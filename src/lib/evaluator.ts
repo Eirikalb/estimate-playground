@@ -56,6 +56,7 @@ export function evaluateMultipleRollouts(
 
   return {
     scenarioId: scenario.id,
+    status: "completed" as const,
     rollouts,
     meanPrediction: Math.round(meanPrediction * 1000) / 1000,
     stdDeviation: Math.round(stdDeviation * 1000) / 1000,

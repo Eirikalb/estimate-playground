@@ -6,7 +6,7 @@ import {
   loadDomainConfig,
   loadExpertFacts,
 } from "@/lib/storage";
-import { generateScenarios } from "@/lib/generator";
+import { generateScenarios, generateScenariosWithNarrative } from "@/lib/generator";
 import { renderPrompt } from "@/prompts/engine";
 import { callOpenRouterMultiple, type OpenRouterConfig } from "@/lib/openrouter";
 import { evaluateMultipleRollouts, calculateAggregateMetrics } from "@/lib/evaluator";
@@ -29,6 +29,8 @@ export async function POST(request: Request) {
       generateTwins = true,
       rolloutsPerScenario = 1,
       seed,
+      useNarrativeDescriptions = false,
+      narrativeModel,
     } = body;
 
     // Validate required fields
@@ -59,12 +61,63 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Domain not found" }, { status: 404 });
     }
 
-    // Generate scenarios
-    const scenarios = generateScenarios(domainConfig, {
-      count: scenarioCount,
-      generateTwins,
-      seed,
-    });
+    // Generate scenarios - use LLM narrative if enabled
+    let scenarios;
+    if (useNarrativeDescriptions) {
+      console.log(`Generating ${scenarioCount} scenarios with LLM-based narratives...`);
+      scenarios = await generateScenariosWithNarrative(domainConfig, {
+        count: scenarioCount,
+        generateTwins,
+        seed,
+        narrativeConfig: {
+          apiKey,
+          model: narrativeModel || "openai/gpt-4o-mini",
+        },
+      });
+      console.log(`Generated ${scenarios.length} scenarios with narratives`);
+    } else {
+      scenarios = generateScenarios(domainConfig, {
+        count: scenarioCount,
+        generateTwins,
+        seed,
+      });
+    }
+
+    // Create initial run with "running" status and placeholder results
+    const runId = uuidv4();
+    const startedAt = new Date().toISOString();
+    
+    // Initialize placeholder results for all scenarios
+    const initialResults: ScenarioResult[] = scenarios.map((scenario) => ({
+      scenarioId: scenario.id,
+      status: "pending" as const,
+      rollouts: [],
+      meanPrediction: 0,
+      stdDeviation: 0,
+      minPrediction: 0,
+      maxPrediction: 0,
+      error: 0,
+      absoluteError: 0,
+      withinTolerance: false,
+      rolloutConsistency: 0,
+    }));
+
+    const run: BenchmarkRun = {
+      id: runId,
+      timestamp: startedAt,
+      domainId,
+      model,
+      promptStrategy: promptTemplateId || "custom",
+      promptTemplate,
+      rolloutsPerScenario: rollouts,
+      status: "running",
+      startedAt,
+      scenarios,
+      results: initialResults,
+    };
+
+    // Save the initial run state
+    await saveBenchmarkRun(run);
 
     // Run each scenario through the LLM
     const config: OpenRouterConfig = {
@@ -73,9 +126,18 @@ export async function POST(request: Request) {
       temperature: 0.3,
     };
 
-    const results: ScenarioResult[] = [];
+    for (let i = 0; i < scenarios.length; i++) {
+      const scenario = scenarios[i];
+      const scenarioStartedAt = new Date().toISOString();
+      
+      // Mark scenario as running
+      run.results[i] = {
+        ...run.results[i],
+        status: "running",
+        startedAt: scenarioStartedAt,
+      };
+      await saveBenchmarkRun(run);
 
-    for (const scenario of scenarios) {
       const prompt = renderPrompt(
         promptTemplate,
         domainConfig,
@@ -87,11 +149,21 @@ export async function POST(request: Request) {
         // Run multiple rollouts for variance estimation
         const llmResults = await callOpenRouterMultiple(prompt, config, rollouts);
         const result = evaluateMultipleRollouts(scenario, llmResults);
-        results.push(result);
+        
+        // Update with completed result
+        run.results[i] = {
+          ...result,
+          status: "completed",
+          startedAt: scenarioStartedAt,
+          completedAt: new Date().toISOString(),
+        };
       } catch (error) {
-        // Record failed prediction with empty rollouts
-        results.push({
+        // Record failed prediction
+        run.results[i] = {
           scenarioId: scenario.id,
+          status: "failed",
+          startedAt: scenarioStartedAt,
+          completedAt: new Date().toISOString(),
           rollouts: [{
             prediction: 0,
             reasoning: `Error: ${error instanceof Error ? error.message : "Unknown error"}`,
@@ -105,29 +177,23 @@ export async function POST(request: Request) {
           absoluteError: scenario.groundTruth.value,
           withinTolerance: false,
           rolloutConsistency: 0,
-        });
+        };
       }
+
+      // Save after each scenario completes
+      await saveBenchmarkRun(run);
 
       // Small delay between scenarios
       await new Promise((resolve) => setTimeout(resolve, 300));
     }
 
-    // Calculate aggregate metrics
-    const aggregateMetrics = calculateAggregateMetrics(scenarios, results);
+    // Calculate aggregate metrics and mark run as completed
+    const completedResults = run.results.filter(r => r.status === "completed" || r.status === "failed");
+    const aggregateMetrics = calculateAggregateMetrics(scenarios, completedResults);
 
-    // Create and save the run
-    const run: BenchmarkRun = {
-      id: uuidv4(),
-      timestamp: new Date().toISOString(),
-      domainId,
-      model,
-      promptStrategy: promptTemplateId || "custom",
-      promptTemplate,
-      rolloutsPerScenario: rollouts,
-      scenarios,
-      results,
-      aggregateMetrics,
-    };
+    run.status = "completed";
+    run.completedAt = new Date().toISOString();
+    run.aggregateMetrics = aggregateMetrics;
 
     await saveBenchmarkRun(run);
 

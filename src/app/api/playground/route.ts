@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { loadDomainConfig, loadExpertFacts } from "@/lib/storage";
-import { generateScenarios } from "@/lib/generator";
+import { generateScenarios, upgradeScenarioNarrative } from "@/lib/generator";
 import { renderPrompt, buildTemplateContext } from "@/prompts/engine";
 import { callOpenRouterMultiple, type OpenRouterConfig } from "@/lib/openrouter";
 import { evaluateMultipleRollouts } from "@/lib/evaluator";
@@ -15,6 +15,8 @@ export async function POST(request: Request) {
       scenario: providedScenario,
       rolloutsPerScenario = 1,
       seed,
+      useNarrativeDescription = false,
+      narrativeModel,
     } = body;
 
     // Validate required fields
@@ -36,6 +38,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Domain not found" }, { status: 404 });
     }
 
+    // Get API key (needed for narrative generation)
+    const apiKey = process.env.OPENROUTER_API_KEY;
+
     // Use provided scenario or generate one
     let scenario = providedScenario;
     if (!scenario) {
@@ -45,6 +50,19 @@ export async function POST(request: Request) {
         seed: seed || Date.now(),
       });
       scenario = scenarios[0];
+    }
+
+    // Upgrade to LLM-based narrative if requested
+    if (useNarrativeDescription && apiKey) {
+      scenario = await upgradeScenarioNarrative(
+        domainConfig,
+        scenario,
+        {
+          apiKey,
+          model: narrativeModel || "openai/gpt-4o-mini",
+        },
+        seed || Date.now()
+      );
     }
 
     // Build template context for preview
@@ -67,9 +85,9 @@ export async function POST(request: Request) {
       });
     }
 
-    // Get API key from environment
-    const apiKey = process.env.OPENROUTER_API_KEY;
-    if (!apiKey) {
+    // Check API key is available for LLM evaluation
+    const llmApiKey = apiKey || process.env.OPENROUTER_API_KEY;
+    if (!llmApiKey) {
       return NextResponse.json(
         { error: "OPENROUTER_API_KEY not configured" },
         { status: 500 }
@@ -78,7 +96,7 @@ export async function POST(request: Request) {
 
     // Run through LLM with multiple rollouts
     const config: OpenRouterConfig = {
-      apiKey,
+      apiKey: llmApiKey,
       model,
       temperature: 0.3,
     };

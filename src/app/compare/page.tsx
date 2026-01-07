@@ -41,7 +41,10 @@ export default function Compare() {
     );
   }
 
-  if (runs.length === 0) {
+  // Filter to only completed runs with metrics
+  const completedRuns = runs.filter((r) => r.aggregateMetrics);
+
+  if (completedRuns.length === 0) {
     return (
       <div className="container max-w-screen-2xl py-8">
         <div className="mb-8">
@@ -52,7 +55,7 @@ export default function Compare() {
         </div>
         <Card>
           <CardContent className="py-12 text-center text-muted-foreground">
-            No runs to compare yet. Create some benchmark runs first.
+            No completed runs to compare yet. Create some benchmark runs first.
           </CardContent>
         </Card>
       </div>
@@ -60,7 +63,7 @@ export default function Compare() {
   }
 
   // Group runs by model
-  const byModel = runs.reduce((acc, run) => {
+  const byModel = completedRuns.reduce((acc, run) => {
     const model = run.model.split("/").pop() || run.model;
     if (!acc[model]) acc[model] = [];
     acc[model].push(run);
@@ -68,7 +71,7 @@ export default function Compare() {
   }, {} as Record<string, BenchmarkRun[]>);
 
   // Group runs by prompt strategy
-  const byStrategy = runs.reduce((acc, run) => {
+  const byStrategy = completedRuns.reduce((acc, run) => {
     if (!acc[run.promptStrategy]) acc[run.promptStrategy] = [];
     acc[run.promptStrategy].push(run);
     return acc;
@@ -77,24 +80,24 @@ export default function Compare() {
   // Prepare chart data - model comparison
   const modelChartData = Object.entries(byModel).map(([model, modelRuns]) => ({
     name: model,
-    hitRate: modelRuns.reduce((sum, r) => sum + r.aggregateMetrics.hitRate, 0) / modelRuns.length,
-    rmse: modelRuns.reduce((sum, r) => sum + r.aggregateMetrics.rmse, 0) / modelRuns.length,
-    latency: modelRuns.reduce((sum, r) => sum + r.aggregateMetrics.avgLatencyMs, 0) / modelRuns.length,
+    hitRate: modelRuns.reduce((sum, r) => sum + (r.aggregateMetrics?.hitRate ?? 0), 0) / modelRuns.length,
+    rmse: modelRuns.reduce((sum, r) => sum + (r.aggregateMetrics?.rmse ?? 0), 0) / modelRuns.length,
+    latency: modelRuns.reduce((sum, r) => sum + (r.aggregateMetrics?.avgLatencyMs ?? 0), 0) / modelRuns.length,
     runs: modelRuns.length,
   }));
 
   // Prepare chart data - strategy comparison
   const strategyChartData = Object.entries(byStrategy).map(([strategy, strategyRuns]) => ({
     name: strategy.replace(/-/g, " "),
-    hitRate: strategyRuns.reduce((sum, r) => sum + r.aggregateMetrics.hitRate, 0) / strategyRuns.length,
-    rmse: strategyRuns.reduce((sum, r) => sum + r.aggregateMetrics.rmse, 0) / strategyRuns.length,
+    hitRate: strategyRuns.reduce((sum, r) => sum + (r.aggregateMetrics?.hitRate ?? 0), 0) / strategyRuns.length,
+    rmse: strategyRuns.reduce((sum, r) => sum + (r.aggregateMetrics?.rmse ?? 0), 0) / strategyRuns.length,
     runs: strategyRuns.length,
   }));
 
   // Scatter plot data - accuracy vs latency
-  const scatterData = runs.map((run) => ({
-    x: run.aggregateMetrics.avgLatencyMs,
-    y: run.aggregateMetrics.hitRate,
+  const scatterData = completedRuns.map((run) => ({
+    x: run.aggregateMetrics?.avgLatencyMs ?? 0,
+    y: run.aggregateMetrics?.hitRate ?? 0,
     model: run.model.split("/").pop() || run.model,
     strategy: run.promptStrategy,
     id: run.id,
@@ -119,7 +122,7 @@ export default function Compare() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">Compare</h1>
         <p className="text-muted-foreground mt-2">
-          Analyze performance across {runs.length} benchmark runs
+          Analyze performance across {completedRuns.length} completed benchmark runs
         </p>
       </div>
 
@@ -128,7 +131,7 @@ export default function Compare() {
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Total Runs</CardDescription>
-            <CardTitle className="text-4xl font-mono">{runs.length}</CardTitle>
+            <CardTitle className="text-4xl font-mono">{completedRuns.length}</CardTitle>
           </CardHeader>
         </Card>
         <Card>
@@ -147,7 +150,7 @@ export default function Compare() {
           <CardHeader className="pb-2">
             <CardDescription>Best Hit Rate</CardDescription>
             <CardTitle className="text-4xl font-mono text-emerald-400">
-              {Math.max(...runs.map((r) => r.aggregateMetrics.hitRate)).toFixed(1)}%
+              {Math.max(...completedRuns.map((r) => r.aggregateMetrics?.hitRate ?? 0)).toFixed(1)}%
             </CardTitle>
           </CardHeader>
         </Card>
@@ -428,7 +431,7 @@ export default function Compare() {
                         <td className="p-2 border-b border-border font-medium">{model}</td>
                         {Object.keys(byStrategy).map((strategy) => {
                           const matchingRun = modelRuns.find((r) => r.promptStrategy === strategy);
-                          const hitRate = matchingRun?.aggregateMetrics.hitRate;
+                          const hitRate = matchingRun?.aggregateMetrics?.hitRate;
                           
                           return (
                             <td key={strategy} className="text-center p-2 border-b border-border">

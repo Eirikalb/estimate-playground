@@ -88,6 +88,8 @@ export const RolloutResultSchema = z.object({
   prediction: z.number(),
   reasoning: z.string(),
   latencyMs: z.number(),
+  startedAt: z.string().optional(),
+  completedAt: z.string().optional(),
 });
 
 export type RolloutResult = z.infer<typeof RolloutResultSchema>;
@@ -97,6 +99,11 @@ export type RolloutResult = z.infer<typeof RolloutResultSchema>;
 
 export const ScenarioResultSchema = z.object({
   scenarioId: z.string(),
+  
+  // Timing and status
+  status: z.enum(["pending", "running", "completed", "failed"]).default("pending"),
+  startedAt: z.string().optional(),
+  completedAt: z.string().optional(),
   
   // Multiple rollouts for variance estimation
   rollouts: z.array(RolloutResultSchema),
@@ -123,17 +130,22 @@ export type ScenarioResult = z.infer<typeof ScenarioResultSchema>;
 
 export const BenchmarkRunSchema = z.object({
   id: z.string(),
-  timestamp: z.string(),
+  timestamp: z.string(), // When the run was created (legacy, kept for compatibility)
   domainId: z.string(),
   model: z.string(),
   promptStrategy: z.string(),
   promptTemplate: z.string(), // The actual template used
   rolloutsPerScenario: z.number().default(1), // Number of rollouts per scenario
 
+  // Run status and timing
+  status: z.enum(["running", "completed", "failed"]).default("running"),
+  startedAt: z.string().optional(),
+  completedAt: z.string().optional(),
+
   scenarios: z.array(ScenarioSchema),
   results: z.array(ScenarioResultSchema),
 
-  // Aggregate metrics
+  // Aggregate metrics (populated when run completes)
   aggregateMetrics: z.object({
     hitRate: z.number(), // % within tolerance
     meanError: z.number(),
@@ -144,7 +156,7 @@ export const BenchmarkRunSchema = z.object({
     // Variance metrics (when rollouts > 1)
     avgStdDeviation: z.number().optional(), // Average std deviation across scenarios
     avgConsistency: z.number().optional(), // Average rollout consistency
-  }),
+  }).optional(), // Optional while run is in progress
 });
 
 export type BenchmarkRun = z.infer<typeof BenchmarkRunSchema>;

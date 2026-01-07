@@ -44,11 +44,12 @@ export default function Dashboard() {
     return "bg-red-500/20 text-red-400";
   };
 
-  // Aggregate stats
+  // Aggregate stats (only from completed runs with metrics)
+  const completedRuns = runs.filter((r) => r.aggregateMetrics);
   const totalRuns = runs.length;
   const avgHitRate =
-    runs.length > 0
-      ? runs.reduce((sum, r) => sum + r.aggregateMetrics.hitRate, 0) / runs.length
+    completedRuns.length > 0
+      ? completedRuns.reduce((sum, r) => sum + (r.aggregateMetrics?.hitRate ?? 0), 0) / completedRuns.length
       : 0;
   const modelsUsed = new Set(runs.map((r) => r.model)).size;
   const templatesUsed = new Set(runs.map((r) => r.promptStrategy)).size;
@@ -151,7 +152,12 @@ export default function Dashboard() {
                 {runs.map((run) => (
                   <TableRow key={run.id}>
                     <TableCell className="font-mono text-sm">
-                      {formatDate(run.timestamp)}
+                      <div className="flex items-center gap-2">
+                        {run.status === "running" && (
+                          <span className="text-amber-400 animate-pulse">●</span>
+                        )}
+                        {formatDate(run.timestamp)}
+                      </div>
                     </TableCell>
                     <TableCell>
                       <Badge variant="secondary" className="font-mono text-xs">
@@ -168,17 +174,21 @@ export default function Dashboard() {
                       {run.rolloutsPerScenario > 1 ? `${run.rolloutsPerScenario}x` : "1"}
                     </TableCell>
                     <TableCell>
-                      <Badge
-                        className={getHitRateColor(run.aggregateMetrics.hitRate)}
-                      >
-                        {run.aggregateMetrics.hitRate.toFixed(1)}%
-                      </Badge>
+                      {run.aggregateMetrics ? (
+                        <Badge
+                          className={getHitRateColor(run.aggregateMetrics.hitRate)}
+                        >
+                          {run.aggregateMetrics.hitRate.toFixed(1)}%
+                        </Badge>
+                      ) : (
+                        <span className="text-muted-foreground text-sm">—</span>
+                      )}
                     </TableCell>
                     <TableCell className="font-mono">
-                      {run.aggregateMetrics.rmse.toFixed(3)}
+                      {run.aggregateMetrics?.rmse.toFixed(3) ?? "—"}
                     </TableCell>
                     <TableCell className="font-mono">
-                      {run.aggregateMetrics.avgStdDeviation !== undefined
+                      {run.aggregateMetrics?.avgStdDeviation !== undefined
                         ? run.aggregateMetrics.avgStdDeviation.toFixed(3)
                         : "—"}
                     </TableCell>

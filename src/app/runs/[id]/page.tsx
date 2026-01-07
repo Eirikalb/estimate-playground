@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, use, useMemo } from "react";
+import { useEffect, useState, use, useMemo, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -40,6 +40,18 @@ import {
   Line,
 } from "recharts";
 import type { BenchmarkRun, Scenario, ScenarioResult } from "@/domains/schema";
+
+// Helper to format duration
+function formatDuration(startedAt?: string, completedAt?: string): string {
+  if (!startedAt) return "—";
+  const start = new Date(startedAt).getTime();
+  const end = completedAt ? new Date(completedAt).getTime() : Date.now();
+  const durationMs = end - start;
+  
+  if (durationMs < 1000) return `${durationMs}ms`;
+  if (durationMs < 60000) return `${(durationMs / 1000).toFixed(1)}s`;
+  return `${Math.floor(durationMs / 60000)}m ${Math.floor((durationMs % 60000) / 1000)}s`;
+}
 
 // Helper function to generate Gaussian curve data
 function generateGaussianData(
@@ -86,7 +98,7 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
     result: ScenarioResult;
   } | null>(null);
 
-  useEffect(() => {
+  const fetchRun = useCallback(() => {
     fetch(`/api/runs/${resolvedParams.id}`)
       .then((res) => res.json())
       .then((data) => {
@@ -94,6 +106,18 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
           router.push("/");
         } else {
           setRun(data);
+          // Update selected scenario if it exists
+          if (selectedScenario) {
+            const updatedResult = data.results.find(
+              (r: ScenarioResult) => r.scenarioId === selectedScenario.scenario.id
+            );
+            if (updatedResult) {
+              setSelectedScenario({
+                scenario: selectedScenario.scenario,
+                result: updatedResult,
+              });
+            }
+          }
         }
         setLoading(false);
       })
@@ -101,7 +125,20 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
         setLoading(false);
         router.push("/");
       });
-  }, [resolvedParams.id, router]);
+  }, [resolvedParams.id, router, selectedScenario]);
+
+  // Initial fetch
+  useEffect(() => {
+    fetchRun();
+  }, [resolvedParams.id]); // Only depend on id for initial fetch
+
+  // Auto-refresh while run is in progress
+  useEffect(() => {
+    if (!run || run.status !== "running") return;
+
+    const intervalId = setInterval(fetchRun, 1000);
+    return () => clearInterval(intervalId);
+  }, [run?.status, fetchRun]);
 
   const handleDelete = async () => {
     if (!confirm("Are you sure you want to delete this run?")) return;
@@ -201,6 +238,40 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
     result: run.results.find((r) => r.scenarioId === scenario.id)!,
   }));
 
+  // Calculate progress
+  const completedScenarios = run.results.filter(
+    (r) => r.status === "completed" || r.status === "failed"
+  ).length;
+  const totalScenarios = run.scenarios.length;
+  const progressPct = totalScenarios > 0 ? (completedScenarios / totalScenarios) * 100 : 0;
+
+  // Get status badge styling
+  const getStatusBadge = () => {
+    switch (run.status) {
+      case "running":
+        return (
+          <Badge variant="default" className="bg-amber-500/20 text-amber-400 border-amber-500/40 animate-pulse">
+            <span className="mr-1.5">●</span>
+            Running ({completedScenarios}/{totalScenarios})
+          </Badge>
+        );
+      case "completed":
+        return (
+          <Badge variant="default" className="bg-emerald-500/20 text-emerald-400 border-emerald-500/40">
+            Completed
+          </Badge>
+        );
+      case "failed":
+        return (
+          <Badge variant="default" className="bg-red-500/20 text-red-400 border-red-500/40">
+            Failed
+          </Badge>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="container max-w-screen-2xl py-6">
       {/* Header - More Compact */}
@@ -213,6 +284,7 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
               </Button>
             </Link>
             <h1 className="text-2xl font-bold tracking-tight">Run Details</h1>
+            {getStatusBadge()}
           </div>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Badge variant="secondary" className="font-mono text-xs">
@@ -237,6 +309,14 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
                 minute: "2-digit",
               })}
             </span>
+            {run.startedAt && (
+              <>
+                <span>•</span>
+                <span className="font-mono text-xs">
+                  ⏱ {formatDuration(run.startedAt, run.completedAt)}
+                </span>
+              </>
+            )}
           </div>
         </div>
         <Button variant="destructive" size="sm" className="h-7" onClick={handleDelete}>
@@ -244,58 +324,76 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
         </Button>
       </div>
 
+      {/* Progress Bar for Running Runs */}
+      {run.status === "running" && (
+        <div className="mb-4">
+          <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-amber-500 transition-all duration-300 ease-out"
+              style={{ width: `${progressPct}%` }}
+            />
+          </div>
+        </div>
+      )}
+
       {/* Metrics Summary - Compact Version */}
-      <div className={`grid gap-2 mb-4 ${hasMultipleRollouts ? "grid-cols-7" : "grid-cols-5"}`}>
-        <div className="bg-card border rounded-lg px-3 py-2">
-          <div className="text-xs text-muted-foreground">Hit Rate</div>
-          <div className={`text-lg font-mono font-bold ${getHitRateColor(run.aggregateMetrics.hitRate)}`}>
-            {run.aggregateMetrics.hitRate.toFixed(1)}%
-          </div>
-        </div>
-        <div className="bg-card border rounded-lg px-3 py-2">
-          <div className="text-xs text-muted-foreground">RMSE</div>
-          <div className="text-lg font-mono font-bold">
-            {run.aggregateMetrics.rmse.toFixed(3)}
-          </div>
-        </div>
-        <div className="bg-card border rounded-lg px-3 py-2">
-          <div className="text-xs text-muted-foreground">Mean Error</div>
-          <div className="text-lg font-mono font-bold">
-            {run.aggregateMetrics.meanError > 0 ? "+" : ""}
-            {run.aggregateMetrics.meanError.toFixed(3)}
-          </div>
-        </div>
-        <div className="bg-card border rounded-lg px-3 py-2">
-          <div className="text-xs text-muted-foreground">Directional</div>
-          <div className="text-lg font-mono font-bold">
-            {run.aggregateMetrics.directionalAccuracy !== undefined
-              ? `${run.aggregateMetrics.directionalAccuracy.toFixed(0)}%`
-              : "—"}
-          </div>
-        </div>
-        <div className="bg-card border rounded-lg px-3 py-2">
-          <div className="text-xs text-muted-foreground">Latency</div>
-          <div className="text-lg font-mono font-bold">
-            {run.aggregateMetrics.avgLatencyMs}ms
-          </div>
-        </div>
-        {hasMultipleRollouts && (
-          <>
-            <div className="bg-card border rounded-lg px-3 py-2">
-              <div className="text-xs text-muted-foreground">Avg σ</div>
-              <div className={`text-lg font-mono font-bold ${getConsistencyColor(run.aggregateMetrics.avgStdDeviation || 0)}`}>
-                {run.aggregateMetrics.avgStdDeviation?.toFixed(3) || "—"}
-              </div>
+      {run.aggregateMetrics ? (
+        <div className={`grid gap-2 mb-4 ${hasMultipleRollouts ? "grid-cols-7" : "grid-cols-5"}`}>
+          <div className="bg-card border rounded-lg px-3 py-2">
+            <div className="text-xs text-muted-foreground">Hit Rate</div>
+            <div className={`text-lg font-mono font-bold ${getHitRateColor(run.aggregateMetrics.hitRate)}`}>
+              {run.aggregateMetrics.hitRate.toFixed(1)}%
             </div>
-            <div className="bg-card border rounded-lg px-3 py-2">
-              <div className="text-xs text-muted-foreground">Consistency</div>
-              <div className="text-lg font-mono font-bold">
-                {run.aggregateMetrics.avgConsistency?.toFixed(0) || "—"}%
-              </div>
+          </div>
+          <div className="bg-card border rounded-lg px-3 py-2">
+            <div className="text-xs text-muted-foreground">RMSE</div>
+            <div className="text-lg font-mono font-bold">
+              {run.aggregateMetrics.rmse.toFixed(3)}
             </div>
-          </>
-        )}
-      </div>
+          </div>
+          <div className="bg-card border rounded-lg px-3 py-2">
+            <div className="text-xs text-muted-foreground">Mean Error</div>
+            <div className="text-lg font-mono font-bold">
+              {run.aggregateMetrics.meanError > 0 ? "+" : ""}
+              {run.aggregateMetrics.meanError.toFixed(3)}
+            </div>
+          </div>
+          <div className="bg-card border rounded-lg px-3 py-2">
+            <div className="text-xs text-muted-foreground">Directional</div>
+            <div className="text-lg font-mono font-bold">
+              {run.aggregateMetrics.directionalAccuracy !== undefined
+                ? `${run.aggregateMetrics.directionalAccuracy.toFixed(0)}%`
+                : "—"}
+            </div>
+          </div>
+          <div className="bg-card border rounded-lg px-3 py-2">
+            <div className="text-xs text-muted-foreground">Latency</div>
+            <div className="text-lg font-mono font-bold">
+              {run.aggregateMetrics.avgLatencyMs}ms
+            </div>
+          </div>
+          {hasMultipleRollouts && (
+            <>
+              <div className="bg-card border rounded-lg px-3 py-2">
+                <div className="text-xs text-muted-foreground">Avg σ</div>
+                <div className={`text-lg font-mono font-bold ${getConsistencyColor(run.aggregateMetrics.avgStdDeviation || 0)}`}>
+                  {run.aggregateMetrics.avgStdDeviation?.toFixed(3) || "—"}
+                </div>
+              </div>
+              <div className="bg-card border rounded-lg px-3 py-2">
+                <div className="text-xs text-muted-foreground">Consistency</div>
+                <div className="text-lg font-mono font-bold">
+                  {run.aggregateMetrics.avgConsistency?.toFixed(0) || "—"}%
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      ) : (
+        <div className="mb-4 text-sm text-muted-foreground italic">
+          Metrics will appear when the run completes...
+        </div>
+      )}
 
       {/* Main Content with Resizable Panels */}
       <ResizablePanelGroup orientation="horizontal" className="min-h-[600px] rounded-lg border">
@@ -310,6 +408,7 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
               <Table>
                 <TableHeader className="sticky top-0 bg-background z-10">
                   <TableRow>
+                    <TableHead className="w-[30px]"></TableHead>
                     <TableHead className="w-[140px]">Anchor</TableHead>
                     <TableHead>Deltas</TableHead>
                     <TableHead className="w-[70px]">Truth</TableHead>
@@ -320,60 +419,75 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {scenarioResults.map(({ scenario, result }) => (
-                    <TableRow
-                      key={scenario.id}
-                      className={`cursor-pointer hover:bg-muted/50 ${
-                        selectedScenario?.scenario.id === scenario.id ? "bg-muted" : ""
-                      }`}
-                      onClick={() => setSelectedScenario({ scenario, result })}
-                    >
-                      <TableCell className="font-mono text-xs">
-                        {scenario.anchor.replace(/_/g, " ")}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex flex-wrap gap-1">
-                          {scenario.appliedDeltas.slice(0, 2).map((d) => (
-                            <Badge key={d} variant="outline" className="text-[10px] px-1 py-0">
-                              {d.replace(/_/g, " ")}
-                            </Badge>
-                          ))}
-                          {scenario.appliedDeltas.length > 2 && (
-                            <Badge variant="outline" className="text-[10px] px-1 py-0">
-                              +{scenario.appliedDeltas.length - 2}
-                            </Badge>
-                          )}
-                          {scenario.distractors.length > 0 && (
-                            <Badge variant="secondary" className="text-[10px] px-1 py-0">
-                              🎭
-                            </Badge>
-                          )}
-                        </div>
-                      </TableCell>
-                      <TableCell className="font-mono text-xs">
-                        {scenario.groundTruth.value.toFixed(2)}%
-                      </TableCell>
-                      <TableCell className="font-mono text-xs">
-                        {result.meanPrediction.toFixed(2)}%
-                      </TableCell>
-                      {hasMultipleRollouts && (
-                        <TableCell className={`font-mono text-xs ${getConsistencyColor(result.stdDeviation)}`}>
-                          {result.stdDeviation.toFixed(3)}
+                  {scenarioResults.map(({ scenario, result }) => {
+                    const isPending = result.status === "pending";
+                    const isRunning = result.status === "running";
+                    const isFailed = result.status === "failed";
+                    
+                    return (
+                      <TableRow
+                        key={scenario.id}
+                        className={`cursor-pointer hover:bg-muted/50 ${
+                          selectedScenario?.scenario.id === scenario.id ? "bg-muted" : ""
+                        } ${isPending ? "opacity-40" : ""} ${isRunning ? "bg-amber-500/5" : ""}`}
+                        onClick={() => setSelectedScenario({ scenario, result })}
+                      >
+                        <TableCell className="text-center">
+                          {isPending && <span className="text-muted-foreground text-xs">○</span>}
+                          {isRunning && <span className="text-amber-400 animate-pulse">●</span>}
+                          {result.status === "completed" && <span className="text-emerald-400">●</span>}
+                          {isFailed && <span className="text-red-400">●</span>}
                         </TableCell>
-                      )}
-                      <TableCell className={`font-mono text-xs ${getErrorColor(result.error)}`}>
-                        {result.error > 0 ? "+" : ""}
-                        {result.error.toFixed(3)}
-                      </TableCell>
-                      <TableCell>
-                        {result.withinTolerance ? (
-                          <span className="text-emerald-400">✓</span>
-                        ) : (
-                          <span className="text-red-400">✗</span>
+                        <TableCell className="font-mono text-xs">
+                          {scenario.anchor.replace(/_/g, " ")}
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex flex-wrap gap-1">
+                            {scenario.appliedDeltas.slice(0, 2).map((d) => (
+                              <Badge key={d} variant="outline" className="text-[10px] px-1 py-0">
+                                {d.replace(/_/g, " ")}
+                              </Badge>
+                            ))}
+                            {scenario.appliedDeltas.length > 2 && (
+                              <Badge variant="outline" className="text-[10px] px-1 py-0">
+                                +{scenario.appliedDeltas.length - 2}
+                              </Badge>
+                            )}
+                            {scenario.distractors.length > 0 && (
+                              <Badge variant="secondary" className="text-[10px] px-1 py-0">
+                                🎭
+                              </Badge>
+                            )}
+                          </div>
+                        </TableCell>
+                        <TableCell className="font-mono text-xs">
+                          {scenario.groundTruth.value.toFixed(2)}%
+                        </TableCell>
+                        <TableCell className="font-mono text-xs">
+                          {isPending || isRunning ? "—" : `${result.meanPrediction.toFixed(2)}%`}
+                        </TableCell>
+                        {hasMultipleRollouts && (
+                          <TableCell className={`font-mono text-xs ${!isPending && !isRunning ? getConsistencyColor(result.stdDeviation) : ""}`}>
+                            {isPending || isRunning ? "—" : result.stdDeviation.toFixed(3)}
+                          </TableCell>
                         )}
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                        <TableCell className={`font-mono text-xs ${!isPending && !isRunning ? getErrorColor(result.error) : ""}`}>
+                          {isPending || isRunning ? "—" : `${result.error > 0 ? "+" : ""}${result.error.toFixed(3)}`}
+                        </TableCell>
+                        <TableCell>
+                          {isPending && <span className="text-muted-foreground">—</span>}
+                          {isRunning && <span className="text-amber-400 animate-pulse">⋯</span>}
+                          {result.status === "completed" && result.withinTolerance && (
+                            <span className="text-emerald-400">✓</span>
+                          )}
+                          {result.status === "completed" && !result.withinTolerance && (
+                            <span className="text-red-400">✗</span>
+                          )}
+                          {isFailed && <span className="text-red-400">!</span>}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </div>
@@ -511,65 +625,103 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
                   </div>
                 )}
 
-                {/* 2. Stats Numbers */}
-                <div className="grid grid-cols-5 gap-2">
-                  <div className="bg-emerald-500/10 border border-emerald-500/20 p-2 rounded text-center">
-                    <div className="text-[10px] text-emerald-400">Target</div>
-                    <div className="font-mono text-sm font-bold text-emerald-400">
-                      {selectedScenario.scenario.groundTruth.value.toFixed(2)}%
-                    </div>
-                  </div>
-                  <div className="bg-amber-500/10 border border-amber-500/20 p-2 rounded text-center">
-                    <div className="text-[10px] text-amber-400">Mean</div>
-                    <div className="font-mono text-sm font-bold text-amber-400">
-                      {selectedScenario.result.meanPrediction.toFixed(2)}%
-                    </div>
-                  </div>
-                  <div className={`p-2 rounded text-center ${
-                    selectedScenario.result.withinTolerance 
-                      ? "bg-emerald-500/10 border border-emerald-500/20" 
-                      : "bg-red-500/10 border border-red-500/20"
+                {/* Status and timing for pending/running scenarios */}
+                {(selectedScenario.result.status === "pending" || selectedScenario.result.status === "running") && (
+                  <div className={`p-3 rounded-lg border ${
+                    selectedScenario.result.status === "running" 
+                      ? "bg-amber-500/10 border-amber-500/30" 
+                      : "bg-muted/30 border-muted"
                   }`}>
-                    <div className="text-[10px] text-muted-foreground">Error</div>
-                    <div className={`font-mono text-sm font-bold ${getErrorColor(selectedScenario.result.error)}`}>
-                      {selectedScenario.result.error > 0 ? "+" : ""}{selectedScenario.result.error.toFixed(3)}%
+                    <div className="flex items-center gap-2">
+                      {selectedScenario.result.status === "running" ? (
+                        <>
+                          <span className="text-amber-400 animate-pulse">●</span>
+                          <span className="text-sm font-medium text-amber-400">Running...</span>
+                          {selectedScenario.result.startedAt && (
+                            <span className="text-xs text-muted-foreground ml-auto font-mono">
+                              {formatDuration(selectedScenario.result.startedAt)}
+                            </span>
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-muted-foreground">○</span>
+                          <span className="text-sm text-muted-foreground">Waiting...</span>
+                        </>
+                      )}
                     </div>
                   </div>
-                  {hasMultipleRollouts && selectedScenario.result.rollouts.length > 1 && (
-                    <>
-                      <div className="bg-muted/50 p-2 rounded text-center">
-                        <div className="text-[10px] text-muted-foreground">σ</div>
-                        <div className={`font-mono text-sm font-bold ${getConsistencyColor(selectedScenario.result.stdDeviation)}`}>
-                          {selectedScenario.result.stdDeviation.toFixed(3)}
-                        </div>
-                      </div>
-                      <div className="bg-muted/50 p-2 rounded text-center">
-                        <div className="text-[10px] text-muted-foreground">In Tol.</div>
-                        <div className="font-mono text-sm font-bold">
-                          {selectedScenario.result.rolloutConsistency.toFixed(0)}%
-                        </div>
-                      </div>
-                    </>
-                  )}
-                  {(!hasMultipleRollouts || selectedScenario.result.rollouts.length <= 1) && (
-                    <>
-                      <div className="bg-muted/50 p-2 rounded text-center">
-                        <div className="text-[10px] text-muted-foreground">Tolerance</div>
-                        <div className="font-mono text-sm">
-                          ±{selectedScenario.scenario.groundTruth.tolerance}%
-                        </div>
-                      </div>
-                      <div className="bg-muted/50 p-2 rounded text-center">
-                        <div className="text-[10px] text-muted-foreground">Latency</div>
-                        <div className="font-mono text-sm">
-                          {selectedScenario.result.rollouts[0]?.latencyMs || 0}ms
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
+                )}
 
-                {/* 3. Collapsible Rollouts */}
+                {/* 2. Stats Numbers - only show when completed */}
+                {selectedScenario.result.status === "completed" && (
+                  <div className="grid grid-cols-5 gap-2">
+                    <div className="bg-emerald-500/10 border border-emerald-500/20 p-2 rounded text-center">
+                      <div className="text-[10px] text-emerald-400">Target</div>
+                      <div className="font-mono text-sm font-bold text-emerald-400">
+                        {selectedScenario.scenario.groundTruth.value.toFixed(2)}%
+                      </div>
+                    </div>
+                    <div className="bg-amber-500/10 border border-amber-500/20 p-2 rounded text-center">
+                      <div className="text-[10px] text-amber-400">Mean</div>
+                      <div className="font-mono text-sm font-bold text-amber-400">
+                        {selectedScenario.result.meanPrediction.toFixed(2)}%
+                      </div>
+                    </div>
+                    <div className={`p-2 rounded text-center ${
+                      selectedScenario.result.withinTolerance 
+                        ? "bg-emerald-500/10 border border-emerald-500/20" 
+                        : "bg-red-500/10 border border-red-500/20"
+                    }`}>
+                      <div className="text-[10px] text-muted-foreground">Error</div>
+                      <div className={`font-mono text-sm font-bold ${getErrorColor(selectedScenario.result.error)}`}>
+                        {selectedScenario.result.error > 0 ? "+" : ""}{selectedScenario.result.error.toFixed(3)}%
+                      </div>
+                    </div>
+                    {hasMultipleRollouts && selectedScenario.result.rollouts.length > 1 && (
+                      <>
+                        <div className="bg-muted/50 p-2 rounded text-center">
+                          <div className="text-[10px] text-muted-foreground">σ</div>
+                          <div className={`font-mono text-sm font-bold ${getConsistencyColor(selectedScenario.result.stdDeviation)}`}>
+                            {selectedScenario.result.stdDeviation.toFixed(3)}
+                          </div>
+                        </div>
+                        <div className="bg-muted/50 p-2 rounded text-center">
+                          <div className="text-[10px] text-muted-foreground">In Tol.</div>
+                          <div className="font-mono text-sm font-bold">
+                            {selectedScenario.result.rolloutConsistency.toFixed(0)}%
+                          </div>
+                        </div>
+                      </>
+                    )}
+                    {(!hasMultipleRollouts || selectedScenario.result.rollouts.length <= 1) && (
+                      <>
+                        <div className="bg-muted/50 p-2 rounded text-center">
+                          <div className="text-[10px] text-muted-foreground">Tolerance</div>
+                          <div className="font-mono text-sm">
+                            ±{selectedScenario.scenario.groundTruth.tolerance}%
+                          </div>
+                        </div>
+                        <div className="bg-muted/50 p-2 rounded text-center">
+                          <div className="text-[10px] text-muted-foreground">Latency</div>
+                          <div className="font-mono text-sm">
+                            {selectedScenario.result.rollouts[0]?.latencyMs || 0}ms
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                )}
+
+                {/* Timing info */}
+                {selectedScenario.result.startedAt && selectedScenario.result.completedAt && (
+                  <div className="text-xs text-muted-foreground font-mono">
+                    Duration: {formatDuration(selectedScenario.result.startedAt, selectedScenario.result.completedAt)}
+                  </div>
+                )}
+
+                {/* 3. Collapsible Rollouts - only show when there are results */}
+                {selectedScenario.result.rollouts.length > 0 && (
                 <div>
                   <h4 className="font-medium text-sm mb-2">
                     Reasoning Traces ({selectedScenario.result.rollouts.length})
@@ -618,6 +770,7 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
                     })}
                   </Accordion>
                 </div>
+                )}
 
                 <Separator />
 
