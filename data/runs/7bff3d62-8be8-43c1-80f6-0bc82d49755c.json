@@ -1,0 +1,610 @@
+{
+  "id": "7bff3d62-8be8-43c1-80f6-0bc82d49755c",
+  "timestamp": "2026-01-07T14:13:47.448Z",
+  "domainId": "real-estate-yield",
+  "model": "openai/gpt-4o-mini",
+  "promptStrategy": "benchmark-only",
+  "promptTemplate": "{{#facts.benchmarks}}\n{{{content}}}\n{{/facts.benchmarks}}\n\n---\n\nUsing the benchmark ranges above, estimate the yield for this property:\n\n{{scenario.contextDescription}}\n\nConsider where this property should be positioned within the relevant benchmark range based on its specific characteristics.\n\nReturn JSON only: {\"yield\": <number>, \"reasoning\": \"<explain benchmark selection and positioning>\"}\n\n",
+  "rolloutsPerScenario": 5,
+  "status": "completed",
+  "startedAt": "2026-01-07T14:13:47.448Z",
+  "useNarrativeDescriptions": true,
+  "narrativeModel": "openai/gpt-4o-mini",
+  "narrativesGenerated": 10,
+  "narrativesTotal": 10,
+  "scenarios": [
+    {
+      "id": "1331fee9-98f8-4624-98ef-5eea33b7010f",
+      "anchor": "logistics_normal",
+      "appliedDeltas": [
+        "poor_micro_location",
+        "modern_building"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Logistikkveien 42 in the secondary industrial area of Drammen, strategically positioned near local industrial estates and smaller logistics terminals. The immediate vicinity of the property benefits from a diverse mix of light industrial and logistics users, creating a robust ecosystem for businesses requiring logistics support. Although the property boasts proximity to major road networks facilitating regional distribution, it is important to note that its micro-location presents suboptimal access and visibility challenges, which may influence prospective tenant interest. \n\nThe cadastral designation for the property is gnr. 135, bnr. 24 in Drammen municipality, encompassing a total plot size of approximately 2,250 m². The building, constructed in 2018, represents a modern logistics facility designed to high standards with a gross building area (BTA) of 3,150 m². The structure is constructed from reinforced concrete, featuring a high-clearance warehouse and integrated office space, tailored to meet the needs of contemporary logistics operations. \n\nDesigned to optimize functionality, the building comprises a single floor with a well-planned layout conducive to both storage and operational needs. The facility has been equipped with energy-efficient systems, enhancing its operational efficiency and reducing long-term running costs. Additionally, the property holds an energy rating of C, reflecting its compliance with recent Norwegian energy regulations and sustainability standards.\n\nTransportation access is facilitated via Logistikkveien, connecting to the E18 motorway, which provides direct routes to Oslo and other key regional destinations. While road access is strong, it is noteworthy that the property has limited rail connections, which may impact logistics efficiencies for certain tenants. Public transport options are available within a short driving distance, offering additional connectivity for employees commuting to the facility.\n\nThe surrounding area is characterized by older building stock, with many facilities dating prior to 2015, creating a distinctive contrast with this modern development. This property’s high-quality standards and recent construction position it as an attractive option for prospective tenants seeking state-of-the-art logistics space. However, potential buyers should be aware that the smaller tenant base typical of secondary industrial areas may result in higher vacancy risks than in more established logistics hubs.\n\nSignificant technical upgrades have been implemented since the building's completion, enhancing the overall functionality and market appeal. Notable enhancements include the installation of advanced security systems and LED lighting throughout the facility in 2019, alongside an upgraded HVAC system in 2021, ensuring optimal climate control and energy efficiency. The property is also compliant with the latest fire safety regulations, having undergone a comprehensive review and update in 2022.\n\nThe property is predominantly utilized for logistics and distribution purposes, with flexible space suitable for various industrial applications. It features a loading dock with multiple access points, designed to facilitate efficient loading and unloading operations, a critical component for logistics tenants. The current tenancy structure includes a mix of established logistics companies and smaller firms, providing an opportunity for potential investors to diversify their tenant portfolio.\n\nIn terms of environmental certifications, while the property meets basic compliance standards, it has not been awarded additional certifications such as BREEAM or LEED, which may be a consideration for environmentally conscious investors. Overall, the modern nature of the building, combined with its strategic location within a secondary logistics area, presents a unique investment opportunity, albeit tempered by the inherent challenges associated with its micro-location.",
+      "groundTruth": {
+        "value": 8.15,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Normal & Secondary): 8%\nSuboptimal micro-location (poor access, visibility): +0.35%\nModern building (post-2015, high standard): -0.2%\nFinal: 8.15%"
+      },
+      "twinId": "3fa8d5e1-909b-43c3-828b-044858c2240b",
+      "twinDeltaChanged": "removed: poor_micro_location"
+    },
+    {
+      "id": "3fa8d5e1-909b-43c3-828b-044858c2240b",
+      "anchor": "logistics_normal",
+      "appliedDeltas": [
+        "modern_building"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Lagerveien 45 in the heart of the Næringsparken industrial area, approximately 2 kilometers from the E6 motorway, providing excellent road access for logistics and distribution operations. The surrounding environment is characterized by a mix of older industrial buildings and modern facilities, contributing to the area’s robust reputation as a secondary logistics hub. Nearby landmarks include several local industrial estates and smaller terminals, which enhance the attractiveness of the location for potential tenants seeking strategic distribution points. The cadastral designation is gnr. 213, bnr. 14 in the municipality of Skedsmo, encompassing an owned plot of 1,500 m².\n\nThe building is a modern logistics facility constructed in 2018, designed to meet the highest standards of industrial use. It comprises a single-storey structure with a gross building area of approximately 2,250 m² BTA, characterized by a spacious open layout that is adaptable for various tenant configurations. The building features high-quality concrete construction, large loading bays, and an internal clear height of 6 meters, allowing for efficient operational workflows. The property benefits from modern insulation and energy-efficient systems, reflected in its energy rating of C (green standard), aligning with contemporary sustainability expectations.\n\nAccess to the property is optimized through a well-designed transport network, with primary road connections facilitating easy logistics routes to both Oslo and the surrounding regions. Limited rail connections are available in the vicinity, appealing to users who may require multimodal transport solutions. The local street grid is designed to accommodate heavy vehicle access, ensuring smooth logistics operations for tenants.\n\nThe property has undergone several technical upgrades since its completion, with notable enhancements made in 2020 to improve the facility's energy efficiency. These upgrades included the installation of a state-of-the-art HVAC system and LED lighting throughout the premises, significantly reducing operational costs while enhancing the working environment for tenants. Additionally, the loading bays were upgraded to facilitate increased throughput, including the installation of new dock levellers in 2021, ensuring seamless operations for logistics activities.\n\nThe current operational configuration of the building is primarily utilized for warehousing and distribution, with ample space for ancillary office areas that cater to tenant needs. The tenancy structure, as outlined in the sales presentation, is diversified, encompassing a small base of tenants engaged in logistics, e-commerce, and light manufacturing, reflecting the flexibility of the space to accommodate various business models. The property is fully let with a mix of long-term and short-term lease agreements, demonstrating strong demand for modern logistics solutions in the area.\n\nThe property falls under the municipal zoning regulations that designate it for industrial and logistics use, allowing for future development opportunities and potential expansion. The surrounding Næringsparken area is experiencing a gradual transformation, with ongoing discussions concerning urban development initiatives that could enhance the value and attractiveness of the property over time.\n\nIn summary, Lagerveien 45 represents a contemporary logistics facility that combines modern construction standards with excellent transport accessibility, making it an appealing investment opportunity in the growing regional logistics market. The combination of a high-quality building, strategic location, and diversified tenant mix positions the property favourably for sustained demand in the logistics sector.",
+      "groundTruth": {
+        "value": 7.8,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Normal & Secondary): 8%\nModern building (post-2015, high standard): -0.2%\nFinal: 7.80%"
+      },
+      "twinId": "1331fee9-98f8-4624-98ef-5eea33b7010f",
+      "twinDeltaChanged": "removed: poor_micro_location"
+    },
+    {
+      "id": "487f4cde-297d-43dd-b575-8a7e30f1fee6",
+      "anchor": "office_oslo_east",
+      "appliedDeltas": [
+        "government_tenant"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Ensjøveien 45 in the emerging office district of Økern, Oslo. This strategic location places the building within a rapidly transforming urban area characterized by an increasing number of modern office spaces, retail outlets, and residential developments. The property is situated approximately 500 metres from the Helsfyr metro station, providing excellent connectivity to Oslo's comprehensive public transport network. The surrounding area is enhanced by the Økern Portal, a key commercial hub, as well as the nearby Valle Hovin sports complex, which hosts various events and activities, further enriching the local urban environment. The accessibility is bolstered by Ring 3 road access and comprehensive bus connections throughout eastern Oslo, making it an attractive destination for businesses seeking a balance of accessibility and lower operational costs compared to central Oslo.\n\nThe building is a modern office structure that was completed in 2020, featuring a sleek, contemporary architectural design that incorporates sustainable building practices. The property spans six floors with a total gross building area of approximately 3,200 m² BTA, with typical office floorplates ranging from 450 m² to 550 m². Built using steel and glass, the building's façade is designed to maximize natural light, creating bright and inviting workspaces. The cadastral designation is gnr. 139, bnr. 27 in Oslo municipality, with an owned plot size of 1,200 m². This property has been awarded a BREEAM Very Good certification, underscoring its commitment to sustainability and energy efficiency.\n\nThe office space is primarily occupied by a single AAA-rated corporate tenant with a long-term lease agreement, significantly enhancing the property's income stability and appeal to prospective investors. The tenant is engaged in the technology sector, benefiting from the area's emerging status as a hub for innovation and business development. The building includes a ground-floor café and a dedicated meeting room facility, providing valuable amenities to tenants and enhancing the overall tenant experience.\n\nRecent technical upgrades have included the installation of advanced HVAC systems and energy-efficient lighting in 2021, as well as the implementation of a smart building management system in 2022, which optimizes energy consumption and enhances the operational efficiency of the building. Additionally, the property features secure bicycle storage and electric vehicle charging stations, catering to the increasing demand for sustainable transport options.\n\nThe property is regulated under the municipal master plan with the primary purpose of \"bebyggelse og anlegg (fremtidig),\" and is predominantly utilized as office space, with complementary amenities to support tenant needs. The current tenancy structure comprises a single unified lease with the AAA-rated corporate tenant, highlighting the property's appeal as a low-risk investment. While there are no additional tenants currently occupying the building, the strong lease with a government entity significantly mitigates the risk of vacancy, making it an attractive investment opportunity.\n\nThe surrounding area is witnessing ongoing infrastructure improvements, including new public transport links and the development of pedestrian-friendly spaces, further enhancing the property’s long-term value. The urban transformation of Økern, coupled with the increasing demand for office space in emerging districts, positions Ensjøveien 45 as a prime asset within the Oslo commercial real estate market.",
+      "groundTruth": {
+        "value": 6.15,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo East): 6.5%\nGovernment or AAA-rated corporate tenant: -0.35%\nFinal: 6.15%"
+      },
+      "twinId": "626ebe30-f6df-4097-9063-76bb52a3010f",
+      "twinDeltaChanged": "removed: government_tenant"
+    },
+    {
+      "id": "626ebe30-f6df-4097-9063-76bb52a3010f",
+      "anchor": "office_oslo_east",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Ensjøveien 26 in the emerging Helsfyr district of Oslo, strategically positioned near key urban transformation areas. This location benefits from its proximity to notable landmarks such as the Helsfyr T-bane station, Økern Portal, and the Hasle Line development, which enhance its accessibility and attractiveness as an office destination. The surrounding area is undergoing significant redevelopment, fostering a vibrant urban environment characterized by a mix of residential, commercial, and cultural spaces. \n\nTransport connectivity is robust, with the Helsfyr metro station providing direct access to the city center and surrounding suburbs. Additionally, the property enjoys easy access to Ring 3, facilitating seamless vehicular movement throughout eastern Oslo. Bus connections are readily available, offering further convenience for commuters and visitors alike. \n\nThe cadastral designation of the property is gnr. 213, bnr. 46 in Oslo municipality, encompassing a plot size of approximately 1,200 m². The building itself was originally constructed in 1987 and exemplifies modern office architecture with its clean lines and functional layout. It comprises six floors, including a basement, and features a gross building area of around 2,850 m² BTA, with typical floor plates measuring approximately 475 m². The construction utilizes a reinforced concrete frame, complemented by large window surfaces that provide ample natural light throughout the premises.\n\nRecent technical upgrades have significantly enhanced the property's appeal. Notable improvements include a comprehensive façade renovation completed in 2020, which not only modernized the building's exterior but also improved its energy efficiency. In 2021, the installation of a state-of-the-art HVAC system was executed, ensuring optimal climate control and comfort for occupants. The property also underwent a complete reconfiguration of its common areas, including a lobby refurbishment in 2022, which has positively impacted the overall tenant experience. Furthermore, the introduction of energy-efficient LED lighting throughout the building in 2023 has further improved its sustainability profile.\n\nThe property is predominantly utilized as office space, with supplementary areas designated for storage and meeting facilities. The tenancy structure, as outlined in the sales presentation, includes a diverse mix of tenants from various sectors, including technology, consultancy, and creative industries. The office spaces are designed to accommodate both open-plan layouts and private offices, making it suitable for a range of occupier needs. The floors are currently occupied by a mix of established firms, contributing to a stable rental income profile, while the lower levels feature flexible meeting rooms and collaborative areas, enhancing the tenant experience.\n\nThe local zoning regulations allow for future development possibilities, as the property is included in the municipal master plan for mixed-use development, indicating a long-term opportunity for additional enhancements or expansions. While the property is not currently certified under BREEAM or LEED, its recent upgrades reflect a commitment to improving sustainability standards, and the energy rating of C highlights its operational efficiency.\n\nIn conclusion, Ensjøveien 26 stands out as a prime opportunity in an evolving office market, characterized by strategic location, modern facilities, and a strong tenant mix. The combination of ongoing urban development in the immediate area, improved transport links, and recent upgrades positions the property as a valuable asset for future growth and stability in the Oslo commercial real estate landscape.",
+      "groundTruth": {
+        "value": 6.5,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo East): 6.5%\nFinal: 6.50%"
+      },
+      "twinId": "487f4cde-297d-43dd-b575-8a7e30f1fee6",
+      "twinDeltaChanged": "removed: government_tenant"
+    },
+    {
+      "id": "67f8b570-c797-4ecc-9f10-2cd361581507",
+      "anchor": "hotel_normal",
+      "appliedDeltas": [
+        "older_building",
+        "multi_tenant",
+        "short_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Parkveien 12, strategically positioned within the burgeoning conference hub of Sandefjord, Norway. Situated approximately 1.5 kilometers from Torp Airport, the property enjoys excellent accessibility for both domestic and international travelers. The immediate vicinity is characterized by a mix of business parks and conference centers, including the Sandefjord Conference Center and a host of corporate offices, establishing the area as a prominent center for regional business activity. Comprehensive transport links are available, with shuttle bus services to Torp Airport and convenient access to major highways, complemented by dedicated onsite parking facilities for guests and tenants. The cadastral designation is gnr. 45, bnr. 20 in Sandefjord municipality, encompassing a plot size of 1,200 m².\n\nConstructed in 1998, the building is a three-story hotel property designed to accommodate both business and leisure guests, with a total gross building area of approximately 2,500 m² BTA. The structure features a modern design with a combination of brick and glass façades, creating an inviting and contemporary appearance. The ground floor comprises a reception area, restaurant, and conference rooms, while the upper two floors house 60 guest rooms, each designed to meet the needs of corporate travelers and tourists alike. The building is maintained in good condition, though it is noted that capital expenditure will be required in the near future due to its age, which may impact the return on investment for prospective buyers.\n\nThe property benefits from a diversified tenant base, currently hosting three key tenants, including a well-established hospitality operator, a corporate training organization, and a local catering service. Each tenant has a short lease duration of less than three years remaining, providing opportunities for repositioning or renegotiating leases to enhance tenant quality and potential yield. The hospitality sector is affected by seasonal variations, with corporate rate dependency during peak business periods, supplemented by regional tourism during the summer months, which further diversifies the income stream.\n\nIn terms of technical upgrades, the property has seen several improvements over the years, including a significant renovation of the guest rooms in 2016, the installation of a new HVAC system in 2018 to enhance energy efficiency, and the refurbishment of the restaurant area in 2020 to align with modern hospitality trends. However, details concerning further environmental certifications are limited, and no current BREEAM or LEED certifications are reported.\n\nThe property is regulated under the municipal master plan with the primary purpose of \"hotell- og servicevirksomhet,\" allowing for ongoing use as a hotel with ancillary services. The tenancy structure is predominantly anchored by the hospitality operator, with supplementary income generated from the conference and catering services, reflecting a blend of short-term and long-term income opportunities.\n\nOverall, Parkveien 12 presents an attractive proposition for investors looking to capitalize on the growing demand for hotel accommodations in Sandefjord, particularly within the context of its business and conference focus, regional tourism, and strong transport links. The potential for future capital improvements and lease negotiations offers opportunities to enhance both tenant quality and overall asset value.",
+      "groundTruth": {
+        "value": 8.53,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Normal & Secondary): 7.875%\nOlder building (pre-2000, needs capex): +0.3%\nDiversified tenant base (3+ tenants): -0.15%\nShort lease (<3 years remaining): +0.5%\nFinal: 8.53%"
+      },
+      "twinId": "dc9c08a1-f7d3-4818-9f0f-ebc71ab96d90",
+      "twinDeltaChanged": "older_building → single_tenant_sme"
+    },
+    {
+      "id": "dc9c08a1-f7d3-4818-9f0f-ebc71ab96d90",
+      "anchor": "hotel_normal",
+      "appliedDeltas": [
+        "multi_tenant",
+        "short_lease",
+        "single_tenant_sme"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Parkveien 24 in the vibrant Bærum municipality, situated strategically between Oslo's city center and the bustling business district of Fornebu. It benefits from its proximity to major conference centres, business parks, and regional tourism hotspots, making it an ideal location for a hotel catering to both corporate and leisure travelers. Approximately 10 kilometers from Oslo Airport Gardermoen, the site enjoys excellent transport accessibility, with an efficient airport shuttle service and direct connections to the E18 highway. The surrounding area is characterized by a strong business and conference focus, seasonal variations in occupancy, and a dependency on corporate rates, which is particularly advantageous for attracting diverse clientele.\n\nThe building is a contemporary hotel structure originally constructed in 2010, designed in a modern architectural style that incorporates large glass facades and sustainable building practices. With a total gross building area of approximately 3,200 m² BTA, the hotel comprises five floors, including a basement level dedicated to storage and maintenance facilities. The property is situated on a plot of 1,500 m², with cadastral references gnr. 181, bnr. 57 in Bærum municipality. The layout includes 85 guest rooms, a large conference area, a restaurant, and a rooftop terrace offering panoramic views of the surrounding landscape.\n\nRecent technical upgrades include the installation of energy-efficient heating and cooling systems in 2019, a complete refurbishment of the guest room interiors in 2020, and modernized conference facilities in 2022. The property maintains a solid energy rating of B, reflecting its commitment to sustainability and operational efficiency. However, additional environmental certifications such as BREEAM or LEED have not been reported in the provided material.\n\nThe current tenancy structure indicates a diversified tenant base, with three key tenants operating within the hotel space. However, it is important to note that the hotel operates under a short lease agreement, with less than three years remaining on the current contract. This introduces a level of concentration risk, as the principal tenant is a small-to-medium enterprise (SME) that manages the hotel, potentially affecting the property’s financial stability if the tenant’s business performance fluctuates.\n\nSurrounding landmarks include the nearby Bærum Kulturhus, which hosts a variety of cultural events, and the expansive Fornebu Business Park that houses several corporate headquarters, enhancing the appeal for business travelers. The area's retail offerings, including restaurants and shops, contribute to a vibrant atmosphere that attracts both tourists and local residents.\n\nPublic transport options are robust, with frequent bus services connecting to the nearby Bærum train station, providing seamless access to central Oslo and connecting transit routes. Ample parking availability at the property further enhances accessibility for guests and visitors, ensuring a convenient experience.\n\nThe property is regulated under the municipal master plan for mixed-use development, primarily designated for hotel and hospitality-related services. Although the hotel has been relatively successful in attracting a mix of corporate and leisure clients, the short lease duration and reliance on a single SME tenant introduce considerations for potential investors regarding future leasing strategies and tenant diversification.\n\nIn summary, Parkveien 24 presents a unique opportunity for investors seeking a hotel property with a strong location and diversified tenant base, while also acknowledging the challenges presented by the short lease term and concentration risk associated with the current SME tenant. The asset’s strategic positioning and recent upgrades enhance its attractiveness in the competitive landscape of Norwegian commercial real estate.",
+      "groundTruth": {
+        "value": 8.67,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Normal & Secondary): 7.875%\nDiversified tenant base (3+ tenants): -0.15%\nShort lease (<3 years remaining): +0.5%\nSingle SME tenant (concentration risk): +0.45%\nFinal: 8.67%"
+      },
+      "twinId": "67f8b570-c797-4ecc-9f10-2cd361581507",
+      "twinDeltaChanged": "older_building → single_tenant_sme"
+    },
+    {
+      "id": "730a8bae-7087-415b-8c36-c10f95ee9de1",
+      "anchor": "hotel_normal",
+      "appliedDeltas": [
+        "older_building"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Hotellplassen 4 in the bustling hotel district of Gardermoen, a strategic area renowned for its close proximity to Oslo Airport and vital conference facilities. This location places the property within a thriving business hub that caters specifically to corporate travelers and regional tourism. The immediate vicinity boasts prominent landmarks such as the Oslo Airport Conference Centre and the Gardermoen Business Park, enhancing the area’s appeal for both short- and long-term visitors. Accessibility to the property is excellent, with convenient airport shuttle services and direct access to the E6 highway, providing seamless connections to Oslo and surrounding regions. Ample parking availability further bolsters the attractiveness of the site to both guests and conference attendees.\n\nThe building, constructed in 1998, serves as a three-star hotel encompassing a total gross building area of approximately 8,250 m² BTA. The structure comprises five floors, designed in a modern architectural style reflective of its late-1990s origins, featuring a robust concrete frame and a combination of solid and glass facades that allow for abundant natural light throughout the premises. The site is registered under cadastral designation gnr. 204, bnr. 56 in Ullensaker municipality, occupying a plot of 2,500 m².\n\nWhile the property has successfully operated as a hotel for over two decades, it is classified as an older building that requires significant capital expenditure (capex) to modernize its facilities and enhance its operational efficiency. The hotel's interior design, while functional, reflects its original aesthetic, and many areas would benefit from refurbishment to meet contemporary guest expectations and standards. This element is critical for potential investors to consider, as it directly impacts future yield potential and market competitiveness.\n\nRecent years have seen some necessary upgrades, including the installation of a new energy-efficient heating and cooling system in 2020, which has improved energy performance and guest comfort. Additionally, in 2021, the hotel underwent a partial refurbishment of its reception area and lobby, featuring updated furnishings and enhanced digital check-in technology. However, more extensive renovations are required for guest rooms and common areas to align with modern hospitality trends.\n\nThe property is currently zoned under the municipal master plan for \"hotell- og servicebebyggelse,\" facilitating its continued use as a hotel. The tenancy structure is primarily comprised of nightly rentals, catering to both leisure and business travelers, with seasonal variations that reflect demand fluctuations throughout the year. The hotel’s reliance on corporate rates, especially during peak conference seasons, positions it as a key player in the local market, although this dependency should be closely monitored due to potential impacts from economic shifts.\n\nThe layout of the hotel includes 147 guest rooms, a restaurant servicing breakfast and light meals, as well as a conference facility with a capacity for up to 200 attendees, providing essential amenities for business functions. Notably, the average room size is approximately 22 m², which aligns with industry standards for budget-conscious travelers. The hotel's strategic location near conference centres and business parks enhances its competitive edge, although addressing its aging infrastructure will be essential for maintaining occupancy rates and attracting new clientele.\n\nIn conclusion, Hotellplassen 4 represents a promising opportunity for investors looking to capitalize on the growing business and tourism markets in Gardermoen. With thoughtful investment in modernization and strategic marketing, the property has the potential to significantly enhance its attractiveness and yield in the evolving commercial real estate landscape.",
+      "groundTruth": {
+        "value": 8.18,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Normal & Secondary): 7.875%\nOlder building (pre-2000, needs capex): +0.3%\nFinal: 8.18%"
+      },
+      "twinId": "55853239-ba39-4802-ae47-34d2c5c4307c",
+      "twinDeltaChanged": "older_building → poor_micro_location"
+    },
+    {
+      "id": "55853239-ba39-4802-ae47-34d2c5c4307c",
+      "anchor": "hotel_normal",
+      "appliedDeltas": [
+        "poor_micro_location"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Hotellplassen 5 in the rapidly developing area of Gardermoen, renowned for its proximity to Oslo Airport and its focus on conference and business activities. The site boasts an advantageous location approximately 1.5 kilometers from Oslo Gardermoen Airport, making it an ideal choice for both business travelers and tourists. The immediate vicinity includes significant landmarks such as the Norwegian Centre for Conference and Culture, various business parks, and a host of regional accommodation options. Transport connectivity is exceptional, with dedicated airport shuttle services, easy highway access via the E6, and ample parking availability for guests.\n\nThe building is a contemporary hotel structure completed in 2010, consisting of six stories with a total gross building area (BTA) of approximately 8,500 m². The property is constructed using a steel frame with glass facades, ensuring a modern aesthetic while providing energy-efficient insulation. The cadastral designation is gnr. 201, bnr. 45 in Ullensaker municipality. The plot extends to 3,500 m², offering generous outdoor space and landscaping that enhances the guest experience.\n\nWithin the hotel, guests are provided with 150 well-appointed guest rooms, a business center, meeting rooms, and recreational facilities, including a gym and a restaurant with capacity for 120 patrons. The hotel has been strategically designed to cater to seasonal variations in occupancy, focusing on corporate rates during weekdays and catering to tourists during weekends and holiday periods.\n\nNotably, the property’s micro-location on Hotellplassen is less than optimal, as it is slightly removed from high-traffic areas, leading to limited visibility from the main access routes. While the building enjoys convenient access to the airport and conference centers, the surrounding area does not attract significant pedestrian footfall, which can impact the hotel's performance during off-peak seasons. This factor should be carefully considered as it may influence overall yield.\n\nThe property has undergone several technical upgrades since its completion, including the installation of energy-efficient heating and cooling systems in 2014, a full refurbishment of guest rooms in 2018, and the addition of solar panels on the roof in 2020 to enhance sustainability. More recent improvements include the renovation of the lobby and public areas in early 2023, providing a modern and welcoming atmosphere for guests. Despite these enhancements, the current energy rating remains at C, which could be improved with further upgrades.\n\nThe hotel is currently operational and has established a mixed tenant structure, predominantly catering to business travelers, corporate clients, and conference attendees. The leasing strategy emphasizes long-term corporate contracts, though the dependency on corporate rates may pose challenges during economic downturns. The property is not currently certified under additional sustainability schemes such as BREEAM or LEED, but ongoing discussions for future certifications are in place, aligning with broader trends in the hotel sector towards sustainable hospitality.\n\nThe property is regulated under the municipal master plan for mixed-use development, allowing for potential future expansion or diversification of services. Overall, the hotel at Hotellplassen 5 presents a unique opportunity for investors seeking to engage with the growing tourism and business sectors in Norway, despite acknowledged challenges related to its micro-location and visibility.",
+      "groundTruth": {
+        "value": 8.23,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Normal & Secondary): 7.875%\nSuboptimal micro-location (poor access, visibility): +0.35%\nFinal: 8.22%"
+      },
+      "twinId": "730a8bae-7087-415b-8c36-c10f95ee9de1",
+      "twinDeltaChanged": "older_building → poor_micro_location"
+    },
+    {
+      "id": "9216e3f4-cb9c-43a7-92fc-fdf45273478e",
+      "anchor": "retail_prime",
+      "appliedDeltas": [
+        "prime_micro_location",
+        "multi_tenant",
+        "poor_micro_location"
+      ],
+      "distractors": [
+        "Transaction is expected to close in Q4."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Bogstadveien 45 in the vibrant Majorstuen district of Oslo, known for its dynamic retail scene and affluent residential neighborhoods. Positioned approximately 150 metres from Majorstuen Metro Station, this prime retail property benefits from high footfall and excellent visibility, surrounded by well-established international brands and diverse dining options. Majorstuen serves as a crucial transport hub, offering seamless connections to the city’s extensive metro, tram, and bus networks, catering to the daily commuting needs of both residents and visitors. The area is characterized by a mix of high street shopping and cultural institutions, reinforcing its standing as one of Oslo's foremost retail destinations.\n\nThe building is a modern retail property originally constructed in 2005, featuring an appealing façade that integrates glass and steel elements, enhancing its contemporary aesthetic. The property comprises three floors with a total gross building area of approximately 2,500 m² BTA. The ground floor offers 1,200 m² of prime retail space, while the first and second floors include additional retail units and office spaces, promoting a diversified tenant base that enhances foot traffic and consumer engagement. The cadastral designation is gnr. 216, bnr. 45 in Oslo municipality, with an owned plot of 500 m².\n\nThe immediate vicinity boasts notable landmarks such as the Oslo City shopping centre, Steen & Strøm, and Glasmagasinet, all of which contribute to the area's reputation as a shopping haven. Additionally, the presence of popular cafes, restaurants, and entertainment facilities creates a vibrant atmosphere, attracting a diverse clientele. Despite its overall prime location, certain aspects of the property's micro-location may present challenges, such as slightly suboptimal visibility from the main thoroughfare, which could affect brand exposure for potential tenants.\n\nThe building features significant technical upgrades that have been implemented since its construction. In 2018, substantial renovations included the installation of energy-efficient HVAC systems and modern LED lighting throughout the retail spaces, greatly enhancing energy performance and tenant comfort. In 2021, the façade received a comprehensive refurbishment, updating its aesthetic appeal and improving insulation properties, which align with contemporary sustainability standards. Further improvements in 2022 included the installation of a new security system and enhanced signage capabilities to improve tenant visibility.\n\nThe tenancy structure is diversified, comprising three active tenants, including a well-known fashion retailer, a gourmet café, and a specialty health and wellness store. This diversified tenant mix not only boosts the overall vibrancy of the shopping experience but also mitigates the risk associated with reliance on a single tenant. The current occupancy rate is robust, with only one unit available for lease, reflecting the high demand for retail space in this sought-after location.\n\nThe property is regulated under the municipal master plan for commercial use, allowing for future enhancement opportunities, which may include expansion or additional retail offerings, subject to municipal approvals. Property-level sustainability initiatives beyond the noted technical upgrades have not been specified, and no additional environmental certifications, such as BREEAM or LEED, have been reported in the information provided.\n\nThe transaction is expected to close in Q4, representing a compelling opportunity for investors looking to capitalize on the strong consumer spending trends and the ongoing urban development in Oslo's retail landscape. With its strategic location, diversified tenant base, and history of substantial upgrades, this property stands as a valuable asset in the heart of Majorstuen.",
+      "groundTruth": {
+        "value": 5.57,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Prime): 5.625%\nExceptional micro-location within the area: -0.25%\nDiversified tenant base (3+ tenants): -0.15%\nSuboptimal micro-location (poor access, visibility): +0.35%\nFinal: 5.57%"
+      },
+      "twinId": "f6fcd719-5ddb-4450-b477-896686118aa6",
+      "twinDeltaChanged": "poor_micro_location → breeam_certified"
+    },
+    {
+      "id": "f6fcd719-5ddb-4450-b477-896686118aa6",
+      "anchor": "retail_prime",
+      "appliedDeltas": [
+        "prime_micro_location",
+        "multi_tenant",
+        "breeam_certified"
+      ],
+      "distractors": [
+        "Transaction is expected to close in Q4."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Bogstadveien 34, positioned in the highly sought-after Majorstuen district of Oslo. This prime retail location benefits from a high footfall pedestrian area, situated approximately 150 metres from the Majorstuen metro station, which serves as a critical junction for multiple metro lines. The surrounding environment is characterized by vibrant urban activity, with notable landmarks such as the Oslo City shopping centre, Steen & Strøm, and the Glasmagasinet, enhancing the attractiveness of the area for both consumers and retailers alike.\n\nThe building comprises a contemporary retail complex originally constructed in 2008, featuring a total of five floors with a gross building area of approximately 2,850 m² BTA. The structure is engineered with a reinforced concrete frame, ensuring both durability and flexibility in tenant fit-out configurations. The cadastral designation is gnr. 215, bnr. 76 in Oslo municipality, with an owned plot size of 540 m², allowing for a well-designed footprint that maximizes retail presence while accommodating essential service areas.\n\nThis property boasts an exceptional micro-location within Majorstuen, directly benefiting from the area's status as a prime retail hub. The immediate vicinity is a thriving shopping destination with a diversified tenant base, currently housing three prominent tenants, including an international fashion brand, a high-end electronics retailer, and a popular café. This diversification not only enhances foot traffic but also provides a stable income stream, reducing the financial risk associated with vacancy.\n\nThe building has received a BREEAM Excellent certification, reflecting its commitment to sustainability and energy efficiency, thereby appealing to environmentally conscious tenants and investors. Key technical upgrades have been implemented to maintain modern standards, including the installation of energy-efficient HVAC systems in 2019, exterior façade refurbishment in 2021, and an upgrade of lighting systems to LED technology in 2022. These enhancements ensure a high-quality tenant experience while further decreasing operational costs.\n\nTransport connections are robust, with direct metro access via Majorstuen station and a network of bus lines servicing the area. The property is strategically situated along Bogstadveien, a primary thoroughfare known for its premium retail offerings and high street shopping experience. The surrounding area also benefits from ample cycling lanes and pedestrian-friendly walkways, which contribute to an active consumer environment.\n\nThe property is regulated under the municipal master plan with the main purpose of \"bebyggelse og anlegg (fremtidig),\" permitting its continued use as a retail facility. The tenancy structure predominantly supports high-street retail and F&B (food and beverage) segments. Current tenants are on long-term leases, which offer a reliable cash flow while allowing for potential future rental growth.\n\nFurthermore, the property is located within a central location that boasts strong consumer spending patterns, bolstered by the presence of international brands and local businesses alike. This not only enhances the shopping experience but also solidifies the district's reputation as a premier shopping destination in Oslo. \n\nThe transaction is expected to close in Q4, providing an excellent opportunity for prospective investors to acquire a strategically positioned retail property within a dynamic urban setting. This offering presents an appealing proposition, combining prime location, diversified tenancy, and sustainability credentials, all contributing to a resilient investment profile.",
+      "groundTruth": {
+        "value": 5.07,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Prime): 5.625%\nExceptional micro-location within the area: -0.25%\nDiversified tenant base (3+ tenants): -0.15%\nBREEAM Excellent or Outstanding certification: -0.15%\nFinal: 5.07%"
+      },
+      "twinId": "9216e3f4-cb9c-43a7-92fc-fdf45273478e",
+      "twinDeltaChanged": "poor_micro_location → breeam_certified"
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "1331fee9-98f8-4624-98ef-5eea33b7010f",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 7.5,
+          "reasoning": "The property is located in a secondary industrial area of Drammen, which typically aligns with the higher end of the logistics yield range due to its suboptimal access and visibility challenges. Given that it is a modern facility constructed in 2018 with energy-efficient systems, it has some advantages over older stock in the area. However, the limited tenant base and potential higher vacancy risks associated with secondary locations suggest a yield closer to the mid to upper range. Therefore, a yield of 7.50% is appropriate, reflecting both its modern attributes and the challenges of its location.",
+          "latencyMs": 2940
+        },
+        {
+          "prediction": 7.25,
+          "reasoning": "The property is located in a secondary industrial area of Drammen, which typically aligns with the higher end of the Logistics Normal & Secondary benchmark range of 6.50%–9.50%. Given its modern construction, high-quality standards, and energy-efficient features, it has a competitive edge over older buildings in the vicinity. However, the suboptimal access and visibility challenges, along with the smaller tenant base typical of secondary areas, contribute to a higher vacancy risk. Therefore, positioning the yield at 7.25% reflects a balance between its modern attributes and the inherent risks associated with its location.",
+          "latencyMs": 3170
+        },
+        {
+          "prediction": 7.25,
+          "reasoning": "The property is located in a secondary industrial area of Drammen, which typically aligns with the higher end of the logistics yield range due to its suboptimal access and visibility challenges. Given its modern construction and energy-efficient systems, it has qualities that could attract tenants; however, the limited tenant base and higher vacancy risks associated with secondary locations suggest a conservative yield estimate. Therefore, positioning it at 7.25% reflects a balance between its modern attributes and the inherent risks of its location.",
+          "latencyMs": 2813
+        },
+        {
+          "prediction": 7.5,
+          "reasoning": "The property is located in a secondary industrial area of Drammen, which typically aligns with the higher end of the yield range for logistics properties due to its suboptimal access and visibility challenges. Given its modern construction and energy-efficient systems, it has some advantages that could attract tenants, but the location's limitations and the smaller tenant base contribute to higher vacancy risks. Therefore, positioning the yield at 7.50% reflects a balance between its modern features and the challenges associated with its micro-location.",
+          "latencyMs": 2897
+        },
+        {
+          "prediction": 7.5,
+          "reasoning": "The property is located in a secondary industrial area in Drammen, which typically places it in the 'Logistics Normal & Secondary' segment. Given its modern construction and high-quality features, it could command a yield at the lower end of the secondary range. However, the suboptimal access and visibility challenges, along with the smaller tenant base, suggest a higher risk of vacancy. Therefore, positioning it towards the upper end of the benchmark range at 7.50% reflects these factors while accounting for its modern amenities.",
+          "latencyMs": 2866
+        }
+      ],
+      "meanPrediction": 7.4,
+      "stdDeviation": 0.122,
+      "minPrediction": 7.25,
+      "maxPrediction": 7.5,
+      "error": -0.75,
+      "absoluteError": 0.75,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-07T14:16:03.581Z",
+      "completedAt": "2026-01-07T14:16:06.756Z"
+    },
+    {
+      "scenarioId": "3fa8d5e1-909b-43c3-828b-044858c2240b",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 7.5,
+          "reasoning": "The property is a modern logistics facility located in a secondary logistics hub, which typically aligns with the 'Logistics Normal & Secondary' segment. Given its high-quality construction, energy-efficient upgrades, and strategic location with excellent road access, it positions itself towards the higher end of the benchmark range for secondary logistics properties. The yield of 7.50% reflects its appeal to tenants in logistics and distribution, as well as the potential for future development in the area.",
+          "latencyMs": 2796
+        },
+        {
+          "prediction": 6.75,
+          "reasoning": "The property is a modern logistics facility located in a secondary logistics hub, which aligns it with the 'Logistics Normal & Secondary' segment. Given its high-quality construction, energy-efficient upgrades, and strategic location with excellent transport access, it positions itself towards the higher end of the benchmark range for this category. The estimated yield of 6.75% reflects its appeal to tenants and the strong demand for logistics spaces in the area.",
+          "latencyMs": 2520
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The property is a modern logistics facility located in a secondary logistics hub, which aligns it with the 'Logistics Normal & Secondary' segment. Given its high-quality construction, energy-efficient upgrades, and strategic location near major transport routes, it is positioned at the lower end of the benchmark range for this category. The estimated yield of 6.50% reflects its appeal to tenants in logistics and e-commerce, while also considering the competitive nature of the local market.",
+          "latencyMs": 2845
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The property is a modern logistics facility located in a secondary logistics hub, which aligns it with the 'Logistics Normal & Secondary' segment. Given its high-quality construction, energy-efficient upgrades, and excellent transport accessibility, it positions itself towards the higher end of the benchmark range for secondary logistics properties. The yield of 6.50% reflects its strong operational capabilities, full occupancy, and diversified tenant mix, making it an attractive investment in the current market.",
+          "latencyMs": 2572
+        },
+        {
+          "prediction": 7,
+          "reasoning": "The property is a modern logistics facility located in a secondary logistics hub, which typically aligns with the 'Logistics Normal & Secondary' segment. Given its high-quality construction, energy-efficient systems, and strategic location with excellent transport access, it positions itself towards the higher end of the benchmark range for secondary logistics properties. The estimated yield of 7.00% reflects its competitive advantages, including a fully let status and diversified tenant mix, while still acknowledging the secondary market context.",
+          "latencyMs": 2770
+        }
+      ],
+      "meanPrediction": 6.85,
+      "stdDeviation": 0.374,
+      "minPrediction": 6.5,
+      "maxPrediction": 7.5,
+      "error": -0.95,
+      "absoluteError": 0.95,
+      "withinTolerance": false,
+      "rolloutConsistency": 20,
+      "startedAt": "2026-01-07T14:16:07.058Z",
+      "completedAt": "2026-01-07T14:16:09.908Z"
+    },
+    {
+      "scenarioId": "487f4cde-297d-43dd-b575-8a7e30f1fee6",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is located in Økern, an emerging office district in Oslo, which positions it slightly below the central business districts but still within a competitive range due to its modern design, sustainability certifications (BREEAM Very Good), and strong tenant profile (AAA-rated corporate tenant). Given the characteristics of the property, including its accessibility, amenities, and the ongoing urban transformation in the area, a yield of 5.75% is appropriate as it reflects a balance between the higher yields seen in less central areas and the lower yields typical of prime locations.",
+          "latencyMs": 3272
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is located in Økern, an emerging office district in Oslo, which suggests it may not command the same yields as more established areas like Oslo CBD or the city center. However, its modern design, sustainable features, and occupancy by a AAA-rated corporate tenant provide a strong appeal and stability. Given these factors, a yield of 5.75% positions the property within the benchmark range for 'Office Oslo East' (5.75%–7.25%), reflecting its attractive location, quality, and tenant profile while acknowledging its emerging market status.",
+          "latencyMs": 3361
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is located in Økern, an emerging office district in Oslo, which positions it slightly below the central business district (CBD) yields but still within a competitive range for modern office spaces. Given its modern design, sustainable features, and strong tenant profile (a single AAA-rated corporate tenant), it justifies a yield towards the lower end of the benchmark for 'Office Other Cities' which ranges from 6.25% to 9.50%. The proximity to public transport and ongoing urban development further enhance its attractiveness, allowing for a yield estimate of 5.75%, reflecting its lower risk and stable income potential.",
+          "latencyMs": 3533
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is located in Økern, an emerging office district in Oslo, which suggests a positioning towards the higher end of the yield range for office spaces in other cities. Given its modern design, BREEAM Very Good certification, and occupancy by a single AAA-rated corporate tenant, the property exhibits low risk and high appeal, justifying a yield of 5.75%. This yield is slightly above the average for 'Office Other Cities' (6.25%–9.50%) but reflects the strategic location and quality of the asset, aligning it closer to the yields of established areas like Oslo East (5.75%–7.25%). The strong lease agreement further supports this positioning.",
+          "latencyMs": 3696
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is located in the emerging office district of Økern, which, while not as central as Oslo CBD, benefits from excellent connectivity and ongoing urban development. Given its modern design, BREEAM Very Good certification, and a long-term lease with a AAA-rated corporate tenant, it possesses strong income stability and appeal. The yield is positioned towards the lower end of the Office Other Cities range (6.25%–9.50%) due to its strategic location and quality, but slightly lower than the central Oslo yields, reflecting its emerging status. The selected yield of 5.75% aligns with the characteristics of the property, balancing its modern amenities and location advantages against the broader market context.",
+          "latencyMs": 3726
+        }
+      ],
+      "meanPrediction": 5.75,
+      "stdDeviation": 0,
+      "minPrediction": 5.75,
+      "maxPrediction": 5.75,
+      "error": -0.4,
+      "absoluteError": 0.4,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-07T14:16:10.211Z",
+      "completedAt": "2026-01-07T14:16:13.940Z"
+    },
+    {
+      "scenarioId": "626ebe30-f6df-4097-9063-76bb52a3010f",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is located in the emerging Helsfyr district of Oslo, which is undergoing significant urban transformation, enhancing its attractiveness as an office destination. Given its strategic location near transport links and ongoing redevelopment, it can be positioned towards the lower end of the Office Oslo East benchmark range (5.75%–7.25%). The recent upgrades, including energy efficiency improvements and modern office facilities, further support a competitive yield. Therefore, a yield of 5.75% is appropriate, reflecting its prime positioning and potential for future growth.",
+          "latencyMs": 2892
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is located in the Helsfyr district of Oslo, which is emerging and undergoing significant urban transformation, enhancing its attractiveness as an office destination. Given its strategic position near key transport links and ongoing developments, it aligns closely with the characteristics of the Office Oslo East market. The recent upgrades, including façade renovation, HVAC system installation, and energy-efficient improvements, further enhance its appeal. Based on these factors, a yield of 5.75% is positioned within the benchmark range for Office Oslo East (5.75%–7.25%), reflecting its competitive advantages while accounting for the evolving nature of the area.",
+          "latencyMs": 3212
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is located in the emerging Helsfyr district of Oslo, which is undergoing significant urban transformation and benefits from strong transport connectivity. Given its strategic location near the Helsfyr T-bane station and ongoing developments, it aligns well with the characteristics of the Office Oslo East market segment. The building has undergone recent upgrades, enhancing its appeal and operational efficiency, which supports a yield towards the lower end of the benchmark range for this segment. Therefore, a yield of 5.75% is appropriate, reflecting its prime positioning and modern facilities.",
+          "latencyMs": 2886
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is located in the emerging Helsfyr district of Oslo, which is undergoing significant urban transformation and has strong transport connectivity, making it an attractive office destination. Given its modern upgrades, including a façade renovation, state-of-the-art HVAC system, and energy-efficient improvements, the property aligns well with the characteristics of the Office Oslo East market. The benchmark yield for Office Oslo East is between 5.75% and 7.25%. Considering the property's strategic location, modern facilities, and stable tenant mix, a yield of 5.75% is justified as it reflects a balance between the prime characteristics of the property and the potential risks associated with its emerging location.",
+          "latencyMs": 3457
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is located in the emerging Helsfyr district of Oslo, which is undergoing significant urban transformation and benefits from robust transport connectivity. Given its modern office architecture, recent technical upgrades, and diverse tenant mix, it aligns well with the characteristics of office properties in Oslo. The benchmark range for 'Office Oslo East' is 5.75%–7.25%, and considering the property's strategic location and enhancements, a yield of 5.75% is appropriate as it reflects both the current market conditions and the potential for future growth.",
+          "latencyMs": 3080
+        }
+      ],
+      "meanPrediction": 5.75,
+      "stdDeviation": 0,
+      "minPrediction": 5.75,
+      "maxPrediction": 5.75,
+      "error": -0.75,
+      "absoluteError": 0.75,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-07T14:16:14.242Z",
+      "completedAt": "2026-01-07T14:16:17.703Z"
+    },
+    {
+      "scenarioId": "67f8b570-c797-4ecc-9f10-2cd361581507",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is a hotel located in Sandefjord, which is not classified as a prime location like Oslo but benefits from its strategic position near a conference hub and airport. Given the mixed-use nature of the property and the presence of diversified tenants, it aligns more closely with the 'Hotel Normal & Secondary' segment. The benchmark for this segment ranges from 6.50% to 9.25%. Considering the property's age, the need for future capital expenditure, and the short lease durations of the tenants, a yield of 5.75% is appropriate as it reflects a balance between the potential for income generation and the risks associated with the current tenant structure and property condition.",
+          "latencyMs": 3236
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is a hotel located in Sandefjord, which is not classified as a prime location like Oslo but has potential due to its strategic position near the airport and conference centers. Given the characteristics of the property, including its age, the need for future capital expenditure, and the short lease durations of its tenants, it is positioned towards the lower end of the Hotel Normal & Secondary yield range of 6.50%–9.25%. However, considering the location's growing demand for hotel accommodations and the mix of business and leisure guests, a yield of 5.75% is reasonable, reflecting both the potential and the risks associated with the property.",
+          "latencyMs": 3553
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property at Parkveien 12 is a hotel located in Sandefjord, which is not classified as a prime hotel market but benefits from its strategic location near Torp Airport and a growing conference hub. Given the characteristics of the property, including its age, the need for future capital expenditure, and the short lease durations of the tenants, it positions the yield towards the middle of the Hotel Normal & Secondary range of 6.50%–9.25%. However, considering the potential for repositioning and the diversified income stream, a yield of 5.75% is reasonable, reflecting a balance between the risks associated with the property's age and lease structure and the opportunities presented by its location and tenant mix.",
+          "latencyMs": 4074
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is a hotel located in Sandefjord, which is not classified as a prime location compared to major cities like Oslo. Given its strategic position near a conference hub and airport, it has good potential for occupancy, but the short lease durations and the need for future capital expenditure suggest a moderate yield. The benchmark for hotel properties indicates a range of 4.75%–6.50% for prime hotels and 6.50%–9.25% for normal and secondary hotels. Considering the characteristics of the property, including its age, tenant structure, and the competitive environment, a yield of 5.75% positions it appropriately within the normal segment of hotel yields.",
+          "latencyMs": 3290
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is a hotel located in Sandefjord, which is not classified as a prime location like Oslo but benefits from its strategic position near Torp Airport and a growing conference hub. Given the characteristics of the property, including its mixed-use tenant base and recent renovations, it aligns more closely with the 'Hotel Normal & Secondary' segment. The yield range for this segment is 6.50%–9.25%. However, considering the age of the property and the need for future capital expenditure, a yield of 5.75% is reasonable as it reflects a balance between the potential for income generation and the risks associated with the property's current condition and lease structure.",
+          "latencyMs": 3317
+        }
+      ],
+      "meanPrediction": 5.75,
+      "stdDeviation": 0,
+      "minPrediction": 5.75,
+      "maxPrediction": 5.75,
+      "error": -2.78,
+      "absoluteError": 2.78,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-07T14:16:18.005Z",
+      "completedAt": "2026-01-07T14:16:22.082Z"
+    },
+    {
+      "scenarioId": "dc9c08a1-f7d3-4818-9f0f-ebc71ab96d90",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is a hotel located in Bærum, which is strategically positioned between Oslo and Fornebu, benefiting from strong business and conference demand. Given its prime location and modern amenities, it aligns closely with the 'Hotel Prime' benchmark range of 4.75%–6.50%. However, the short lease term and concentration risk associated with the SME tenant suggest a slight adjustment towards the higher end of the range. Therefore, a yield of 5.75% reflects its prime positioning while accounting for the risks involved.",
+          "latencyMs": 2684
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is a hotel located in Bærum, which is strategically positioned between Oslo and Fornebu, making it attractive for both corporate and leisure travelers. Given its modern design, recent upgrades, and strong energy rating, it aligns well with the 'Hotel Prime' segment, which has a yield range of 4.75%–6.50%. However, the short lease term and reliance on a single SME tenant introduce some risk, suggesting a positioning towards the higher end of the range. Therefore, a yield of 5.75% reflects its prime location and quality while accounting for the associated risks.",
+          "latencyMs": 3000
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is a hotel located in Bærum, which is strategically positioned between Oslo and Fornebu, making it attractive for both corporate and leisure travelers. Given its modern design, recent upgrades, and strong transport accessibility, it aligns well with the characteristics of a 'Hotel Normal & Secondary' segment. However, the short lease term and reliance on a single SME tenant introduce some risk, which justifies positioning the yield slightly below the prime range. Therefore, a yield of 5.75% is appropriate, reflecting the property's strengths while accounting for the associated risks.",
+          "latencyMs": 2833
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is a hotel located in Bærum, which is strategically positioned between Oslo and Fornebu, benefiting from strong business and conference activity. Given its prime location and recent upgrades, it aligns more closely with the 'Hotel Prime' segment, which has a yield range of 4.75%–6.50%. However, the short lease agreement and reliance on a single SME tenant introduce some risk, suggesting a positioning towards the higher end of the range. Therefore, a yield of 5.75% reflects its prime characteristics while accounting for the concentration risk.",
+          "latencyMs": 2769
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The property is a hotel located in Bærum, which is strategically positioned between Oslo's city center and Fornebu, making it attractive for both corporate and leisure travelers. Given the characteristics of the property, including its modern design, recent upgrades, and strong accessibility, it aligns well with the 'Hotel Prime' segment, which has a yield range of 4.75%–6.50%. However, the short lease term and reliance on a single SME tenant introduce some risk, which justifies positioning the yield towards the higher end of the range. Therefore, a yield of 5.50% reflects the property's prime location while accounting for the concentration risk associated with the current tenant.",
+          "latencyMs": 3408
+        }
+      ],
+      "meanPrediction": 5.7,
+      "stdDeviation": 0.1,
+      "minPrediction": 5.5,
+      "maxPrediction": 5.75,
+      "error": -2.97,
+      "absoluteError": 2.97,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-07T14:16:22.385Z",
+      "completedAt": "2026-01-07T14:16:25.796Z"
+    },
+    {
+      "scenarioId": "730a8bae-7087-415b-8c36-c10f95ee9de1",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is a three-star hotel located in Gardermoen, a strategic area near Oslo Airport, which positions it favorably within the hotel market. Given its classification as a 'Hotel Normal & Secondary' property, the benchmark yield range is 6.50%–9.25%. However, the property requires significant capital expenditure for modernization, which impacts its current competitiveness and attractiveness. Therefore, a yield of 5.75% is selected, reflecting its current operational status and the need for further investment to enhance its facilities and align with contemporary hospitality trends.",
+          "latencyMs": 3178
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The property is classified as a three-star hotel located in a strategic area near Oslo Airport, making it appealing for both corporate travelers and tourists. Given its current operational status and the need for significant capital expenditure to modernize its facilities, it aligns more closely with the 'Hotel Normal & Secondary' segment, which has a yield range of 6.50%–9.25%. Considering the age of the building and the required renovations, a yield of 6.50% is a reasonable estimate, reflecting its current state while acknowledging its potential for improvement.",
+          "latencyMs": 2517
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The property is a three-star hotel located in a strategic area near Oslo Airport, which enhances its appeal to corporate travelers and tourists. Given its current operational status and the need for significant capital expenditure to modernize the facilities, it is positioned within the 'Hotel Normal & Secondary' segment of the market. The yield range for this segment is 6.50%–9.25%. Considering the property's age, the required renovations, and the competitive landscape, a yield of 6.50% is appropriate, reflecting its current condition while acknowledging its potential for improvement with investment.",
+          "latencyMs": 2596
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is classified as a three-star hotel located in Gardermoen, a strategic area near Oslo Airport, which enhances its appeal for corporate travelers and tourism. Given its current operational status and the need for significant capital expenditure to modernize its facilities, the yield should be positioned towards the middle of the 'Hotel Normal & Secondary' segment. The benchmark for this segment ranges from 6.50% to 9.25%. Considering the property's aging infrastructure and the necessity for further renovations, a yield of 5.75% reflects its current state while acknowledging the potential for improvement with investment.",
+          "latencyMs": 2616
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The property is a three-star hotel located in Gardermoen, a strategic area near Oslo Airport, which is beneficial for attracting both corporate travelers and tourists. Given its classification as an older building requiring significant capital expenditure for modernization, it would not command the highest yields seen in prime hotel properties. The benchmark for Hotel Normal & Secondary yields ranges from 6.50% to 9.25%. Considering the need for further renovations to meet contemporary standards and the competitive landscape of the hotel market, a yield of 6.50% is appropriate, positioning it at the lower end of the Normal category while reflecting its potential for improvement.",
+          "latencyMs": 2582
+        }
+      ],
+      "meanPrediction": 6.2,
+      "stdDeviation": 0.367,
+      "minPrediction": 5.75,
+      "maxPrediction": 6.5,
+      "error": -1.98,
+      "absoluteError": 1.98,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-07T14:16:26.100Z",
+      "completedAt": "2026-01-07T14:16:29.280Z"
+    },
+    {
+      "scenarioId": "55853239-ba39-4802-ae47-34d2c5c4307c",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is a hotel located in Gardermoen, which benefits from proximity to Oslo Airport and conference facilities, making it attractive for business travelers. Given its modern construction, recent upgrades, and operational status, it would typically align with the Hotel Prime yield range of 4.75%–6.50%. However, the property's micro-location is less than optimal, with limited visibility and pedestrian footfall, which could negatively impact its performance, especially during off-peak seasons. Therefore, a yield of 5.75% is positioned towards the higher end of the Prime range to reflect both its strengths and the challenges posed by its location.",
+          "latencyMs": 3597
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is a hotel located in Gardermoen, which benefits from proximity to Oslo Airport and conference facilities, suggesting a strong potential for business and tourist occupancy. Given its modern construction and recent upgrades, it could be positioned towards the lower end of the 'Hotel Prime' yield range (4.75%–6.50%). However, the less-than-optimal micro-location and limited visibility from high-traffic areas may hinder performance, leading to a conservative estimate. Therefore, a yield of 5.75% reflects a balance between its advantages and the challenges posed by its location.",
+          "latencyMs": 3371
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is a hotel located in Gardermoen, which is close to Oslo Airport and caters primarily to business travelers and conference attendees. Given its prime location near significant landmarks and transport connectivity, it would typically warrant a yield towards the lower end of the range for hotel properties. However, the hotel's micro-location is less optimal due to limited visibility and pedestrian footfall, which could negatively impact performance during off-peak seasons. Therefore, a yield of 5.75% is positioned slightly above the midpoint of the benchmark range for hotel prime (4.75%–6.50%), reflecting both the advantages of its location and the challenges posed by its visibility and dependency on corporate rates.",
+          "latencyMs": 3795
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is a hotel located in a developing area near Oslo Airport, which provides a strategic advantage for business and conference activities. However, its micro-location is less than optimal due to limited visibility and pedestrian footfall, which could negatively impact performance during off-peak seasons. Given these factors, a yield of 5.75% is positioned within the 'Hotel Normal & Secondary' range of 6.50%–9.25%, reflecting the potential for solid returns due to its location and amenities, while accounting for the challenges posed by its visibility and reliance on corporate clients.",
+          "latencyMs": 3353
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is a hotel located in Gardermoen, which is close to Oslo Airport and caters primarily to business travelers and conference attendees. Given its prime location near significant landmarks and transport connectivity, it aligns with the 'Hotel Prime' segment, which has a yield range of 4.75%–6.50%. However, the property's micro-location is slightly less optimal due to limited visibility and pedestrian footfall, which could impact its performance. Therefore, positioning the yield at 5.75% reflects a balance between its prime location and the challenges posed by its visibility and dependency on corporate rates.",
+          "latencyMs": 3414
+        }
+      ],
+      "meanPrediction": 5.75,
+      "stdDeviation": 0,
+      "minPrediction": 5.75,
+      "maxPrediction": 5.75,
+      "error": -2.48,
+      "absoluteError": 2.48,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-07T14:16:29.583Z",
+      "completedAt": "2026-01-07T14:16:33.383Z"
+    },
+    {
+      "scenarioId": "9216e3f4-cb9c-43a7-92fc-fdf45273478e",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 6.25,
+          "reasoning": "The property is located in a prime retail area of Majorstuen, Oslo, which is known for high footfall and a vibrant shopping scene. Given its modern construction, significant upgrades, and diversified tenant base, it aligns well with the Retail Prime category. However, the slightly suboptimal visibility from the main thoroughfare may detract from its prime status, positioning it at the lower end of the Retail Prime benchmark range of 5.25%–6.00%. Considering these factors, a yield of 6.25% reflects its strong location and tenant mix while accounting for the visibility challenge.",
+          "latencyMs": 2793
+        },
+        {
+          "prediction": 6,
+          "reasoning": "The property is located in a prime retail area of Majorstuen, which is characterized by high footfall and excellent visibility, aligning it with the 'Retail Prime' category. Given its modern construction, significant technical upgrades, and diversified tenant mix, it supports a yield towards the lower end of the Retail Prime benchmark range of 5.25%–6.00%. However, the slight challenge in visibility from the main thoroughfare suggests a modest adjustment towards the higher end of this range, resulting in an estimated yield of 6.00%.",
+          "latencyMs": 2853
+        },
+        {
+          "prediction": 6,
+          "reasoning": "The property is located in a prime retail area of Majorstuen, which is known for high footfall and a vibrant retail scene, aligning with the characteristics of 'Retail Prime' properties. Given its modern construction, significant technical upgrades, and diversified tenant base, it justifies a yield towards the lower end of the Retail Prime benchmark range of 5.25%–6.00%. However, the slight challenge of suboptimal visibility from the main thoroughfare suggests a cautious approach, positioning the yield at 6.00% to reflect both the prime location and the minor visibility concern.",
+          "latencyMs": 4033
+        },
+        {
+          "prediction": 6.25,
+          "reasoning": "The property is located in a prime retail area of Majorstuen, Oslo, which is known for high footfall and a vibrant shopping scene. Given its modern construction, significant technical upgrades, and diversified tenant mix, it qualifies for a yield at the higher end of the Retail Prime category. However, the slightly suboptimal visibility from the main thoroughfare may prevent it from reaching the very top of the range. Therefore, a yield of 6.25% is appropriate, reflecting its prime location and quality while accounting for the minor visibility challenge.",
+          "latencyMs": 2576
+        },
+        {
+          "prediction": 6.25,
+          "reasoning": "The property is located in a prime retail area of Majorstuen, Oslo, which is characterized by high footfall, excellent visibility, and a diverse tenant mix. Given its modern construction, significant technical upgrades, and strong occupancy rate, it aligns well with the 'Retail Prime' segment, which has a benchmark yield range of 5.25%–6.00%. However, due to the noted challenge of slightly suboptimal visibility from the main thoroughfare, a yield of 6.25% is justified, positioning it at the higher end of the 'Retail Normal' range (6.50%–7.25%). This reflects the property's strong fundamentals while accounting for the visibility concern.",
+          "latencyMs": 4800
+        }
+      ],
+      "meanPrediction": 6.15,
+      "stdDeviation": 0.122,
+      "minPrediction": 6,
+      "maxPrediction": 6.25,
+      "error": 0.58,
+      "absoluteError": 0.58,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-07T14:16:33.685Z",
+      "completedAt": "2026-01-07T14:16:38.488Z"
+    },
+    {
+      "scenarioId": "f6fcd719-5ddb-4450-b477-896686118aa6",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is located in the Majorstuen district of Oslo, which is a prime retail area characterized by high foot traffic and a vibrant urban environment. Given its proximity to the Majorstuen metro station and notable landmarks, it benefits from strong consumer interest and accessibility. The presence of established tenants, including an international fashion brand and a high-end electronics retailer, along with long-term leases, enhances the stability of cash flow. The BREEAM Excellent certification and recent technical upgrades further increase its appeal to environmentally conscious tenants and investors. Considering these factors, the property aligns well with the 'Retail Prime' benchmark range of 5.25%–6.00%, and a yield of 5.75% is positioned favorably within this range, reflecting its prime location and strong tenant profile.",
+          "latencyMs": 4390
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is located in the Majorstuen district of Oslo, which is a prime retail area with high foot traffic and proximity to major transport links, enhancing its attractiveness. Given its prime location, diversified tenant base, and recent upgrades, it aligns well with the 'Retail Prime' segment. The benchmark for 'Retail Prime' yields ranges from 5.25% to 6.00%. Considering the property's strong attributes and the competitive nature of the area, a yield of 5.75% is appropriate, reflecting both its prime status and the potential for stable income.",
+          "latencyMs": 2409
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is located in the Majorstuen district of Oslo, which is a prime retail area characterized by high foot traffic and proximity to major transport links, including the Majorstuen metro station. Given its prime location, diversified tenant base, and recent upgrades that enhance its appeal, it aligns closely with the 'Retail Prime' benchmark range of 5.25%–6.00%. However, considering the competitive nature of the area and the sustainability certifications (BREEAM Excellent), a yield of 5.75% is justified as it reflects a strong investment opportunity while remaining slightly below the upper limit of the prime range.",
+          "latencyMs": 2623
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is located in the Majorstuen district of Oslo, which is a prime retail area with high footfall and strong consumer spending patterns. Given its proximity to the Majorstuen metro station and notable landmarks, it benefits from significant pedestrian traffic, making it an attractive location for retail. The presence of diversified tenants, including an international fashion brand and a high-end electronics retailer, further enhances its appeal and stability. Given these factors, the property aligns well with the 'Retail Prime' segment, which has a benchmark yield range of 5.25%–6.00%. The selected yield of 5.75% reflects its prime location, strong tenant mix, and sustainability credentials, positioning it towards the higher end of the prime retail range.",
+          "latencyMs": 2876
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is located in the Majorstuen district of Oslo, which is a prime retail area characterized by high foot traffic and proximity to major transport links. Given its prime location, diversified tenant base, and sustainable design with BREEAM Excellent certification, it aligns well with the 'Retail Prime' segment. The benchmark range for 'Retail Prime' is 5.25%–6.00%. Considering the property's strong attributes, a yield of 5.75% is justified as it reflects its competitive positioning within the prime retail market while accounting for the high-quality tenants and the potential for future rental growth.",
+          "latencyMs": 2807
+        }
+      ],
+      "meanPrediction": 5.75,
+      "stdDeviation": 0,
+      "minPrediction": 5.75,
+      "maxPrediction": 5.75,
+      "error": 0.68,
+      "absoluteError": 0.68,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-07T14:16:38.794Z",
+      "completedAt": "2026-01-07T14:16:43.185Z"
+    }
+  ],
+  "completedAt": "2026-01-07T14:16:43.488Z",
+  "aggregateMetrics": {
+    "hitRate": 0,
+    "meanError": -1.18,
+    "rmse": 1.721,
+    "avgLatencyMs": 3133,
+    "directionalAccuracy": 40,
+    "avgStdDeviation": 0.109,
+    "avgConsistency": 2
+  }
+}

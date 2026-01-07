@@ -238,7 +238,7 @@ export function generateFallbackDescription(
 }
 
 /**
- * Batch generate narratives for multiple scenarios
+ * Batch generate narratives for multiple scenarios (parallel processing)
  */
 export async function generateNarrativesBatch(
   domain: DomainConfig,
@@ -251,41 +251,60 @@ export async function generateNarrativesBatch(
   config: NarrativeGeneratorConfig,
   onProgress?: (completed: number, total: number) => void
 ): Promise<GeneratedNarrative[]> {
-  const results: GeneratedNarrative[] = [];
+  const results: GeneratedNarrative[] = new Array(scenarios.length);
+  const BATCH_SIZE = 5; // Process 5 narratives in parallel
+  let completedCount = 0;
 
-  for (let i = 0; i < scenarios.length; i++) {
-    const scenario = scenarios[i];
-    
-    try {
-      const narrative = await generateNarrativeDescription(
-        domain,
-        scenario.anchorKey,
-        scenario.appliedDeltaKeys,
-        scenario.distractors,
-        scenario.seed,
-        config
-      );
-      results.push(narrative);
-    } catch (error) {
-      // Fallback to template-based generation on error
-      console.error(`Failed to generate narrative for scenario ${i}:`, error);
-      results.push({
-        description: generateFallbackDescription(
+  for (let batchStart = 0; batchStart < scenarios.length; batchStart += BATCH_SIZE) {
+    const batchEnd = Math.min(batchStart + BATCH_SIZE, scenarios.length);
+    const batchIndices = Array.from({ length: batchEnd - batchStart }, (_, i) => batchStart + i);
+
+    // Generate narratives for this batch in parallel
+    const batchPromises = batchIndices.map(async (i) => {
+      const scenario = scenarios[i];
+      
+      try {
+        const narrative = await generateNarrativeDescription(
           domain,
           scenario.anchorKey,
           scenario.appliedDeltaKeys,
-          scenario.distractors
-        ),
-        briefSummary: generateBriefSummary(domain, scenario.anchorKey, scenario.appliedDeltaKeys),
-        latencyMs: 0,
-      });
+          scenario.distractors,
+          scenario.seed,
+          config
+        );
+        return { index: i, narrative };
+      } catch (error) {
+        // Fallback to template-based generation on error
+        console.error(`Failed to generate narrative for scenario ${i}:`, error);
+        return {
+          index: i,
+          narrative: {
+            description: generateFallbackDescription(
+              domain,
+              scenario.anchorKey,
+              scenario.appliedDeltaKeys,
+              scenario.distractors
+            ),
+            briefSummary: generateBriefSummary(domain, scenario.anchorKey, scenario.appliedDeltaKeys),
+            latencyMs: 0,
+          },
+        };
+      }
+    });
+
+    const batchResults = await Promise.all(batchPromises);
+
+    // Store results in correct positions
+    for (const { index, narrative } of batchResults) {
+      results[index] = narrative;
     }
 
-    onProgress?.(i + 1, scenarios.length);
+    completedCount = batchEnd;
+    onProgress?.(completedCount, scenarios.length);
 
-    // Small delay between requests to avoid rate limiting
-    if (i < scenarios.length - 1) {
-      await new Promise(resolve => setTimeout(resolve, 300));
+    // Small delay between batches to avoid rate limiting
+    if (batchEnd < scenarios.length) {
+      await new Promise(resolve => setTimeout(resolve, 200));
     }
   }
 

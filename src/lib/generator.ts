@@ -378,53 +378,72 @@ export async function generateScenariosWithNarrative(
     }
   }
 
-  // Now generate narratives for each skeleton (slow, LLM-based)
-  const scenarios: Scenario[] = [];
+  // Now generate narratives for each skeleton in parallel batches (slow, LLM-based)
+  const scenarios: Scenario[] = new Array(skeletons.length);
   const totalSkeletons = skeletons.length;
+  const BATCH_SIZE = 5; // Process 5 narratives in parallel
 
-  for (let i = 0; i < skeletons.length; i++) {
-    const skeleton = skeletons[i];
-    onProgress?.(i, totalSkeletons, `Generating narrative ${i + 1}/${totalSkeletons}...`);
+  let completedCount = 0;
 
-    let contextDescription: string;
+  for (let batchStart = 0; batchStart < skeletons.length; batchStart += BATCH_SIZE) {
+    const batchEnd = Math.min(batchStart + BATCH_SIZE, skeletons.length);
+    const batchIndices = Array.from({ length: batchEnd - batchStart }, (_, i) => batchStart + i);
 
-    try {
-      const narrative = await generateNarrativeDescription(
-        domain,
-        skeleton.anchorKey,
-        skeleton.appliedDeltaKeys,
-        skeleton.distractors,
-        skeleton.narrativeSeed,
-        config
-      );
-      contextDescription = narrative.description;
-    } catch (error) {
-      console.error(`Failed to generate narrative for scenario ${skeleton.id}:`, error);
-      // Fallback to template-based description
-      contextDescription = generateFallbackDescription(
-        domain,
-        skeleton.anchorKey,
-        skeleton.appliedDeltaKeys,
-        skeleton.distractors
-      );
+    onProgress?.(completedCount, totalSkeletons, `Generating narratives ${batchStart + 1}-${batchEnd}/${totalSkeletons}...`);
+
+    // Generate narratives for this batch in parallel
+    const batchPromises = batchIndices.map(async (i) => {
+      const skeleton = skeletons[i];
+      let contextDescription: string;
+
+      try {
+        const narrative = await generateNarrativeDescription(
+          domain,
+          skeleton.anchorKey,
+          skeleton.appliedDeltaKeys,
+          skeleton.distractors,
+          skeleton.narrativeSeed,
+          config
+        );
+        contextDescription = narrative.description;
+      } catch (error) {
+        console.error(`Failed to generate narrative for scenario ${skeleton.id}:`, error);
+        // Fallback to template-based description
+        contextDescription = generateFallbackDescription(
+          domain,
+          skeleton.anchorKey,
+          skeleton.appliedDeltaKeys,
+          skeleton.distractors
+        );
+      }
+
+      return {
+        index: i,
+        scenario: {
+          id: skeleton.id,
+          anchor: skeleton.anchorKey,
+          appliedDeltas: skeleton.appliedDeltaKeys,
+          distractors: skeleton.distractors,
+          contextDescription,
+          groundTruth: skeleton.groundTruth,
+          twinId: skeleton.twinId,
+          twinDeltaChanged: skeleton.twinDeltaChanged,
+        } as Scenario,
+      };
+    });
+
+    const batchResults = await Promise.all(batchPromises);
+
+    // Store results in correct positions
+    for (const { index, scenario } of batchResults) {
+      scenarios[index] = scenario;
     }
 
-    const scenario: Scenario = {
-      id: skeleton.id,
-      anchor: skeleton.anchorKey,
-      appliedDeltas: skeleton.appliedDeltaKeys,
-      distractors: skeleton.distractors,
-      contextDescription,
-      groundTruth: skeleton.groundTruth,
-      twinId: skeleton.twinId,
-      twinDeltaChanged: skeleton.twinDeltaChanged,
-    };
+    completedCount = batchEnd;
 
-    scenarios.push(scenario);
-
-    // Small delay between LLM calls to avoid rate limiting
-    if (i < skeletons.length - 1) {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+    // Small delay between batches to avoid rate limiting
+    if (batchEnd < skeletons.length) {
+      await new Promise((resolve) => setTimeout(resolve, 200));
     }
   }
 

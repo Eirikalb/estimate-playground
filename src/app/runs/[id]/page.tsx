@@ -132,9 +132,9 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
     fetchRun();
   }, [resolvedParams.id]); // Only depend on id for initial fetch
 
-  // Auto-refresh while run is in progress
+  // Auto-refresh while run is in progress (either generating narratives or running)
   useEffect(() => {
-    if (!run || run.status !== "running") return;
+    if (!run || (run.status !== "running" && run.status !== "generating_narratives")) return;
 
     const intervalId = setInterval(fetchRun, 1000);
     return () => clearInterval(intervalId);
@@ -248,6 +248,13 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
   // Get status badge styling
   const getStatusBadge = () => {
     switch (run.status) {
+      case "generating_narratives":
+        return (
+          <Badge variant="default" className="bg-purple-500/20 text-purple-400 border-purple-500/40 animate-pulse">
+            <span className="mr-1.5">●</span>
+            Generating Narratives ({run.narrativesGenerated || 0}/{run.narrativesTotal || totalScenarios})
+          </Badge>
+        );
       case "running":
         return (
           <Badge variant="default" className="bg-amber-500/20 text-amber-400 border-amber-500/40 animate-pulse">
@@ -325,8 +332,26 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
       </div>
 
       {/* Progress Bar for Running Runs */}
+      {run.status === "generating_narratives" && (
+        <div className="mb-4">
+          <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
+            <span>Generating property narratives with {run.narrativeModel || "LLM"}...</span>
+            <span>{run.narrativesGenerated || 0} / {run.narrativesTotal || totalScenarios}</span>
+          </div>
+          <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-purple-500 transition-all duration-300 ease-out"
+              style={{ width: `${((run.narrativesGenerated || 0) / (run.narrativesTotal || totalScenarios)) * 100}%` }}
+            />
+          </div>
+        </div>
+      )}
       {run.status === "running" && (
         <div className="mb-4">
+          <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
+            <span>Running evaluations...</span>
+            <span>{completedScenarios} / {totalScenarios}</span>
+          </div>
           <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
             <div 
               className="h-full bg-amber-500 transition-all duration-300 ease-out"

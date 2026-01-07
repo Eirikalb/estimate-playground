@@ -42,6 +42,8 @@ export default function Playground() {
   const [scenarioCount, setScenarioCount] = useState<number>(5);
   const [rolloutsPerScenario, setRolloutsPerScenario] = useState<number>(1);
   const [seed, setSeed] = useState<number>(Date.now());
+  const [useNarrativeDescriptions, setUseNarrativeDescriptions] = useState<boolean>(true);
+  const [narrativeModel, setNarrativeModel] = useState<string>("openai/gpt-4o-mini");
   
   const [loading, setLoading] = useState(false);
   const [previewLoading, setPreviewLoading] = useState(false);
@@ -77,6 +79,8 @@ export default function Playground() {
           domainId: "real-estate-yield",
           promptTemplate: customTemplate,
           seed,
+          useNarrativeDescription: useNarrativeDescriptions,
+          narrativeModel,
         }),
       });
       const data = await res.json();
@@ -104,6 +108,8 @@ export default function Playground() {
           scenario: result?.scenario,
           rolloutsPerScenario,
           seed,
+          useNarrativeDescription: useNarrativeDescriptions,
+          narrativeModel,
         }),
       });
       const data = await res.json();
@@ -133,6 +139,8 @@ export default function Playground() {
           rolloutsPerScenario,
           generateTwins: true,
           seed,
+          useNarrativeDescriptions,
+          narrativeModel,
         }),
       });
       const data = await res.json();
@@ -254,6 +262,56 @@ export default function Playground() {
                 </div>
               </div>
 
+              <Separator />
+              
+              {/* Narrative Generation Toggle */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <label className="text-sm font-medium">LLM-Generated Narratives</label>
+                    <p className="text-xs text-muted-foreground">
+                      Use AI to generate rich property prospectus descriptions
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setUseNarrativeDescriptions(!useNarrativeDescriptions)}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                      useNarrativeDescriptions ? "bg-purple-500" : "bg-muted"
+                    }`}
+                  >
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                        useNarrativeDescriptions ? "translate-x-6" : "translate-x-1"
+                      }`}
+                    />
+                  </button>
+                </div>
+                
+                {useNarrativeDescriptions && (
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">
+                      Narrative Model
+                    </label>
+                    <Select value={narrativeModel} onValueChange={setNarrativeModel}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {AVAILABLE_MODELS.filter(m => 
+                          m.id.includes("gpt-4o-mini") || 
+                          m.id.includes("gemini") || 
+                          m.id.includes("claude")
+                        ).map((model) => (
+                          <SelectItem key={model.id} value={model.id}>
+                            <span className="font-medium">{model.name}</span>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+              </div>
+
               {rolloutsPerScenario > 1 && (
                 <div className="bg-muted/50 rounded-lg p-3 text-sm">
                   <span className="text-muted-foreground">
@@ -263,6 +321,14 @@ export default function Playground() {
                         ({totalApiCalls} total API calls)
                       </span>
                     )}
+                  </span>
+                </div>
+              )}
+              
+              {useNarrativeDescriptions && (
+                <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3 text-sm">
+                  <span className="text-purple-400">
+                    Narrative generation will add ~{scenarioCount * 2} LLM calls before evaluation.
                   </span>
                 </div>
               )}
@@ -301,7 +367,9 @@ export default function Playground() {
                   variant="outline"
                   disabled={previewLoading}
                 >
-                  {previewLoading ? "Generating..." : "Generate Preview"}
+                  {previewLoading 
+                    ? (useNarrativeDescriptions ? "Generating Narrative..." : "Generating...") 
+                    : (useNarrativeDescriptions ? "Generate Preview (+ Narrative)" : "Generate Preview")}
                 </Button>
                 <Button
                   onClick={handleRunSingle}
@@ -317,8 +385,8 @@ export default function Playground() {
                   disabled={runningBenchmark}
                 >
                   {runningBenchmark
-                    ? `Running ${totalApiCalls} calls...`
-                    : `Run Benchmark (${totalApiCalls} calls)`}
+                    ? `Starting benchmark...`
+                    : `Run Benchmark (${useNarrativeDescriptions ? scenarioCount * 2 + totalApiCalls : totalApiCalls} calls)`}
                 </Button>
               </div>
             </CardContent>

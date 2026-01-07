@@ -6,7 +6,8 @@ import {
   loadDomainConfig,
   loadExpertFacts,
 } from "@/lib/storage";
-import { generateScenarios, generateScenariosWithNarrative } from "@/lib/generator";
+import { generateScenarios } from "@/lib/generator";
+import { generateNarrativeDescription, generateFallbackDescription } from "@/lib/narrative-generator";
 import { renderPrompt } from "@/prompts/engine";
 import { callOpenRouterMultiple, type OpenRouterConfig } from "@/lib/openrouter";
 import { evaluateMultipleRollouts, calculateAggregateMetrics } from "@/lib/evaluator";
@@ -29,8 +30,8 @@ export async function POST(request: Request) {
       generateTwins = true,
       rolloutsPerScenario = 1,
       seed,
-      useNarrativeDescriptions = false,
-      narrativeModel,
+      useNarrativeDescriptions = true, // Now defaults to true
+      narrativeModel = "openai/gpt-4o-mini",
     } = body;
 
     // Validate required fields
@@ -61,34 +62,19 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Domain not found" }, { status: 404 });
     }
 
-    // Generate scenarios - use LLM narrative if enabled
-    let scenarios;
-    if (useNarrativeDescriptions) {
-      console.log(`Generating ${scenarioCount} scenarios with LLM-based narratives...`);
-      scenarios = await generateScenariosWithNarrative(domainConfig, {
-        count: scenarioCount,
-        generateTwins,
-        seed,
-        narrativeConfig: {
-          apiKey,
-          model: narrativeModel || "openai/gpt-4o-mini",
-        },
-      });
-      console.log(`Generated ${scenarios.length} scenarios with narratives`);
-    } else {
-      scenarios = generateScenarios(domainConfig, {
-        count: scenarioCount,
-        generateTwins,
-        seed,
-      });
-    }
-
-    // Create initial run with "running" status and placeholder results
+    // Create run ID and start time
     const runId = uuidv4();
     const startedAt = new Date().toISOString();
-    
-    // Initialize placeholder results for all scenarios
-    const initialResults: ScenarioResult[] = scenarios.map((scenario) => ({
+
+    // First, generate scenario skeletons (fast, synchronous)
+    const skeletonScenarios = generateScenarios(domainConfig, {
+      count: scenarioCount,
+      generateTwins,
+      seed,
+    });
+
+    // Initialize placeholder results
+    const initialResults: ScenarioResult[] = skeletonScenarios.map((scenario) => ({
       scenarioId: scenario.id,
       status: "pending" as const,
       rollouts: [],
@@ -102,6 +88,7 @@ export async function POST(request: Request) {
       rolloutConsistency: 0,
     }));
 
+    // Create initial run - either generating narratives or running directly
     const run: BenchmarkRun = {
       id: runId,
       timestamp: startedAt,
@@ -110,86 +97,186 @@ export async function POST(request: Request) {
       promptStrategy: promptTemplateId || "custom",
       promptTemplate,
       rolloutsPerScenario: rollouts,
-      status: "running",
+      status: useNarrativeDescriptions ? "generating_narratives" : "running",
       startedAt,
-      scenarios,
+      useNarrativeDescriptions,
+      narrativeModel: useNarrativeDescriptions ? narrativeModel : undefined,
+      narrativesGenerated: useNarrativeDescriptions ? 0 : undefined,
+      narrativesTotal: useNarrativeDescriptions ? skeletonScenarios.length : undefined,
+      scenarios: skeletonScenarios,
       results: initialResults,
     };
 
-    // Save the initial run state
+    // Save initial run state
     await saveBenchmarkRun(run);
 
-    // Run each scenario through the LLM
+    // If using narrative descriptions, generate them in parallel batches
+    if (useNarrativeDescriptions) {
+      console.log(`Generating ${skeletonScenarios.length} scenarios with LLM-based narratives (parallel)...`);
+      
+      const NARRATIVE_BATCH_SIZE = 5; // Process 5 narratives in parallel
+      
+      for (let batchStart = 0; batchStart < skeletonScenarios.length; batchStart += NARRATIVE_BATCH_SIZE) {
+        const batchEnd = Math.min(batchStart + NARRATIVE_BATCH_SIZE, skeletonScenarios.length);
+        const batchIndices = Array.from({ length: batchEnd - batchStart }, (_, i) => batchStart + i);
+        
+        // Generate narratives for this batch in parallel
+        const batchPromises = batchIndices.map(async (i) => {
+          const scenario = skeletonScenarios[i];
+          const narrativeSeed = (seed || Date.now()) + i * 1000;
+          
+          try {
+            const narrative = await generateNarrativeDescription(
+              domainConfig,
+              scenario.anchor,
+              scenario.appliedDeltas,
+              scenario.distractors,
+              narrativeSeed,
+              { apiKey, model: narrativeModel }
+            );
+            
+            return {
+              index: i,
+              description: narrative.description,
+            };
+          } catch (error) {
+            console.error(`Failed to generate narrative for scenario ${i}:`, error);
+            return {
+              index: i,
+              description: generateFallbackDescription(
+                domainConfig,
+                scenario.anchor,
+                scenario.appliedDeltas,
+                scenario.distractors
+              ),
+            };
+          }
+        });
+        
+        const batchResults = await Promise.all(batchPromises);
+        
+        // Update scenarios with generated narratives
+        for (const result of batchResults) {
+          run.scenarios[result.index] = {
+            ...skeletonScenarios[result.index],
+            contextDescription: result.description,
+          };
+        }
+        
+        // Update progress
+        run.narrativesGenerated = batchEnd;
+        await saveBenchmarkRun(run);
+        
+        // Small delay between batches to avoid rate limiting
+        if (batchEnd < skeletonScenarios.length) {
+          await new Promise((resolve) => setTimeout(resolve, 200));
+        }
+      }
+      
+      console.log(`Generated ${skeletonScenarios.length} scenarios with narratives`);
+      
+      // Transition to running status
+      run.status = "running";
+      await saveBenchmarkRun(run);
+    }
+
+    // Run scenarios through the LLM in parallel batches
     const config: OpenRouterConfig = {
       apiKey,
       model,
       temperature: 0.3,
     };
 
-    for (let i = 0; i < scenarios.length; i++) {
-      const scenario = scenarios[i];
-      const scenarioStartedAt = new Date().toISOString();
+    const SCENARIO_BATCH_SIZE = 3; // Process 3 scenarios in parallel (each may have multiple rollouts)
+
+    for (let batchStart = 0; batchStart < run.scenarios.length; batchStart += SCENARIO_BATCH_SIZE) {
+      const batchEnd = Math.min(batchStart + SCENARIO_BATCH_SIZE, run.scenarios.length);
+      const batchIndices = Array.from({ length: batchEnd - batchStart }, (_, i) => batchStart + i);
       
-      // Mark scenario as running
-      run.results[i] = {
-        ...run.results[i],
-        status: "running",
-        startedAt: scenarioStartedAt,
-      };
-      await saveBenchmarkRun(run);
-
-      const prompt = renderPrompt(
-        promptTemplate,
-        domainConfig,
-        expertFacts,
-        scenario
-      );
-
-      try {
-        // Run multiple rollouts for variance estimation
-        const llmResults = await callOpenRouterMultiple(prompt, config, rollouts);
-        const result = evaluateMultipleRollouts(scenario, llmResults);
-        
-        // Update with completed result
+      // Mark scenarios in this batch as running
+      const scenarioStartTimes: Record<number, string> = {};
+      for (const i of batchIndices) {
+        const scenarioStartedAt = new Date().toISOString();
+        scenarioStartTimes[i] = scenarioStartedAt;
         run.results[i] = {
-          ...result,
-          status: "completed",
+          ...run.results[i],
+          status: "running",
           startedAt: scenarioStartedAt,
-          completedAt: new Date().toISOString(),
-        };
-      } catch (error) {
-        // Record failed prediction
-        run.results[i] = {
-          scenarioId: scenario.id,
-          status: "failed",
-          startedAt: scenarioStartedAt,
-          completedAt: new Date().toISOString(),
-          rollouts: [{
-            prediction: 0,
-            reasoning: `Error: ${error instanceof Error ? error.message : "Unknown error"}`,
-            latencyMs: 0,
-          }],
-          meanPrediction: 0,
-          stdDeviation: 0,
-          minPrediction: 0,
-          maxPrediction: 0,
-          error: scenario.groundTruth.value,
-          absoluteError: scenario.groundTruth.value,
-          withinTolerance: false,
-          rolloutConsistency: 0,
         };
       }
-
-      // Save after each scenario completes
       await saveBenchmarkRun(run);
 
-      // Small delay between scenarios
-      await new Promise((resolve) => setTimeout(resolve, 300));
+      // Run this batch of scenarios in parallel
+      const batchPromises = batchIndices.map(async (i) => {
+        const scenario = run.scenarios[i];
+        const scenarioStartedAt = scenarioStartTimes[i];
+
+        const prompt = renderPrompt(
+          promptTemplate,
+          domainConfig,
+          expertFacts,
+          scenario
+        );
+
+        try {
+          // Run multiple rollouts for variance estimation
+          const llmResults = await callOpenRouterMultiple(prompt, config, rollouts);
+          const result = evaluateMultipleRollouts(scenario, llmResults);
+          
+          return {
+            index: i,
+            result: {
+              ...result,
+              status: "completed" as const,
+              startedAt: scenarioStartedAt,
+              completedAt: new Date().toISOString(),
+            },
+          };
+        } catch (error) {
+          return {
+            index: i,
+            result: {
+              scenarioId: scenario.id,
+              status: "failed" as const,
+              startedAt: scenarioStartedAt,
+              completedAt: new Date().toISOString(),
+              rollouts: [{
+                prediction: 0,
+                reasoning: `Error: ${error instanceof Error ? error.message : "Unknown error"}`,
+                latencyMs: 0,
+              }],
+              meanPrediction: 0,
+              stdDeviation: 0,
+              minPrediction: 0,
+              maxPrediction: 0,
+              error: scenario.groundTruth.value,
+              absoluteError: scenario.groundTruth.value,
+              withinTolerance: false,
+              rolloutConsistency: 0,
+            },
+          };
+        }
+      });
+
+      const batchResults = await Promise.all(batchPromises);
+      
+      // Update results
+      for (const { index, result } of batchResults) {
+        run.results[index] = result;
+      }
+
+      // Save after each batch completes
+      await saveBenchmarkRun(run);
+
+      // Small delay between batches to avoid rate limiting
+      if (batchEnd < run.scenarios.length) {
+        await new Promise((resolve) => setTimeout(resolve, 200));
+      }
     }
 
     // Calculate aggregate metrics and mark run as completed
     const completedResults = run.results.filter(r => r.status === "completed" || r.status === "failed");
-    const aggregateMetrics = calculateAggregateMetrics(scenarios, completedResults);
+    const aggregateMetrics = calculateAggregateMetrics(run.scenarios, completedResults);
 
     run.status = "completed";
     run.completedAt = new Date().toISOString();

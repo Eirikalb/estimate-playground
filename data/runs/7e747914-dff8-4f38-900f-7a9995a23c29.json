@@ -1,0 +1,485 @@
+{
+  "id": "7e747914-dff8-4f38-900f-7a9995a23c29",
+  "timestamp": "2026-01-07T14:11:40.962Z",
+  "domainId": "real-estate-yield",
+  "model": "openai/gpt-4o-mini",
+  "promptStrategy": "persona",
+  "promptTemplate": "You are a senior {{domain.name}} analyst with 15+ years of experience in the Norwegian market.\n\n{{#facts.benchmarks}}\n{{{content}}}\n{{/facts.benchmarks}}\n\n{{#facts.lease_risk}}\n{{{content}}}\n{{/facts.lease_risk}}\n\n{{#facts.tenant_quality}}\n{{{content}}}\n{{/facts.tenant_quality}}\n\n{{#facts.building_standard}}\n{{{content}}}\n{{/facts.building_standard}}\n\n{{#facts.methodology}}\n{{{content}}}\n{{/facts.methodology}}\n\n---\n\n### Property to Evaluate\n\n{{scenario.contextDescription}}\n\n---\n\nBased on your expert analysis, estimate the appropriate market yield for this property.\n\nReturn your answer as JSON only, no markdown:\n{\"yield\": <number>, \"reasoning\": \"<your detailed reasoning>\"}\n\n",
+  "rolloutsPerScenario": 5,
+  "status": "completed",
+  "startedAt": "2026-01-07T14:11:40.962Z",
+  "useNarrativeDescriptions": false,
+  "scenarios": [
+    {
+      "id": "f1be7c29-fed7-432b-99e6-dd15d195b68d",
+      "anchor": "retail_prime",
+      "appliedDeltas": [
+        "multi_tenant",
+        "vacancy_risk"
+      ],
+      "distractors": [
+        "Transaction is expected to close in Q4.",
+        "The current owner has held the property for 15 years."
+      ],
+      "contextDescription": "Property Type: Retail Prime\n\nKey Characteristics:\n- Diversified tenant base (3+ tenants)\n- Current or imminent vacancy (>20%)\n\nAdditional Context:\n- Transaction is expected to close in Q4.\n- The current owner has held the property for 15 years.",
+      "groundTruth": {
+        "value": 5.88,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Prime): 5.625%\nDiversified tenant base (3+ tenants): -0.15%\nCurrent or imminent vacancy (>20%): +0.4%\nFinal: 5.88%"
+      },
+      "twinId": "8f9a7dd2-cc09-4f11-aa2d-3cacf72d8831",
+      "twinDeltaChanged": "vacancy_risk → prime_micro_location"
+    },
+    {
+      "id": "8f9a7dd2-cc09-4f11-aa2d-3cacf72d8831",
+      "anchor": "retail_prime",
+      "appliedDeltas": [
+        "multi_tenant",
+        "prime_micro_location"
+      ],
+      "distractors": [
+        "Transaction is expected to close in Q4.",
+        "The current owner has held the property for 15 years."
+      ],
+      "contextDescription": "Property Type: Retail Prime\n\nKey Characteristics:\n- Diversified tenant base (3+ tenants)\n- Exceptional micro-location within the area\n\nAdditional Context:\n- Transaction is expected to close in Q4.\n- The current owner has held the property for 15 years.",
+      "groundTruth": {
+        "value": 5.23,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Prime): 5.625%\nDiversified tenant base (3+ tenants): -0.15%\nExceptional micro-location within the area: -0.25%\nFinal: 5.22%"
+      },
+      "twinId": "f1be7c29-fed7-432b-99e6-dd15d195b68d",
+      "twinDeltaChanged": "vacancy_risk → prime_micro_location"
+    },
+    {
+      "id": "21d8fd2c-9229-40e9-80d4-e1b884689330",
+      "anchor": "retail_secondary",
+      "appliedDeltas": [
+        "long_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Retail Secondary\n\nKey Characteristics:\n- Long lease (>10 years WAULT) with creditworthy tenant",
+      "groundTruth": {
+        "value": 8.07,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Secondary): 8.375%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nFinal: 8.07%"
+      },
+      "twinId": "ed5aa09e-e292-4a97-82d2-ad752983feb2",
+      "twinDeltaChanged": "removed: long_lease"
+    },
+    {
+      "id": "ed5aa09e-e292-4a97-82d2-ad752983feb2",
+      "anchor": "retail_secondary",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "Property Type: Retail Secondary",
+      "groundTruth": {
+        "value": 8.38,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Secondary): 8.375%\nFinal: 8.38%"
+      },
+      "twinId": "21d8fd2c-9229-40e9-80d4-e1b884689330",
+      "twinDeltaChanged": "removed: long_lease"
+    },
+    {
+      "id": "1634f7ea-b199-4150-a943-58f42f87b8d6",
+      "anchor": "office_oslo_south",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "Property Type: Office Oslo South",
+      "groundTruth": {
+        "value": 6.88,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo South): 6.875%\nFinal: 6.88%"
+      }
+    },
+    {
+      "id": "46b4b7a9-d03f-4243-9e78-1581b24efc21",
+      "anchor": "logistics_prime",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "Property Type: Logistics Prime",
+      "groundTruth": {
+        "value": 6.13,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Prime): 6.125%\nFinal: 6.13%"
+      }
+    },
+    {
+      "id": "336ac378-4cb3-4071-9b2b-3ec0bdd799ac",
+      "anchor": "logistics_normal",
+      "appliedDeltas": [
+        "breeam_certified",
+        "short_lease",
+        "multi_tenant",
+        "government_tenant"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Logistics Normal & Secondary\n\nKey Characteristics:\n- BREEAM Excellent or Outstanding certification\n- Short lease (<3 years remaining)\n- Diversified tenant base (3+ tenants)\n- Government or AAA-rated corporate tenant",
+      "groundTruth": {
+        "value": 7.85,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Normal & Secondary): 8%\nBREEAM Excellent or Outstanding certification: -0.15%\nShort lease (<3 years remaining): +0.5%\nDiversified tenant base (3+ tenants): -0.15%\nGovernment or AAA-rated corporate tenant: -0.35%\nFinal: 7.85%"
+      },
+      "twinId": "67940890-f9c6-4374-9e90-ac1acdead78c",
+      "twinDeltaChanged": "removed: government_tenant"
+    },
+    {
+      "id": "67940890-f9c6-4374-9e90-ac1acdead78c",
+      "anchor": "logistics_normal",
+      "appliedDeltas": [
+        "breeam_certified",
+        "short_lease",
+        "multi_tenant"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Logistics Normal & Secondary\n\nKey Characteristics:\n- BREEAM Excellent or Outstanding certification\n- Short lease (<3 years remaining)\n- Diversified tenant base (3+ tenants)",
+      "groundTruth": {
+        "value": 8.2,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Normal & Secondary): 8%\nBREEAM Excellent or Outstanding certification: -0.15%\nShort lease (<3 years remaining): +0.5%\nDiversified tenant base (3+ tenants): -0.15%\nFinal: 8.20%"
+      },
+      "twinId": "336ac378-4cb3-4071-9b2b-3ec0bdd799ac",
+      "twinDeltaChanged": "removed: government_tenant"
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "f1be7c29-fed7-432b-99e6-dd15d195b68d",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 6.25,
+          "reasoning": "The property is classified as Retail Prime, which typically has a yield range of 5.25%–6.00%. However, the presence of a current or imminent vacancy of over 20% introduces significant re-letting risk, which typically warrants a yield premium of 25-75 bps. Given this context, I would adjust the yield upwards by approximately 50 bps to account for the vacancy risk. Therefore, the adjusted yield would be 6.00% (upper end of the prime range) + 0.50% = 6.25%. This yield reflects the diversified tenant base, which mitigates some risk, but the vacancy still necessitates a higher yield to attract potential investors.",
+          "latencyMs": 3802
+        },
+        {
+          "prediction": 6,
+          "reasoning": "The property is classified as Retail Prime, which has a benchmark yield range of 5.25%–6.00%. Given the diversified tenant base with 3+ tenants, this typically supports a lower yield due to reduced risk. However, the current or imminent vacancy of over 20% introduces significant re-letting risk, which typically commands a premium of 25-75 bps. Considering this vacancy risk, I would adjust the yield upward by approximately 50 bps from the lower end of the benchmark range. Therefore, the estimated yield for this property is 6.00%.",
+          "latencyMs": 3646
+        },
+        {
+          "prediction": 6.25,
+          "reasoning": "The property is classified as Retail Prime, which has a benchmark yield range of 5.25%–6.00%. However, the presence of a current or imminent vacancy of over 20% introduces significant re-letting risk, which typically warrants a premium of 25-75 bps. Given the diversified tenant base (3+ tenants), the risk is somewhat mitigated compared to a single tenant scenario, but the vacancy still necessitates an adjustment. Therefore, applying a conservative adjustment of +50 bps to the upper end of the benchmark range results in an estimated yield of 6.25%. This yield reflects the balance between the prime classification and the increased risk due to vacancy.",
+          "latencyMs": 3656
+        },
+        {
+          "prediction": 6.25,
+          "reasoning": "The property is classified as Retail Prime, which has a benchmark yield range of 5.25%–6.00%. However, the presence of a significant vacancy (>20%) introduces additional risk, which typically warrants a yield premium. Given the diversified tenant base (3+ tenants), the impact of the vacancy is somewhat mitigated, but it still necessitates an upward adjustment. Considering the market conditions and the risk associated with the vacancy, a yield of 6.25% is appropriate, reflecting a 25 bps premium for the vacancy risk while still being competitive within the Retail Prime segment.",
+          "latencyMs": 3297
+        },
+        {
+          "prediction": 6.25,
+          "reasoning": "The property is classified as Retail Prime, which typically has a yield range of 5.25%–6.00%. However, the presence of a current or imminent vacancy of over 20% introduces significant re-letting risk, which typically warrants a premium of 25-75 bps. Given the diversified tenant base (3+ tenants), the risk is somewhat mitigated compared to a single tenant situation, but the vacancy still impacts the yield negatively. Therefore, applying a conservative adjustment of +50 bps for the vacancy risk to the upper end of the Retail Prime range results in an estimated yield of 6.25%. This yield reflects the balance between the prime classification of the property and the associated risks.",
+          "latencyMs": 3776
+        }
+      ],
+      "meanPrediction": 6.2,
+      "stdDeviation": 0.1,
+      "minPrediction": 6,
+      "maxPrediction": 6.25,
+      "error": 0.32,
+      "absoluteError": 0.32,
+      "withinTolerance": true,
+      "rolloutConsistency": 20,
+      "startedAt": "2026-01-07T14:11:40.963Z",
+      "completedAt": "2026-01-07T14:11:44.769Z"
+    },
+    {
+      "scenarioId": "8f9a7dd2-cc09-4f11-aa2d-3cacf72d8831",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5.5,
+          "reasoning": "The property is categorized as Retail Prime, which has a benchmark yield range of 5.25%–6.00%. Given the diversified tenant base with 3 or more tenants, the risk associated with tenant concentration is mitigated, supporting a position towards the lower end of the yield range. Additionally, the exceptional micro-location enhances the attractiveness of the property, further justifying a yield of 5.50%. This yield reflects a balance between the prime asset quality and the stability provided by the diversified tenant mix.",
+          "latencyMs": 2880
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The property is classified as Retail Prime, which typically has a yield range of 5.25%–6.00%. Given the diversified tenant base with 3 or more tenants, this reduces the risk associated with tenant concentration, placing it closer to the lower end of the yield range. The exceptional micro-location further enhances its attractiveness, justifying a yield of 5.50%. This yield reflects the quality of the asset, the tenant mix, and the favorable market conditions expected for the transaction closing in Q4.",
+          "latencyMs": 2926
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The property is classified as Retail Prime, which has a benchmark yield range of 5.25%–6.00%. Given the diversified tenant base with 3 or more tenants, this reduces the risk associated with tenant concentration, suggesting a lower yield within the range. The exceptional micro-location further enhances the attractiveness of the property, allowing for a yield closer to the lower end of the benchmark. Therefore, an estimated yield of 5.50% is appropriate, reflecting the quality of the asset and its tenant mix.",
+          "latencyMs": 2925
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The property is classified as Retail Prime, which has a benchmark yield range of 5.25%–6.00%. Given the diversified tenant base with more than three tenants, this reduces the risk associated with tenant concentration, allowing for a more favorable yield. Additionally, the exceptional micro-location enhances the attractiveness of the property, potentially positioning it closer to the lower end of the yield range. Considering these factors, I estimate the yield at 5.50%, which reflects a balance between the prime nature of the asset and the reduced risk from tenant diversification.",
+          "latencyMs": 3918
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The property is categorized as Retail Prime, which has a benchmark yield range of 5.25%–6.00%. Given the diversified tenant base of 3+ tenants, this indicates a lower risk profile, which would typically position the yield towards the lower end of the range. Additionally, the exceptional micro-location enhances its attractiveness, further justifying a yield closer to the lower end. Therefore, an estimated yield of 5.50% reflects both the quality of the asset and the current market conditions.",
+          "latencyMs": 2819
+        }
+      ],
+      "meanPrediction": 5.5,
+      "stdDeviation": 0,
+      "minPrediction": 5.5,
+      "maxPrediction": 5.5,
+      "error": 0.27,
+      "absoluteError": 0.27,
+      "withinTolerance": true,
+      "rolloutConsistency": 100,
+      "startedAt": "2026-01-07T14:11:45.073Z",
+      "completedAt": "2026-01-07T14:11:48.994Z"
+    },
+    {
+      "scenarioId": "21d8fd2c-9229-40e9-80d4-e1b884689330",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 7.25,
+          "reasoning": "The property is classified as Retail Secondary, which typically commands yields in the range of 7.25% to 9.50%. Given that it has a long lease (greater than 10 years WAULT) with a creditworthy tenant, we can apply a yield compression of 25-50 basis points. Starting from the lower end of the Retail Secondary range (7.25%), the yield compression would bring the yield down to the lower end of the range, resulting in an estimated yield of 7.25%. This reflects the stability and reduced risk associated with a long lease and a reliable tenant.",
+          "latencyMs": 2718
+        },
+        {
+          "prediction": 7,
+          "reasoning": "The property is classified as Retail Secondary, which typically has a yield range of 7.25%–9.50%. However, given that it has a long lease (>10 years WAULT) with a creditworthy tenant, we can apply a yield compression adjustment of 25-50 basis points. Starting from the lower end of the Retail Secondary range (7.25%), applying a 25 basis point compression results in a yield of 7.00%. This yield reflects the lower risk associated with the long lease and creditworthy tenant while remaining within the expected range for secondary retail properties.",
+          "latencyMs": 4089
+        },
+        {
+          "prediction": 7.25,
+          "reasoning": "The property is classified as Retail Secondary, which typically has a yield range of 7.25% to 9.50%. Given that it has a long lease (greater than 10 years WAULT) with a creditworthy tenant, we can apply a yield compression adjustment of 25-50 basis points. Starting from the lower end of the Retail Secondary range (7.25%), we adjust downwards by 25 basis points due to the long lease and tenant quality, resulting in an estimated yield of 7.25%. This yield reflects the reduced risk associated with the long lease and creditworthy tenant while remaining within the expected range for Retail Secondary properties.",
+          "latencyMs": 4520
+        },
+        {
+          "prediction": 7.25,
+          "reasoning": "The property is classified as Retail Secondary, which typically has a yield range of 7.25% to 9.50%. Given that it has a long lease (greater than 10 years WAULT) with a creditworthy tenant, it will trade closer to the lower end of the yield range. The long lease reduces re-letting risk and aligns the property more closely with bond-like returns, allowing for a yield compression of approximately 25-50 bps. Therefore, the appropriate market yield for this property is estimated at 7.25%.",
+          "latencyMs": 2677
+        },
+        {
+          "prediction": 7.25,
+          "reasoning": "The property is classified as Retail Secondary, which typically has a yield range of 7.25% to 9.50%. Given that it has a long lease (>10 years WAULT) with a creditworthy tenant, we can apply a yield compression adjustment of 25-50 basis points. This places the yield closer to the lower end of the Retail Secondary range. Therefore, the adjusted yield is 7.25%, reflecting both the property type and the favorable lease conditions.",
+          "latencyMs": 3006
+        }
+      ],
+      "meanPrediction": 7.2,
+      "stdDeviation": 0.1,
+      "minPrediction": 7,
+      "maxPrediction": 7.25,
+      "error": -0.87,
+      "absoluteError": 0.87,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-07T14:11:49.297Z",
+      "completedAt": "2026-01-07T14:11:53.824Z"
+    },
+    {
+      "scenarioId": "ed5aa09e-e292-4a97-82d2-ad752983feb2",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 8.25,
+          "reasoning": "The property is classified as Retail Secondary, which has a yield range of 7.25%–9.50%. Given that secondary retail properties typically face higher risks due to location, tenant quality, and market demand, I would position this property towards the higher end of the range. Assuming the tenant quality is medium risk, which aligns with established national brands or mid-sized companies, I would apply a benchmark yield of 8.00%. Additionally, if the lease length is shorter than average (less than 3 years), I would add a premium of 25 bps for the re-letting risk, resulting in a final yield of 8.25%. This yield reflects the balance of the inherent risks associated with secondary retail properties while considering the current market conditions.",
+          "latencyMs": 4695
+        },
+        {
+          "prediction": 8.25,
+          "reasoning": "The property is classified as Retail Secondary, which typically has a yield range of 7.25% to 9.50%. Given the characteristics of secondary retail properties, they generally face higher risks due to location, tenant quality, and market demand. Assuming the property has a medium tenant quality (established mid-sized companies or well-known national brands), we would position it around the midpoint of the secondary range. Considering potential risks associated with tenant quality and market conditions, I would apply a slight adjustment towards the higher end of the range, resulting in an estimated yield of 8.25%.",
+          "latencyMs": 3073
+        },
+        {
+          "prediction": 8.25,
+          "reasoning": "The property is classified as Retail Secondary, which typically has a yield range of 7.25% to 9.50%. Given the nature of secondary retail properties, they are generally subject to higher vacancy risks and may have less desirable locations compared to prime retail. Assuming this property has a medium risk tenant profile, I would position it towards the higher end of the range. Additionally, if the property has short leases or lower tenant quality, this would further justify a yield closer to 8.25%, reflecting the need for a premium to compensate for potential risks associated with re-letting and tenant stability.",
+          "latencyMs": 3104
+        },
+        {
+          "prediction": 8.25,
+          "reasoning": "The property is classified as Retail Secondary, which typically has a yield range of 7.25% to 9.50%. Given the nature of secondary retail properties, they tend to carry higher risks due to factors such as location, tenant quality, and market demand. Assuming the property has a medium lease length (5-10 years) and is situated in a location that is not prime, I would position it towards the higher end of the yield range. Additionally, if the tenant quality is assessed as medium risk, this further supports a yield adjustment towards the upper end of the spectrum. Therefore, an estimated yield of 8.25% reflects the combined risks and market conditions for this retail secondary property.",
+          "latencyMs": 4425
+        },
+        {
+          "prediction": 8.25,
+          "reasoning": "The property is categorized as Retail Secondary, which typically has a yield range of 7.25% to 9.50%. Given that secondary retail properties often face higher risks due to location, tenant quality, and market dynamics, I would position this property towards the higher end of the range. Assuming the tenant quality is medium risk and the lease length is medium (5-10 years), I would apply a slight adjustment of +25 bps for tenant risk and +25 bps for lease length. This results in a final yield of 8.25%, which reflects the inherent risks and market conditions associated with secondary retail properties.",
+          "latencyMs": 3315
+        }
+      ],
+      "meanPrediction": 8.25,
+      "stdDeviation": 0,
+      "minPrediction": 8.25,
+      "maxPrediction": 8.25,
+      "error": -0.13,
+      "absoluteError": 0.13,
+      "withinTolerance": true,
+      "rolloutConsistency": 100,
+      "startedAt": "2026-01-07T14:11:54.130Z",
+      "completedAt": "2026-01-07T14:11:58.832Z"
+    },
+    {
+      "scenarioId": "1634f7ea-b199-4150-a943-58f42f87b8d6",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 6.75,
+          "reasoning": "The property is located in Oslo South, which has a yield range of 6.25%–7.50%. To estimate the appropriate market yield, we consider the following factors: \n\n1. **Tenant Quality**: Assuming the tenant is a well-known national brand (medium risk), we would apply a benchmark yield. This would typically place us at the mid-range of the yield spectrum. \n\n2. **Lease Length**: If the lease length is medium (5-10 years), it aligns with the market norm, suggesting no adjustment is necessary for lease length. \n\n3. **Building Standard and Age**: If the building is modern (post-2015), we would apply a yield compression of 15-25 bps. Assuming a 20 bps compression for a modern building, this would lower the yield. \n\n4. **Positioning**: Given that Oslo South is not the prime location compared to Oslo CBD, we would lean towards the higher end of the range. \n\nConsidering these factors, we start with a benchmark yield of 6.75% (mid-range of 6.25%-7.50%), apply a 20 bps compression for the modern building, and arrive at a final yield of 6.75%.",
+          "latencyMs": 6455
+        },
+        {
+          "prediction": 6.75,
+          "reasoning": "The property is located in Oslo South, which has a yield range of 6.25%–7.50%. To determine the appropriate yield, we consider several factors: if the property has a long lease (>10 years WAULT) with a creditworthy tenant, we would adjust downwards by 25-50 bps, potentially placing the yield closer to 6.25%-6.50%. However, if the lease is medium (5-10 years), we would expect it to trade at the benchmark yield of around 6.50%. If the lease is short (<3 years), we would add a premium of 25-75 bps, which could push the yield up to 7.00%-7.25%. Assuming a medium lease with a tenant of medium risk, I estimate the yield to be around 6.75%, reflecting a balanced risk profile within the given range.",
+          "latencyMs": 5611
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The property is located in Oslo South, which has a yield range of 6.25%–7.50%. To determine the appropriate yield, we need to consider several factors: \n\n1. **Tenant Quality**: Assuming the tenant is a medium-risk entity (e.g., an established mid-sized company), this would align with benchmark yields. \n\n2. **Lease Length**: If the property has a medium lease length (5-10 years), it would typically trade at benchmark yields. If the lease is longer, we could see a decrease in yield; if shorter, we might see an increase. For this analysis, we will assume a medium lease length.\n\n3. **Building Standard and Age**: If the building is modern (post-2015), we would expect a yield compression of about 15-25 bps. If it is older (pre-2000), we would expect a yield expansion of 20-40 bps. Assuming the building is modern, we can apply a compression of 20 bps.\n\nCombining these factors, starting from the midpoint of the yield range (6.25% + 7.50% = 6.875%, midpoint = 6.875%), we apply the adjustments: \n- Tenant quality: no adjustment (medium risk) \n- Lease length: no adjustment (medium lease) \n- Building condition: -20 bps (modern building) \n\nFinal yield calculation: 6.875% - 0.20% = 6.675%. Rounding to a practical yield, we estimate 6.50% as the appropriate market yield for this property.",
+          "latencyMs": 8429
+        },
+        {
+          "prediction": 6.25,
+          "reasoning": "The property is located in Oslo South, which has a yield range of 6.25%–7.50%. Assuming this property has a medium lease length (5-10 years) with a tenant of medium risk (an established mid-sized company), it would typically trade at benchmark yields. Given that the property is in a good location but not prime compared to CBD areas, I would position it at the lower end of the range. Additionally, if the building is modern (post-2015) and well-maintained, this could further compress the yield by about 15-25 bps. However, without specific details on tenant quality or lease length, a conservative estimate of 6.25% is appropriate, reflecting a balanced assessment of the market conditions and property characteristics.",
+          "latencyMs": 4129
+        },
+        {
+          "prediction": 6.75,
+          "reasoning": "The property is located in Oslo South, which has a yield range of 6.25%–7.50%. To determine the appropriate yield, I consider the following factors: \n\n1. **Tenant Quality**: Assuming the tenant is an established mid-sized company, this would place it in the medium risk category, aligning with benchmark yields. This would typically suggest a yield closer to the mid-range of the bracket.\n\n2. **Lease Length**: If the property has a medium lease length (5-10 years), it would trade at benchmark yields. If the lease length is longer, it could command a lower yield, while a shorter lease would increase the yield due to re-letting risks. Assuming a medium lease length, we maintain the benchmark yield.\n\n3. **Building Standard and Age**: If the building is modern (post-2015), it would command a lower yield due to lower maintenance costs and better energy efficiency. If it is older (pre-2000), it would face higher capex requirements and potential obsolescence risks, increasing the yield. Assuming it is a modern building, we can apply a yield compression of 15-25 bps.\n\n4. **Final Adjustment**: Considering the medium lease length and tenant quality, I would position the yield towards the higher end of the range, factoring in the modern building standard. Thus, applying a slight compression for the modern building and maintaining the medium risk tenant, I estimate a yield of 6.75%.",
+          "latencyMs": 9444
+        }
+      ],
+      "meanPrediction": 6.6,
+      "stdDeviation": 0.2,
+      "minPrediction": 6.25,
+      "maxPrediction": 6.75,
+      "error": -0.28,
+      "absoluteError": 0.28,
+      "withinTolerance": true,
+      "rolloutConsistency": 60,
+      "startedAt": "2026-01-07T14:11:59.137Z",
+      "completedAt": "2026-01-07T14:12:08.588Z"
+    },
+    {
+      "scenarioId": "46b4b7a9-d03f-4243-9e78-1581b24efc21",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is classified as 'Logistics Prime', which has a benchmark yield range of 5.50%–6.75%. Given the current market conditions and the characteristics of prime logistics properties, I would position this property towards the lower end of the range at 5.75%. This estimation assumes that the property is modern (post-2015), which typically commands lower yields due to lower maintenance costs and better energy efficiency. Additionally, if the tenant is of high quality (e.g., a large, established logistics company), this would further support a yield closer to the lower end of the range. However, if there are any concerns regarding tenant quality or lease length, adjustments could be made accordingly.",
+          "latencyMs": 3698
+        },
+        {
+          "prediction": 6,
+          "reasoning": "The property is classified as 'Logistics Prime', which has a market yield range of 5.50% to 6.75%. Given that prime logistics properties typically command yields towards the lower end of this range, I have positioned the yield at 6.00%. This estimate assumes the property is modern (post-2015) and likely has a good tenant mix, which would support a lower yield within the prime segment. Additionally, if the property has a long lease with a creditworthy tenant, it could justify being at the lower end of the range, but without specific details on tenant quality and lease length, 6.00% is a balanced estimate.",
+          "latencyMs": 3301
+        },
+        {
+          "prediction": 6.25,
+          "reasoning": "The property is classified as Logistics Prime, which has a benchmark yield range of 5.50% to 6.75%. Assuming the property is modern (post-2015) and has a good tenant quality (likely medium to low risk), it would command a yield closer to the lower end of the range. Given the current market dynamics, a yield of 6.25% reflects a balance between the prime location, tenant quality, and the modern building standard, while also considering the competitive landscape in the logistics sector.",
+          "latencyMs": 2689
+        },
+        {
+          "prediction": 6,
+          "reasoning": "The property is classified as Logistics Prime, which has a benchmark yield range of 5.50%–6.75%. Assuming the property is modern (post-2015) and has a strong tenant profile (potentially low to medium risk), I would position it towards the lower end of the range. Given the current market dynamics and the increasing demand for logistics space, a yield of 6.00% reflects a balance between the prime asset quality and the competitive landscape while accounting for potential tenant quality and lease terms.",
+          "latencyMs": 2715
+        },
+        {
+          "prediction": 6.25,
+          "reasoning": "The property is classified as Logistics Prime, which has a market yield range of 5.50% to 6.75%. To determine the appropriate yield, I consider several factors: if the property is modern (post-2015), it would command a lower yield within this range due to lower maintenance costs and higher tenant attractiveness. Assuming the property is modern, I would adjust downwards by 15-25 basis points. If the tenant is of low risk (e.g., a government or AAA-rated corporation), I would apply an additional compression of 15-40 basis points. Therefore, if we start at the midpoint of the prime range (6.125%), and apply a 25 basis point reduction for modern standards and a 15 basis point reduction for tenant quality, the yield would be approximately 6.25%. This yield reflects a balance of the property’s prime classification, modern building standards, and low tenant risk.",
+          "latencyMs": 4454
+        }
+      ],
+      "meanPrediction": 6.05,
+      "stdDeviation": 0.187,
+      "minPrediction": 5.75,
+      "maxPrediction": 6.25,
+      "error": -0.08,
+      "absoluteError": 0.08,
+      "withinTolerance": true,
+      "rolloutConsistency": 80,
+      "startedAt": "2026-01-07T14:12:08.891Z",
+      "completedAt": "2026-01-07T14:12:13.351Z"
+    },
+    {
+      "scenarioId": "336ac378-4cb3-4071-9b2b-3ec0bdd799ac",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 6.5,
+          "reasoning": "{\"yield\": 6.25, \"reasoning\": \"To determine the appropriate market yield for the logistics property, we start with the benchmark yield for 'Logistics Normal & Secondary', which ranges from 6.50% to 9.50%. Given the property has BREEAM Excellent or Outstanding certification, we can apply a yield compression of 10-20 bps. However, the property also has a short lease of less than 3 years remaining, which typically adds a premium of 25-75 bps due to re-letting risk. The presence of a diversified tenant base with government or AAA-rated corporate tenants mitigates some risk, but the short lease still necessitates a cautious approach. \n\nStarting from the lower end of the benchmark (6.50%), we apply a 15-20 bps compression for the high building standard, bringing it down to approximately 6.35%. Then, we account for the short lease, adding a premium of 25-50 bps, which brings the yield back up to around 6.60% to 6.85%. However, considering the quality of the tenants, we can lean towards the lower end of this adjusted range. Therefore, a final yield of 6.25% is justified, reflecting the strong tenant quality while acknowledging the risks associated with the short lease.\"}",
+          "latencyMs": 8693
+        },
+        {
+          "prediction": 6.25,
+          "reasoning": "Starting with the benchmark yield for Logistics Normal & Secondary, which ranges from 6.50% to 9.50%, we need to consider the specific characteristics of the property. The BREEAM Excellent or Outstanding certification would typically compress the yield by 10-20 basis points. However, the short lease term of less than 3 years remaining adds a significant re-letting risk, which would require a premium of 25-75 basis points. Given that the tenant base is diversified with a government or AAA-rated corporate tenant, this mitigates some risk, allowing for a lower premium. Overall, the adjustments would lead to a yield of approximately 6.25%, considering the BREEAM certification's positive impact and the short lease's negative impact.",
+          "latencyMs": 4532
+        },
+        {
+          "prediction": 6.25,
+          "reasoning": "The property is classified as Logistics Normal & Secondary, which has a benchmark yield range of 6.50%–9.50%. Given the BREEAM Excellent or Outstanding certification, we can expect a yield compression of approximately 15-20 bps. However, the property has a short lease of less than 3 years remaining, which typically adds a premium of 25-75 bps due to re-letting risk. The tenant base is diversified with a government or AAA-rated corporate tenant, which is considered low risk and would normally compress yields further by 15-40 bps. Taking all these factors into account, the adjustments lead to a final yield estimate of approximately 6.25%, which is at the lower end of the benchmark range, reflecting the positive attributes of the property while accounting for the short lease term.",
+          "latencyMs": 5410
+        },
+        {
+          "prediction": 6.25,
+          "reasoning": "The property is classified as Logistics Normal & Secondary, which has a benchmark yield range of 6.50% to 9.50%. Given the BREEAM Excellent or Outstanding certification, we can apply a yield compression of 10-20 bps, bringing the yield down to a lower range. However, the property has a short lease of less than 3 years remaining, which introduces a re-letting risk that typically commands a premium of 25-75 bps. The diversified tenant base with a government or AAA-rated corporate tenant mitigates some risk, but the short lease still warrants a higher yield. Therefore, after applying the adjustments, the estimated yield is positioned at 6.25%, reflecting the balance between the positive impact of tenant quality and the negative impact of the short lease.",
+          "latencyMs": 5696
+        },
+        {
+          "prediction": 6.25,
+          "reasoning": "The property is classified as Logistics Normal & Secondary, which has a benchmark yield range of 6.50% to 9.50%. Given the BREEAM Excellent or Outstanding certification, we can apply a yield compression of 10-20 bps, bringing the yield down to a range of 6.30% to 6.40%. However, the property has a short lease of less than 3 years remaining, which introduces significant re-letting risk. This typically warrants a premium of 25-75 bps. Therefore, we adjust the yield upwards by 25 bps to account for the short lease, resulting in a final yield of approximately 6.25%. The diversified tenant base, including government or AAA-rated corporate tenants, mitigates some risk, but the short lease remains a critical factor in determining the yield.",
+          "latencyMs": 5460
+        }
+      ],
+      "meanPrediction": 6.3,
+      "stdDeviation": 0.1,
+      "minPrediction": 6.25,
+      "maxPrediction": 6.5,
+      "error": -1.55,
+      "absoluteError": 1.55,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-07T14:12:13.656Z",
+      "completedAt": "2026-01-07T14:12:22.356Z"
+    },
+    {
+      "scenarioId": "67940890-f9c6-4374-9e90-ac1acdead78c",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 7.25,
+          "reasoning": "The property is classified as Logistics Normal & Secondary, which has a benchmark yield range of 6.50%–9.50%. Given the BREEAM Excellent or Outstanding certification, we can expect a yield compression of 10-20 basis points, which would bring the yield closer to the lower end of the range. However, the property has a short lease of less than 3 years remaining, which typically adds a premium of 25-75 basis points due to re-letting risk. Since the property has a diversified tenant base of 3 or more tenants, this mitigates some of the risks associated with short leases. Therefore, after applying these adjustments, the estimated yield would be around 7.25%, reflecting a balance between the positive impact of the building certification and the negative impact of the short lease.",
+          "latencyMs": 5159
+        },
+        {
+          "prediction": 7.25,
+          "reasoning": "Starting with the benchmark yield for Logistics Normal & Secondary, which ranges from 6.50% to 9.50%, we first consider the BREEAM Excellent or Outstanding certification, which typically compresses yields by 10-20 bps. This would adjust the yield lower towards the 6.50% end of the range. However, the property has a short lease of less than 3 years remaining, which introduces significant re-letting risk, typically adding a premium of 25-75 bps. Given that the property has a diversified tenant base of 3 or more tenants, this mitigates some of the risks associated with short leases, but not entirely. Therefore, we apply a moderate premium of about 50 bps for the short lease. After applying these adjustments, the yield is estimated at 7.25%, reflecting both the quality of the certification and the risks associated with the lease length.",
+          "latencyMs": 5855
+        },
+        {
+          "prediction": 7.25,
+          "reasoning": "Starting with the benchmark yield for Logistics Normal & Secondary, which ranges from 6.50% to 9.50%, we need to make adjustments based on the property's characteristics. The property has BREEAM Excellent or Outstanding certification, which typically compresses yields by 10-20 bps. Given the certification, we can apply a 15 bps compression, bringing the yield down to 6.85%. However, the property also has a short lease of less than 3 years remaining, which introduces significant re-letting risk. This typically requires a premium of 25-75 bps. Given the diversified tenant base of 3+ tenants, we can apply a more moderate premium of 50 bps. This brings the adjusted yield to 7.35%. To finalize, we round down to the nearest quarter point, resulting in a market yield of 7.25%, which reflects the balance of the positive and negative factors affecting the property.",
+          "latencyMs": 5157
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "{\"yield\": 7.25, \"reasoning\": \"To estimate the yield for the logistics property classified as Normal & Secondary, we start with the benchmark yield range of 6.50%–9.50%. Given the BREEAM Excellent or Outstanding certification, we can apply a yield compression of 10-20 bps, which would adjust the yield downwards. However, the property has a short lease of less than 3 years remaining, which typically adds a premium of 25-75 bps due to re-letting risk. Since the tenant base is diversified with 3 or more tenants, this mitigates some of the re-letting risk but does not eliminate it entirely. \n\nConsidering these factors, we can apply a 15 bps compression for the BREEAM certification and a 50 bps premium for the short lease. Starting from the midpoint of the benchmark range (8.00%), we adjust downwards by 15 bps (to 7.85%) and then upwards by 50 bps (to 8.35%). This leads us to a final yield estimate of approximately 7.25%, which reflects the property's characteristics and associated risks.\"}",
+          "latencyMs": 5852
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "{\"yield\": 7.25, \"reasoning\": \"To estimate the appropriate market yield for the logistics property classified as 'Normal & Secondary', we start with the benchmark yield range of 6.50%–9.50%. Given the property's BREEAM Excellent or Outstanding certification, we apply a yield compression adjustment of 10-20 basis points, which brings the yield down to approximately 6.30%–9.30%. However, the property has a short lease term of less than 3 years remaining, which introduces significant re-letting risk. This typically warrants a premium of 25-75 basis points, pushing the yield up to a range of 6.55%–10.05%. \n\nSince the property has a diversified tenant base of 3 or more tenants, this mitigates some of the risk associated with short leases, allowing us to lean towards the lower end of the adjusted range. Therefore, we estimate the yield at 7.25%, reflecting both the quality of the certification and the risks associated with the lease term.\"}",
+          "latencyMs": 6370
+        }
+      ],
+      "meanPrediction": 6.95,
+      "stdDeviation": 0.367,
+      "minPrediction": 6.5,
+      "maxPrediction": 7.25,
+      "error": -1.25,
+      "absoluteError": 1.25,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-07T14:12:22.659Z",
+      "completedAt": "2026-01-07T14:12:29.033Z"
+    }
+  ],
+  "completedAt": "2026-01-07T14:12:29.337Z",
+  "aggregateMetrics": {
+    "hitRate": 62.5,
+    "meanError": -0.446,
+    "rmse": 0.79,
+    "avgLatencyMs": 4459,
+    "directionalAccuracy": 100,
+    "avgStdDeviation": 0.132,
+    "avgConsistency": 45
+  }
+}

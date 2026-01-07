@@ -138,9 +138,15 @@ export const BenchmarkRunSchema = z.object({
   rolloutsPerScenario: z.number().default(1), // Number of rollouts per scenario
 
   // Run status and timing
-  status: z.enum(["running", "completed", "failed"]).default("running"),
+  status: z.enum(["generating_narratives", "running", "completed", "failed"]).default("running"),
   startedAt: z.string().optional(),
   completedAt: z.string().optional(),
+  
+  // Narrative generation tracking
+  useNarrativeDescriptions: z.boolean().optional(),
+  narrativeModel: z.string().optional(),
+  narrativesGenerated: z.number().optional(), // Count of narratives generated so far
+  narrativesTotal: z.number().optional(), // Total narratives to generate
 
   scenarios: z.array(ScenarioSchema),
   results: z.array(ScenarioResultSchema),

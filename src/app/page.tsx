@@ -153,6 +153,9 @@ export default function Dashboard() {
                   <TableRow key={run.id}>
                     <TableCell className="font-mono text-sm">
                       <div className="flex items-center gap-2">
+                        {run.status === "generating_narratives" && (
+                          <span className="text-purple-400 animate-pulse">●</span>
+                        )}
                         {run.status === "running" && (
                           <span className="text-amber-400 animate-pulse">●</span>
                         )}
