@@ -250,3 +250,47 @@ export async function runBatch(
   return results;
 }
 
+/**
+ * Simple text generation without JSON parsing - for narrative generation
+ */
+export async function generateText(
+  prompt: string,
+  config: OpenRouterConfig
+): Promise<{ text: string; latencyMs: number }> {
+  const startTime = Date.now();
+
+  const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${config.apiKey}`,
+      "HTTP-Referer": "https://estimate-playground.local",
+      "X-Title": "Estimate Playground",
+    },
+    body: JSON.stringify({
+      model: config.model,
+      messages: [
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+      temperature: config.temperature ?? 0.7,
+      max_tokens: config.maxTokens ?? 2048,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`OpenRouter API error: ${response.status} - ${errorText}`);
+  }
+
+  const data: OpenRouterResponse = await response.json();
+  const latencyMs = Date.now() - startTime;
+
+  return {
+    text: data.choices[0]?.message?.content ?? "",
+    latencyMs,
+  };
+}
+

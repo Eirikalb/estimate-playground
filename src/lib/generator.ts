@@ -1,5 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 import type { DomainConfig, Scenario } from "@/domains/schema";
+import {
+  generateNarrativeDescription,
+  generateFallbackDescription,
+  type NarrativeGeneratorConfig,
+} from "@/lib/narrative-generator";
 
 export interface GeneratorOptions {
   /** Number of scenarios to generate */
@@ -16,6 +21,14 @@ export interface GeneratorOptions {
   generateTwins?: boolean;
   /** Random seed for reproducibility */
   seed?: number;
+  /** Use LLM-based narrative generation (requires narrativeConfig) */
+  useLlmNarrative?: boolean;
+  /** Configuration for LLM narrative generation */
+  narrativeConfig?: NarrativeGeneratorConfig;
+  /** Model to use for narrative generation */
+  narrativeModel?: string;
+  /** Progress callback for async generation */
+  onProgress?: (completed: number, total: number, phase: string) => void;
 }
 
 // Simple seeded random number generator (Mulberry32)
@@ -69,9 +82,9 @@ export function calculateGroundTruth(
 }
 
 /**
- * Generate a natural language description of a scenario
+ * Generate a simple structured description (fallback/preview mode)
  */
-function generateContextDescription(
+function generateSimpleDescription(
   domain: DomainConfig,
   anchorKey: string,
   appliedDeltaKeys: string[],
@@ -105,7 +118,7 @@ function generateContextDescription(
 }
 
 /**
- * Generate scenarios for a domain
+ * Generate scenarios for a domain (synchronous - uses simple descriptions)
  */
 export function generateScenarios(
   domain: DomainConfig,
@@ -156,14 +169,14 @@ export function generateScenarios(
       appliedDeltaKeys
     );
 
-    // Create scenario
+    // Create scenario with simple description
     const scenarioId = uuidv4();
     const scenario: Scenario = {
       id: scenarioId,
       anchor: anchorKey,
       appliedDeltas: appliedDeltaKeys,
       distractors,
-      contextDescription: generateContextDescription(
+      contextDescription: generateSimpleDescription(
         domain,
         anchorKey,
         appliedDeltaKeys,
@@ -215,7 +228,7 @@ export function generateScenarios(
         anchor: anchorKey,
         appliedDeltas: twinDeltaKeys,
         distractors, // Same distractors
-        contextDescription: generateContextDescription(
+        contextDescription: generateSimpleDescription(
           domain,
           anchorKey,
           twinDeltaKeys,
@@ -242,6 +255,216 @@ export function generateScenarios(
 }
 
 /**
+ * Generate scenarios with LLM-based narrative descriptions (async)
+ * This produces rich, natural language property prospectuses
+ */
+export async function generateScenariosWithNarrative(
+  domain: DomainConfig,
+  options: GeneratorOptions
+): Promise<Scenario[]> {
+  const {
+    count,
+    minDeltas = 0,
+    maxDeltas = 4,
+    distractorProbability = 0.3,
+    maxDistractors = 2,
+    generateTwins = true,
+    seed = Date.now(),
+    narrativeConfig,
+    narrativeModel,
+    onProgress,
+  } = options;
+
+  if (!narrativeConfig?.apiKey) {
+    throw new Error("narrativeConfig with apiKey is required for LLM narrative generation");
+  }
+
+  const config: NarrativeGeneratorConfig = {
+    ...narrativeConfig,
+    model: narrativeModel || narrativeConfig.model,
+  };
+
+  const random = createRng(seed);
+  const anchorKeys = Object.keys(domain.anchors);
+  const deltaKeys = Object.keys(domain.deltas);
+
+  // Helper to pick random items
+  const pickRandom = <T>(arr: T[], count: number): T[] => {
+    const shuffled = [...arr].sort(() => random() - 0.5);
+    return shuffled.slice(0, count);
+  };
+
+  // First, generate the scenario structure (fast)
+  interface ScenarioSkeleton {
+    id: string;
+    anchorKey: string;
+    appliedDeltaKeys: string[];
+    distractors: string[];
+    groundTruth: { value: number; tolerance: number; calculation: string };
+    twinId?: string;
+    twinDeltaChanged?: string;
+    narrativeSeed: number;
+  }
+
+  const skeletons: ScenarioSkeleton[] = [];
+
+  onProgress?.(0, count * 2, "Generating scenario structure...");
+
+  for (let i = 0; i < count; i++) {
+    // Pick random anchor
+    const anchorKey = anchorKeys[Math.floor(random() * anchorKeys.length)];
+
+    // Pick random number of deltas
+    const numDeltas = minDeltas + Math.floor(random() * (maxDeltas - minDeltas + 1));
+    const appliedDeltaKeys = pickRandom(deltaKeys, numDeltas);
+
+    // Maybe add distractors
+    const distractors: string[] = [];
+    if (random() < distractorProbability && domain.distractors.length > 0) {
+      const numDistractors = 1 + Math.floor(random() * maxDistractors);
+      distractors.push(...pickRandom(domain.distractors, numDistractors));
+    }
+
+    // Calculate ground truth
+    const { value, calculation } = calculateGroundTruth(domain, anchorKey, appliedDeltaKeys);
+
+    const scenarioId = uuidv4();
+    const skeleton: ScenarioSkeleton = {
+      id: scenarioId,
+      anchorKey,
+      appliedDeltaKeys,
+      distractors,
+      groundTruth: { value, tolerance: 0.35, calculation },
+      narrativeSeed: Math.floor(random() * 1000000),
+    };
+
+    skeletons.push(skeleton);
+
+    // Generate twin skeleton if enabled
+    if (generateTwins && appliedDeltaKeys.length > 0) {
+      const deltaToRemove = appliedDeltaKeys[Math.floor(random() * appliedDeltaKeys.length)];
+      const availableDeltas = deltaKeys.filter((k) => !appliedDeltaKeys.includes(k));
+
+      let twinDeltaKeys: string[];
+      let twinDeltaChanged: string;
+
+      if (availableDeltas.length > 0 && random() > 0.5) {
+        const newDelta = availableDeltas[Math.floor(random() * availableDeltas.length)];
+        twinDeltaKeys = appliedDeltaKeys.filter((k) => k !== deltaToRemove).concat(newDelta);
+        twinDeltaChanged = `${deltaToRemove} → ${newDelta}`;
+      } else {
+        twinDeltaKeys = appliedDeltaKeys.filter((k) => k !== deltaToRemove);
+        twinDeltaChanged = `removed: ${deltaToRemove}`;
+      }
+
+      const twinTruth = calculateGroundTruth(domain, anchorKey, twinDeltaKeys);
+      const twinId = uuidv4();
+
+      const twinSkeleton: ScenarioSkeleton = {
+        id: twinId,
+        anchorKey,
+        appliedDeltaKeys: twinDeltaKeys,
+        distractors,
+        groundTruth: { value: twinTruth.value, tolerance: 0.35, calculation: twinTruth.calculation },
+        twinId: scenarioId,
+        twinDeltaChanged,
+        narrativeSeed: Math.floor(random() * 1000000),
+      };
+
+      skeleton.twinId = twinId;
+      skeleton.twinDeltaChanged = twinDeltaChanged;
+
+      skeletons.push(twinSkeleton);
+    }
+  }
+
+  // Now generate narratives for each skeleton (slow, LLM-based)
+  const scenarios: Scenario[] = [];
+  const totalSkeletons = skeletons.length;
+
+  for (let i = 0; i < skeletons.length; i++) {
+    const skeleton = skeletons[i];
+    onProgress?.(i, totalSkeletons, `Generating narrative ${i + 1}/${totalSkeletons}...`);
+
+    let contextDescription: string;
+
+    try {
+      const narrative = await generateNarrativeDescription(
+        domain,
+        skeleton.anchorKey,
+        skeleton.appliedDeltaKeys,
+        skeleton.distractors,
+        skeleton.narrativeSeed,
+        config
+      );
+      contextDescription = narrative.description;
+    } catch (error) {
+      console.error(`Failed to generate narrative for scenario ${skeleton.id}:`, error);
+      // Fallback to template-based description
+      contextDescription = generateFallbackDescription(
+        domain,
+        skeleton.anchorKey,
+        skeleton.appliedDeltaKeys,
+        skeleton.distractors
+      );
+    }
+
+    const scenario: Scenario = {
+      id: skeleton.id,
+      anchor: skeleton.anchorKey,
+      appliedDeltas: skeleton.appliedDeltaKeys,
+      distractors: skeleton.distractors,
+      contextDescription,
+      groundTruth: skeleton.groundTruth,
+      twinId: skeleton.twinId,
+      twinDeltaChanged: skeleton.twinDeltaChanged,
+    };
+
+    scenarios.push(scenario);
+
+    // Small delay between LLM calls to avoid rate limiting
+    if (i < skeletons.length - 1) {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    }
+  }
+
+  onProgress?.(totalSkeletons, totalSkeletons, "Complete");
+
+  return scenarios;
+}
+
+/**
+ * Upgrade a single scenario's description to use LLM-based narrative
+ */
+export async function upgradeScenarioNarrative(
+  domain: DomainConfig,
+  scenario: Scenario,
+  config: NarrativeGeneratorConfig,
+  seed?: number
+): Promise<Scenario> {
+  const narrativeSeed = seed ?? Date.now();
+
+  try {
+    const narrative = await generateNarrativeDescription(
+      domain,
+      scenario.anchor,
+      scenario.appliedDeltas,
+      scenario.distractors,
+      narrativeSeed,
+      config
+    );
+
+    return {
+      ...scenario,
+      contextDescription: narrative.description,
+    };
+  } catch (error) {
+    console.error(`Failed to upgrade narrative for scenario ${scenario.id}:`, error);
+    return scenario; // Return unchanged on error
+  }
+}
+
+/**
  * Get twin pairs from a list of scenarios
  */
 export function getTwinPairs(
@@ -263,4 +486,3 @@ export function getTwinPairs(
 
   return pairs;
 }
-

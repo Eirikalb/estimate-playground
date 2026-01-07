@@ -1,0 +1,553 @@
+{
+  "id": "8eabd7cd-5042-44fb-81cf-a58866b143e4",
+  "timestamp": "2026-01-07T14:01:33.384Z",
+  "domainId": "real-estate-yield",
+  "model": "openai/gpt-4o-mini",
+  "promptStrategy": "few-shot",
+  "promptTemplate": "You are estimating market yields for Norwegian commercial real estate.\n\nHere are three example valuations:\n\n**Example 1:**\nProperty: Office building in Oslo CBD, built 2018, government tenant (Ministry of Finance), 12 years remaining on lease, BREEAM Excellent.\nAnalysis: Prime CBD location (4.50-5.25% range). Government tenant and long lease = very low risk. Modern building with certification. Position at low end of range, slight compression for quality.\nResult: {\"yield\": 4.50, \"reasoning\": \"Prime CBD, government tenant, long lease, modern certified building - bond-like characteristics justify lowest yields\"}\n\n**Example 2:**\nProperty: Office building in Oslo Lysaker, built 2005, single tenant (mid-sized IT company), 4 years remaining on lease.\nAnalysis: Lysaker range is 5.50-7.00%. Single corporate tenant with medium lease. Building is 20 years old. Position mid-range, slight expansion for tenant and building factors.\nResult: {\"yield\": 6.50, \"reasoning\": \"Lysaker mid-range positioning, single tenant adds concentration risk, older building needs consideration, medium lease term\"}\n\n**Example 3:**\nProperty: Logistics warehouse outside Bergen, built 1995, three tenants (logistics companies), average 6 years remaining.\nAnalysis: Logistics Normal range 6.50-9.50%. Diversified tenants good. Old building is concern. Medium lease. Secondary location.\nResult: {\"yield\": 7.75, \"reasoning\": \"Secondary logistics location, older building requiring capex, partially offset by diversified tenant base and reasonable lease terms\"}\n\n---\n\nNow evaluate this property:\n\n{{scenario.contextDescription}}\n\nReturn JSON only: {\"yield\": <number>, \"reasoning\": \"<your analysis following the same pattern>\"}\n\n",
+  "rolloutsPerScenario": 5,
+  "status": "completed",
+  "startedAt": "2026-01-07T14:01:33.384Z",
+  "scenarios": [
+    {
+      "id": "8d789174-e7a1-41c8-9ed3-ebb8eb79d005",
+      "anchor": "retail_secondary",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "Property Type: Retail Secondary",
+      "groundTruth": {
+        "value": 8.38,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Secondary): 8.375%\nFinal: 8.38%"
+      }
+    },
+    {
+      "id": "6d6c5db1-1ac7-4caf-addf-d2d657385428",
+      "anchor": "retail_normal",
+      "appliedDeltas": [
+        "long_lease",
+        "breeam_certified",
+        "poor_micro_location"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Retail Normal\n\nKey Characteristics:\n- Long lease (>10 years WAULT) with creditworthy tenant\n- BREEAM Excellent or Outstanding certification\n- Suboptimal micro-location (poor access, visibility)",
+      "groundTruth": {
+        "value": 6.78,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Normal): 6.875%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nBREEAM Excellent or Outstanding certification: -0.15%\nSuboptimal micro-location (poor access, visibility): +0.35%\nFinal: 6.77%"
+      },
+      "twinId": "40ff5155-7b01-4d56-97c2-7a04ceb3cd23",
+      "twinDeltaChanged": "poor_micro_location → government_tenant"
+    },
+    {
+      "id": "40ff5155-7b01-4d56-97c2-7a04ceb3cd23",
+      "anchor": "retail_normal",
+      "appliedDeltas": [
+        "long_lease",
+        "breeam_certified",
+        "government_tenant"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Retail Normal\n\nKey Characteristics:\n- Long lease (>10 years WAULT) with creditworthy tenant\n- BREEAM Excellent or Outstanding certification\n- Government or AAA-rated corporate tenant",
+      "groundTruth": {
+        "value": 6.08,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Normal): 6.875%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nBREEAM Excellent or Outstanding certification: -0.15%\nGovernment or AAA-rated corporate tenant: -0.35%\nFinal: 6.08%"
+      },
+      "twinId": "6d6c5db1-1ac7-4caf-addf-d2d657385428",
+      "twinDeltaChanged": "poor_micro_location → government_tenant"
+    },
+    {
+      "id": "c432715d-464b-47f8-8331-2352e5c425f8",
+      "anchor": "logistics_normal",
+      "appliedDeltas": [
+        "breeam_certified",
+        "short_lease",
+        "poor_micro_location",
+        "multi_tenant"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Logistics Normal & Secondary\n\nKey Characteristics:\n- BREEAM Excellent or Outstanding certification\n- Short lease (<3 years remaining)\n- Suboptimal micro-location (poor access, visibility)\n- Diversified tenant base (3+ tenants)",
+      "groundTruth": {
+        "value": 8.55,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Normal & Secondary): 8%\nBREEAM Excellent or Outstanding certification: -0.15%\nShort lease (<3 years remaining): +0.5%\nSuboptimal micro-location (poor access, visibility): +0.35%\nDiversified tenant base (3+ tenants): -0.15%\nFinal: 8.55%"
+      },
+      "twinId": "64fa9397-7fc7-4e4d-8d36-be2e9be3ada8",
+      "twinDeltaChanged": "multi_tenant → long_lease"
+    },
+    {
+      "id": "64fa9397-7fc7-4e4d-8d36-be2e9be3ada8",
+      "anchor": "logistics_normal",
+      "appliedDeltas": [
+        "breeam_certified",
+        "short_lease",
+        "poor_micro_location",
+        "long_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Logistics Normal & Secondary\n\nKey Characteristics:\n- BREEAM Excellent or Outstanding certification\n- Short lease (<3 years remaining)\n- Suboptimal micro-location (poor access, visibility)\n- Long lease (>10 years WAULT) with creditworthy tenant",
+      "groundTruth": {
+        "value": 8.4,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Normal & Secondary): 8%\nBREEAM Excellent or Outstanding certification: -0.15%\nShort lease (<3 years remaining): +0.5%\nSuboptimal micro-location (poor access, visibility): +0.35%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nFinal: 8.40%"
+      },
+      "twinId": "c432715d-464b-47f8-8331-2352e5c425f8",
+      "twinDeltaChanged": "multi_tenant → long_lease"
+    },
+    {
+      "id": "c7e44884-d371-41fd-a321-19b7c6152abc",
+      "anchor": "retail_prime",
+      "appliedDeltas": [
+        "poor_micro_location",
+        "long_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Retail Prime\n\nKey Characteristics:\n- Suboptimal micro-location (poor access, visibility)\n- Long lease (>10 years WAULT) with creditworthy tenant",
+      "groundTruth": {
+        "value": 5.68,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Prime): 5.625%\nSuboptimal micro-location (poor access, visibility): +0.35%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nFinal: 5.67%"
+      },
+      "twinId": "268927f5-5f2f-48b9-b5d4-fd2c7e75909a",
+      "twinDeltaChanged": "poor_micro_location → breeam_certified"
+    },
+    {
+      "id": "268927f5-5f2f-48b9-b5d4-fd2c7e75909a",
+      "anchor": "retail_prime",
+      "appliedDeltas": [
+        "long_lease",
+        "breeam_certified"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Retail Prime\n\nKey Characteristics:\n- Long lease (>10 years WAULT) with creditworthy tenant\n- BREEAM Excellent or Outstanding certification",
+      "groundTruth": {
+        "value": 5.18,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Prime): 5.625%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nBREEAM Excellent or Outstanding certification: -0.15%\nFinal: 5.17%"
+      },
+      "twinId": "c7e44884-d371-41fd-a321-19b7c6152abc",
+      "twinDeltaChanged": "poor_micro_location → breeam_certified"
+    },
+    {
+      "id": "2d6ef360-221f-4cc2-9bc6-3bcb4e213cc1",
+      "anchor": "retail_normal",
+      "appliedDeltas": [
+        "government_tenant",
+        "short_lease",
+        "poor_micro_location"
+      ],
+      "distractors": [
+        "The seller is highly motivated and wants a quick transaction."
+      ],
+      "contextDescription": "Property Type: Retail Normal\n\nKey Characteristics:\n- Government or AAA-rated corporate tenant\n- Short lease (<3 years remaining)\n- Suboptimal micro-location (poor access, visibility)\n\nAdditional Context:\n- The seller is highly motivated and wants a quick transaction.",
+      "groundTruth": {
+        "value": 7.38,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Normal): 6.875%\nGovernment or AAA-rated corporate tenant: -0.35%\nShort lease (<3 years remaining): +0.5%\nSuboptimal micro-location (poor access, visibility): +0.35%\nFinal: 7.38%"
+      },
+      "twinId": "7a0f4de2-2ceb-4e8f-b453-fe44310ac03c",
+      "twinDeltaChanged": "removed: government_tenant"
+    },
+    {
+      "id": "7a0f4de2-2ceb-4e8f-b453-fe44310ac03c",
+      "anchor": "retail_normal",
+      "appliedDeltas": [
+        "short_lease",
+        "poor_micro_location"
+      ],
+      "distractors": [
+        "The seller is highly motivated and wants a quick transaction."
+      ],
+      "contextDescription": "Property Type: Retail Normal\n\nKey Characteristics:\n- Short lease (<3 years remaining)\n- Suboptimal micro-location (poor access, visibility)\n\nAdditional Context:\n- The seller is highly motivated and wants a quick transaction.",
+      "groundTruth": {
+        "value": 7.73,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Normal): 6.875%\nShort lease (<3 years remaining): +0.5%\nSuboptimal micro-location (poor access, visibility): +0.35%\nFinal: 7.72%"
+      },
+      "twinId": "2d6ef360-221f-4cc2-9bc6-3bcb4e213cc1",
+      "twinDeltaChanged": "removed: government_tenant"
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "8d789174-e7a1-41c8-9ed3-ebb8eb79d005",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 8,
+          "reasoning": "Secondary retail location typically carries higher risk due to competition from e-commerce and changing consumer habits. Older building may require updates, but diversified tenant base mitigates some risk. Positioned towards the higher end of the range due to location and property age.",
+          "latencyMs": 1550
+        },
+        {
+          "prediction": 8.25,
+          "reasoning": "Secondary retail location typically carries higher risk due to potential tenant turnover and market volatility. Older building may require capital expenditures. Positioning towards the higher end of the range reflects these risks, but a diversified tenant base can provide some stability.",
+          "latencyMs": 2685
+        },
+        {
+          "prediction": 8,
+          "reasoning": "Secondary retail location typically carries higher risk due to potential tenant turnover and market volatility. Older building may require renovations, but diversified tenant base mitigates some risk. Positioned towards the higher end of the range due to location and property condition.",
+          "latencyMs": 1538
+        },
+        {
+          "prediction": 8.25,
+          "reasoning": "Secondary retail location typically carries higher risk, older building may require renovations, but diversified tenant base helps mitigate risk. Positioning slightly above mid-range due to location and building age.",
+          "latencyMs": 1273
+        },
+        {
+          "prediction": 8,
+          "reasoning": "Secondary retail location, potential for higher risk due to market trends, older building may require updates, but diversified tenant base mitigates some risk, positioning slightly above mid-range for secondary retail",
+          "latencyMs": 1329
+        }
+      ],
+      "meanPrediction": 8.1,
+      "stdDeviation": 0.122,
+      "minPrediction": 8,
+      "maxPrediction": 8.25,
+      "error": -0.28,
+      "absoluteError": 0.28,
+      "withinTolerance": true,
+      "rolloutConsistency": 40,
+      "startedAt": "2026-01-07T14:01:33.385Z",
+      "completedAt": "2026-01-07T14:01:36.073Z"
+    },
+    {
+      "scenarioId": "6d6c5db1-1ac7-4caf-addf-d2d657385428",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5.75,
+          "reasoning": "Long lease with creditworthy tenant and high sustainability certification provide strong stability, but suboptimal micro-location limits attractiveness. Position slightly below prime retail yields due to location concerns.",
+          "latencyMs": 1434
+        },
+        {
+          "prediction": 6,
+          "reasoning": "Long lease with creditworthy tenant and high sustainability certification provide stability, but suboptimal micro-location affects desirability and risk profile, positioning yield slightly above the lower end of the Retail Normal range.",
+          "latencyMs": 1557
+        },
+        {
+          "prediction": 6,
+          "reasoning": "Long lease with creditworthy tenant and high sustainability certification provide strong security, but suboptimal micro-location impacts desirability and marketability, positioning yield slightly higher than prime retail.",
+          "latencyMs": 1513
+        },
+        {
+          "prediction": 6,
+          "reasoning": "Long lease with creditworthy tenant and high sustainability certification provide stability, but suboptimal micro-location impacts desirability and may increase risk, positioning yield slightly above mid-range for retail.",
+          "latencyMs": 1509
+        },
+        {
+          "prediction": 6,
+          "reasoning": "Long lease with creditworthy tenant and high sustainability certification provide stability, but suboptimal micro-location impacts desirability. Position slightly below mid-range for retail due to location challenges.",
+          "latencyMs": 1480
+        }
+      ],
+      "meanPrediction": 5.95,
+      "stdDeviation": 0.1,
+      "minPrediction": 5.75,
+      "maxPrediction": 6,
+      "error": -0.83,
+      "absoluteError": 0.83,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-07T14:01:36.377Z",
+      "completedAt": "2026-01-07T14:01:37.936Z"
+    },
+    {
+      "scenarioId": "40ff5155-7b01-4d56-97c2-7a04ceb3cd23",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 4.25,
+          "reasoning": "Long lease with creditworthy tenant provides low risk, BREEAM Excellent certification enhances appeal, positioning at the lower end of the retail normal range due to strong tenant quality and lease security.",
+          "latencyMs": 1277
+        },
+        {
+          "prediction": 4.75,
+          "reasoning": "Retail Normal with long lease and creditworthy tenant provides low risk. BREEAM Excellent certification enhances appeal. Positioning slightly above the low end of the prime range due to strong tenant quality and lease term.",
+          "latencyMs": 1393
+        },
+        {
+          "prediction": 4.25,
+          "reasoning": "Long lease with creditworthy tenant and high sustainability certification (BREEAM Excellent/Outstanding) indicates very low risk. Retail Normal range suggests positioning at the lower end due to strong tenant quality and lease term.",
+          "latencyMs": 1306
+        },
+        {
+          "prediction": 4.75,
+          "reasoning": "Long lease with creditworthy tenant provides low risk, BREEAM Excellent certification enhances appeal. Retail Normal range suggests positioning at the lower end due to strong tenant quality and lease duration.",
+          "latencyMs": 1249
+        },
+        {
+          "prediction": 4.25,
+          "reasoning": "Retail Normal with long lease and creditworthy tenant provides low risk. BREEAM Excellent or Outstanding certification enhances appeal. Positioning at the lower end of the range due to strong tenant quality and lease term.",
+          "latencyMs": 1340
+        }
+      ],
+      "meanPrediction": 4.45,
+      "stdDeviation": 0.245,
+      "minPrediction": 4.25,
+      "maxPrediction": 4.75,
+      "error": -1.63,
+      "absoluteError": 1.63,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-07T14:01:38.239Z",
+      "completedAt": "2026-01-07T14:01:39.637Z"
+    },
+    {
+      "scenarioId": "c432715d-464b-47f8-8331-2352e5c425f8",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 8.5,
+          "reasoning": "Secondary logistics location with suboptimal micro-location impacts yield negatively. Short lease term adds risk, but BREEAM certification and diversified tenant base provide some stability. Positioning towards the higher end of the range due to these factors.",
+          "latencyMs": 1608
+        },
+        {
+          "prediction": 8.25,
+          "reasoning": "Secondary logistics location with suboptimal micro-location impacts yield negatively. Short lease term adds risk, but BREEAM certification and diversified tenant base provide some stability. Positioning at the higher end of the range reflects these mixed factors.",
+          "latencyMs": 1582
+        },
+        {
+          "prediction": 8.5,
+          "reasoning": "Secondary logistics location with suboptimal micro-location affects desirability. Short lease term introduces higher risk. However, BREEAM Excellent certification and diversified tenant base provide some stability, justifying a yield towards the higher end of the range.",
+          "latencyMs": 1600
+        },
+        {
+          "prediction": 8.5,
+          "reasoning": "Secondary logistics location with suboptimal micro-location and short lease term introduces higher risk. However, BREEAM certification and diversified tenant base provide some stability. Positioning towards the higher end of the range due to these risk factors.",
+          "latencyMs": 2080
+        },
+        {
+          "prediction": 8.25,
+          "reasoning": "Secondary logistics location with suboptimal micro-location affecting desirability. Short lease term introduces higher risk, despite BREEAM certification and diversified tenant base. Positioning towards higher end of the range due to certification but offset by lease term and location challenges.",
+          "latencyMs": 1733
+        }
+      ],
+      "meanPrediction": 8.4,
+      "stdDeviation": 0.122,
+      "minPrediction": 8.25,
+      "maxPrediction": 8.5,
+      "error": -0.15,
+      "absoluteError": 0.15,
+      "withinTolerance": true,
+      "rolloutConsistency": 100,
+      "startedAt": "2026-01-07T14:01:39.942Z",
+      "completedAt": "2026-01-07T14:01:42.027Z"
+    },
+    {
+      "scenarioId": "64fa9397-7fc7-4e4d-8d36-be2e9be3ada8",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 7.25,
+          "reasoning": "Secondary logistics location with suboptimal micro-location impacts yield. Short lease term increases risk, but long WAULT with creditworthy tenant mitigates some concerns. BREEAM certification adds value, positioning slightly above mid-range due to the lease dynamics.",
+          "latencyMs": 1475
+        },
+        {
+          "prediction": 8,
+          "reasoning": "Secondary logistics location with suboptimal micro-location impacts yield. Short lease term introduces higher risk, but BREEAM Excellent certification and creditworthy tenant provide some stability. Positioning reflects the balance of these factors.",
+          "latencyMs": 1374
+        },
+        {
+          "prediction": 8,
+          "reasoning": "Secondary logistics location with suboptimal micro-location impacts yield. Short lease term introduces risk, but long WAULT with creditworthy tenant and high-quality BREEAM certification provides some stability. Positioning slightly above mid-range due to these mixed factors.",
+          "latencyMs": 1475
+        },
+        {
+          "prediction": 8.25,
+          "reasoning": "Secondary logistics location with suboptimal micro-location factors and short lease term create higher risk. However, the presence of a creditworthy tenant and BREEAM certification provide some stability. Positioning at the higher end of the range reflects these mixed characteristics.",
+          "latencyMs": 1454
+        },
+        {
+          "prediction": 8.25,
+          "reasoning": "Secondary logistics location with suboptimal micro-location impacts yield. Short lease term creates risk, but BREEAM Excellent certification and creditworthy tenant provide stability. Positioning reflects higher risk due to lease duration and location, resulting in a yield above the typical range.",
+          "latencyMs": 1564
+        }
+      ],
+      "meanPrediction": 7.95,
+      "stdDeviation": 0.367,
+      "minPrediction": 7.25,
+      "maxPrediction": 8.25,
+      "error": -0.45,
+      "absoluteError": 0.45,
+      "withinTolerance": false,
+      "rolloutConsistency": 40,
+      "startedAt": "2026-01-07T14:01:42.330Z",
+      "completedAt": "2026-01-07T14:01:43.901Z"
+    },
+    {
+      "scenarioId": "c7e44884-d371-41fd-a321-19b7c6152abc",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 6,
+          "reasoning": "Prime retail property with long lease and creditworthy tenant provides stability, but suboptimal micro-location impacts desirability and potential foot traffic, positioning yield towards the higher end of the retail range.",
+          "latencyMs": 1213
+        },
+        {
+          "prediction": 6,
+          "reasoning": "Prime retail property with long lease and creditworthy tenant provides stability, but suboptimal micro-location impacts desirability and marketability, positioning yield slightly above mid-range for prime retail.",
+          "latencyMs": 1193
+        },
+        {
+          "prediction": 6,
+          "reasoning": "Despite a long lease with a creditworthy tenant providing stability, the suboptimal micro-location with poor access and visibility introduces significant risk. This positioning is below prime retail yields, reflecting the location's challenges while still benefiting from the long lease.",
+          "latencyMs": 1598
+        },
+        {
+          "prediction": 6,
+          "reasoning": "Despite a long lease with a creditworthy tenant providing stability, the suboptimal micro-location with poor access and visibility significantly impacts desirability, positioning the yield towards the higher end of the retail range.",
+          "latencyMs": 1259
+        },
+        {
+          "prediction": 6,
+          "reasoning": "Despite the long lease with a creditworthy tenant providing stability, the suboptimal micro-location with poor access and visibility significantly impacts desirability. This results in a yield positioned towards the higher end of the retail range, reflecting the location risk.",
+          "latencyMs": 1396
+        }
+      ],
+      "meanPrediction": 6,
+      "stdDeviation": 0,
+      "minPrediction": 6,
+      "maxPrediction": 6,
+      "error": 0.32,
+      "absoluteError": 0.32,
+      "withinTolerance": true,
+      "rolloutConsistency": 100,
+      "startedAt": "2026-01-07T14:01:44.206Z",
+      "completedAt": "2026-01-07T14:01:45.807Z"
+    },
+    {
+      "scenarioId": "268927f5-5f2f-48b9-b5d4-fd2c7e75909a",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 4.75,
+          "reasoning": "Prime retail location with long lease and creditworthy tenant provides low risk. BREEAM Excellent certification enhances appeal, positioning slightly above the lowest yields due to strong tenant quality and lease term.",
+          "latencyMs": 1362
+        },
+        {
+          "prediction": 4.75,
+          "reasoning": "Prime retail location with long lease and creditworthy tenant provides strong stability. BREEAM Excellent certification enhances appeal, positioning slightly above the lowest yields due to the quality of the asset and tenant security.",
+          "latencyMs": 1285
+        },
+        {
+          "prediction": 4.75,
+          "reasoning": "Prime retail property with long lease and creditworthy tenant, combined with BREEAM Excellent certification indicates low risk and high quality. Positioning slightly above the lowest yield due to retail sector dynamics, but strong tenant and certification support a favorable yield.",
+          "latencyMs": 1645
+        },
+        {
+          "prediction": 4.75,
+          "reasoning": "Prime retail location with long lease and creditworthy tenant provides strong security. BREEAM Excellent certification enhances appeal, positioning slightly above the low end of the prime retail range due to the quality of the tenant and building.",
+          "latencyMs": 1330
+        },
+        {
+          "prediction": 4.75,
+          "reasoning": "Prime retail location with long lease and creditworthy tenant provides low risk profile. BREEAM Excellent or Outstanding certification enhances appeal. Positioned slightly above the lowest yield due to retail sector dynamics but still reflects strong fundamentals.",
+          "latencyMs": 1333
+        }
+      ],
+      "meanPrediction": 4.75,
+      "stdDeviation": 0,
+      "minPrediction": 4.75,
+      "maxPrediction": 4.75,
+      "error": -0.43,
+      "absoluteError": 0.43,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-07T14:01:46.109Z",
+      "completedAt": "2026-01-07T14:01:47.756Z"
+    },
+    {
+      "scenarioId": "2d6ef360-221f-4cc2-9bc6-3bcb4e213cc1",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 8.5,
+          "reasoning": "Retail Normal range typically 6.00-9.00%. Government or AAA-rated tenant provides strong credit quality, but short lease term and suboptimal micro-location increase risk. Motivated seller may indicate urgency, justifying a higher yield to attract buyers.",
+          "latencyMs": 1694
+        },
+        {
+          "prediction": 7.5,
+          "reasoning": "Retail Normal category with a government or AAA-rated corporate tenant provides stability; however, the short lease term (<3 years) introduces re-leasing risk. The suboptimal micro-location with poor access and visibility further pressures yield. Motivated seller may indicate urgency, potentially leading to a slightly higher yield to attract buyers.",
+          "latencyMs": 1921
+        },
+        {
+          "prediction": 8.5,
+          "reasoning": "Retail Normal range typically 6.50-9.50%. Government or AAA-rated corporate tenant provides stability, but short lease term (<3 years) introduces re-leasing risk. Suboptimal micro-location affects desirability and potential for future rental growth. Motivated seller may indicate a need for a quicker sale, justifying a higher yield.",
+          "latencyMs": 2215
+        },
+        {
+          "prediction": 8.5,
+          "reasoning": "Retail Normal category with a government or AAA-rated tenant provides some security, but the short lease term (<3 years) introduces significant re-leasing risk. The suboptimal micro-location with poor access and visibility further elevates the risk profile. Given the seller's motivation for a quick transaction, the yield is positioned towards the higher end to account for these factors.",
+          "latencyMs": 1905
+        },
+        {
+          "prediction": 8,
+          "reasoning": "Retail Normal range typically 6.50-9.50%. Government or AAA-rated tenant provides stability, but short lease and suboptimal micro-location increase risk. Positioning towards higher end of range due to these factors, with seller motivation potentially impacting pricing.",
+          "latencyMs": 1880
+        }
+      ],
+      "meanPrediction": 8.2,
+      "stdDeviation": 0.4,
+      "minPrediction": 7.5,
+      "maxPrediction": 8.5,
+      "error": 0.82,
+      "absoluteError": 0.82,
+      "withinTolerance": false,
+      "rolloutConsistency": 20,
+      "startedAt": "2026-01-07T14:01:48.061Z",
+      "completedAt": "2026-01-07T14:01:50.294Z"
+    },
+    {
+      "scenarioId": "7a0f4de2-2ceb-4e8f-b453-fe44310ac03c",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 9,
+          "reasoning": "Retail Normal range is typically 7.50-10.50%. Short lease term adds significant risk, and the suboptimal micro-location further detracts from attractiveness. Motivated seller may indicate urgency, justifying a higher yield to attract buyers despite the challenges.",
+          "latencyMs": 1619
+        },
+        {
+          "prediction": 9,
+          "reasoning": "Retail Normal range is typically 7.00-10.00%. Short lease term (<3 years) adds significant risk, and suboptimal micro-location further detracts from attractiveness. Motivated seller may indicate urgency, leading to a higher yield to compensate for the risks involved.",
+          "latencyMs": 1828
+        },
+        {
+          "prediction": 9,
+          "reasoning": "Retail Normal range is typically higher due to risks. Short lease term (<3 years) and suboptimal micro-location with poor access and visibility significantly increase risk. Motivated seller may indicate urgency, potentially leading to a discount. Positioning at the higher end of the range reflects these factors.",
+          "latencyMs": 1879
+        },
+        {
+          "prediction": 9,
+          "reasoning": "Retail Normal range is typically 7.50-10.50%. Short lease term (<3 years) introduces higher risk, and suboptimal micro-location with poor access and visibility further elevates concerns. Motivated seller may indicate urgency, justifying positioning at the higher end of the range.",
+          "latencyMs": 1521
+        },
+        {
+          "prediction": 9,
+          "reasoning": "Retail Normal range typically 7.00-10.00%. Short lease term creates higher risk of vacancy, and suboptimal micro-location further exacerbates this risk. Motivated seller suggests urgency, which may pressure pricing. Positioned towards the higher end of the range due to these factors.",
+          "latencyMs": 1864
+        }
+      ],
+      "meanPrediction": 9,
+      "stdDeviation": 0,
+      "minPrediction": 9,
+      "maxPrediction": 9,
+      "error": 1.27,
+      "absoluteError": 1.27,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-07T14:01:50.596Z",
+      "completedAt": "2026-01-07T14:01:52.478Z"
+    }
+  ],
+  "completedAt": "2026-01-07T14:01:52.782Z",
+  "aggregateMetrics": {
+    "hitRate": 33.33,
+    "meanError": -0.151,
+    "rmse": 0.831,
+    "avgLatencyMs": 1563,
+    "directionalAccuracy": 100,
+    "avgStdDeviation": 0.151,
+    "avgConsistency": 33.33
+  }
+}
