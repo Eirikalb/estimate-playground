@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { loadDomainConfig, loadExpertFacts } from "@/lib/storage";
 import { generateScenarios } from "@/lib/generator";
 import { renderPrompt, buildTemplateContext } from "@/prompts/engine";
-import { callOpenRouter, type OpenRouterConfig } from "@/lib/openrouter";
-import { evaluatePrediction } from "@/lib/evaluator";
+import { callOpenRouterMultiple, type OpenRouterConfig } from "@/lib/openrouter";
+import { evaluateMultipleRollouts } from "@/lib/evaluator";
 
 export async function POST(request: Request) {
   try {
@@ -13,6 +13,7 @@ export async function POST(request: Request) {
       model,
       promptTemplate,
       scenario: providedScenario,
+      rolloutsPerScenario = 1,
       seed,
     } = body;
 
@@ -23,6 +24,9 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    // Validate rollouts (1-10)
+    const rollouts = Math.max(1, Math.min(10, rolloutsPerScenario));
 
     // Load domain config and facts
     const domainConfig = await loadDomainConfig(domainId);
@@ -72,23 +76,27 @@ export async function POST(request: Request) {
       );
     }
 
-    // Run through LLM
+    // Run through LLM with multiple rollouts
     const config: OpenRouterConfig = {
       apiKey,
       model,
       temperature: 0.3,
     };
 
-    const llmResult = await callOpenRouter(renderedPrompt, config);
-    const result = evaluatePrediction(scenario, llmResult);
+    const llmResults = await callOpenRouterMultiple(renderedPrompt, config, rollouts);
+    const result = evaluateMultipleRollouts(scenario, llmResults);
 
     return NextResponse.json({
       scenario,
       renderedPrompt,
       context,
       result,
-      rawResponse: llmResult.rawResponse,
-      latencyMs: llmResult.latencyMs,
+      rollouts: llmResults.map((r) => ({
+        prediction: r.prediction.yield,
+        reasoning: r.prediction.reasoning,
+        latencyMs: r.latencyMs,
+        rawResponse: r.rawResponse,
+      })),
     });
   } catch (error) {
     console.error("Playground error:", error);
@@ -98,4 +106,3 @@ export async function POST(request: Request) {
     );
   }
 }
-

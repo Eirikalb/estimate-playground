@@ -155,6 +155,60 @@ function parseJsonResponse(content: string): Prediction {
 }
 
 /**
+ * Run multiple rollouts of the same prompt for variance estimation
+ * Runs in parallel for efficiency
+ */
+export async function callOpenRouterMultiple(
+  prompt: string,
+  config: OpenRouterConfig,
+  numRollouts: number
+): Promise<LLMResult[]> {
+  if (numRollouts <= 0) {
+    return [];
+  }
+
+  if (numRollouts === 1) {
+    const result = await callOpenRouter(prompt, config);
+    return [result];
+  }
+
+  // Run rollouts in parallel (with some batching to avoid rate limits)
+  const batchSize = 5;
+  const results: LLMResult[] = [];
+
+  for (let i = 0; i < numRollouts; i += batchSize) {
+    const batchCount = Math.min(batchSize, numRollouts - i);
+    const batchPromises = Array(batchCount)
+      .fill(null)
+      .map(async () => {
+        try {
+          return await callOpenRouter(prompt, config);
+        } catch (error) {
+          return {
+            prediction: {
+              yield: 0,
+              reasoning: `Error: ${error instanceof Error ? error.message : "Unknown error"}`,
+            },
+            rawResponse: "",
+            latencyMs: 0,
+            model: config.model,
+          } as LLMResult;
+        }
+      });
+
+    const batchResults = await Promise.all(batchPromises);
+    results.push(...batchResults);
+
+    // Small delay between batches to avoid rate limiting
+    if (i + batchSize < numRollouts) {
+      await new Promise((resolve) => setTimeout(resolve, 300));
+    }
+  }
+
+  return results;
+}
+
+/**
  * Run a batch of prompts through OpenRouter
  */
 export async function runBatch(

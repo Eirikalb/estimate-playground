@@ -16,15 +16,21 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import type { PromptTemplate, Scenario, ScenarioResult } from "@/domains/schema";
+import type { PromptTemplate, Scenario, ScenarioResult, RolloutResult } from "@/domains/schema";
 import { AVAILABLE_MODELS } from "@/lib/openrouter";
+
+interface PlaygroundRollout {
+  prediction: number;
+  reasoning: string;
+  latencyMs: number;
+  rawResponse: string;
+}
 
 interface PlaygroundResult {
   scenario: Scenario;
   renderedPrompt: string;
   result?: ScenarioResult;
-  rawResponse?: string;
-  latencyMs?: number;
+  rollouts?: PlaygroundRollout[];
 }
 
 export default function Playground() {
@@ -34,6 +40,7 @@ export default function Playground() {
   const [customTemplate, setCustomTemplate] = useState<string>("");
   const [selectedModel, setSelectedModel] = useState<string>("openai/gpt-4o-mini");
   const [scenarioCount, setScenarioCount] = useState<number>(5);
+  const [rolloutsPerScenario, setRolloutsPerScenario] = useState<number>(1);
   const [seed, setSeed] = useState<number>(Date.now());
   
   const [loading, setLoading] = useState(false);
@@ -95,6 +102,7 @@ export default function Playground() {
           model: selectedModel,
           promptTemplate: customTemplate,
           scenario: result?.scenario,
+          rolloutsPerScenario,
           seed,
         }),
       });
@@ -122,6 +130,7 @@ export default function Playground() {
           promptTemplate: customTemplate,
           promptTemplateId: selectedTemplate,
           scenarioCount,
+          rolloutsPerScenario,
           generateTwins: true,
           seed,
         }),
@@ -144,6 +153,14 @@ export default function Playground() {
     if (absError <= 0.35) return "text-amber-400";
     return "text-red-400";
   };
+
+  const getConsistencyColor = (std: number) => {
+    if (std <= 0.1) return "text-emerald-400";
+    if (std <= 0.25) return "text-amber-400";
+    return "text-red-400";
+  };
+
+  const totalApiCalls = scenarioCount * 2 * rolloutsPerScenario;
 
   return (
     <div className="container max-w-screen-2xl py-8">
@@ -201,10 +218,10 @@ export default function Playground() {
                 </Select>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-3 gap-4">
                 <div>
                   <label className="text-sm font-medium mb-2 block">
-                    Scenario Count
+                    Scenarios
                   </label>
                   <Input
                     type="number"
@@ -212,6 +229,19 @@ export default function Playground() {
                     max={50}
                     value={scenarioCount}
                     onChange={(e) => setScenarioCount(parseInt(e.target.value) || 5)}
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium mb-2 block">
+                    Rollouts
+                    <span className="text-muted-foreground text-xs ml-1">(1-10)</span>
+                  </label>
+                  <Input
+                    type="number"
+                    min={1}
+                    max={10}
+                    value={rolloutsPerScenario}
+                    onChange={(e) => setRolloutsPerScenario(Math.max(1, Math.min(10, parseInt(e.target.value) || 1)))}
                   />
                 </div>
                 <div>
@@ -223,6 +253,19 @@ export default function Playground() {
                   />
                 </div>
               </div>
+
+              {rolloutsPerScenario > 1 && (
+                <div className="bg-muted/50 rounded-lg p-3 text-sm">
+                  <span className="text-muted-foreground">
+                    Running {rolloutsPerScenario} rollouts per scenario enables variance estimation.
+                    {totalApiCalls > 20 && (
+                      <span className="text-amber-400 ml-1">
+                        ({totalApiCalls} total API calls)
+                      </span>
+                    )}
+                  </span>
+                </div>
+              )}
             </CardContent>
           </Card>
 
@@ -252,7 +295,7 @@ export default function Playground() {
           {/* Actions */}
           <Card>
             <CardContent className="pt-6">
-              <div className="flex gap-3">
+              <div className="flex gap-3 flex-wrap">
                 <Button
                   onClick={handlePreview}
                   variant="outline"
@@ -265,15 +308,17 @@ export default function Playground() {
                   variant="secondary"
                   disabled={loading || !result?.scenario}
                 >
-                  {loading ? "Running..." : "Run Single Scenario"}
+                  {loading 
+                    ? `Running ${rolloutsPerScenario} rollout${rolloutsPerScenario > 1 ? "s" : ""}...` 
+                    : `Run ${rolloutsPerScenario > 1 ? `${rolloutsPerScenario} Rollouts` : "Single Scenario"}`}
                 </Button>
                 <Button
                   onClick={handleRunBenchmark}
                   disabled={runningBenchmark}
                 >
                   {runningBenchmark
-                    ? `Running ${scenarioCount * 2} scenarios...`
-                    : `Run Full Benchmark (${scenarioCount * 2} scenarios)`}
+                    ? `Running ${totalApiCalls} calls...`
+                    : `Run Benchmark (${totalApiCalls} calls)`}
                 </Button>
               </div>
             </CardContent>
@@ -292,6 +337,9 @@ export default function Playground() {
                     <TabsTrigger value="prompt">Rendered Prompt</TabsTrigger>
                     {result.result && (
                       <TabsTrigger value="response">LLM Response</TabsTrigger>
+                    )}
+                    {result.rollouts && result.rollouts.length > 1 && (
+                      <TabsTrigger value="rollouts">Rollouts ({result.rollouts.length})</TabsTrigger>
                     )}
                   </TabsList>
 
@@ -320,14 +368,16 @@ export default function Playground() {
 
                       {result.result && (
                         <div>
-                          <h4 className="font-medium mb-2">Prediction</h4>
+                          <h4 className="font-medium mb-2">
+                            {result.result.rollouts.length > 1 ? "Mean Prediction" : "Prediction"}
+                          </h4>
                           <div className="bg-muted p-4 rounded-lg font-mono">
                             <div
                               className={`text-2xl font-bold ${getErrorColor(
                                 result.result.error
                               )}`}
                             >
-                              {result.result.prediction.toFixed(2)}%
+                              {result.result.meanPrediction.toFixed(2)}%
                             </div>
                             <div className="text-xs text-muted-foreground mt-1">
                               Error: {result.result.error > 0 ? "+" : ""}
@@ -338,6 +388,16 @@ export default function Playground() {
                                 </Badge>
                               )}
                             </div>
+                            {result.result.rollouts.length > 1 && (
+                              <div className="text-xs mt-2 pt-2 border-t border-border">
+                                <span className={getConsistencyColor(result.result.stdDeviation)}>
+                                  σ = {result.result.stdDeviation.toFixed(3)}
+                                </span>
+                                <span className="text-muted-foreground ml-2">
+                                  Range: {result.result.minPrediction.toFixed(2)} - {result.result.maxPrediction.toFixed(2)}
+                                </span>
+                              </div>
+                            )}
                           </div>
                         </div>
                       )}
@@ -375,22 +435,63 @@ export default function Playground() {
 
                   {result.result && (
                     <TabsContent value="response" className="space-y-4">
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                        <span>Latency: {result.latencyMs}ms</span>
-                      </div>
+                      {result.rollouts && result.rollouts.length > 0 && (
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                          <span>
+                            Avg Latency: {Math.round(
+                              result.rollouts.reduce((s, r) => s + r.latencyMs, 0) / result.rollouts.length
+                            )}ms
+                          </span>
+                          {result.rollouts.length > 1 && (
+                            <span>
+                              Total Rollouts: {result.rollouts.length}
+                            </span>
+                          )}
+                        </div>
+                      )}
 
                       <div>
                         <h4 className="font-medium mb-2">Raw Response</h4>
-                        <pre className="bg-muted p-4 rounded-lg text-sm whitespace-pre-wrap font-mono">
-                          {result.rawResponse}
+                        <pre className="bg-muted p-4 rounded-lg text-sm whitespace-pre-wrap font-mono max-h-[300px] overflow-auto">
+                          {result.rollouts?.[0]?.rawResponse || "No response"}
                         </pre>
                       </div>
 
                       <div>
                         <h4 className="font-medium mb-2">Parsed Reasoning</h4>
                         <p className="text-sm text-muted-foreground">
-                          {result.result.reasoning}
+                          {result.result.rollouts[0]?.reasoning || "No reasoning"}
                         </p>
+                      </div>
+                    </TabsContent>
+                  )}
+
+                  {result.rollouts && result.rollouts.length > 1 && (
+                    <TabsContent value="rollouts" className="space-y-4">
+                      <div className="text-sm text-muted-foreground mb-4">
+                        Individual predictions from {result.rollouts.length} rollouts
+                      </div>
+                      <div className="space-y-3">
+                        {result.rollouts.map((rollout, i) => (
+                          <div key={i} className="bg-muted p-3 rounded-lg">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="font-medium">Rollout {i + 1}</span>
+                              <div className="flex items-center gap-3 text-sm">
+                                <span className={`font-mono ${getErrorColor(
+                                  rollout.prediction - result.scenario.groundTruth.value
+                                )}`}>
+                                  {rollout.prediction.toFixed(2)}%
+                                </span>
+                                <span className="text-muted-foreground">
+                                  {rollout.latencyMs}ms
+                                </span>
+                              </div>
+                            </div>
+                            <p className="text-xs text-muted-foreground line-clamp-2">
+                              {rollout.reasoning}
+                            </p>
+                          </div>
+                        ))}
                       </div>
                     </TabsContent>
                   )}
@@ -403,4 +504,3 @@ export default function Playground() {
     </div>
   );
 }
-

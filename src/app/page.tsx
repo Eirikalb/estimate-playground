@@ -140,9 +140,10 @@ export default function Dashboard() {
                   <TableHead>Model</TableHead>
                   <TableHead>Strategy</TableHead>
                   <TableHead>Scenarios</TableHead>
+                  <TableHead>Rollouts</TableHead>
                   <TableHead>Hit Rate</TableHead>
                   <TableHead>RMSE</TableHead>
-                  <TableHead>Directional</TableHead>
+                  <TableHead>Avg σ</TableHead>
                   <TableHead></TableHead>
                 </TableRow>
               </TableHeader>
@@ -163,6 +164,9 @@ export default function Dashboard() {
                     <TableCell className="font-mono">
                       {run.scenarios.length}
                     </TableCell>
+                    <TableCell className="font-mono">
+                      {run.rolloutsPerScenario > 1 ? `${run.rolloutsPerScenario}x` : "1"}
+                    </TableCell>
                     <TableCell>
                       <Badge
                         className={getHitRateColor(run.aggregateMetrics.hitRate)}
@@ -174,8 +178,8 @@ export default function Dashboard() {
                       {run.aggregateMetrics.rmse.toFixed(3)}
                     </TableCell>
                     <TableCell className="font-mono">
-                      {run.aggregateMetrics.directionalAccuracy !== undefined
-                        ? `${run.aggregateMetrics.directionalAccuracy.toFixed(0)}%`
+                      {run.aggregateMetrics.avgStdDeviation !== undefined
+                        ? run.aggregateMetrics.avgStdDeviation.toFixed(3)
                         : "—"}
                     </TableCell>
                     <TableCell>

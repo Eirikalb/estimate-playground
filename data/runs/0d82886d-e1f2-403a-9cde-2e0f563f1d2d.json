@@ -1,0 +1,393 @@
+{
+  "id": "0d82886d-e1f2-403a-9cde-2e0f563f1d2d",
+  "timestamp": "2026-01-07T13:08:15.709Z",
+  "domainId": "real-estate-yield",
+  "model": "openai/gpt-4o-mini",
+  "promptStrategy": "persona",
+  "promptTemplate": "You are a senior {{domain.name}} analyst with 15+ years of experience in the Norwegian market.\n\n{{#facts.benchmarks}}\n{{{content}}}\n{{/facts.benchmarks}}\n\n{{#facts.lease_risk}}\n{{{content}}}\n{{/facts.lease_risk}}\n\n{{#facts.tenant_quality}}\n{{{content}}}\n{{/facts.tenant_quality}}\n\n{{#facts.building_standard}}\n{{{content}}}\n{{/facts.building_standard}}\n\n{{#facts.methodology}}\n{{{content}}}\n{{/facts.methodology}}\n\n---\n\n### Property to Evaluate\n\n{{scenario.contextDescription}}\n\n---\n\nBased on your expert analysis, estimate the appropriate market yield for this property.\n\nReturn your answer as JSON only, no markdown:\n{\"yield\": <number>, \"reasoning\": \"<your detailed reasoning>\"}\n\n",
+  "rolloutsPerScenario": 5,
+  "scenarios": [
+    {
+      "id": "9ca5c4f2-9b8d-4b2b-b9be-e6c9f8b01fc0",
+      "anchor": "retail_prime",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "Property Type: Retail Prime",
+      "groundTruth": {
+        "value": 5.63,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Prime): 5.625%\nFinal: 5.63%"
+      }
+    },
+    {
+      "id": "a447598c-a303-4692-819d-9a17539c3dc9",
+      "anchor": "hotel_prime",
+      "appliedDeltas": [
+        "long_lease",
+        "short_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Hotel Prime\n\nKey Characteristics:\n- Long lease (>10 years WAULT) with creditworthy tenant\n- Short lease (<3 years remaining)",
+      "groundTruth": {
+        "value": 5.83,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Prime): 5.625%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nShort lease (<3 years remaining): +0.5%\nFinal: 5.83%"
+      },
+      "twinId": "a60f7ff1-f95d-42e7-af6e-5a6a9b0a74fc",
+      "twinDeltaChanged": "removed: short_lease"
+    },
+    {
+      "id": "a60f7ff1-f95d-42e7-af6e-5a6a9b0a74fc",
+      "anchor": "hotel_prime",
+      "appliedDeltas": [
+        "long_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Hotel Prime\n\nKey Characteristics:\n- Long lease (>10 years WAULT) with creditworthy tenant",
+      "groundTruth": {
+        "value": 5.33,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Prime): 5.625%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nFinal: 5.33%"
+      },
+      "twinId": "a447598c-a303-4692-819d-9a17539c3dc9",
+      "twinDeltaChanged": "removed: short_lease"
+    },
+    {
+      "id": "414f9233-4003-4a84-81bc-67f32931c1b5",
+      "anchor": "office_trondheim",
+      "appliedDeltas": [
+        "modern_building",
+        "multi_tenant",
+        "vacancy_risk"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Office Trondheim\n\nKey Characteristics:\n- Modern building (post-2015, high standard)\n- Diversified tenant base (3+ tenants)\n- Current or imminent vacancy (>20%)",
+      "groundTruth": {
+        "value": 6.8,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Trondheim): 6.75%\nModern building (post-2015, high standard): -0.2%\nDiversified tenant base (3+ tenants): -0.15%\nCurrent or imminent vacancy (>20%): +0.4%\nFinal: 6.80%"
+      },
+      "twinId": "c67bb046-1b56-4080-835e-13f60de685c8",
+      "twinDeltaChanged": "vacancy_risk → older_building"
+    },
+    {
+      "id": "c67bb046-1b56-4080-835e-13f60de685c8",
+      "anchor": "office_trondheim",
+      "appliedDeltas": [
+        "modern_building",
+        "multi_tenant",
+        "older_building"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Office Trondheim\n\nKey Characteristics:\n- Modern building (post-2015, high standard)\n- Diversified tenant base (3+ tenants)\n- Older building (pre-2000, needs capex)",
+      "groundTruth": {
+        "value": 6.7,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Trondheim): 6.75%\nModern building (post-2015, high standard): -0.2%\nDiversified tenant base (3+ tenants): -0.15%\nOlder building (pre-2000, needs capex): +0.3%\nFinal: 6.70%"
+      },
+      "twinId": "414f9233-4003-4a84-81bc-67f32931c1b5",
+      "twinDeltaChanged": "vacancy_risk → older_building"
+    },
+    {
+      "id": "0e564441-1345-4e98-9785-29de9c95ddd8",
+      "anchor": "office_oslo_east",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "Property Type: Office Oslo East",
+      "groundTruth": {
+        "value": 6.5,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo East): 6.5%\nFinal: 6.50%"
+      }
+    },
+    {
+      "id": "9cb2fef4-0c41-4d0b-9492-a23dd133423b",
+      "anchor": "hotel_normal",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "Property Type: Hotel Normal & Secondary",
+      "groundTruth": {
+        "value": 7.88,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Normal & Secondary): 7.875%\nFinal: 7.88%"
+      }
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "9ca5c4f2-9b8d-4b2b-b9be-e6c9f8b01fc0",
+      "rollouts": [
+        {
+          "prediction": 5.5,
+          "reasoning": "The property is classified as Retail Prime, which has a yield range of 5.25% to 6.00%. Assuming the property is in a desirable location with good tenant quality, I would position it towards the lower end of the range. If the tenant is a well-known national brand or an established mid-sized company, it would align with medium risk, justifying a yield of around 5.50%. This yield reflects the stability of a prime retail asset while considering the current market conditions and tenant risk.",
+          "latencyMs": 2480
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The property is classified as Retail Prime, which has a benchmark yield range of 5.25% to 6.00%. Assuming the property is in a prime location with a strong tenant mix and a long lease (greater than 10 years) with a creditworthy tenant, it would trade closer to the lower end of the range. Given these factors, a yield of 5.50% is appropriate, reflecting the quality of the asset and the stability provided by the long lease.",
+          "latencyMs": 2611
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The property is classified as Retail Prime, which has a yield range of 5.25% to 6.00%. Assuming the property is in a good location with a strong tenant mix and a long lease term, it would likely trade closer to the lower end of this range. Given the current market conditions and the importance of tenant quality, if the tenant is a well-known national brand or an established mid-sized company, this supports a yield of around 5.50%. This yield reflects a balance between the prime nature of the asset and the associated risks.",
+          "latencyMs": 2689
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The property is classified as Retail Prime, which has a benchmark yield range of 5.25% to 6.00%. Assuming the property is in a good location with a strong tenant mix, we would position it towards the lower end of the range. If the tenant is of low risk, such as a government tenant or a AAA-rated corporation, we could apply a yield compression of 15-40 bps. Given this context, I estimate a yield of 5.50%, reflecting a strong tenant profile and a prime retail location.",
+          "latencyMs": 2575
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is classified as Retail Prime, which has a yield range of 5.25% to 6.00%. Assuming the property is in a desirable location with good foot traffic and a strong tenant mix, it would likely be positioned towards the lower end of the range. Given the current market conditions, I estimate a yield of 5.75%. This takes into account the quality of the tenant, which I assume is likely to be a well-known national brand or an established mid-sized company, thus reflecting medium risk. Additionally, if the property has a long lease term and is modern or well-maintained, it could command a slightly lower yield within the prime range.",
+          "latencyMs": 3250
+        }
+      ],
+      "meanPrediction": 5.55,
+      "stdDeviation": 0.1,
+      "minPrediction": 5.5,
+      "maxPrediction": 5.75,
+      "error": -0.08,
+      "absoluteError": 0.08,
+      "withinTolerance": true,
+      "rolloutConsistency": 100
+    },
+    {
+      "scenarioId": "a447598c-a303-4692-819d-9a17539c3dc9",
+      "rollouts": [
+        {
+          "prediction": 5.25,
+          "reasoning": "The property is classified as a 'Hotel Prime' asset, which has a benchmark yield range of 4.75% to 6.50%. Given the characteristics of the property, it has a long lease (>10 years WAULT) with a creditworthy tenant, which typically would command a yield compression of 25-50 bps. However, it also has a short lease (<3 years remaining), which introduces significant re-letting risk, warranting a yield expansion of 25-75 bps. Balancing these factors, the long lease would suggest a lower yield closer to 4.75%, while the short lease would push it higher. Therefore, the final yield is estimated at 5.25%, reflecting a compromise between the benefits of the long lease and the risks associated with the short remaining term.",
+          "latencyMs": 4454
+        },
+        {
+          "prediction": 5.25,
+          "reasoning": "The property is classified as a Hotel Prime asset, which has a benchmark yield range of 4.75%–6.50%. Given the characteristics of the property, it has a long lease (>10 years WAULT) with a creditworthy tenant, which typically would command a yield closer to the lower end of the range due to the stability and reduced risk associated with long leases. However, the property also has a short lease (<3 years remaining), which introduces significant re-letting risk. This risk typically warrants a premium of 25-75 bps. Therefore, we would adjust the yield upwards by approximately 50 bps to account for the short lease risk. Starting from the lower end of the benchmark yield (4.75%), the adjusted yield would be 4.75% + 0.50% = 5.25%. This yield reflects the balance between the long lease stability and the short lease risk.",
+          "latencyMs": 5115
+        },
+        {
+          "prediction": 5.25,
+          "reasoning": "The property is categorized as a Hotel Prime asset, which has a benchmark yield range of 4.75% to 6.50%. Given the characteristics of the property, it has a long lease (>10 years WAULT) with a creditworthy tenant, which typically commands a lower yield due to reduced risk. However, the presence of a short lease (<3 years remaining) introduces significant re-letting risk, which typically adds a premium of 25-75 basis points to the yield. Therefore, while the long lease would suggest a yield closer to the lower end of the range (around 4.75%), the short remaining lease necessitates an adjustment upwards. Considering these factors, a yield of 5.25% is appropriate, reflecting both the quality of the tenant and the risk associated with the short lease term.",
+          "latencyMs": 4509
+        },
+        {
+          "prediction": 5.25,
+          "reasoning": "The property is classified as a Hotel Prime asset, which typically has a yield range of 4.75% to 6.50%. Given that it has a long lease (>10 years WAULT) with a creditworthy tenant, it would normally command a lower yield due to the stability and reduced risk associated with such leases. However, the presence of a short lease (<3 years remaining) introduces significant re-letting risk, which typically requires a yield premium of 25-75 bps. Therefore, while the long lease would suggest a yield closer to the lower end of the range (around 4.75% to 5.25%), the short lease necessitates an adjustment upwards. Considering these factors, the estimated yield is 5.25%, reflecting a balance between the long lease's stability and the risks associated with the short lease.",
+          "latencyMs": 4541
+        },
+        {
+          "prediction": 5.25,
+          "reasoning": "The property is classified as a Hotel Prime asset, which has a typical yield range of 4.75%–6.50%. Given the long lease (>10 years WAULT) with a creditworthy tenant, we would expect a yield compression of 25-50 basis points. However, the short lease (<3 years remaining) introduces significant re-letting risk, which would typically require a premium of 25-75 basis points. Balancing these factors, the yield would be adjusted downwards from the lower end of the prime range due to the long lease, but then adjusted upwards due to the short remaining lease. Therefore, the final yield is estimated at 5.25%, reflecting the strong tenant quality but also accounting for the risks associated with the short lease term.",
+          "latencyMs": 4277
+        }
+      ],
+      "meanPrediction": 5.25,
+      "stdDeviation": 0,
+      "minPrediction": 5.25,
+      "maxPrediction": 5.25,
+      "error": -0.58,
+      "absoluteError": 0.58,
+      "withinTolerance": false,
+      "rolloutConsistency": 0
+    },
+    {
+      "scenarioId": "a60f7ff1-f95d-42e7-af6e-5a6a9b0a74fc",
+      "rollouts": [
+        {
+          "prediction": 4.75,
+          "reasoning": "The property is classified as a Hotel Prime asset, which has a benchmark yield range of 4.75% to 6.50%. Given that it has a long lease (>10 years WAULT) with a creditworthy tenant, it is likely to trade closer to the lower end of the yield range. The long lease provides stability and reduces risk, allowing for a yield compression of approximately 25-50 basis points. Therefore, the estimated yield for this property is 4.75%, reflecting its prime status and low risk associated with the tenant.",
+          "latencyMs": 3197
+        },
+        {
+          "prediction": 4.75,
+          "reasoning": "The property is classified as 'Hotel Prime' and has a long lease (>10 years WAULT) with a creditworthy tenant. According to the yield data for Q3 2024, 'Hotel Prime' yields range from 4.75% to 6.50%. Given the long lease with a creditworthy tenant, this property would command a yield at the lower end of the range, specifically 4.75%, as it aligns closely with bond-like returns due to the stability and reduced risk associated with long-term leases.",
+          "latencyMs": 3550
+        },
+        {
+          "prediction": 4.75,
+          "reasoning": "The property is classified as a Hotel Prime type, which has a benchmark yield range of 4.75% to 6.50%. Given that it has a long lease (greater than 10 years WAULT) with a creditworthy tenant, it would command a yield closer to the lower end of the range. Specifically, long leases with creditworthy tenants typically trade at yields that are 25-50 basis points lower than the benchmark. Therefore, applying a 25 basis point compression to the lower end of the benchmark (4.75% - 0.25%) results in an estimated yield of 4.75%.",
+          "latencyMs": 4424
+        },
+        {
+          "prediction": 4.75,
+          "reasoning": "The property is classified as 'Hotel Prime' and has a long lease with a WAULT of over 10 years with a creditworthy tenant. According to the yield data, the yield range for Hotel Prime is 4.75% to 6.50%. Given the long lease term and the quality of the tenant, which typically commands lower yields due to reduced risk, the yield would be positioned at the lower end of the range. Therefore, an estimated yield of 4.75% is appropriate, reflecting the bond-like return characteristic associated with long leases and creditworthy tenants.",
+          "latencyMs": 3972
+        },
+        {
+          "prediction": 4.75,
+          "reasoning": "The property is categorized as 'Hotel Prime' which has a benchmark yield range of 4.75% to 6.50%. Given that it has a long lease (>10 years WAULT) with a creditworthy tenant, it would trade closer to the lower end of the yield range. Long leases with strong tenants typically command a yield compression of 25-50 basis points. Therefore, applying a 25 basis point compression to the lower end of the benchmark (4.75%) results in an estimated yield of 4.75%, reflecting the property's strong position in the market.",
+          "latencyMs": 4026
+        }
+      ],
+      "meanPrediction": 4.75,
+      "stdDeviation": 0,
+      "minPrediction": 4.75,
+      "maxPrediction": 4.75,
+      "error": -0.58,
+      "absoluteError": 0.58,
+      "withinTolerance": false,
+      "rolloutConsistency": 0
+    },
+    {
+      "scenarioId": "414f9233-4003-4a84-81bc-67f32931c1b5",
+      "rollouts": [
+        {
+          "prediction": 6.25,
+          "reasoning": "The property is an office in Trondheim, which typically has yields ranging from 5.50% to 8.00%. Given that it is a modern building (post-2015), it would typically command a lower yield due to lower maintenance costs and better energy efficiency. This could provide a yield compression of 15-25 bps. However, the property has a current or imminent vacancy of over 20%, which introduces significant re-letting risk, likely requiring a yield premium of 25-75 bps to compensate for this risk. Considering the diversified tenant base (3+ tenants) mitigates some risk, the overall adjustment leads to a final yield estimate of 6.25%, which is at the higher end of the typical range for this segment, reflecting the balance between the modern building quality and the vacancy risk.",
+          "latencyMs": 3675
+        },
+        {
+          "prediction": 6.25,
+          "reasoning": "The property is an office building in Trondheim, which typically has yields ranging from 5.50% to 8.00%. Given that it is a modern building (post-2015) with a high standard, we can expect a yield compression of approximately 15-25 bps, placing it closer to the lower end of the range. However, the current or imminent vacancy of over 20% introduces a significant re-letting risk, which typically commands a yield premium of 25-75 bps. Taking these factors into account, the yield adjustment leads to a final estimated yield of 6.25%, balancing the benefits of the modern building against the risks associated with vacancy.",
+          "latencyMs": 3579
+        },
+        {
+          "prediction": 6.25,
+          "reasoning": "The property is located in Trondheim, which has a yield range of 5.50%–8.00% for office spaces. Given that it is a modern building (post-2015) with a high standard, we can expect a yield compression of approximately 15-25 bps, moving it towards the lower end of the range. However, the current or imminent vacancy of over 20% introduces significant re-letting risk, which typically adds a premium of 25-75 bps to the yield. Considering these factors, the yield adjustment would be as follows: starting from a benchmark yield of around 5.75% (the midpoint of the range), applying a 20 bps compression for the modern standard brings it to 5.55%, and then adding a 70 bps premium for the vacancy risk results in an estimated yield of approximately 6.25%.",
+          "latencyMs": 5349
+        },
+        {
+          "prediction": 6.25,
+          "reasoning": "The property is an office in Trondheim, which typically has yields ranging from 5.50% to 8.00%. Given that it is a modern building (post-2015) with a high standard, we can expect a yield compression of 15-25 bps, bringing it closer to the lower end of the range. However, the current or imminent vacancy of over 20% introduces significant re-letting risk, which would typically command a premium of 25-75 bps. Balancing these factors, the yield is adjusted upwards due to the vacancy risk. Thus, the final estimated yield is 6.25%, reflecting a moderate risk profile considering the building's quality and tenant diversification.",
+          "latencyMs": 3334
+        },
+        {
+          "prediction": 6.25,
+          "reasoning": "The property is an office in Trondheim, which typically has yields ranging from 5.50% to 8.00%. Given that it is a modern building (post-2015) with a high standard, it would command a yield at the lower end of the spectrum, approximately 15-25 bps lower than the benchmark. However, the property has a current or imminent vacancy of over 20%, which introduces significant re-letting risk. This factor would typically warrant a yield premium of 25-75 bps. Considering these adjustments, we start at a base yield of around 5.75% for a modern building in Trondheim, apply a downward adjustment of 20 bps for its high standard, and then add a premium of 50 bps for the vacancy risk. This results in an estimated yield of 6.25%.",
+          "latencyMs": 3749
+        }
+      ],
+      "meanPrediction": 6.25,
+      "stdDeviation": 0,
+      "minPrediction": 6.25,
+      "maxPrediction": 6.25,
+      "error": -0.55,
+      "absoluteError": 0.55,
+      "withinTolerance": false,
+      "rolloutConsistency": 0
+    },
+    {
+      "scenarioId": "c67bb046-1b56-4080-835e-13f60de685c8",
+      "rollouts": [
+        {
+          "prediction": 6.75,
+          "reasoning": "The property is an office in Trondheim, which typically has yields ranging from 5.50% to 8.00%. Given that it is a modern building (post-2015) with a high standard, it would typically command a lower yield of about 15-25 bps. However, the presence of an older building (pre-2000) that requires capex introduces a significant risk factor, likely resulting in a yield expansion of 20-40 bps. The diversified tenant base (3+ tenants) mitigates some risk associated with tenant quality, but since the building requires capital expenditure, the yield adjustment leans towards the higher end. Therefore, starting from a benchmark yield of around 6.25% for office in Trondheim, adjusting for the modern standard (lowering by 20 bps) and then increasing due to the older building needing capex (increasing by 50 bps), results in an estimated yield of 6.75%.",
+          "latencyMs": 4907
+        },
+        {
+          "prediction": 7.25,
+          "reasoning": "To evaluate the yield for the Office Trondheim property, we start by identifying the benchmark yield range for office properties in Trondheim, which is 5.50%–8.00%. Given that the property is a modern building (post-2015), it would typically command a yield at the lower end of the range due to lower maintenance costs and higher tenant appeal. However, the property also has characteristics of an older building (pre-2000) that requires capital expenditure (capex), which introduces obsolescence risk and necessitates a yield expansion of 20-40 bps. Additionally, while the tenant base is diversified with 3+ tenants, which mitigates some risk, it does not fully offset the concerns related to the building's age and required capex. Therefore, adjusting the yield downwards for the modern standard (15-25 bps compression) and upwards for the older building condition (20-40 bps expansion), we arrive at a final yield of approximately 7.25%, which reflects the balance of these factors.",
+          "latencyMs": 4309
+        },
+        {
+          "prediction": 7.25,
+          "reasoning": "To evaluate the yield for the office property in Trondheim, we start with the benchmark yield for Office Trondheim, which ranges from 5.50% to 8.00%. Given that this property is a modern building (post-2015) with a high standard, it would typically command a lower yield within this range, likely around the 5.50% to 6.25% mark. However, the property also has an older building component (pre-2000) that requires capital expenditures (capex), which introduces obsolescence risk and necessitates a yield expansion of approximately 20-40 basis points. Additionally, while the tenant base is diversified with 3+ tenants, which generally reduces risk, the presence of an older building still weighs on the overall yield. Taking these factors into account, we position the yield at the higher end of the benchmark range, resulting in an estimated yield of 7.25%.",
+          "latencyMs": 4019
+        },
+        {
+          "prediction": 6.75,
+          "reasoning": "The property is an office in Trondheim, which typically has yields ranging from 5.50% to 8.00%. Given that it is a modern building (post-2015) with a high standard, it would typically command a lower yield of about 15-25 bps. However, the presence of an older building (pre-2000) that requires capital expenditure introduces a yield expansion risk of 20-40 bps. The diversified tenant base (3+ tenants) mitigates some tenant risk, but since the property has a mix of modern and older characteristics, the adjustments balance out. Therefore, starting from a benchmark yield of around 6.25% for modern buildings in Trondheim, adjusting for tenant quality and building condition leads to an estimated yield of 6.75%.",
+          "latencyMs": 4045
+        },
+        {
+          "prediction": 6.75,
+          "reasoning": "To evaluate the yield for the Office Trondheim property, we start with the benchmark yield range for Office Trondheim, which is 5.50%–8.00%. Given that the property is a modern building (post-2015), we can apply a yield compression of 15-25 basis points. However, the property also has characteristics of an older building (pre-2000) that requires capital expenditure, which typically results in a yield expansion of 20-40 basis points. The diversified tenant base (3+ tenants) suggests a medium risk profile, which aligns with benchmark yields. After considering these factors, we estimate a yield of 6.75%, which reflects the balance between the positive aspects of a modern building and the negative implications of needing capex.",
+          "latencyMs": 3899
+        }
+      ],
+      "meanPrediction": 6.95,
+      "stdDeviation": 0.245,
+      "minPrediction": 6.75,
+      "maxPrediction": 7.25,
+      "error": 0.25,
+      "absoluteError": 0.25,
+      "withinTolerance": true,
+      "rolloutConsistency": 60
+    },
+    {
+      "scenarioId": "0e564441-1345-4e98-9785-29de9c95ddd8",
+      "rollouts": [
+        {
+          "prediction": 6,
+          "reasoning": "The property is located in Oslo East, which has a yield range of 5.75% to 7.25%. Assuming this property is a medium-quality asset with a typical tenant mix, it would likely trade at the benchmark yield. If the property has a lease length of around 5-10 years with a mix of medium-risk tenants (established mid-sized companies or well-known national brands), it would justify a yield towards the middle of the range. Additionally, if the building is modern (post-2015) and has good energy efficiency, it could command a slight compression of around 15-25 bps, leading to a final yield estimate of 6.00%.",
+          "latencyMs": 3132
+        },
+        {
+          "prediction": 6,
+          "reasoning": "The property is located in Oslo East, where the market yield range is 5.75%–7.25%. To determine the appropriate yield, we need to consider several factors: if the property has a long lease with a creditworthy tenant, we could expect a yield closer to the lower end of the range. If it has a medium lease length with established tenants, it would align with benchmark yields. However, if the lease is short or the tenant quality is lower, we would adjust towards the higher end. Assuming the property has a medium lease length with a mix of established tenants, a yield of 6.00% is reasonable, reflecting a balanced risk profile within the given range.",
+          "latencyMs": 3968
+        },
+        {
+          "prediction": 6,
+          "reasoning": "The property is located in Oslo East, which has a yield range of 5.75%–7.25%. Assuming the property has a medium lease length (5-10 years) with a tenant of medium risk (established mid-sized company), it would typically trade at benchmark yields. Given the location's characteristics and the tenant's profile, I would position the yield slightly above the midpoint of the range to account for medium risk, resulting in an estimated yield of 6.00%. This reflects a balance between the location's attractiveness and the tenant's creditworthiness.",
+          "latencyMs": 2417
+        },
+        {
+          "prediction": 6,
+          "reasoning": "The property is located in Oslo East, which has a yield range of 5.75% to 7.25%. Assuming this is a medium-quality asset with a typical tenant mix, we would start at the benchmark yield. If the property has a WAULT of 5-10 years, it would trade at the benchmark yield. If the tenant quality is medium risk, we would not adjust the yield significantly. If the building is modern (post-2015), we could apply a slight compression of 15-25 bps. Given these factors, a yield of 6.00% is reasonable, reflecting a balance of tenant risk and building quality.",
+          "latencyMs": 2745
+        },
+        {
+          "prediction": 6,
+          "reasoning": "The property is located in Oslo East, which has a yield range of 5.75%–7.25%. To determine the appropriate yield, I will consider several factors: if the property has a long lease (over 10 years) with a creditworthy tenant, it would command a lower yield, closer to the lower end of the range. If the lease is medium (5-10 years), it would align with benchmark yields. If the lease is short (less than 3 years), it would require a premium due to re-letting risk. Assuming the property has a medium lease length with a tenant of medium risk, I would position it at the benchmark yield. Additionally, if the building is modern (post-2015) and has good energy efficiency, it could justify a slight compression of around 15-25 bps. Therefore, a yield of 6.00% reflects a balanced assessment of the location, lease length, tenant quality, and building condition.",
+          "latencyMs": 3896
+        }
+      ],
+      "meanPrediction": 6,
+      "stdDeviation": 0,
+      "minPrediction": 6,
+      "maxPrediction": 6,
+      "error": -0.5,
+      "absoluteError": 0.5,
+      "withinTolerance": false,
+      "rolloutConsistency": 0
+    },
+    {
+      "scenarioId": "9cb2fef4-0c41-4d0b-9492-a23dd133423b",
+      "rollouts": [
+        {
+          "prediction": 7,
+          "reasoning": "The property is classified as 'Hotel Normal & Secondary', which has a yield range of 6.50%–9.25%. To estimate the appropriate market yield, we consider several factors: if the property is in a location with moderate demand and competition, it would likely fall towards the middle of the range. Additionally, if the hotel has a reasonable tenant quality (not a prime operator but not a high-risk tenant), we can assume a slight adjustment towards the higher end of the range. Given these considerations, a yield of 7.00% reflects a balance between the market standard for secondary hotels and the potential risks associated with tenant quality and location.",
+          "latencyMs": 3706
+        },
+        {
+          "prediction": 7.25,
+          "reasoning": "The property is classified as 'Hotel Normal & Secondary,' which typically commands yields in the range of 6.50% to 9.25%. Given the normal and secondary classification, we would expect the yield to be towards the higher end of this range. Assuming the property has a medium lease length and tenant quality that is average (not high risk but not low risk), I estimate a yield of 7.25%. This reflects a balance between the inherent risks associated with a secondary hotel asset and the current market conditions.",
+          "latencyMs": 3295
+        },
+        {
+          "prediction": 7.25,
+          "reasoning": "The property is categorized as 'Hotel Normal & Secondary,' which has a yield range of 6.50% to 9.25%. Given that it is a secondary asset, it would typically trade at the higher end of this range. Considering factors such as tenant quality, lease length, and building condition are crucial in determining the final yield. Assuming the hotel has a medium lease length (5-10 years) and a tenant with medium risk (established brand), we would apply benchmark yields. Additionally, if the building is reasonably modern but not certified, we might expect a slight yield compression. Therefore, a yield of 7.25% is appropriate, reflecting a balance between the risks associated with a secondary hotel asset and the prevailing market conditions.",
+          "latencyMs": 3688
+        },
+        {
+          "prediction": 7.25,
+          "reasoning": "The property is classified as 'Hotel Normal & Secondary,' which has a yield range of 6.50% to 9.25%. Given that it falls within the secondary category, we would expect it to trade at the higher end of the yield spectrum due to factors such as potentially lower tenant quality and higher operational risks compared to prime assets. Considering the average market conditions and the typical characteristics of secondary hotels, a yield of 7.25% is reasonable. This reflects a balance between the inherent risks associated with secondary hotels and the current market appetite for such assets.",
+          "latencyMs": 4626
+        },
+        {
+          "prediction": 7,
+          "reasoning": "The property is categorized as 'Hotel Normal & Secondary', which has a yield range of 6.50% to 9.25%. Given the nature of the hotel market, I would position this property towards the middle of the range due to potential tenant quality and market conditions. Assuming the property has a reasonable tenant mix but may not be in a prime location or have exceptional features, a yield of 7.00% reflects a balance between the risks associated with the hotel sector and the expected returns. Additionally, factors such as lease length and tenant quality could further influence this yield, but without specific details provided, a conservative estimate within the normal range is appropriate.",
+          "latencyMs": 3711
+        }
+      ],
+      "meanPrediction": 7.15,
+      "stdDeviation": 0.122,
+      "minPrediction": 7,
+      "maxPrediction": 7.25,
+      "error": -0.73,
+      "absoluteError": 0.73,
+      "withinTolerance": false,
+      "rolloutConsistency": 0
+    }
+  ],
+  "aggregateMetrics": {
+    "hitRate": 28.57,
+    "meanError": -0.396,
+    "rmse": 0.511,
+    "avgLatencyMs": 3763,
+    "directionalAccuracy": 50,
+    "avgStdDeviation": 0.067,
+    "avgConsistency": 22.86
+  }
+}

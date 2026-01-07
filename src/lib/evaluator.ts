@@ -2,34 +2,80 @@ import type {
   Scenario,
   ScenarioResult,
   BenchmarkRun,
+  RolloutResult,
 } from "@/domains/schema";
 import type { LLMResult } from "./openrouter";
 import { getTwinPairs } from "./generator";
 
 /**
- * Evaluate a single prediction against ground truth
+ * Calculate standard deviation
+ */
+function calculateStdDeviation(values: number[]): number {
+  if (values.length <= 1) return 0;
+  const mean = values.reduce((sum, v) => sum + v, 0) / values.length;
+  const squaredDiffs = values.map((v) => Math.pow(v - mean, 2));
+  const variance = squaredDiffs.reduce((sum, v) => sum + v, 0) / values.length;
+  return Math.sqrt(variance);
+}
+
+/**
+ * Evaluate multiple rollouts against ground truth
+ * Calculates mean, std deviation, and consistency metrics
+ */
+export function evaluateMultipleRollouts(
+  scenario: Scenario,
+  results: LLMResult[]
+): ScenarioResult {
+  const groundTruth = scenario.groundTruth.value;
+  const tolerance = scenario.groundTruth.tolerance;
+
+  // Convert LLMResults to RolloutResults
+  const rollouts: RolloutResult[] = results.map((r) => ({
+    prediction: r.prediction.yield,
+    reasoning: r.prediction.reasoning,
+    latencyMs: r.latencyMs,
+  }));
+
+  // Calculate aggregate stats
+  const predictions = rollouts.map((r) => r.prediction);
+  const meanPrediction = predictions.reduce((sum, p) => sum + p, 0) / predictions.length;
+  const stdDeviation = calculateStdDeviation(predictions);
+  const minPrediction = Math.min(...predictions);
+  const maxPrediction = Math.max(...predictions);
+
+  // Evaluate against ground truth using mean
+  const error = meanPrediction - groundTruth;
+  const absoluteError = Math.abs(error);
+  const withinTolerance = absoluteError <= tolerance;
+
+  // Calculate rollout consistency (% of rollouts within tolerance)
+  const rolloutsWithinTolerance = predictions.filter(
+    (p) => Math.abs(p - groundTruth) <= tolerance
+  ).length;
+  const rolloutConsistency = (rolloutsWithinTolerance / predictions.length) * 100;
+
+  return {
+    scenarioId: scenario.id,
+    rollouts,
+    meanPrediction: Math.round(meanPrediction * 1000) / 1000,
+    stdDeviation: Math.round(stdDeviation * 1000) / 1000,
+    minPrediction: Math.round(minPrediction * 1000) / 1000,
+    maxPrediction: Math.round(maxPrediction * 1000) / 1000,
+    error: Math.round(error * 1000) / 1000,
+    absoluteError: Math.round(absoluteError * 1000) / 1000,
+    withinTolerance,
+    rolloutConsistency: Math.round(rolloutConsistency * 100) / 100,
+  };
+}
+
+/**
+ * Evaluate a single prediction against ground truth (backwards compatible)
  */
 export function evaluatePrediction(
   scenario: Scenario,
   result: LLMResult
 ): ScenarioResult {
-  const prediction = result.prediction.yield;
-  const groundTruth = scenario.groundTruth.value;
-  const tolerance = scenario.groundTruth.tolerance;
-
-  const error = prediction - groundTruth;
-  const absoluteError = Math.abs(error);
-  const withinTolerance = absoluteError <= tolerance;
-
-  return {
-    scenarioId: scenario.id,
-    prediction,
-    reasoning: result.prediction.reasoning,
-    latencyMs: result.latencyMs,
-    error,
-    absoluteError,
-    withinTolerance,
-  };
+  return evaluateMultipleRollouts(scenario, [result]);
 }
 
 /**
@@ -61,12 +107,28 @@ export function calculateAggregateMetrics(
     results.reduce((sum, r) => sum + r.error * r.error, 0) / results.length;
   const rmse = Math.sqrt(mse);
 
-  // Average latency
-  const avgLatencyMs =
-    results.reduce((sum, r) => sum + r.latencyMs, 0) / results.length;
+  // Average latency across all rollouts
+  const totalLatency = results.reduce(
+    (sum, r) => sum + r.rollouts.reduce((s, roll) => s + roll.latencyMs, 0),
+    0
+  );
+  const totalRollouts = results.reduce((sum, r) => sum + r.rollouts.length, 0);
+  const avgLatencyMs = totalRollouts > 0 ? totalLatency / totalRollouts : 0;
 
   // Directional accuracy for twin pairs
   const directionalAccuracy = calculateDirectionalAccuracy(scenarios, results);
+
+  // Variance metrics (when rollouts > 1)
+  const hasMultipleRollouts = results.some((r) => r.rollouts.length > 1);
+  let avgStdDeviation: number | undefined;
+  let avgConsistency: number | undefined;
+
+  if (hasMultipleRollouts) {
+    avgStdDeviation =
+      results.reduce((sum, r) => sum + r.stdDeviation, 0) / results.length;
+    avgConsistency =
+      results.reduce((sum, r) => sum + r.rolloutConsistency, 0) / results.length;
+  }
 
   return {
     hitRate: Math.round(hitRate * 100) / 100,
@@ -74,6 +136,12 @@ export function calculateAggregateMetrics(
     rmse: Math.round(rmse * 1000) / 1000,
     avgLatencyMs: Math.round(avgLatencyMs),
     ...(directionalAccuracy !== undefined && { directionalAccuracy }),
+    ...(avgStdDeviation !== undefined && {
+      avgStdDeviation: Math.round(avgStdDeviation * 1000) / 1000,
+    }),
+    ...(avgConsistency !== undefined && {
+      avgConsistency: Math.round(avgConsistency * 100) / 100,
+    }),
   };
 }
 
@@ -109,7 +177,7 @@ function calculateDirectionalAccuracy(
     // Determine expected direction based on ground truth
     const expectedDiff =
       original.groundTruth.value - twin.groundTruth.value;
-    const actualDiff = originalResult.prediction - twinResult.prediction;
+    const actualDiff = originalResult.meanPrediction - twinResult.meanPrediction;
 
     // Check if the direction matches (both positive, both negative, or both zero)
     if (
@@ -188,6 +256,7 @@ export function getDetailedBreakdown(
   analysis: {
     errorCategory: "excellent" | "good" | "fair" | "poor";
     biasDirection: "overestimate" | "underestimate" | "accurate";
+    consistencyCategory?: "high" | "medium" | "low";
   };
 }> {
   return scenarios
@@ -218,12 +287,25 @@ export function getDetailedBreakdown(
         biasDirection = "accurate";
       }
 
+      // Consistency category (when multiple rollouts)
+      let consistencyCategory: "high" | "medium" | "low" | undefined;
+      if (result.rollouts.length > 1) {
+        if (result.stdDeviation <= 0.1) {
+          consistencyCategory = "high";
+        } else if (result.stdDeviation <= 0.25) {
+          consistencyCategory = "medium";
+        } else {
+          consistencyCategory = "low";
+        }
+      }
+
       return {
         scenario,
         result,
         analysis: {
           errorCategory,
           biasDirection,
+          ...(consistencyCategory && { consistencyCategory }),
         },
       };
     })

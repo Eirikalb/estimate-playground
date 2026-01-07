@@ -1,0 +1,463 @@
+{
+  "id": "05a7c570-2ca4-4b50-8fb8-cd3cb1f43a80",
+  "timestamp": "2026-01-07T13:31:44.950Z",
+  "domainId": "real-estate-yield",
+  "model": "openai/gpt-4o-mini",
+  "promptStrategy": "minimal",
+  "promptTemplate": "Estimate the market yield for this Norwegian commercial real estate property:\n\n{{scenario.contextDescription}}\n\nReturn JSON only: {\"yield\": <number>, \"reasoning\": \"<brief explanation>\"}\n\n",
+  "rolloutsPerScenario": 5,
+  "scenarios": [
+    {
+      "id": "e576f7ab-ee1a-4262-9454-01c4fec7adfd",
+      "anchor": "logistics_normal",
+      "appliedDeltas": [
+        "single_tenant_sme",
+        "long_lease",
+        "multi_tenant",
+        "prime_micro_location"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Logistics Normal & Secondary\n\nKey Characteristics:\n- Single SME tenant (concentration risk)\n- Long lease (>10 years WAULT) with creditworthy tenant\n- Diversified tenant base (3+ tenants)\n- Exceptional micro-location within the area",
+      "groundTruth": {
+        "value": 7.75,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Normal & Secondary): 8%\nSingle SME tenant (concentration risk): +0.45%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nDiversified tenant base (3+ tenants): -0.15%\nExceptional micro-location within the area: -0.25%\nFinal: 7.75%"
+      },
+      "twinId": "9549349f-0200-474f-9df5-2b0d9354a9e5",
+      "twinDeltaChanged": "single_tenant_sme → modern_building"
+    },
+    {
+      "id": "9549349f-0200-474f-9df5-2b0d9354a9e5",
+      "anchor": "logistics_normal",
+      "appliedDeltas": [
+        "long_lease",
+        "multi_tenant",
+        "prime_micro_location",
+        "modern_building"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Logistics Normal & Secondary\n\nKey Characteristics:\n- Long lease (>10 years WAULT) with creditworthy tenant\n- Diversified tenant base (3+ tenants)\n- Exceptional micro-location within the area\n- Modern building (post-2015, high standard)",
+      "groundTruth": {
+        "value": 7.1,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Normal & Secondary): 8%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nDiversified tenant base (3+ tenants): -0.15%\nExceptional micro-location within the area: -0.25%\nModern building (post-2015, high standard): -0.2%\nFinal: 7.10%"
+      },
+      "twinId": "e576f7ab-ee1a-4262-9454-01c4fec7adfd",
+      "twinDeltaChanged": "single_tenant_sme → modern_building"
+    },
+    {
+      "id": "636816d0-d984-4712-9851-54f6a196edf6",
+      "anchor": "hotel_prime",
+      "appliedDeltas": [
+        "single_tenant_sme",
+        "multi_tenant",
+        "long_lease",
+        "breeam_certified"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Hotel Prime\n\nKey Characteristics:\n- Single SME tenant (concentration risk)\n- Diversified tenant base (3+ tenants)\n- Long lease (>10 years WAULT) with creditworthy tenant\n- BREEAM Excellent or Outstanding certification",
+      "groundTruth": {
+        "value": 5.48,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Prime): 5.625%\nSingle SME tenant (concentration risk): +0.45%\nDiversified tenant base (3+ tenants): -0.15%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nBREEAM Excellent or Outstanding certification: -0.15%\nFinal: 5.47%"
+      },
+      "twinId": "ad43accf-075f-4ac3-8fc6-8d6eacc45a88",
+      "twinDeltaChanged": "removed: long_lease"
+    },
+    {
+      "id": "ad43accf-075f-4ac3-8fc6-8d6eacc45a88",
+      "anchor": "hotel_prime",
+      "appliedDeltas": [
+        "single_tenant_sme",
+        "multi_tenant",
+        "breeam_certified"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Hotel Prime\n\nKey Characteristics:\n- Single SME tenant (concentration risk)\n- Diversified tenant base (3+ tenants)\n- BREEAM Excellent or Outstanding certification",
+      "groundTruth": {
+        "value": 5.78,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Prime): 5.625%\nSingle SME tenant (concentration risk): +0.45%\nDiversified tenant base (3+ tenants): -0.15%\nBREEAM Excellent or Outstanding certification: -0.15%\nFinal: 5.77%"
+      },
+      "twinId": "636816d0-d984-4712-9851-54f6a196edf6",
+      "twinDeltaChanged": "removed: long_lease"
+    },
+    {
+      "id": "d0035469-ddb8-4e53-9163-64ebfba38401",
+      "anchor": "residential",
+      "appliedDeltas": [
+        "single_tenant_sme",
+        "government_tenant",
+        "poor_micro_location",
+        "older_building"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Residential\n\nKey Characteristics:\n- Single SME tenant (concentration risk)\n- Government or AAA-rated corporate tenant\n- Suboptimal micro-location (poor access, visibility)\n- Older building (pre-2000, needs capex)",
+      "groundTruth": {
+        "value": 6.13,
+        "tolerance": 0.35,
+        "calculation": "Base (Residential): 5.375%\nSingle SME tenant (concentration risk): +0.45%\nGovernment or AAA-rated corporate tenant: -0.35%\nSuboptimal micro-location (poor access, visibility): +0.35%\nOlder building (pre-2000, needs capex): +0.3%\nFinal: 6.13%"
+      },
+      "twinId": "70ac061f-c917-4080-b086-8824274bff81",
+      "twinDeltaChanged": "older_building → multi_tenant"
+    },
+    {
+      "id": "70ac061f-c917-4080-b086-8824274bff81",
+      "anchor": "residential",
+      "appliedDeltas": [
+        "single_tenant_sme",
+        "government_tenant",
+        "poor_micro_location",
+        "multi_tenant"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Residential\n\nKey Characteristics:\n- Single SME tenant (concentration risk)\n- Government or AAA-rated corporate tenant\n- Suboptimal micro-location (poor access, visibility)\n- Diversified tenant base (3+ tenants)",
+      "groundTruth": {
+        "value": 5.68,
+        "tolerance": 0.35,
+        "calculation": "Base (Residential): 5.375%\nSingle SME tenant (concentration risk): +0.45%\nGovernment or AAA-rated corporate tenant: -0.35%\nSuboptimal micro-location (poor access, visibility): +0.35%\nDiversified tenant base (3+ tenants): -0.15%\nFinal: 5.67%"
+      },
+      "twinId": "d0035469-ddb8-4e53-9163-64ebfba38401",
+      "twinDeltaChanged": "older_building → multi_tenant"
+    },
+    {
+      "id": "f1e9b97e-90fd-43fd-8e02-57f8cfc22ecd",
+      "anchor": "logistics_prime",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "Property Type: Logistics Prime",
+      "groundTruth": {
+        "value": 6.13,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Prime): 6.125%\nFinal: 6.13%"
+      }
+    },
+    {
+      "id": "4d492aac-4705-497b-b7da-7f67eca1307a",
+      "anchor": "residential",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "Property Type: Residential",
+      "groundTruth": {
+        "value": 5.38,
+        "tolerance": 0.35,
+        "calculation": "Base (Residential): 5.375%\nFinal: 5.38%"
+      }
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "e576f7ab-ee1a-4262-9454-01c4fec7adfd",
+      "rollouts": [
+        {
+          "prediction": 6.5,
+          "reasoning": "The yield is estimated at 6.5% due to the long lease with a creditworthy tenant, which reduces risk, but the concentration risk from having a single SME tenant affects the yield negatively. The exceptional micro-location adds value, supporting a slightly lower yield compared to average market rates.",
+          "latencyMs": 2002
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The yield is estimated at 6.5% due to the long lease with a creditworthy tenant, which reduces risk, but the concentration risk from having a single SME tenant impacts the yield slightly. The exceptional micro-location adds value, supporting a lower yield compared to less desirable properties.",
+          "latencyMs": 1975
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The yield is estimated at 6.5% due to the long lease with a creditworthy tenant, which reduces risk despite the concentration risk from a single SME tenant. The diversified tenant base and exceptional micro-location further support a stable income, justifying a moderate yield in the logistics sector.",
+          "latencyMs": 2000
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The property has a long lease with a creditworthy tenant, which reduces risk and supports a lower yield. However, the concentration risk from a single SME tenant and the secondary nature of the logistics property suggest a moderate yield. The exceptional micro-location adds value, balancing the risks.",
+          "latencyMs": 1978
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The yield is estimated at 6.5% due to the long lease with a creditworthy tenant, which mitigates risk despite the concentration risk from a single SME tenant. The diversified tenant base and exceptional micro-location enhance the property's attractiveness, justifying a yield that reflects stability and lower risk.",
+          "latencyMs": 3166
+        }
+      ],
+      "meanPrediction": 6.5,
+      "stdDeviation": 0,
+      "minPrediction": 6.5,
+      "maxPrediction": 6.5,
+      "error": -1.25,
+      "absoluteError": 1.25,
+      "withinTolerance": false,
+      "rolloutConsistency": 0
+    },
+    {
+      "scenarioId": "9549349f-0200-474f-9df5-2b0d9354a9e5",
+      "rollouts": [
+        {
+          "prediction": 5.5,
+          "reasoning": "Given the long lease with a creditworthy tenant, a diversified tenant base, and a modern building in an exceptional micro-location, the property is likely to attract strong demand, justifying a lower yield in the range of 5.0% to 6.0%. A yield of 5.5% reflects the quality and stability of the investment.",
+          "latencyMs": 2912
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The long lease with a creditworthy tenant and a diversified tenant base typically leads to lower risk, which can justify a lower yield. The exceptional micro-location and modern building further enhance the property's attractiveness, suggesting a yield in the range of 5.0% to 6.0% for logistics properties in Norway.",
+          "latencyMs": 2625
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "Given the long lease with a creditworthy tenant, diversified tenant base, exceptional micro-location, and modern building standards, the property is likely to attract a lower yield due to its stability and lower risk profile. A yield of 5.5% reflects these favorable characteristics in the current market for logistics properties in Norway.",
+          "latencyMs": 2824
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The long lease with a creditworthy tenant and diversified tenant base typically leads to lower risk, which can justify a lower yield. Additionally, the exceptional micro-location and modern building standards contribute to higher demand, further supporting a yield around 5.5%.",
+          "latencyMs": 1800
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The property has a long lease with a creditworthy tenant and a diversified tenant base, which reduces risk. Its exceptional micro-location and modern building standards further enhance its appeal, suggesting a lower yield due to lower perceived risk and strong demand.",
+          "latencyMs": 1731
+        }
+      ],
+      "meanPrediction": 5.5,
+      "stdDeviation": 0,
+      "minPrediction": 5.5,
+      "maxPrediction": 5.5,
+      "error": -1.6,
+      "absoluteError": 1.6,
+      "withinTolerance": false,
+      "rolloutConsistency": 0
+    },
+    {
+      "scenarioId": "636816d0-d984-4712-9851-54f6a196edf6",
+      "rollouts": [
+        {
+          "prediction": 5.5,
+          "reasoning": "The yield is estimated at 5.5% due to the long lease with a creditworthy tenant, which reduces risk. However, the concentration risk from having a single SME tenant offsets some of the stability, while the BREEAM certification adds value, supporting a slightly lower yield compared to typical market rates.",
+          "latencyMs": 2265
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The market yield for a prime hotel property with a long lease and a creditworthy tenant is typically lower due to the stability and security of income. The BREEAM Excellent or Outstanding certification adds value, indicating sustainability and operational efficiency, which can attract higher quality tenants and reduce vacancy risk. However, the concentration risk from a single SME tenant slightly offsets the yield, leading to an estimated market yield of around 5.5%.",
+          "latencyMs": 2958
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The yield is estimated at 5.5% due to the long lease with a creditworthy tenant, which reduces risk, and the BREEAM certification, which enhances the property's value. However, the concentration risk from having a single SME tenant slightly offsets the potential yield.",
+          "latencyMs": 1947
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The market yield for a prime hotel property in Norway with a long lease and creditworthy tenant is estimated at 5.5%. This reflects the stability provided by the long WAULT and the BREEAM certification, while also considering the concentration risk from having a single SME tenant.",
+          "latencyMs": 2099
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The yield is estimated at 5.5% due to the combination of a long lease with a creditworthy tenant, which reduces risk, and the BREEAM certification that enhances property value. However, the concentration risk from having a single SME tenant slightly offsets the yield, keeping it within a competitive range for prime hotel properties in Norway.",
+          "latencyMs": 2235
+        }
+      ],
+      "meanPrediction": 5.5,
+      "stdDeviation": 0,
+      "minPrediction": 5.5,
+      "maxPrediction": 5.5,
+      "error": 0.02,
+      "absoluteError": 0.02,
+      "withinTolerance": true,
+      "rolloutConsistency": 100
+    },
+    {
+      "scenarioId": "ad43accf-075f-4ac3-8fc6-8d6eacc45a88",
+      "rollouts": [
+        {
+          "prediction": 6.5,
+          "reasoning": "The market yield for a prime hotel property in Norway, considering the concentration risk of a single SME tenant but balanced by a diversified tenant base and high sustainability certification (BREEAM Excellent or Outstanding), is estimated around 6.5%. This reflects a moderate risk premium for tenant concentration while acknowledging the value added by sustainability and diversification.",
+          "latencyMs": 2577
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The market yield for a prime hotel property in Norway with a single SME tenant presents concentration risk, which typically leads to a higher yield requirement. However, the presence of a diversified tenant base and BREEAM Excellent or Outstanding certification adds value and reduces risk, allowing for a more competitive yield estimate. A yield of 6.5% reflects these factors.",
+          "latencyMs": 2317
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "Given the property is a hotel with a single SME tenant, it carries concentration risk which typically leads to a higher yield requirement. However, the presence of a diversified tenant base and a BREEAM Excellent or Outstanding certification can mitigate some risk and enhance attractiveness, resulting in an estimated market yield of around 6.5%.",
+          "latencyMs": 2146
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The yield is estimated at 5.5% due to the prime hotel property status, BREEAM Excellent certification indicating sustainability, and the presence of multiple tenants which reduces concentration risk. However, the reliance on a single SME tenant introduces some risk, slightly lowering the yield compared to more diversified properties.",
+          "latencyMs": 1887
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The yield is estimated at 5.5% for a prime hotel property in Norway, considering the single SME tenant introduces concentration risk, but the diversified tenant base mitigates it. Additionally, the BREEAM Excellent or Outstanding certification enhances the property's appeal and sustainability, potentially attracting higher-quality tenants and stabilizing income.",
+          "latencyMs": 2420
+        }
+      ],
+      "meanPrediction": 6.1,
+      "stdDeviation": 0.49,
+      "minPrediction": 5.5,
+      "maxPrediction": 6.5,
+      "error": 0.32,
+      "absoluteError": 0.32,
+      "withinTolerance": true,
+      "rolloutConsistency": 40
+    },
+    {
+      "scenarioId": "d0035469-ddb8-4e53-9163-64ebfba38401",
+      "rollouts": [
+        {
+          "prediction": 5.5,
+          "reasoning": "The yield is estimated at 5.5% due to the concentration risk from a single SME tenant, despite the tenant's strong credit rating. The suboptimal micro-location and the need for capital expenditures on an older building further increase perceived risk, leading to a higher yield requirement from investors.",
+          "latencyMs": 2162
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The yield is estimated at 6.5% due to the concentration risk from a single tenant, which typically increases risk and thus yield. The presence of a government or AAA-rated corporate tenant mitigates some risk, but the suboptimal micro-location and the need for capital expenditures on an older building suggest a higher yield to attract investors.",
+          "latencyMs": 2669
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The yield is estimated at 6.5% due to the concentration risk associated with a single SME tenant, which typically demands a higher yield. The presence of a government or AAA-rated corporate tenant mitigates some risk, but the suboptimal micro-location and the need for capital expenditure on an older building further increase the yield to attract investors.",
+          "latencyMs": 2008
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The yield is estimated at 5.5% due to the concentration risk of having a single, albeit high-quality, tenant which mitigates some risk but is offset by the suboptimal micro-location and the need for capital expenditures on an older building. These factors typically lead to a higher yield requirement to attract investors.",
+          "latencyMs": 2219
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "Given the concentration risk from a single SME tenant, the suboptimal micro-location, and the need for capital expenditures on an older building, the yield is estimated to be higher than average for residential properties to account for these risks.",
+          "latencyMs": 1713
+        }
+      ],
+      "meanPrediction": 6.1,
+      "stdDeviation": 0.49,
+      "minPrediction": 5.5,
+      "maxPrediction": 6.5,
+      "error": -0.03,
+      "absoluteError": 0.03,
+      "withinTolerance": true,
+      "rolloutConsistency": 0
+    },
+    {
+      "scenarioId": "70ac061f-c917-4080-b086-8824274bff81",
+      "rollouts": [
+        {
+          "prediction": 5.5,
+          "reasoning": "The yield is estimated at 5.5% due to the concentration risk from a single SME tenant and the suboptimal micro-location, which typically lowers demand and rental rates. However, the presence of a government or AAA-rated corporate tenant mitigates some risk, providing stability and a slightly higher yield.",
+          "latencyMs": 1873
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The yield is estimated at 5.5% considering the presence of a government or AAA-rated corporate tenant which typically provides stability, but the concentration risk from a single SME tenant and the suboptimal micro-location negatively impact the yield. The diversified tenant base helps mitigate some risk, but overall, these factors lead to a moderate yield.",
+          "latencyMs": 2035
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The presence of a government or AAA-rated corporate tenant mitigates some risk, but the concentration risk from a single SME tenant and the suboptimal micro-location negatively impact the yield. A diversified tenant base would typically increase stability, but in this case, the overall risk profile suggests a moderate yield.",
+          "latencyMs": 1966
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The yield is estimated at 5.5% due to the concentration risk of a single SME tenant, which typically demands a higher yield. However, the presence of a government or AAA-rated corporate tenant mitigates some risk, while the suboptimal micro-location suggests a lower demand, balancing the overall yield.",
+          "latencyMs": 1997
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The yield is estimated at 5.5% due to the concentration risk from a single SME tenant, which typically demands a higher yield. However, the presence of a government or AAA-rated corporate tenant mitigates some risk, while the suboptimal micro-location and diversified tenant base suggest a moderate yield adjustment.",
+          "latencyMs": 2054
+        }
+      ],
+      "meanPrediction": 5.5,
+      "stdDeviation": 0,
+      "minPrediction": 5.5,
+      "maxPrediction": 5.5,
+      "error": -0.18,
+      "absoluteError": 0.18,
+      "withinTolerance": true,
+      "rolloutConsistency": 100
+    },
+    {
+      "scenarioId": "f1e9b97e-90fd-43fd-8e02-57f8cfc22ecd",
+      "rollouts": [
+        {
+          "prediction": 5.5,
+          "reasoning": "The estimated market yield for prime logistics properties in Norway typically ranges between 5% to 6%, reflecting strong demand for logistics space driven by e-commerce growth and limited supply in key locations.",
+          "latencyMs": 1418
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The estimated yield for prime logistics properties in Norway typically ranges between 5% to 6%, influenced by strong demand for logistics space, low vacancy rates, and stable rental growth in the sector.",
+          "latencyMs": 1798
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The estimated market yield for prime logistics properties in Norway typically ranges between 5% to 6%, reflecting strong demand in the logistics sector, particularly due to e-commerce growth and strategic location advantages.",
+          "latencyMs": 1529
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The estimated market yield for prime logistics properties in Norway typically ranges between 5% to 6%, driven by strong demand for logistics space due to e-commerce growth and limited supply in key locations.",
+          "latencyMs": 1517
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The estimated market yield for prime logistics properties in Norway typically ranges between 5% to 6%, reflecting strong demand in the logistics sector driven by e-commerce growth and limited supply of high-quality assets.",
+          "latencyMs": 1509
+        }
+      ],
+      "meanPrediction": 5.5,
+      "stdDeviation": 0,
+      "minPrediction": 5.5,
+      "maxPrediction": 5.5,
+      "error": -0.63,
+      "absoluteError": 0.63,
+      "withinTolerance": false,
+      "rolloutConsistency": 0
+    },
+    {
+      "scenarioId": "4d492aac-4705-497b-b7da-7f67eca1307a",
+      "rollouts": [
+        {
+          "prediction": 4.5,
+          "reasoning": "The estimated market yield for residential commercial real estate in Norway typically ranges between 4% to 6%. Given current market conditions, demand for residential properties, and rental rates, a yield of 4.5% is a reasonable estimate.",
+          "latencyMs": 1706
+        },
+        {
+          "prediction": 4.5,
+          "reasoning": "The estimated market yield for residential properties in Norway typically ranges between 4% to 6%, with 4.5% being a reasonable estimate considering current market conditions, demand for residential units, and economic factors.",
+          "latencyMs": 1570
+        },
+        {
+          "prediction": 4.5,
+          "reasoning": "The estimated market yield for residential properties in Norway typically ranges between 4% to 6%. Given the current demand for residential units and stable rental income, a yield of 4.5% is a reasonable estimate.",
+          "latencyMs": 1579
+        },
+        {
+          "prediction": 4.5,
+          "reasoning": "The estimated market yield for residential commercial real estate in Norway typically ranges between 4% to 6%. Given current market conditions, demand for residential properties, and rental rates, a yield of 4.5% is a reasonable estimate.",
+          "latencyMs": 1668
+        },
+        {
+          "prediction": 4.5,
+          "reasoning": "The estimated market yield for residential commercial real estate in Norway typically ranges from 4% to 6%, depending on location, property condition, and market demand. Given current trends and economic conditions, a yield of 4.5% is a reasonable estimate.",
+          "latencyMs": 1894
+        }
+      ],
+      "meanPrediction": 4.5,
+      "stdDeviation": 0,
+      "minPrediction": 4.5,
+      "maxPrediction": 4.5,
+      "error": -0.88,
+      "absoluteError": 0.88,
+      "withinTolerance": false,
+      "rolloutConsistency": 0
+    }
+  ],
+  "aggregateMetrics": {
+    "hitRate": 50,
+    "meanError": -0.529,
+    "rmse": 0.824,
+    "avgLatencyMs": 2069,
+    "directionalAccuracy": 100,
+    "avgStdDeviation": 0.123,
+    "avgConsistency": 30
+  }
+}

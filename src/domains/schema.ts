@@ -81,19 +81,39 @@ export const PredictionSchema = z.object({
 
 export type Prediction = z.infer<typeof PredictionSchema>;
 
-// Scenario Result Schema
-// After running a scenario through an LLM
+// Individual Rollout Result
+// A single prediction from one LLM call
 
-export const ScenarioResultSchema = z.object({
-  scenarioId: z.string(),
+export const RolloutResultSchema = z.object({
   prediction: z.number(),
   reasoning: z.string(),
   latencyMs: z.number(),
+});
 
-  // Metrics
-  error: z.number(), // prediction - groundTruth
+export type RolloutResult = z.infer<typeof RolloutResultSchema>;
+
+// Scenario Result Schema
+// After running a scenario through an LLM (supports multiple rollouts)
+
+export const ScenarioResultSchema = z.object({
+  scenarioId: z.string(),
+  
+  // Multiple rollouts for variance estimation
+  rollouts: z.array(RolloutResultSchema),
+  
+  // Aggregate stats across rollouts
+  meanPrediction: z.number(),
+  stdDeviation: z.number(),
+  minPrediction: z.number(),
+  maxPrediction: z.number(),
+
+  // Evaluation against ground truth (using mean)
+  error: z.number(), // meanPrediction - groundTruth
   absoluteError: z.number(),
   withinTolerance: z.boolean(),
+  
+  // Consistency metrics
+  rolloutConsistency: z.number(), // % of rollouts within tolerance
 });
 
 export type ScenarioResult = z.infer<typeof ScenarioResultSchema>;
@@ -108,6 +128,7 @@ export const BenchmarkRunSchema = z.object({
   model: z.string(),
   promptStrategy: z.string(),
   promptTemplate: z.string(), // The actual template used
+  rolloutsPerScenario: z.number().default(1), // Number of rollouts per scenario
 
   scenarios: z.array(ScenarioSchema),
   results: z.array(ScenarioResultSchema),
@@ -120,6 +141,9 @@ export const BenchmarkRunSchema = z.object({
     directionalAccuracy: z.number().optional(), // For twin tests
     avgLatencyMs: z.number(),
     totalCost: z.number().optional(),
+    // Variance metrics (when rollouts > 1)
+    avgStdDeviation: z.number().optional(), // Average std deviation across scenarios
+    avgConsistency: z.number().optional(), // Average rollout consistency
   }),
 });
 

@@ -8,9 +8,9 @@ import {
 } from "@/lib/storage";
 import { generateScenarios } from "@/lib/generator";
 import { renderPrompt } from "@/prompts/engine";
-import { callOpenRouter, type OpenRouterConfig } from "@/lib/openrouter";
-import { evaluatePrediction, calculateAggregateMetrics } from "@/lib/evaluator";
-import type { BenchmarkRun, Scenario, ScenarioResult } from "@/domains/schema";
+import { callOpenRouterMultiple, type OpenRouterConfig } from "@/lib/openrouter";
+import { evaluateMultipleRollouts, calculateAggregateMetrics } from "@/lib/evaluator";
+import type { BenchmarkRun, ScenarioResult } from "@/domains/schema";
 
 export async function GET() {
   const runs = await listBenchmarkRuns();
@@ -27,6 +27,7 @@ export async function POST(request: Request) {
       promptTemplateId,
       scenarioCount = 10,
       generateTwins = true,
+      rolloutsPerScenario = 1,
       seed,
     } = body;
 
@@ -37,6 +38,9 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    // Validate rollouts (1-10)
+    const rollouts = Math.max(1, Math.min(10, rolloutsPerScenario));
 
     // Get API key from environment
     const apiKey = process.env.OPENROUTER_API_KEY;
@@ -80,23 +84,31 @@ export async function POST(request: Request) {
       );
 
       try {
-        const llmResult = await callOpenRouter(prompt, config);
-        const result = evaluatePrediction(scenario, llmResult);
+        // Run multiple rollouts for variance estimation
+        const llmResults = await callOpenRouterMultiple(prompt, config, rollouts);
+        const result = evaluateMultipleRollouts(scenario, llmResults);
         results.push(result);
       } catch (error) {
-        // Record failed prediction
+        // Record failed prediction with empty rollouts
         results.push({
           scenarioId: scenario.id,
-          prediction: 0,
-          reasoning: `Error: ${error instanceof Error ? error.message : "Unknown error"}`,
-          latencyMs: 0,
+          rollouts: [{
+            prediction: 0,
+            reasoning: `Error: ${error instanceof Error ? error.message : "Unknown error"}`,
+            latencyMs: 0,
+          }],
+          meanPrediction: 0,
+          stdDeviation: 0,
+          minPrediction: 0,
+          maxPrediction: 0,
           error: scenario.groundTruth.value,
           absoluteError: scenario.groundTruth.value,
           withinTolerance: false,
+          rolloutConsistency: 0,
         });
       }
 
-      // Small delay between requests
+      // Small delay between scenarios
       await new Promise((resolve) => setTimeout(resolve, 300));
     }
 
@@ -111,6 +123,7 @@ export async function POST(request: Request) {
       model,
       promptStrategy: promptTemplateId || "custom",
       promptTemplate,
+      rolloutsPerScenario: rollouts,
       scenarios,
       results,
       aggregateMetrics,
@@ -127,4 +140,3 @@ export async function POST(request: Request) {
     );
   }
 }
-
