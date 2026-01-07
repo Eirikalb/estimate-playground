@@ -1,0 +1,258 @@
+{
+  "id": "b875f25f-f711-427b-8688-96bf6efbed3f",
+  "timestamp": "2026-01-07T12:51:15.772Z",
+  "domainId": "real-estate-yield",
+  "model": "openai/gpt-4o-mini",
+  "promptStrategy": "benchmark-only",
+  "promptTemplate": "{{#facts.benchmarks}}\n{{{content}}}\n{{/facts.benchmarks}}\n\n---\n\nUsing the benchmark ranges above, estimate the yield for this property:\n\n{{scenario.contextDescription}}\n\nConsider where this property should be positioned within the relevant benchmark range based on its specific characteristics.\n\nReturn JSON only: {\"yield\": <number>, \"reasoning\": \"<explain benchmark selection and positioning>\"}\n\n",
+  "scenarios": [
+    {
+      "id": "34618bba-88bb-45db-a61c-6faf4ca7778a",
+      "anchor": "office_bergen",
+      "appliedDeltas": [
+        "single_tenant_sme",
+        "government_tenant"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Office Bergen\n\nKey Characteristics:\n- Single SME tenant (concentration risk)\n- Government or AAA-rated corporate tenant",
+      "groundTruth": {
+        "value": 6.35,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Bergen): 6.25%\nSingle SME tenant (concentration risk): +0.45%\nGovernment or AAA-rated corporate tenant: -0.35%\nFinal: 6.35%"
+      },
+      "twinId": "9dda96d1-7ba2-44a3-9072-71aa72442290",
+      "twinDeltaChanged": "government_tenant → modern_building"
+    },
+    {
+      "id": "9dda96d1-7ba2-44a3-9072-71aa72442290",
+      "anchor": "office_bergen",
+      "appliedDeltas": [
+        "single_tenant_sme",
+        "modern_building"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Office Bergen\n\nKey Characteristics:\n- Single SME tenant (concentration risk)\n- Modern building (post-2015, high standard)",
+      "groundTruth": {
+        "value": 6.5,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Bergen): 6.25%\nSingle SME tenant (concentration risk): +0.45%\nModern building (post-2015, high standard): -0.2%\nFinal: 6.50%"
+      },
+      "twinId": "34618bba-88bb-45db-a61c-6faf4ca7778a",
+      "twinDeltaChanged": "government_tenant → modern_building"
+    },
+    {
+      "id": "e2b722ae-bcb0-4de5-90d4-fc97f56fbc9e",
+      "anchor": "office_other",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "Property Type: Office Other Cities",
+      "groundTruth": {
+        "value": 7.88,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Other Cities): 7.875%\nFinal: 7.88%"
+      }
+    },
+    {
+      "id": "96d37b4c-be3b-49df-80b8-d05a2d732706",
+      "anchor": "logistics_normal",
+      "appliedDeltas": [
+        "older_building"
+      ],
+      "distractors": [
+        "Transaction is expected to close in Q4.",
+        "There is a popular café on the ground floor."
+      ],
+      "contextDescription": "Property Type: Logistics Normal & Secondary\n\nKey Characteristics:\n- Older building (pre-2000, needs capex)\n\nAdditional Context:\n- Transaction is expected to close in Q4.\n- There is a popular café on the ground floor.",
+      "groundTruth": {
+        "value": 8.3,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Normal & Secondary): 8%\nOlder building (pre-2000, needs capex): +0.3%\nFinal: 8.30%"
+      },
+      "twinId": "17187546-2754-4cf2-b671-921cbbcd4681",
+      "twinDeltaChanged": "removed: older_building"
+    },
+    {
+      "id": "17187546-2754-4cf2-b671-921cbbcd4681",
+      "anchor": "logistics_normal",
+      "appliedDeltas": [],
+      "distractors": [
+        "Transaction is expected to close in Q4.",
+        "There is a popular café on the ground floor."
+      ],
+      "contextDescription": "Property Type: Logistics Normal & Secondary\n\nAdditional Context:\n- Transaction is expected to close in Q4.\n- There is a popular café on the ground floor.",
+      "groundTruth": {
+        "value": 8,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Normal & Secondary): 8%\nFinal: 8.00%"
+      },
+      "twinId": "96d37b4c-be3b-49df-80b8-d05a2d732706",
+      "twinDeltaChanged": "removed: older_building"
+    },
+    {
+      "id": "14b2a92c-fa75-4798-8375-56e96696af15",
+      "anchor": "logistics_prime",
+      "appliedDeltas": [
+        "long_lease",
+        "poor_micro_location",
+        "short_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Logistics Prime\n\nKey Characteristics:\n- Long lease (>10 years WAULT) with creditworthy tenant\n- Suboptimal micro-location (poor access, visibility)\n- Short lease (<3 years remaining)",
+      "groundTruth": {
+        "value": 6.68,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Prime): 6.125%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nSuboptimal micro-location (poor access, visibility): +0.35%\nShort lease (<3 years remaining): +0.5%\nFinal: 6.67%"
+      },
+      "twinId": "5173d13e-538b-4f8d-aba8-176fa8551462",
+      "twinDeltaChanged": "poor_micro_location → government_tenant"
+    },
+    {
+      "id": "5173d13e-538b-4f8d-aba8-176fa8551462",
+      "anchor": "logistics_prime",
+      "appliedDeltas": [
+        "long_lease",
+        "short_lease",
+        "government_tenant"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Logistics Prime\n\nKey Characteristics:\n- Long lease (>10 years WAULT) with creditworthy tenant\n- Short lease (<3 years remaining)\n- Government or AAA-rated corporate tenant",
+      "groundTruth": {
+        "value": 5.98,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Prime): 6.125%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nShort lease (<3 years remaining): +0.5%\nGovernment or AAA-rated corporate tenant: -0.35%\nFinal: 5.98%"
+      },
+      "twinId": "14b2a92c-fa75-4798-8375-56e96696af15",
+      "twinDeltaChanged": "poor_micro_location → government_tenant"
+    },
+    {
+      "id": "abb7738c-7e2c-41e2-a32d-6c4d419c4da9",
+      "anchor": "office_bergen",
+      "appliedDeltas": [
+        "long_lease",
+        "prime_micro_location",
+        "older_building"
+      ],
+      "distractors": [
+        "The seller is highly motivated and wants a quick transaction."
+      ],
+      "contextDescription": "Property Type: Office Bergen\n\nKey Characteristics:\n- Long lease (>10 years WAULT) with creditworthy tenant\n- Exceptional micro-location within the area\n- Older building (pre-2000, needs capex)\n\nAdditional Context:\n- The seller is highly motivated and wants a quick transaction.",
+      "groundTruth": {
+        "value": 6,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Bergen): 6.25%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nExceptional micro-location within the area: -0.25%\nOlder building (pre-2000, needs capex): +0.3%\nFinal: 6.00%"
+      },
+      "twinId": "eb1771ac-6c84-4b12-8073-9dc6a625d1df",
+      "twinDeltaChanged": "long_lease → modern_building"
+    },
+    {
+      "id": "eb1771ac-6c84-4b12-8073-9dc6a625d1df",
+      "anchor": "office_bergen",
+      "appliedDeltas": [
+        "prime_micro_location",
+        "older_building",
+        "modern_building"
+      ],
+      "distractors": [
+        "The seller is highly motivated and wants a quick transaction."
+      ],
+      "contextDescription": "Property Type: Office Bergen\n\nKey Characteristics:\n- Exceptional micro-location within the area\n- Older building (pre-2000, needs capex)\n- Modern building (post-2015, high standard)\n\nAdditional Context:\n- The seller is highly motivated and wants a quick transaction.",
+      "groundTruth": {
+        "value": 6.1,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Bergen): 6.25%\nExceptional micro-location within the area: -0.25%\nOlder building (pre-2000, needs capex): +0.3%\nModern building (post-2015, high standard): -0.2%\nFinal: 6.10%"
+      },
+      "twinId": "abb7738c-7e2c-41e2-a32d-6c4d419c4da9",
+      "twinDeltaChanged": "long_lease → modern_building"
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "34618bba-88bb-45db-a61c-6faf4ca7778a",
+      "prediction": 5.75,
+      "reasoning": "The property is an Office in Bergen with a single SME tenant, which introduces some concentration risk. However, the tenant is either a government or AAA-rated corporate entity, which significantly mitigates the risk associated with having a single tenant. Given the benchmark range for Office Bergen is 5.25%–7.25%, the yield is positioned towards the lower-middle of the range at 5.75%. This reflects the stability provided by the high-quality tenant while accounting for the concentration risk.",
+      "latencyMs": 3167,
+      "error": -0.5999999999999996,
+      "absoluteError": 0.5999999999999996,
+      "withinTolerance": false
+    },
+    {
+      "scenarioId": "9dda96d1-7ba2-44a3-9072-71aa72442290",
+      "prediction": 6,
+      "reasoning": "The property is located in Office Bergen, which has a benchmark yield range of 5.25%–7.25%. Given that the property is a modern building (post-2015) with high standards, it would likely be positioned towards the lower end of the range due to its quality. However, the presence of a single SME tenant introduces concentration risk, which could push the yield slightly higher. Therefore, a yield of 6.00% reflects a balance between the high quality of the building and the associated risk from tenant concentration.",
+      "latencyMs": 3145,
+      "error": -0.5,
+      "absoluteError": 0.5,
+      "withinTolerance": false
+    },
+    {
+      "scenarioId": "e2b722ae-bcb0-4de5-90d4-fc97f56fbc9e",
+      "prediction": 7.5,
+      "reasoning": "The property is categorized as 'Office Other Cities,' which has a benchmark yield range of 6.25%–9.50%. Given that the property is likely in a less central location compared to Oslo but still in a city with reasonable demand for office space, a yield of 7.50% positions it towards the higher end of the range. This reflects a moderate risk profile, considering factors such as location, demand, and potential rental income.",
+      "latencyMs": 2548,
+      "error": -0.3799999999999999,
+      "absoluteError": 0.3799999999999999,
+      "withinTolerance": false
+    },
+    {
+      "scenarioId": "96d37b4c-be3b-49df-80b8-d05a2d732706",
+      "prediction": 7.5,
+      "reasoning": "Given that the property is categorized as Logistics Normal & Secondary, the benchmark range is 6.50%–9.50%. However, the property is an older building (pre-2000) that requires capital expenditure (capex), which typically lowers its attractiveness to investors. This suggests positioning towards the higher end of the range to account for the additional risks associated with the property's condition. The presence of a popular café on the ground floor adds some value, but it does not significantly offset the drawbacks of the building's age and need for investment. Therefore, a yield of 7.50% is a reasonable estimate.",
+      "latencyMs": 3408,
+      "error": -0.8000000000000007,
+      "absoluteError": 0.8000000000000007,
+      "withinTolerance": false
+    },
+    {
+      "scenarioId": "17187546-2754-4cf2-b671-921cbbcd4681",
+      "prediction": 7.5,
+      "reasoning": "The property is categorized as Logistics Normal & Secondary, which has a benchmark yield range of 6.50%–9.50%. Given that there is a popular café on the ground floor, this adds value and attractiveness to the property, potentially positioning it towards the lower end of the range. However, since it is still classified as secondary, a yield of 7.50% is reasonable, reflecting both its secondary status and the added appeal of the café.",
+      "latencyMs": 2491,
+      "error": -0.5,
+      "absoluteError": 0.5,
+      "withinTolerance": false
+    },
+    {
+      "scenarioId": "14b2a92c-fa75-4798-8375-56e96696af15",
+      "prediction": 6.25,
+      "reasoning": "The benchmark range for Logistics Prime is 5.50%–6.75%. Given the property's long lease with a creditworthy tenant, it would typically be positioned towards the lower end of the range. However, the suboptimal micro-location and short remaining lease term negatively impact its attractiveness. Therefore, a yield of 6.25% is selected, reflecting a compromise between the strong lease terms and the property's location challenges.",
+      "latencyMs": 2513,
+      "error": -0.4299999999999997,
+      "absoluteError": 0.4299999999999997,
+      "withinTolerance": false
+    },
+    {
+      "scenarioId": "5173d13e-538b-4f8d-aba8-176fa8551462",
+      "prediction": 6.25,
+      "reasoning": "The property is classified as Logistics Prime, which has a benchmark yield range of 5.50%–6.75%. Given the long lease with a creditworthy tenant, it would typically warrant a yield towards the lower end of the range. However, the short lease remaining (<3 years) introduces additional risk, which would push the yield higher within the range. Therefore, a yield of 6.25% is a balanced position considering both the long-term tenant stability and the short lease duration.",
+      "latencyMs": 2488,
+      "error": 0.2699999999999996,
+      "absoluteError": 0.2699999999999996,
+      "withinTolerance": true
+    },
+    {
+      "scenarioId": "abb7738c-7e2c-41e2-a32d-6c4d419c4da9",
+      "prediction": 6,
+      "reasoning": "Given that the property is an Office in Bergen, the benchmark range is 5.25%–7.25%. The long lease with a creditworthy tenant and exceptional micro-location would typically justify a lower yield within this range, reflecting lower risk and stable income. However, the fact that the building is older (pre-2000) and requires capital expenditure (capex) suggests a higher risk, which would push the yield up. Considering these factors, a yield of 6.00% is a balanced position that accounts for both the strengths (long lease, good location) and weaknesses (older building needing capex) of the property.",
+      "latencyMs": 2881,
+      "error": 0,
+      "absoluteError": 0,
+      "withinTolerance": true
+    },
+    {
+      "scenarioId": "eb1771ac-6c84-4b12-8073-9dc6a625d1df",
+      "prediction": 6,
+      "reasoning": "The property is categorized as Office Bergen, which has a benchmark yield range of 5.25%–7.25%. Given its exceptional micro-location, it could be positioned towards the lower end of the range. However, the fact that it is an older building (pre-2000) needing capex suggests a higher risk, which typically results in a higher yield. The seller's motivation for a quick transaction may also indicate a need to price competitively. Therefore, a yield of 6.00% strikes a balance between the positive location factor and the negative implications of the building's age and condition.",
+      "latencyMs": 3076,
+      "error": -0.09999999999999964,
+      "absoluteError": 0.09999999999999964,
+      "withinTolerance": true
+    }
+  ],
+  "aggregateMetrics": {
+    "hitRate": 33.33,
+    "meanError": -0.338,
+    "rmse": 0.461,
+    "avgLatencyMs": 2857,
+    "directionalAccuracy": 25
+  }
+}

@@ -1,0 +1,293 @@
+{
+  "id": "48a1bae6-37d3-4dfc-8803-4d6a559167b4",
+  "timestamp": "2026-01-07T12:51:44.259Z",
+  "domainId": "real-estate-yield",
+  "model": "openai/gpt-4o-mini",
+  "promptStrategy": "benchmark-only",
+  "promptTemplate": "{{#facts.benchmarks}}\n{{{content}}}\n{{/facts.benchmarks}}\n\n---\n\nUsing the benchmark ranges above, estimate the yield for this property:\n\n{{scenario.contextDescription}}\n\nConsider where this property should be positioned within the relevant benchmark range based on its specific characteristics.\n\nReturn JSON only: {\"yield\": <number>, \"reasoning\": \"<explain benchmark selection and positioning>\"}\n\n",
+  "scenarios": [
+    {
+      "id": "3a795f83-d2e4-463b-8824-f218b438f35e",
+      "anchor": "office_oslo_centre",
+      "appliedDeltas": [
+        "modern_building",
+        "government_tenant",
+        "long_lease",
+        "multi_tenant"
+      ],
+      "distractors": [
+        "There is a popular café on the ground floor."
+      ],
+      "contextDescription": "Property Type: Office Oslo Centre\n\nKey Characteristics:\n- Modern building (post-2015, high standard)\n- Government or AAA-rated corporate tenant\n- Long lease (>10 years WAULT) with creditworthy tenant\n- Diversified tenant base (3+ tenants)\n\nAdditional Context:\n- There is a popular café on the ground floor.",
+      "groundTruth": {
+        "value": 4.63,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Centre): 5.625%\nModern building (post-2015, high standard): -0.2%\nGovernment or AAA-rated corporate tenant: -0.35%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nDiversified tenant base (3+ tenants): -0.15%\nFinal: 4.63%"
+      },
+      "twinId": "f9d60b1c-5903-487f-92bd-01c0117a942e",
+      "twinDeltaChanged": "removed: long_lease"
+    },
+    {
+      "id": "f9d60b1c-5903-487f-92bd-01c0117a942e",
+      "anchor": "office_oslo_centre",
+      "appliedDeltas": [
+        "modern_building",
+        "government_tenant",
+        "multi_tenant"
+      ],
+      "distractors": [
+        "There is a popular café on the ground floor."
+      ],
+      "contextDescription": "Property Type: Office Oslo Centre\n\nKey Characteristics:\n- Modern building (post-2015, high standard)\n- Government or AAA-rated corporate tenant\n- Diversified tenant base (3+ tenants)\n\nAdditional Context:\n- There is a popular café on the ground floor.",
+      "groundTruth": {
+        "value": 4.93,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Centre): 5.625%\nModern building (post-2015, high standard): -0.2%\nGovernment or AAA-rated corporate tenant: -0.35%\nDiversified tenant base (3+ tenants): -0.15%\nFinal: 4.92%"
+      },
+      "twinId": "3a795f83-d2e4-463b-8824-f218b438f35e",
+      "twinDeltaChanged": "removed: long_lease"
+    },
+    {
+      "id": "af9aecd6-1cb6-405c-8ac2-ccccf0053369",
+      "anchor": "hotel_prime",
+      "appliedDeltas": [
+        "long_lease",
+        "short_lease",
+        "vacancy_risk",
+        "older_building"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Hotel Prime\n\nKey Characteristics:\n- Long lease (>10 years WAULT) with creditworthy tenant\n- Short lease (<3 years remaining)\n- Current or imminent vacancy (>20%)\n- Older building (pre-2000, needs capex)",
+      "groundTruth": {
+        "value": 6.53,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Prime): 5.625%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nShort lease (<3 years remaining): +0.5%\nCurrent or imminent vacancy (>20%): +0.4%\nOlder building (pre-2000, needs capex): +0.3%\nFinal: 6.53%"
+      },
+      "twinId": "6e7b3ad4-3046-4aa2-a2d9-d259b21c4c6c",
+      "twinDeltaChanged": "long_lease → prime_micro_location"
+    },
+    {
+      "id": "6e7b3ad4-3046-4aa2-a2d9-d259b21c4c6c",
+      "anchor": "hotel_prime",
+      "appliedDeltas": [
+        "short_lease",
+        "vacancy_risk",
+        "older_building",
+        "prime_micro_location"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Hotel Prime\n\nKey Characteristics:\n- Short lease (<3 years remaining)\n- Current or imminent vacancy (>20%)\n- Older building (pre-2000, needs capex)\n- Exceptional micro-location within the area",
+      "groundTruth": {
+        "value": 6.58,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Prime): 5.625%\nShort lease (<3 years remaining): +0.5%\nCurrent or imminent vacancy (>20%): +0.4%\nOlder building (pre-2000, needs capex): +0.3%\nExceptional micro-location within the area: -0.25%\nFinal: 6.58%"
+      },
+      "twinId": "af9aecd6-1cb6-405c-8ac2-ccccf0053369",
+      "twinDeltaChanged": "long_lease → prime_micro_location"
+    },
+    {
+      "id": "639cff44-68b7-4bef-abef-9fd31d5f8439",
+      "anchor": "hotel_prime",
+      "appliedDeltas": [
+        "single_tenant_sme",
+        "multi_tenant",
+        "short_lease",
+        "poor_micro_location"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Hotel Prime\n\nKey Characteristics:\n- Single SME tenant (concentration risk)\n- Diversified tenant base (3+ tenants)\n- Short lease (<3 years remaining)\n- Suboptimal micro-location (poor access, visibility)",
+      "groundTruth": {
+        "value": 6.78,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Prime): 5.625%\nSingle SME tenant (concentration risk): +0.45%\nDiversified tenant base (3+ tenants): -0.15%\nShort lease (<3 years remaining): +0.5%\nSuboptimal micro-location (poor access, visibility): +0.35%\nFinal: 6.77%"
+      },
+      "twinId": "a32f3ce6-9297-4549-a8a9-2400552e2d16",
+      "twinDeltaChanged": "poor_micro_location → prime_micro_location"
+    },
+    {
+      "id": "a32f3ce6-9297-4549-a8a9-2400552e2d16",
+      "anchor": "hotel_prime",
+      "appliedDeltas": [
+        "single_tenant_sme",
+        "multi_tenant",
+        "short_lease",
+        "prime_micro_location"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Hotel Prime\n\nKey Characteristics:\n- Single SME tenant (concentration risk)\n- Diversified tenant base (3+ tenants)\n- Short lease (<3 years remaining)\n- Exceptional micro-location within the area",
+      "groundTruth": {
+        "value": 6.18,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Prime): 5.625%\nSingle SME tenant (concentration risk): +0.45%\nDiversified tenant base (3+ tenants): -0.15%\nShort lease (<3 years remaining): +0.5%\nExceptional micro-location within the area: -0.25%\nFinal: 6.17%"
+      },
+      "twinId": "639cff44-68b7-4bef-abef-9fd31d5f8439",
+      "twinDeltaChanged": "poor_micro_location → prime_micro_location"
+    },
+    {
+      "id": "558a1ec8-e76d-43f0-ad9c-82859206b699",
+      "anchor": "logistics_normal",
+      "appliedDeltas": [
+        "long_lease",
+        "older_building"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Logistics Normal & Secondary\n\nKey Characteristics:\n- Long lease (>10 years WAULT) with creditworthy tenant\n- Older building (pre-2000, needs capex)",
+      "groundTruth": {
+        "value": 8,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Normal & Secondary): 8%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nOlder building (pre-2000, needs capex): +0.3%\nFinal: 8.00%"
+      },
+      "twinId": "b6fe35e8-5f4c-40b7-bae7-e938a3983bbc",
+      "twinDeltaChanged": "removed: long_lease"
+    },
+    {
+      "id": "b6fe35e8-5f4c-40b7-bae7-e938a3983bbc",
+      "anchor": "logistics_normal",
+      "appliedDeltas": [
+        "older_building"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Logistics Normal & Secondary\n\nKey Characteristics:\n- Older building (pre-2000, needs capex)",
+      "groundTruth": {
+        "value": 8.3,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Normal & Secondary): 8%\nOlder building (pre-2000, needs capex): +0.3%\nFinal: 8.30%"
+      },
+      "twinId": "558a1ec8-e76d-43f0-ad9c-82859206b699",
+      "twinDeltaChanged": "removed: long_lease"
+    },
+    {
+      "id": "bd7e40c4-e7b3-4d5f-a0d0-f7b89d1df1d5",
+      "anchor": "office_other",
+      "appliedDeltas": [
+        "poor_micro_location",
+        "breeam_certified"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Office Other Cities\n\nKey Characteristics:\n- Suboptimal micro-location (poor access, visibility)\n- BREEAM Excellent or Outstanding certification",
+      "groundTruth": {
+        "value": 8.07,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Other Cities): 7.875%\nSuboptimal micro-location (poor access, visibility): +0.35%\nBREEAM Excellent or Outstanding certification: -0.15%\nFinal: 8.07%"
+      },
+      "twinId": "93c11958-9a3d-4412-8c5a-fb8d0a7ddb5a",
+      "twinDeltaChanged": "poor_micro_location → short_lease"
+    },
+    {
+      "id": "93c11958-9a3d-4412-8c5a-fb8d0a7ddb5a",
+      "anchor": "office_other",
+      "appliedDeltas": [
+        "breeam_certified",
+        "short_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Office Other Cities\n\nKey Characteristics:\n- BREEAM Excellent or Outstanding certification\n- Short lease (<3 years remaining)",
+      "groundTruth": {
+        "value": 8.23,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Other Cities): 7.875%\nBREEAM Excellent or Outstanding certification: -0.15%\nShort lease (<3 years remaining): +0.5%\nFinal: 8.22%"
+      },
+      "twinId": "bd7e40c4-e7b3-4d5f-a0d0-f7b89d1df1d5",
+      "twinDeltaChanged": "poor_micro_location → short_lease"
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "3a795f83-d2e4-463b-8824-f218b438f35e",
+      "prediction": 5.5,
+      "reasoning": "Given the characteristics of the property in the Office Oslo Centre market, it is positioned favorably within the benchmark range of 5.00%–6.25%. The modern building built post-2015 indicates a high standard, which typically commands a lower yield due to higher demand. The presence of a government or AAA-rated corporate tenant, along with a long lease term and a diversified tenant base, further enhances the stability and attractiveness of the investment, justifying a positioning towards the lower end of the range. Additionally, the popular café on the ground floor adds to the property's appeal, potentially increasing foot traffic and tenant satisfaction, which supports a yield of 5.50%.",
+      "latencyMs": 3175,
+      "error": 0.8700000000000001,
+      "absoluteError": 0.8700000000000001,
+      "withinTolerance": false
+    },
+    {
+      "scenarioId": "f9d60b1c-5903-487f-92bd-01c0117a942e",
+      "prediction": 5.75,
+      "reasoning": "The property is located in the Office Oslo Centre market, which has a benchmark yield range of 5.00% to 6.25%. Given its modern construction (post-2015) and high standard, along with a government or AAA-rated corporate tenant and a diversified tenant base, the property is likely to be positioned towards the lower end of the range. The presence of a popular café on the ground floor adds to its appeal, justifying a yield of 5.75%, which reflects a strong demand and lower risk profile.",
+      "latencyMs": 3102,
+      "error": 0.8200000000000003,
+      "absoluteError": 0.8200000000000003,
+      "withinTolerance": false
+    },
+    {
+      "scenarioId": "af9aecd6-1cb6-405c-8ac2-ccccf0053369",
+      "prediction": 6.25,
+      "reasoning": "The property is categorized as Hotel Prime, which has a benchmark yield range of 4.75%–6.50%. Given the key characteristics of the property, such as a short lease (<3 years remaining), current or imminent vacancy (>20%), and the need for capital expenditures due to being an older building (pre-2000), it is positioned towards the higher end of the benchmark range. The combination of these factors increases the risk associated with the property, justifying a yield of 6.25%, which is above the midpoint of the benchmark range.",
+      "latencyMs": 3096,
+      "error": -0.28000000000000025,
+      "absoluteError": 0.28000000000000025,
+      "withinTolerance": true
+    },
+    {
+      "scenarioId": "6e7b3ad4-3046-4aa2-a2d9-d259b21c4c6c",
+      "prediction": 5.75,
+      "reasoning": "The property is classified as Hotel Prime, which has a benchmark yield range of 4.75%–6.50%. Given the short lease duration of less than 3 years, the current or imminent vacancy of over 20%, and the need for capital expenditures due to its older building status, these factors would typically push the yield higher within the range. However, the exceptional micro-location can mitigate some of the risks associated with the property's condition and lease status. Therefore, positioning the yield at 5.75% reflects a balance between the property's challenges and its advantageous location.",
+      "latencyMs": 3390,
+      "error": -0.8300000000000001,
+      "absoluteError": 0.8300000000000001,
+      "withinTolerance": false
+    },
+    {
+      "scenarioId": "639cff44-68b7-4bef-abef-9fd31d5f8439",
+      "prediction": 5.75,
+      "reasoning": "The property is classified as Hotel Prime, which has a benchmark yield range of 4.75%–6.50%. Given the characteristics of the property, including a single SME tenant (which introduces concentration risk), a short lease term of less than 3 years, and a suboptimal micro-location with poor access and visibility, it is prudent to position the yield towards the higher end of the benchmark range. Therefore, a yield of 5.75% reflects the increased risk associated with these factors while still remaining competitive within the Hotel Prime segment.",
+      "latencyMs": 3290,
+      "error": -1.0300000000000002,
+      "absoluteError": 1.0300000000000002,
+      "withinTolerance": false
+    },
+    {
+      "scenarioId": "a32f3ce6-9297-4549-a8a9-2400552e2d16",
+      "prediction": 5.75,
+      "reasoning": "The property is classified as Hotel Prime, which has a benchmark yield range of 4.75% to 6.50%. Given the characteristics of the property, it has a single SME tenant, which introduces concentration risk, potentially pushing the yield higher within the range. However, the presence of a diversified tenant base (3+ tenants) somewhat mitigates this risk. The short lease term of less than 3 years typically leads to a higher yield due to increased uncertainty. Despite these risks, the exceptional micro-location within the area suggests a strong demand, which could justify a lower yield. Therefore, positioning the yield at 5.75% reflects a balance between the risks and the advantageous location.",
+      "latencyMs": 5145,
+      "error": -0.4299999999999997,
+      "absoluteError": 0.4299999999999997,
+      "withinTolerance": false
+    },
+    {
+      "scenarioId": "558a1ec8-e76d-43f0-ad9c-82859206b699",
+      "prediction": 7.5,
+      "reasoning": "Given that the property is classified as Logistics Normal & Secondary, the benchmark range is 6.50%–9.50%. The long lease with a creditworthy tenant provides stability and reduces risk, which typically supports a lower yield. However, the older building (pre-2000) that requires capital expenditure (capex) suggests a higher risk, which would push the yield higher within the range. Therefore, positioning the yield at 7.50% reflects a balance between the stability offered by the long lease and the potential risks associated with the building's age and need for investment.",
+      "latencyMs": 3582,
+      "error": -0.5,
+      "absoluteError": 0.5,
+      "withinTolerance": false
+    },
+    {
+      "scenarioId": "b6fe35e8-5f4c-40b7-bae7-e938a3983bbc",
+      "prediction": 8,
+      "reasoning": "The property is classified as Logistics Normal & Secondary, which has a benchmark yield range of 6.50%–9.50%. Given that the building is older (pre-2000) and requires capital expenditures (capex), it would likely be positioned towards the higher end of the range to account for the additional risks and costs associated with its condition. Therefore, an estimated yield of 8.00% reflects these considerations.",
+      "latencyMs": 2997,
+      "error": -0.3000000000000007,
+      "absoluteError": 0.3000000000000007,
+      "withinTolerance": true
+    },
+    {
+      "scenarioId": "bd7e40c4-e7b3-4d5f-a0d0-f7b89d1df1d5",
+      "prediction": 7.25,
+      "reasoning": "The property is categorized as 'Office Other Cities' with a benchmark yield range of 6.25%–9.50%. However, due to its suboptimal micro-location characterized by poor access and visibility, it would be positioned towards the higher end of the range. The BREEAM Excellent or Outstanding certification provides a positive aspect that could slightly mitigate the negative impact of the location, justifying a yield of 7.25%.",
+      "latencyMs": 2843,
+      "error": -0.8200000000000003,
+      "absoluteError": 0.8200000000000003,
+      "withinTolerance": false
+    },
+    {
+      "scenarioId": "93c11958-9a3d-4412-8c5a-fb8d0a7ddb5a",
+      "prediction": 7.25,
+      "reasoning": "The property is categorized as 'Office Other Cities' with a benchmark yield range of 6.25%–9.50%. Given its BREEAM Excellent or Outstanding certification, which typically adds value and appeal, it would be positioned towards the lower end of the range. However, the short lease of less than 3 years remaining generally detracts from the property's attractiveness, leading to a yield closer to the midpoint of the range. Therefore, a yield of 7.25% reflects a balance between the positive impact of the certification and the negative impact of the short lease.",
+      "latencyMs": 3498,
+      "error": -0.9800000000000004,
+      "absoluteError": 0.9800000000000004,
+      "withinTolerance": false
+    }
+  ],
+  "aggregateMetrics": {
+    "hitRate": 20,
+    "meanError": -0.348,
+    "rmse": 0.736,
+    "avgLatencyMs": 3412,
+    "directionalAccuracy": 40
+  }
+}

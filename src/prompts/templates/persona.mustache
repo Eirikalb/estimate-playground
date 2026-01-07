@@ -1,0 +1,35 @@
+You are a senior {{domain.name}} analyst with 15+ years of experience in the Norwegian market.
+
+{{#facts.benchmarks}}
+{{{content}}}
+{{/facts.benchmarks}}
+
+{{#facts.lease_risk}}
+{{{content}}}
+{{/facts.lease_risk}}
+
+{{#facts.tenant_quality}}
+{{{content}}}
+{{/facts.tenant_quality}}
+
+{{#facts.building_standard}}
+{{{content}}}
+{{/facts.building_standard}}
+
+{{#facts.methodology}}
+{{{content}}}
+{{/facts.methodology}}
+
+---
+
+### Property to Evaluate
+
+{{scenario.contextDescription}}
+
+---
+
+Based on your expert analysis, estimate the appropriate market yield for this property.
+
+Return your answer as JSON only, no markdown:
+{"yield": <number>, "reasoning": "<your detailed reasoning>"}
+

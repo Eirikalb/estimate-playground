@@ -1,0 +1,30 @@
+{
+  "domainId": "real-estate-yield",
+  "facts": [
+    {
+      "name": "benchmarks",
+      "content": "### Norwegian Commercial Real Estate Yields (Q3 2024)\n\n**Office Markets:**\n- Office Oslo CBD: 4.50%–5.25%\n- Office Oslo Centre: 5.00%–6.25%\n- Office Oslo Skøyen: 5.25%–6.25%\n- Office Oslo Lysaker: 5.50%–7.00%\n- Office Oslo East: 5.75%–7.25%\n- Office Oslo South: 6.25%–7.50%\n- Office Stavanger: 5.50%–8.50%\n- Office Bergen: 5.25%–7.25%\n- Office Trondheim: 5.50%–8.00%\n- Office Other Cities: 6.25%–9.50%\n\n**Retail:**\n- Retail Prime: 5.25%–6.00%\n- Retail Normal: 6.50%–7.25%\n- Retail Secondary: 7.25%–9.50%\n- Retail Big Box: 6.25%–9.00%\n\n**Other Segments:**\n- Logistics Prime: 5.50%–6.75%\n- Logistics Normal & Secondary: 6.50%–9.50%\n- Hotel Prime: 4.75%–6.50%\n- Hotel Normal & Secondary: 6.50%–9.25%\n- Residential: 4.25%–6.50%"
+    },
+    {
+      "name": "lease_risk",
+      "content": "### Lease Length and Tenant Risk\n\nLease length is one of the most critical factors in yield determination:\n\n- **Long leases (>10 years WAULT)** with creditworthy tenants trade closer to bond-like returns. These properties command 25-50 bps lower yields.\n- **Medium leases (5-10 years)** represent the market norm and typically trade at benchmark yields.\n- **Short leases (<3 years remaining)** add significant re-letting risk. Expect 25-75 bps premium to compensate for vacancy risk and leasing costs.\n\nWAULT (Weighted Average Unexpired Lease Term) should be calculated across all tenants, weighted by rental income."
+    },
+    {
+      "name": "tenant_quality",
+      "content": "### Tenant Quality Assessment\n\n**Low Risk (yield compression):**\n- Government tenants (state, municipal)\n- AAA-rated corporations\n- Large international companies\n- Listed companies with strong balance sheets\n\n**Medium Risk (benchmark yields):**\n- Established mid-sized companies\n- Well-known national brands\n- Professional services firms\n\n**High Risk (yield expansion):**\n- Single SME tenant (concentration risk)\n- Startups or early-stage companies\n- Tenants in cyclical industries\n- Tenants with weak financials"
+    },
+    {
+      "name": "building_standard",
+      "content": "### Building Standard and Age\n\n**Modern buildings (post-2015):**\n- Lower maintenance costs\n- Better energy efficiency\n- More attractive to tenants\n- Command 15-25 bps lower yields\n\n**BREEAM/Environmental certification:**\n- Excellent or Outstanding: 10-20 bps yield compression\n- Increasingly required by institutional investors\n- Affects both lettability and exit pricing\n\n**Older buildings (pre-2000):**\n- Higher capex requirements\n- Obsolescence risk\n- May require significant refurbishment\n- 20-40 bps yield expansion"
+    },
+    {
+      "name": "methodology",
+      "content": "### Valuation Methodology\n\n**Step 1: Identify Benchmark**\nSelect the most relevant location/segment benchmark from the market data.\n\n**Step 2: Position Within Range**\n- Prime assets → lower end of range\n- Secondary assets → higher end of range\n- Consider: location quality, building standard, tenant mix\n\n**Step 3: Apply Adjustments**\nAdjust from benchmark for specific property factors:\n- Tenant quality (+ or - 15-40 bps)\n- Lease length (+ or - 25-50 bps)\n- Building condition (+ or - 15-35 bps)\n- Special factors (vacancy, development potential, etc.)\n\n**Step 4: Sense Check**\nEnsure final yield is logical given the risk profile and comparable transactions."
+    },
+    {
+      "name": "risk_free_context",
+      "content": "### Interest Rate Context\n\nThe baseline real risk-free rate is approximately 2.1% (10-year government bond ~4.1% minus 2.0% expected inflation).\n\nYield spreads over risk-free:\n- Prime CBD office: 200-300 bps spread\n- Secondary office: 350-500 bps spread\n- Higher-risk assets: 500+ bps spread\n\nIn a rising rate environment, yield compression is limited. In a falling rate environment, prime assets may see further compression."
+    }
+  ]
+}
+

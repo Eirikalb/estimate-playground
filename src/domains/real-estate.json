@@ -1,0 +1,150 @@
+{
+  "id": "real-estate-yield",
+  "name": "Norwegian Commercial Real Estate Yield",
+  "description": "Estimating market yields for commercial properties in Norway based on location, tenant quality, lease terms, and building standard.",
+  "outputUnit": "%",
+  "anchors": {
+    "office_oslo_cbd": {
+      "value": 4.875,
+      "description": "Office Oslo CBD (Prime)"
+    },
+    "office_oslo_centre": {
+      "value": 5.625,
+      "description": "Office Oslo Centre"
+    },
+    "office_oslo_skoyen": {
+      "value": 5.75,
+      "description": "Office Oslo Skøyen"
+    },
+    "office_oslo_lysaker": {
+      "value": 6.25,
+      "description": "Office Oslo Lysaker"
+    },
+    "office_oslo_east": {
+      "value": 6.5,
+      "description": "Office Oslo East"
+    },
+    "office_oslo_south": {
+      "value": 6.875,
+      "description": "Office Oslo South"
+    },
+    "office_stavanger": {
+      "value": 7.0,
+      "description": "Office Stavanger"
+    },
+    "office_bergen": {
+      "value": 6.25,
+      "description": "Office Bergen"
+    },
+    "office_trondheim": {
+      "value": 6.75,
+      "description": "Office Trondheim"
+    },
+    "office_other": {
+      "value": 7.875,
+      "description": "Office Other Cities"
+    },
+    "retail_prime": {
+      "value": 5.625,
+      "description": "Retail Prime"
+    },
+    "retail_normal": {
+      "value": 6.875,
+      "description": "Retail Normal"
+    },
+    "retail_secondary": {
+      "value": 8.375,
+      "description": "Retail Secondary"
+    },
+    "logistics_prime": {
+      "value": 6.125,
+      "description": "Logistics Prime"
+    },
+    "logistics_normal": {
+      "value": 8.0,
+      "description": "Logistics Normal & Secondary"
+    },
+    "hotel_prime": {
+      "value": 5.625,
+      "description": "Hotel Prime"
+    },
+    "hotel_normal": {
+      "value": 7.875,
+      "description": "Hotel Normal & Secondary"
+    },
+    "residential": {
+      "value": 5.375,
+      "description": "Residential"
+    }
+  },
+  "deltas": {
+    "long_lease": {
+      "type": "additive",
+      "value": -0.30,
+      "description": "Long lease (>10 years WAULT) with creditworthy tenant"
+    },
+    "short_lease": {
+      "type": "additive",
+      "value": 0.50,
+      "description": "Short lease (<3 years remaining)"
+    },
+    "government_tenant": {
+      "type": "additive",
+      "value": -0.35,
+      "description": "Government or AAA-rated corporate tenant"
+    },
+    "single_tenant_sme": {
+      "type": "additive",
+      "value": 0.45,
+      "description": "Single SME tenant (concentration risk)"
+    },
+    "multi_tenant": {
+      "type": "additive",
+      "value": -0.15,
+      "description": "Diversified tenant base (3+ tenants)"
+    },
+    "modern_building": {
+      "type": "additive",
+      "value": -0.20,
+      "description": "Modern building (post-2015, high standard)"
+    },
+    "older_building": {
+      "type": "additive",
+      "value": 0.30,
+      "description": "Older building (pre-2000, needs capex)"
+    },
+    "breeam_certified": {
+      "type": "additive",
+      "value": -0.15,
+      "description": "BREEAM Excellent or Outstanding certification"
+    },
+    "vacancy_risk": {
+      "type": "additive",
+      "value": 0.40,
+      "description": "Current or imminent vacancy (>20%)"
+    },
+    "prime_micro_location": {
+      "type": "additive",
+      "value": -0.25,
+      "description": "Exceptional micro-location within the area"
+    },
+    "poor_micro_location": {
+      "type": "additive",
+      "value": 0.35,
+      "description": "Suboptimal micro-location (poor access, visibility)"
+    }
+  },
+  "distractors": [
+    "The seller is highly motivated and wants a quick transaction.",
+    "The building has a beautiful lobby with marble floors.",
+    "Transaction is expected to close in Q4.",
+    "The property manager has won several industry awards.",
+    "The building was recently featured in a architecture magazine.",
+    "The current owner has held the property for 15 years.",
+    "There is a popular café on the ground floor.",
+    "The building has excellent views of the fjord.",
+    "The property has been in the same family for two generations.",
+    "Local politicians have expressed support for the area's development."
+  ]
+}
+

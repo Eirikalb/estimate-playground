@@ -1,0 +1,260 @@
+{
+  "id": "8b0e1ede-f1cc-473e-aa88-1cee964a6d26",
+  "timestamp": "2026-01-07T12:54:24.116Z",
+  "domainId": "real-estate-yield",
+  "model": "openai/gpt-4o-mini",
+  "promptStrategy": "persona",
+  "promptTemplate": "You are a senior {{domain.name}} analyst with 15+ years of experience in the Norwegian market.\n\n{{#facts.benchmarks}}\n{{{content}}}\n{{/facts.benchmarks}}\n\n{{#facts.lease_risk}}\n{{{content}}}\n{{/facts.lease_risk}}\n\n{{#facts.tenant_quality}}\n{{{content}}}\n{{/facts.tenant_quality}}\n\n{{#facts.building_standard}}\n{{{content}}}\n{{/facts.building_standard}}\n\n{{#facts.methodology}}\n{{{content}}}\n{{/facts.methodology}}\n\n---\n\n### Property to Evaluate\n\n{{scenario.contextDescription}}\n\n---\n\nBased on your expert analysis, estimate the appropriate market yield for this property.\n\nReturn your answer as JSON only, no markdown:\n{\"yield\": <number>, \"reasoning\": \"<your detailed reasoning>\"}\n\n",
+  "scenarios": [
+    {
+      "id": "615d193f-ee9f-4286-b407-7bdd11b0e9c6",
+      "anchor": "residential",
+      "appliedDeltas": [
+        "prime_micro_location",
+        "long_lease",
+        "single_tenant_sme",
+        "poor_micro_location"
+      ],
+      "distractors": [
+        "Local politicians have expressed support for the area's development.",
+        "The building was recently featured in a architecture magazine."
+      ],
+      "contextDescription": "Property Type: Residential\n\nKey Characteristics:\n- Exceptional micro-location within the area\n- Long lease (>10 years WAULT) with creditworthy tenant\n- Single SME tenant (concentration risk)\n- Suboptimal micro-location (poor access, visibility)\n\nAdditional Context:\n- Local politicians have expressed support for the area's development.\n- The building was recently featured in a architecture magazine.",
+      "groundTruth": {
+        "value": 5.63,
+        "tolerance": 0.35,
+        "calculation": "Base (Residential): 5.375%\nExceptional micro-location within the area: -0.25%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nSingle SME tenant (concentration risk): +0.45%\nSuboptimal micro-location (poor access, visibility): +0.35%\nFinal: 5.63%"
+      },
+      "twinId": "9d0b6885-46b8-4580-96e3-db57573b3f08",
+      "twinDeltaChanged": "prime_micro_location → breeam_certified"
+    },
+    {
+      "id": "9d0b6885-46b8-4580-96e3-db57573b3f08",
+      "anchor": "residential",
+      "appliedDeltas": [
+        "long_lease",
+        "single_tenant_sme",
+        "poor_micro_location",
+        "breeam_certified"
+      ],
+      "distractors": [
+        "Local politicians have expressed support for the area's development.",
+        "The building was recently featured in a architecture magazine."
+      ],
+      "contextDescription": "Property Type: Residential\n\nKey Characteristics:\n- Long lease (>10 years WAULT) with creditworthy tenant\n- Single SME tenant (concentration risk)\n- Suboptimal micro-location (poor access, visibility)\n- BREEAM Excellent or Outstanding certification\n\nAdditional Context:\n- Local politicians have expressed support for the area's development.\n- The building was recently featured in a architecture magazine.",
+      "groundTruth": {
+        "value": 5.73,
+        "tolerance": 0.35,
+        "calculation": "Base (Residential): 5.375%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nSingle SME tenant (concentration risk): +0.45%\nSuboptimal micro-location (poor access, visibility): +0.35%\nBREEAM Excellent or Outstanding certification: -0.15%\nFinal: 5.72%"
+      },
+      "twinId": "615d193f-ee9f-4286-b407-7bdd11b0e9c6",
+      "twinDeltaChanged": "prime_micro_location → breeam_certified"
+    },
+    {
+      "id": "e87151ec-8838-45a2-a8cf-60f74b6ba10a",
+      "anchor": "office_stavanger",
+      "appliedDeltas": [
+        "multi_tenant",
+        "poor_micro_location"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Office Stavanger\n\nKey Characteristics:\n- Diversified tenant base (3+ tenants)\n- Suboptimal micro-location (poor access, visibility)",
+      "groundTruth": {
+        "value": 7.2,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Stavanger): 7%\nDiversified tenant base (3+ tenants): -0.15%\nSuboptimal micro-location (poor access, visibility): +0.35%\nFinal: 7.20%"
+      },
+      "twinId": "0687808f-cde9-491a-a1ef-9e3e56aa5fc5",
+      "twinDeltaChanged": "multi_tenant → breeam_certified"
+    },
+    {
+      "id": "0687808f-cde9-491a-a1ef-9e3e56aa5fc5",
+      "anchor": "office_stavanger",
+      "appliedDeltas": [
+        "poor_micro_location",
+        "breeam_certified"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Office Stavanger\n\nKey Characteristics:\n- Suboptimal micro-location (poor access, visibility)\n- BREEAM Excellent or Outstanding certification",
+      "groundTruth": {
+        "value": 7.2,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Stavanger): 7%\nSuboptimal micro-location (poor access, visibility): +0.35%\nBREEAM Excellent or Outstanding certification: -0.15%\nFinal: 7.20%"
+      },
+      "twinId": "e87151ec-8838-45a2-a8cf-60f74b6ba10a",
+      "twinDeltaChanged": "multi_tenant → breeam_certified"
+    },
+    {
+      "id": "39d1ff16-3b12-43a5-9641-f3aa180f7289",
+      "anchor": "office_oslo_centre",
+      "appliedDeltas": [
+        "modern_building",
+        "single_tenant_sme",
+        "government_tenant"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Office Oslo Centre\n\nKey Characteristics:\n- Modern building (post-2015, high standard)\n- Single SME tenant (concentration risk)\n- Government or AAA-rated corporate tenant",
+      "groundTruth": {
+        "value": 5.53,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Centre): 5.625%\nModern building (post-2015, high standard): -0.2%\nSingle SME tenant (concentration risk): +0.45%\nGovernment or AAA-rated corporate tenant: -0.35%\nFinal: 5.53%"
+      },
+      "twinId": "d4abed2d-c330-4e68-b23d-7fe6996ec290",
+      "twinDeltaChanged": "removed: government_tenant"
+    },
+    {
+      "id": "d4abed2d-c330-4e68-b23d-7fe6996ec290",
+      "anchor": "office_oslo_centre",
+      "appliedDeltas": [
+        "modern_building",
+        "single_tenant_sme"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Office Oslo Centre\n\nKey Characteristics:\n- Modern building (post-2015, high standard)\n- Single SME tenant (concentration risk)",
+      "groundTruth": {
+        "value": 5.88,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Centre): 5.625%\nModern building (post-2015, high standard): -0.2%\nSingle SME tenant (concentration risk): +0.45%\nFinal: 5.88%"
+      },
+      "twinId": "39d1ff16-3b12-43a5-9641-f3aa180f7289",
+      "twinDeltaChanged": "removed: government_tenant"
+    },
+    {
+      "id": "8e95c7b9-7a1a-478a-97a9-94d5354c55d6",
+      "anchor": "hotel_normal",
+      "appliedDeltas": [
+        "multi_tenant"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Hotel Normal & Secondary\n\nKey Characteristics:\n- Diversified tenant base (3+ tenants)",
+      "groundTruth": {
+        "value": 7.73,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Normal & Secondary): 7.875%\nDiversified tenant base (3+ tenants): -0.15%\nFinal: 7.72%"
+      },
+      "twinId": "6a2d6537-77e2-47ac-b080-17807371e08e",
+      "twinDeltaChanged": "multi_tenant → breeam_certified"
+    },
+    {
+      "id": "6a2d6537-77e2-47ac-b080-17807371e08e",
+      "anchor": "hotel_normal",
+      "appliedDeltas": [
+        "breeam_certified"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Hotel Normal & Secondary\n\nKey Characteristics:\n- BREEAM Excellent or Outstanding certification",
+      "groundTruth": {
+        "value": 7.73,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Normal & Secondary): 7.875%\nBREEAM Excellent or Outstanding certification: -0.15%\nFinal: 7.72%"
+      },
+      "twinId": "8e95c7b9-7a1a-478a-97a9-94d5354c55d6",
+      "twinDeltaChanged": "multi_tenant → breeam_certified"
+    },
+    {
+      "id": "8b55a3b8-ea2c-4cee-b0b7-4b25c8a5f4ca",
+      "anchor": "hotel_normal",
+      "appliedDeltas": [],
+      "distractors": [
+        "The seller is highly motivated and wants a quick transaction.",
+        "The property manager has won several industry awards."
+      ],
+      "contextDescription": "Property Type: Hotel Normal & Secondary\n\nAdditional Context:\n- The seller is highly motivated and wants a quick transaction.\n- The property manager has won several industry awards.",
+      "groundTruth": {
+        "value": 7.88,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Normal & Secondary): 7.875%\nFinal: 7.88%"
+      }
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "615d193f-ee9f-4286-b407-7bdd11b0e9c6",
+      "prediction": 5.75,
+      "reasoning": "To determine the appropriate market yield for the residential property, we start with the benchmark yield range for residential properties, which is 4.25%–6.50%. Given the characteristics of the property: \n\n1. **Exceptional Micro-location**: This typically supports a lower yield, but the mention of 'suboptimal micro-location' suggests some offsetting factors. \n2. **Long Lease (>10 years WAULT)**: This is a strong positive factor, as it typically commands a yield compression of 25-50 bps. \n3. **Single SME Tenant**: This introduces concentration risk, which typically leads to a yield expansion of 25-75 bps. \n\nConsidering these factors, we can analyze the adjustments: \n- Starting from the midpoint of the benchmark range (5.375%), we apply the following adjustments: \n  - Long lease benefits (yield compression): -40 bps \n  - Single SME tenant (yield expansion): +50 bps \n\nCalculating this gives us: \n5.375% - 0.40% + 0.50% = 5.475%. \n\nRounding this to a logical yield in the market context, we arrive at an estimated yield of 5.75%. This yield reflects the balance of the long lease's stability against the risks posed by the tenant's concentration and the suboptimal micro-location.",
+      "latencyMs": 6774,
+      "error": 0.1200000000000001,
+      "absoluteError": 0.1200000000000001,
+      "withinTolerance": true
+    },
+    {
+      "scenarioId": "9d0b6885-46b8-4580-96e3-db57573b3f08",
+      "prediction": 5.25,
+      "reasoning": "The property is a residential asset with a long lease (>10 years WAULT) with a creditworthy tenant, which typically commands lower yields due to stability. However, the presence of a single SME tenant introduces concentration risk, which would typically lead to a yield expansion of 25-75 bps. Additionally, the suboptimal micro-location (poor access and visibility) would further increase the yield by approximately 15-40 bps due to perceived risk. On the positive side, the BREEAM Excellent or Outstanding certification would compress the yield by 10-20 bps, making the property more attractive to investors. Considering these factors, we start with a benchmark yield for residential properties of 4.25%–6.50%. Given the adjustments for tenant risk and location, the estimated yield would be around 5.25%, reflecting a balance between the long lease stability and the risks associated with tenant concentration and location.",
+      "latencyMs": 5314,
+      "error": -0.4800000000000004,
+      "absoluteError": 0.4800000000000004,
+      "withinTolerance": false
+    },
+    {
+      "scenarioId": "e87151ec-8838-45a2-a8cf-60f74b6ba10a",
+      "prediction": 6.25,
+      "reasoning": "For the Office Stavanger market, the benchmark yield range is 5.50%–8.50%. Given the property's diversified tenant base, which mitigates concentration risk, it would typically lean towards the lower end of the yield spectrum. However, the suboptimal micro-location with poor access and visibility introduces additional risk factors that would necessitate an upward adjustment. Considering these elements, a yield of 6.25% is justified as it reflects a balance between the positive aspects of tenant diversification and the negative impact of location quality.",
+      "latencyMs": 3185,
+      "error": -0.9500000000000002,
+      "absoluteError": 0.9500000000000002,
+      "withinTolerance": false
+    },
+    {
+      "scenarioId": "0687808f-cde9-491a-a1ef-9e3e56aa5fc5",
+      "prediction": 6,
+      "reasoning": "The property is an office in Stavanger, which has a yield range of 5.50%–8.50%. Given its BREEAM Excellent or Outstanding certification, we can apply a yield compression of 10-20 bps. However, the suboptimal micro-location (poor access and visibility) will negatively impact the yield, likely requiring an adjustment of 25-50 bps due to the associated risks. Starting from a benchmark yield of around 6.50% for medium-quality office assets in Stavanger, the BREEAM certification would lower the yield to approximately 6.30% (6.50% - 20 bps), but the micro-location risk pushes it up to 6.00% (6.30% + 30 bps). Thus, the estimated market yield for this property is 6.00%.",
+      "latencyMs": 4719,
+      "error": -1.2000000000000002,
+      "absoluteError": 1.2000000000000002,
+      "withinTolerance": false
+    },
+    {
+      "scenarioId": "39d1ff16-3b12-43a5-9641-f3aa180f7289",
+      "prediction": 5,
+      "reasoning": "The property is located in the Office Oslo Centre segment, which has a benchmark yield range of 5.00%–6.25%. Given that it is a modern building (post-2015), we can apply a yield compression of 15-25 basis points, bringing the yield closer to the lower end of the range. However, the presence of a single SME tenant introduces concentration risk, which typically warrants a yield expansion of 25-75 basis points. Since the tenant is either a government or AAA-rated corporate tenant, this mitigates some of the risk associated with being a single tenant. Therefore, after considering the tenant quality and the concentration risk, the yield is adjusted to 5.00%, which reflects a balance between the benefits of the modern building and the risks associated with the tenant structure.",
+      "latencyMs": 4897,
+      "error": -0.5300000000000002,
+      "absoluteError": 0.5300000000000002,
+      "withinTolerance": false
+    },
+    {
+      "scenarioId": "d4abed2d-c330-4e68-b23d-7fe6996ec290",
+      "prediction": 6,
+      "reasoning": "The property is located in the Office Oslo Centre segment, which has a benchmark yield range of 5.00%–6.25%. Given that it is a modern building (post-2015), we can apply a yield compression of 15-25 bps, moving the yield towards the lower end of the range. However, the presence of a single SME tenant introduces concentration risk, which typically warrants a yield expansion of 25-75 bps. Balancing these factors, the modern standard would push the yield down to around 5.75%–6.00%, but the tenant risk pushes it back up. Therefore, a final yield of 6.00% reflects the combination of the modern building quality and the concentration risk associated with the single SME tenant.",
+      "latencyMs": 4381,
+      "error": 0.1200000000000001,
+      "absoluteError": 0.1200000000000001,
+      "withinTolerance": true
+    },
+    {
+      "scenarioId": "8e95c7b9-7a1a-478a-97a9-94d5354c55d6",
+      "prediction": 7,
+      "reasoning": "The property is classified as 'Hotel Normal & Secondary', which typically has a yield range of 6.50% to 9.25%. Given that it has a diversified tenant base with 3 or more tenants, this reduces the concentration risk associated with a single tenant, which is a positive factor. However, since it falls under the 'Normal & Secondary' category, it will not command the lower yields associated with prime properties. Considering the medium risk profile of the tenants and the diversified nature of the tenant base, I estimate the yield to be at the lower end of the range, around 7.00%, reflecting a balance between the inherent risks of the secondary market and the benefits of tenant diversification.",
+      "latencyMs": 3303,
+      "error": -0.7300000000000004,
+      "absoluteError": 0.7300000000000004,
+      "withinTolerance": false
+    },
+    {
+      "scenarioId": "6a2d6537-77e2-47ac-b080-17807371e08e",
+      "prediction": 6.25,
+      "reasoning": "The property is categorized as 'Hotel Normal & Secondary', which typically has a yield range of 6.50% to 9.25%. Given the BREEAM Excellent or Outstanding certification, we can apply a yield compression of 10-20 bps. Starting from the lower end of the yield range (6.50%), applying a 15 bps compression for the certification results in an estimated yield of 6.25%. This yield reflects the property's quality due to the certification while acknowledging its secondary market status.",
+      "latencyMs": 2647,
+      "error": -1.4800000000000004,
+      "absoluteError": 1.4800000000000004,
+      "withinTolerance": false
+    },
+    {
+      "scenarioId": "8b55a3b8-ea2c-4cee-b0b7-4b25c8a5f4ca",
+      "prediction": 7,
+      "reasoning": "The property is classified as 'Hotel Normal & Secondary', which has a benchmark yield range of 6.50%–9.25%. Given the seller's high motivation for a quick transaction, this may indicate a potential for yield compression. However, since it is categorized as 'Normal & Secondary', it will naturally trade towards the higher end of the yield spectrum. Considering the property manager's awards, this could enhance the property's appeal and slightly compress the yield. Therefore, I estimate the yield at 7.00%, which is a reasonable midpoint reflecting the competitive market conditions and the specific characteristics of the property.",
+      "latencyMs": 3715,
+      "error": -0.8799999999999999,
+      "absoluteError": 0.8799999999999999,
+      "withinTolerance": false
+    }
+  ],
+  "aggregateMetrics": {
+    "hitRate": 22.22,
+    "meanError": -0.668,
+    "rmse": 0.842,
+    "avgLatencyMs": 4326,
+    "directionalAccuracy": 25
+  }
+}
