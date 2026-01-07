@@ -1,0 +1,516 @@
+{
+  "id": "92140e84-0852-48aa-b0b2-36b78e45a390",
+  "timestamp": "2026-01-07T13:38:58.429Z",
+  "domainId": "real-estate-yield",
+  "model": "google/gemini-3-flash-preview",
+  "promptStrategy": "persona",
+  "promptTemplate": "You are a senior {{domain.name}} analyst with 15+ years of experience in the Norwegian market.\n\n{{#facts.benchmarks}}\n{{{content}}}\n{{/facts.benchmarks}}\n\n{{#facts.lease_risk}}\n{{{content}}}\n{{/facts.lease_risk}}\n\n{{#facts.tenant_quality}}\n{{{content}}}\n{{/facts.tenant_quality}}\n\n{{#facts.building_standard}}\n{{{content}}}\n{{/facts.building_standard}}\n\n{{#facts.methodology}}\n{{{content}}}\n{{/facts.methodology}}\n\n---\n\n### Property to Evaluate\n\n{{scenario.contextDescription}}\n\n---\n\nBased on your expert analysis, estimate the appropriate market yield for this property.\n\nReturn your answer as JSON only, no markdown:\n{\"yield\": <number>, \"reasoning\": \"<your detailed reasoning>\"}\n\n",
+  "rolloutsPerScenario": 5,
+  "scenarios": [
+    {
+      "id": "cfc6064e-bf42-4f91-be75-a819b2faa433",
+      "anchor": "office_bergen",
+      "appliedDeltas": [
+        "breeam_certified"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Office Bergen\n\nKey Characteristics:\n- BREEAM Excellent or Outstanding certification",
+      "groundTruth": {
+        "value": 6.1,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Bergen): 6.25%\nBREEAM Excellent or Outstanding certification: -0.15%\nFinal: 6.10%"
+      },
+      "twinId": "98a85bd5-244d-4c31-b0b4-1b57b0963389",
+      "twinDeltaChanged": "breeam_certified → prime_micro_location"
+    },
+    {
+      "id": "98a85bd5-244d-4c31-b0b4-1b57b0963389",
+      "anchor": "office_bergen",
+      "appliedDeltas": [
+        "prime_micro_location"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Office Bergen\n\nKey Characteristics:\n- Exceptional micro-location within the area",
+      "groundTruth": {
+        "value": 6,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Bergen): 6.25%\nExceptional micro-location within the area: -0.25%\nFinal: 6.00%"
+      },
+      "twinId": "cfc6064e-bf42-4f91-be75-a819b2faa433",
+      "twinDeltaChanged": "breeam_certified → prime_micro_location"
+    },
+    {
+      "id": "a267db4e-c436-4433-98ae-51145d4d32cc",
+      "anchor": "office_other",
+      "appliedDeltas": [
+        "poor_micro_location",
+        "short_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Office Other Cities\n\nKey Characteristics:\n- Suboptimal micro-location (poor access, visibility)\n- Short lease (<3 years remaining)",
+      "groundTruth": {
+        "value": 8.73,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Other Cities): 7.875%\nSuboptimal micro-location (poor access, visibility): +0.35%\nShort lease (<3 years remaining): +0.5%\nFinal: 8.72%"
+      },
+      "twinId": "b0f3a900-62b3-4c06-bce8-6cca32cf1e85",
+      "twinDeltaChanged": "poor_micro_location → older_building"
+    },
+    {
+      "id": "b0f3a900-62b3-4c06-bce8-6cca32cf1e85",
+      "anchor": "office_other",
+      "appliedDeltas": [
+        "short_lease",
+        "older_building"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Office Other Cities\n\nKey Characteristics:\n- Short lease (<3 years remaining)\n- Older building (pre-2000, needs capex)",
+      "groundTruth": {
+        "value": 8.68,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Other Cities): 7.875%\nShort lease (<3 years remaining): +0.5%\nOlder building (pre-2000, needs capex): +0.3%\nFinal: 8.68%"
+      },
+      "twinId": "a267db4e-c436-4433-98ae-51145d4d32cc",
+      "twinDeltaChanged": "poor_micro_location → older_building"
+    },
+    {
+      "id": "244c0e25-3076-4a39-9a76-954e00a77588",
+      "anchor": "residential",
+      "appliedDeltas": [
+        "older_building",
+        "modern_building"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Residential\n\nKey Characteristics:\n- Older building (pre-2000, needs capex)\n- Modern building (post-2015, high standard)",
+      "groundTruth": {
+        "value": 5.48,
+        "tolerance": 0.35,
+        "calculation": "Base (Residential): 5.375%\nOlder building (pre-2000, needs capex): +0.3%\nModern building (post-2015, high standard): -0.2%\nFinal: 5.47%"
+      },
+      "twinId": "3e877918-690f-4b61-a3f2-0bd5e19e921e",
+      "twinDeltaChanged": "removed: older_building"
+    },
+    {
+      "id": "3e877918-690f-4b61-a3f2-0bd5e19e921e",
+      "anchor": "residential",
+      "appliedDeltas": [
+        "modern_building"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Residential\n\nKey Characteristics:\n- Modern building (post-2015, high standard)",
+      "groundTruth": {
+        "value": 5.18,
+        "tolerance": 0.35,
+        "calculation": "Base (Residential): 5.375%\nModern building (post-2015, high standard): -0.2%\nFinal: 5.17%"
+      },
+      "twinId": "244c0e25-3076-4a39-9a76-954e00a77588",
+      "twinDeltaChanged": "removed: older_building"
+    },
+    {
+      "id": "68d7f4fc-42c9-46bd-a712-07191444615d",
+      "anchor": "office_oslo_south",
+      "appliedDeltas": [
+        "older_building",
+        "single_tenant_sme",
+        "government_tenant"
+      ],
+      "distractors": [
+        "Transaction is expected to close in Q4."
+      ],
+      "contextDescription": "Property Type: Office Oslo South\n\nKey Characteristics:\n- Older building (pre-2000, needs capex)\n- Single SME tenant (concentration risk)\n- Government or AAA-rated corporate tenant\n\nAdditional Context:\n- Transaction is expected to close in Q4.",
+      "groundTruth": {
+        "value": 7.28,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo South): 6.875%\nOlder building (pre-2000, needs capex): +0.3%\nSingle SME tenant (concentration risk): +0.45%\nGovernment or AAA-rated corporate tenant: -0.35%\nFinal: 7.28%"
+      },
+      "twinId": "1bd04512-24a9-4f76-bf16-7a3e879f625d",
+      "twinDeltaChanged": "removed: single_tenant_sme"
+    },
+    {
+      "id": "1bd04512-24a9-4f76-bf16-7a3e879f625d",
+      "anchor": "office_oslo_south",
+      "appliedDeltas": [
+        "older_building",
+        "government_tenant"
+      ],
+      "distractors": [
+        "Transaction is expected to close in Q4."
+      ],
+      "contextDescription": "Property Type: Office Oslo South\n\nKey Characteristics:\n- Older building (pre-2000, needs capex)\n- Government or AAA-rated corporate tenant\n\nAdditional Context:\n- Transaction is expected to close in Q4.",
+      "groundTruth": {
+        "value": 6.83,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo South): 6.875%\nOlder building (pre-2000, needs capex): +0.3%\nGovernment or AAA-rated corporate tenant: -0.35%\nFinal: 6.83%"
+      },
+      "twinId": "68d7f4fc-42c9-46bd-a712-07191444615d",
+      "twinDeltaChanged": "removed: single_tenant_sme"
+    },
+    {
+      "id": "081c954c-a551-4e6a-90ff-3044e9e64320",
+      "anchor": "office_oslo_east",
+      "appliedDeltas": [],
+      "distractors": [
+        "The seller is highly motivated and wants a quick transaction."
+      ],
+      "contextDescription": "Property Type: Office Oslo East\n\nAdditional Context:\n- The seller is highly motivated and wants a quick transaction.",
+      "groundTruth": {
+        "value": 6.5,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo East): 6.5%\nFinal: 6.50%"
+      }
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "cfc6064e-bf42-4f91-be75-a819b2faa433",
+      "rollouts": [
+        {
+          "prediction": 5.1,
+          "reasoning": "Starting with the Office Bergen benchmark (5.25%–7.25%), the property qualifies for the prime end of the spectrum. The BREEAM Excellent/Outstanding certification is a significant value driver in the current Norwegian market, particularly for institutional investors and ESG-mandated funds, justifying a 15-20 bps compression from the prime floor. While the prompt does not specify WAULT or tenant credit, a building of this ESG caliber typically attracts high-quality tenants and commands a 'green premium.' I have positioned the yield at 5.10%, which sits 15 bps below the standard prime benchmark to reflect the superior building standard and its high liquidity in the secondary market.",
+          "latencyMs": 2314
+        },
+        {
+          "prediction": 5.15,
+          "reasoning": "Starting with the Office Bergen benchmark (5.25%–7.25%), the property qualifies for the prime end of the spectrum due to its high ESG credentials. A BREEAM Excellent/Outstanding certification is a significant value driver in the current Norwegian market, typically commanding a 10-20 bps yield compression compared to standard prime assets. Given that institutional investors and green-bond-financed funds specifically target such assets to meet EU Taxonomy requirements, the yield breaks through the standard 5.25% floor. While the lack of WAULT and tenant data prevents a more aggressive compression, the environmental status alone justifies a 10 bps premium over the prime benchmark, resulting in an estimated yield of 5.15%.",
+          "latencyMs": 2188
+        },
+        {
+          "prediction": 5.1,
+          "reasoning": "Starting with the Office Bergen benchmark (5.25%–7.25%), the property qualifies for the prime end of the spectrum. The BREEAM Excellent/Outstanding certification is a significant value driver in the current Norwegian market, particularly for institutional investors and ESG-mandated funds, justifying a 15-20 bps compression from the prime floor of 5.25%. While the prompt does not specify WAULT or tenant credit, a building of this technical standard in Bergen typically attracts high-quality tenants and commands a 'green premium' on the exit yield. Therefore, I have positioned the yield at 5.10%, reflecting its status as a top-tier, future-proofed asset that outperforms the standard prime benchmark.",
+          "latencyMs": 2366
+        },
+        {
+          "prediction": 5.1,
+          "reasoning": "As a senior analyst, I am positioning this asset at the absolute prime end of the Bergen office market. The benchmark for Office Bergen is 5.25%–7.25%. A BREEAM Excellent/Outstanding certification is a significant value driver in the current Norwegian market, typically commanding a 15-20 bps compression due to institutional 'green' mandates and lower energy risk. While the prompt does not specify WAULT or tenant credit, a building of this ESG caliber almost invariably attracts high-quality, long-term tenants. Therefore, I have applied a 15 bps compression to the prime benchmark of 5.25%, resulting in a 5.10% yield. This reflects the high liquidity and lower risk premium associated with top-tier sustainable assets in Norway's second-largest city.",
+          "latencyMs": 1993
+        },
+        {
+          "prediction": 5.15,
+          "reasoning": "Starting with the Office Bergen benchmark (5.25%–7.25%), the property qualifies for the prime end of the spectrum. The BREEAM Excellent/Outstanding certification is a significant value driver in the current Norwegian market, providing a 10-20 bps compression due to institutional demand and lower 'brown discount' risk. While the prompt does not specify WAULT or tenant credit, a BREEAM-certified asset of this caliber typically attracts high-quality tenants and commands a 'green premium.' I have positioned the yield at 5.15%, which sits 10 bps below the standard prime floor of 5.25%, reflecting the superior building standard and ESG profile which currently overrides general secondary city risk.",
+          "latencyMs": 2428
+        }
+      ],
+      "meanPrediction": 5.12,
+      "stdDeviation": 0.024,
+      "minPrediction": 5.1,
+      "maxPrediction": 5.15,
+      "error": -0.98,
+      "absoluteError": 0.98,
+      "withinTolerance": false,
+      "rolloutConsistency": 0
+    },
+    {
+      "scenarioId": "98a85bd5-244d-4c31-b0b4-1b57b0963389",
+      "rollouts": [
+        {
+          "prediction": 5.25,
+          "reasoning": "As a senior analyst in the Norwegian market, I am positioning this asset at the absolute prime end of the Bergen office range (5.25%–7.25%). An 'exceptional micro-location' in Bergen—typically signifying the CBD/Vågen area or prime Solheimsviken/Kronstad—drastically reduces vacancy risk and ensures long-term liquidity. While the prompt does not specify WAULT or building age, the 'exceptional' nature of the location suggests a trophy asset profile that attracts institutional investors, justifying the 5.25% floor. Any further compression would require a long-term government lease (WAULT >10 years) or a BREEAM Outstanding certification, which are not specified here.",
+          "latencyMs": 2536
+        },
+        {
+          "prediction": 5.25,
+          "reasoning": "As a senior analyst in the Norwegian market, I am positioning this asset at the absolute prime end of the Bergen office range (5.25%–7.25%). An 'exceptional micro-location' in Bergen—typically signifying the Vågsbunnen or City Center core—is the primary driver for yield compression. While the prompt does not specify WAULT or building age, the 'exceptional' location status implies high institutional liquidity and strong residual value. In the Q3 2024 climate, where the spread between prime and secondary has widened, a trophy asset in Bergen's best micro-location commands the minimum benchmark yield due to its scarcity and high tenant retention potential.",
+          "latencyMs": 1800
+        },
+        {
+          "prediction": 5.25,
+          "reasoning": "As an Office Bergen asset with an 'exceptional micro-location,' the property fundamentally anchors at the prime end of the 5.25%–7.25% market range. In the Bergen market, micro-location is the primary driver of liquidity and tenant retention. While specific details on WAULT and building age are not provided, an exceptional location in the current Q3 2024 climate—characterized by high interest rates but strong rental growth in central hubs—justifies the tightest possible benchmark yield. This assumes the asset meets modern institutional standards; any deficiency in building grade would be offset by the scarcity value of the site itself.",
+          "latencyMs": 2252
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "The benchmark for Office Bergen is 5.25%–7.25%. An 'exceptional micro-location' immediately places the asset toward the prime end of this range. However, without specific data on WAULT, tenant credit, or BREEAM certification, we cannot justify the absolute floor of 5.25%, which is reserved for long-term state-guaranteed leases in brand-new builds. A yield of 5.50% reflects a high-quality asset in a superior location with standard market risk profiles for other variables, positioning it as a 'Prime' Bergen office asset in the current Q3 2024 interest rate environment.",
+          "latencyMs": 2003
+        },
+        {
+          "prediction": 5.25,
+          "reasoning": "As a senior analyst in the Norwegian market, I am positioning this asset at the absolute prime end of the Bergen office range (5.25%–7.25%). An 'exceptional micro-location' in Bergen—typically signifying the CBD/Vågen area or prime Media City/Solheimsviken hubs—is the primary driver for yield compression. While the prompt does not specify WAULT or building age, the 'exceptional' status implies institutional grade quality that mitigates vacancy risk and attracts high-caliber tenants. In the current Q3 2024 climate, where liquidity is returning to prime regional hubs, such a trophy location commands the minimum risk premium, offsetting broader macroeconomic pressures.",
+          "latencyMs": 2373
+        }
+      ],
+      "meanPrediction": 5.3,
+      "stdDeviation": 0.1,
+      "minPrediction": 5.25,
+      "maxPrediction": 5.5,
+      "error": -0.7,
+      "absoluteError": 0.7,
+      "withinTolerance": false,
+      "rolloutConsistency": 0
+    },
+    {
+      "scenarioId": "a267db4e-c436-4433-98ae-51145d4d32cc",
+      "rollouts": [
+        {
+          "prediction": 9.25,
+          "reasoning": "Starting with the 'Office Other Cities' benchmark (6.25%–9.50%), the property is positioned toward the high end of the range due to its suboptimal micro-location and poor visibility, which limits tenant appeal and future rental growth. The critical risk factor is the short WAULT (<3 years), which necessitates a significant yield expansion (approx. 50-75 bps) to compensate for imminent re-letting risk, potential vacancy, and associated CAPEX/incentive costs. While the absolute ceiling is 9.50%, a yield of 9.25% reflects a distressed but still functional asset where the lack of location 'stickiness' compounds the lease expiry risk.",
+          "latencyMs": 2636
+        },
+        {
+          "prediction": 9.25,
+          "reasoning": "Starting with the 'Office Other Cities' benchmark (6.25%–9.50%), the property is immediately positioned toward the upper bound due to its suboptimal micro-location, poor visibility, and lack of accessibility, which severely limits tenant demand. The short lease term (<3 years WAULT) introduces significant re-letting risk and potential vacancy in a secondary market where absorption rates are typically slow. Applying a 50-75 bps premium for lease length risk and an additional 25-40 bps for the location's structural disadvantages pushes the yield to the 9.00%-9.50% range. A yield of 9.25% reflects the high risk-adjusted return required by investors to compensate for the imminent capex, leasing commissions, and the high probability of a void period in a non-prime city.",
+          "latencyMs": 4136
+        },
+        {
+          "prediction": 9.25,
+          "reasoning": "Starting with the 'Office Other Cities' benchmark (6.25%–9.50%), the property is positioned at the high end of the range due to its suboptimal micro-location and poor visibility, which significantly limits tenant appeal and future liquidity. The short lease term (<3 years WAULT) introduces substantial re-letting risk in a secondary market where vacancy periods are typically prolonged, necessitating a 50-75 bps premium over benchmark norms. While the range tops out at 9.50%, a yield of 9.25% reflects a distressed but still functional asset; any further deterioration in building standard or tenant credit would likely push this toward the 9.50%+ 'exit' territory or make it a pure development play.",
+          "latencyMs": 2202
+        },
+        {
+          "prediction": 9.25,
+          "reasoning": "Starting with the 'Office Other Cities' benchmark (6.25%–9.50%), the property is positioned toward the high end of the range due to its suboptimal micro-location and poor visibility, which limits tenant appeal and future rental growth. The critical risk factor is the short WAULT (<3 years), which necessitates a significant yield expansion (typically 50-75 bps) to compensate for imminent re-letting risk, potential vacancy, and associated capex/incentives. While the absolute ceiling for the segment is 9.50%, a yield of 9.25% reflects a distressed but still functional asset where the location risk and lease expiry risk compound, placing it firmly in the secondary/high-risk category.",
+          "latencyMs": 2077
+        },
+        {
+          "prediction": 9.25,
+          "reasoning": "Starting with the 'Office Other Cities' benchmark (6.25%–9.50%), the property is positioned toward the high end of the range due to its suboptimal micro-location and poor visibility, which limits future tenant demand. The short WAULT (<3 years) introduces significant re-letting risk in a secondary market where vacancy periods are typically longer, necessitating a 50-75 bps premium over the benchmark mid-point. While the range tops out at 9.50%, a yield of 9.25% reflects a high-risk profile that accounts for both the immediate cash flow uncertainty and the structural disadvantages of the location, while assuming the building itself is functional enough to avoid the absolute ceiling of the market risk spectrum.",
+          "latencyMs": 3280
+        }
+      ],
+      "meanPrediction": 9.25,
+      "stdDeviation": 0,
+      "minPrediction": 9.25,
+      "maxPrediction": 9.25,
+      "error": 0.52,
+      "absoluteError": 0.52,
+      "withinTolerance": false,
+      "rolloutConsistency": 0
+    },
+    {
+      "scenarioId": "b0f3a900-62b3-4c06-bce8-6cca32cf1e85",
+      "rollouts": [
+        {
+          "prediction": 9.25,
+          "reasoning": "Starting with the 'Office Other Cities' benchmark (6.25%–9.50%), the property is positioned toward the high end of the range due to its secondary location and age. The base yield for an older building in this segment is approximately 8.25%. I have applied a +50 bps expansion for the short WAULT (<3 years), which introduces significant re-letting and vacancy risk in a non-core market. An additional +50 bps expansion is applied for the pre-2000 construction and identified capex needs, reflecting both technical obsolescence and the 'green discount' compared to modern ESG-compliant assets. This results in a 9.25% yield, reflecting a high-risk profile where the investor requires a significant premium for both the immediate leasing risk and the upcoming capital intensive refurbishment requirements.",
+          "latencyMs": 13115
+        },
+        {
+          "prediction": 9.25,
+          "reasoning": "Starting with the 'Office Other Cities' benchmark (6.25%–9.50%), the property is positioned toward the high end of the range due to its secondary location and age. The base yield for an older building in this segment is approximately 8.25%. I have applied a +50 bps expansion for the short WAULT (<3 years), which introduces significant binary vacancy risk and immediate leasing commissions. An additional +50 bps expansion is applied for the pre-2000 construction and looming capex requirements, as investors in the current Q3 2024 market demand a higher risk premium for assets requiring heavy technical upgrades to meet modern energy standards. The final yield of 9.25% reflects the high execution risk and the 'Other Cities' liquidity discount.",
+          "latencyMs": 2359
+        },
+        {
+          "prediction": 9.25,
+          "reasoning": "Starting with the 'Office Other Cities' benchmark (6.25%–9.50%), the property is positioned toward the high end of the range due to its secondary location and age. The base yield for an older building in this segment is approximately 8.25%. I have applied a +50 bps expansion for the short WAULT (<3 years), which introduces significant re-letting and vacancy risk in a non-core market. An additional +50 bps expansion is applied for the pre-2000 construction and stated capex requirements, reflecting technical obsolescence and the high cost of modernizing to meet current energy standards. The final yield of 9.25% reflects the high risk-premium required by investors for a secondary asset with immediate vacancy risk and capital intensive requirements.",
+          "latencyMs": 2144
+        },
+        {
+          "prediction": 9.25,
+          "reasoning": "Starting with the 'Office Other Cities' benchmark (6.25%–9.50%), the property is positioned at the upper end of the range due to its secondary location and age. The base benchmark for an older building in this segment is approximately 8.25%-8.50%. I have applied a 40 bps expansion for the pre-2000 construction and looming capex requirements (obsolescence risk), and a further 50 bps premium to account for the high re-letting risk associated with a WAULT of less than 3 years. In the current Q3 2024 climate, where financing costs remain elevated, investors demand a significant risk premium for assets requiring both immediate capital expenditure and intensive asset management to secure new tenants.",
+          "latencyMs": 2159
+        },
+        {
+          "prediction": 9.25,
+          "reasoning": "Starting with the 'Office Other Cities' benchmark (6.25%–9.50%), the property is positioned at the upper end of the range due to its secondary location and age. The base yield for an older building (pre-2000) in this segment typically starts around 8.25%-8.50%. I have applied a +40 bps expansion for building age and imminent capex requirements (obsolescence risk) and a +50 bps premium for the high re-letting risk associated with a short WAULT (<3 years). This results in a 9.25% yield, reflecting the significant risk premium required by investors for a non-prime asset with high vacancy exposure and technical depreciation in a secondary market.",
+          "latencyMs": 13103
+        }
+      ],
+      "meanPrediction": 9.25,
+      "stdDeviation": 0,
+      "minPrediction": 9.25,
+      "maxPrediction": 9.25,
+      "error": 0.57,
+      "absoluteError": 0.57,
+      "withinTolerance": false,
+      "rolloutConsistency": 0
+    },
+    {
+      "scenarioId": "244c0e25-3076-4a39-9a76-954e00a77588",
+      "rollouts": [
+        {
+          "prediction": 4.65,
+          "reasoning": "The valuation starts with the Residential benchmark range of 4.25%–6.50%. The property presents a dual-profile risk: while the 'older building' component (pre-2000) typically necessitates a 20-40 bps yield expansion due to capex requirements and technical obsolescence, the 'modern building' component (post-2015) acts as a strong hedge, commanding prime pricing due to lower maintenance and high tenant appeal. In the Norwegian residential market, modern units drive the bulk of the value. I have positioned the yield toward the lower (prime) end of the scale at 4.65% because the presence of a modern, high-standard building significantly mitigates the overall portfolio risk, though the yield is slightly elevated from the absolute floor (4.25%) to account for the necessary capex and refurbishment drag associated with the older structure.",
+          "latencyMs": 2770
+        },
+        {
+          "prediction": 4.95,
+          "reasoning": "The valuation starts with the Residential benchmark range of 4.25%–6.50%. The property presents a dual-profile risk: while the post-2015 modern section commands a premium (lower yield) due to high technical standards and BREEAM-aligned efficiency, the pre-2000 section introduces significant Capex requirements and operational obsolescence risk, necessitating a yield expansion. Given the stability of the residential asset class in the Norwegian market, the modern component pushes the yield toward the prime end (approx. 4.50%), but the older component and associated maintenance drag pull the weighted average upward. A yield of 4.95% reflects a balanced position that accounts for the 'flight to quality' for the new build while pricing in the structural risks and reinvestment needs of the older portion.",
+          "latencyMs": 3698
+        },
+        {
+          "prediction": 4.15,
+          "reasoning": "The valuation is based on the 'Residential' benchmark range of 4.25%–6.50%. As a senior analyst, I must note a contradiction in the property description provided (listed as both 'Older' and 'Modern'). Following the methodology for a 'Modern building (post-2015, high standard)', the asset qualifies for the prime end of the spectrum. Starting at the 4.25% floor, I apply a 10 bps compression for modern energy efficiency and lower maintenance profile compared to the market average. While residential yields are typically less sensitive to WAULT than commercial, the high building standard and 'post-2015' status drive the yield slightly below the standard benchmark floor due to strong institutional demand for ESG-compliant residential assets in the Norwegian market. If the 'Older' characteristic were the primary driver, the yield would instead expand toward 5.25%-5.50% to account for capex and obsolescence.",
+          "latencyMs": 2653
+        },
+        {
+          "prediction": 5.15,
+          "reasoning": "The valuation is based on the Residential benchmark (4.25%–6.50%). The property presents a conflicting profile: a modern, high-standard post-2015 section and an older pre-2000 section requiring capex. For the modern component, we target the lower end of the range (approx. 4.50-4.75%) due to lower maintenance and high tenant appeal. For the older component, we adjust toward the mid-to-high range (approx. 5.50-5.75%) to account for obsolescence risk and upcoming capital expenditure. Assuming a balanced mix, the blended benchmark sits at 5.15%. This reflects a premium for the capex risk in the older wing, offset by the institutional quality and yield compression (approx. 15-25 bps) typically attributed to the modern, energy-efficient portion of the asset.",
+          "latencyMs": 3295
+        },
+        {
+          "prediction": 4.15,
+          "reasoning": "The valuation is based on the Residential benchmark range of 4.25%–6.50%. As a senior analyst, I have identified a contradiction in the property description (listed as both pre-2000 and post-2015). Following the 'Modern building' characteristic as the primary value driver, we start at the prime end of the residential range (4.25%). For a post-2015 asset with high standards, we apply a 15-25 bps compression due to lower maintenance and high tenant appeal. Residential assets in the Norwegian market, particularly modern ones with institutional quality, currently trade at a premium (lower yield) compared to older stock due to strict ESG requirements and lower capex risk. The final yield of 4.15% reflects a prime, modern residential asset, positioned slightly below the standard benchmark floor to account for the 'high standard' specification.",
+          "latencyMs": 13282
+        }
+      ],
+      "meanPrediction": 4.61,
+      "stdDeviation": 0.408,
+      "minPrediction": 4.15,
+      "maxPrediction": 5.15,
+      "error": -0.87,
+      "absoluteError": 0.87,
+      "withinTolerance": false,
+      "rolloutConsistency": 20
+    },
+    {
+      "scenarioId": "3e877918-690f-4b61-a3f2-0bd5e19e921e",
+      "rollouts": [
+        {
+          "prediction": 4.4,
+          "reasoning": "The property is positioned at the lower end of the Q3 2024 Residential benchmark range (4.25%–6.50%). As a modern asset built post-2015, it benefits from lower technical risk and higher energy efficiency, justifying a 15-25 bps compression from the mid-point. While residential yields are less sensitive to WAULT than commercial assets due to the granular nature of individual leases, the 'high standard' and modern construction significantly reduce long-term capex requirements and increase liquidity among institutional investors. A yield of 4.40% reflects a prime residential positioning, slightly above the absolute floor to account for the current interest rate environment and the typical spread required over the risk-free rate in the Norwegian market.",
+          "latencyMs": 2353
+        },
+        {
+          "prediction": 4.35,
+          "reasoning": "Starting with the Residential benchmark range of 4.25%–6.50%, the property is positioned at the prime end due to its modern construction (post-2015). In the Norwegian market, modern residential assets command the lowest yields due to minimal capex requirements, high energy efficiency, and strong institutional demand. While the benchmark floor is 4.25%, a yield of 4.35% accounts for the 'modern building' compression (15-25 bps) against the broader residential average, while maintaining a slight buffer for current interest rate levels. The high building standard significantly reduces obsolescence risk, justifying a yield near the absolute prime threshold.",
+          "latencyMs": 1852
+        },
+        {
+          "prediction": 4.5,
+          "reasoning": "The property is positioned at the lower end of the Q3 2024 Residential yield range (4.25%–6.50%). As a modern asset built post-2015, it benefits from minimal immediate CAPEX requirements and high energy efficiency, which justifies a 15-25 bps compression relative to the market average. While the absolute prime floor of 4.25% is typically reserved for institutional 'trophy' assets in Oslo's most central districts with BREEAM certification, a 4.50% yield reflects the low risk profile of modern residential stock, strong tenant demand for high-standard housing, and the structural stability of the Norwegian residential rental market.",
+          "latencyMs": 2013
+        },
+        {
+          "prediction": 4.4,
+          "reasoning": "Starting with the Residential benchmark range of 4.25%–6.50%, the property is positioned near the prime end due to its modern construction (post-2015). As a senior analyst, I apply a yield compression of approximately 15-25 bps for the high building standard and energy efficiency typical of newer builds, which reduces maintenance capex and increases tenant appeal. While the specific location isn't provided, a modern residential asset represents one of the lowest risk profiles in the current Norwegian market. The 4.40% yield reflects a premium asset that attracts institutional investors seeking stable, inflation-hedged cash flows with minimal technical obsolescence risk.",
+          "latencyMs": 2166
+        },
+        {
+          "prediction": 4.35,
+          "reasoning": "Starting with the Residential benchmark range of 4.25%–6.50%, the property is positioned at the prime end due to its modern construction (post-2015). In the Norwegian market, modern residential assets command the lowest yields due to minimal maintenance requirements (low capex), high energy efficiency, and strong institutional demand. While the benchmark floor is 4.25%, a yield of 4.35% reflects a 'prime' positioning that accounts for the current interest rate environment in Q3 2024, providing a slight buffer above the absolute minimum while rewarding the asset's high building standard and lower obsolescence risk.",
+          "latencyMs": 1875
+        }
+      ],
+      "meanPrediction": 4.4,
+      "stdDeviation": 0.055,
+      "minPrediction": 4.35,
+      "maxPrediction": 4.5,
+      "error": -0.78,
+      "absoluteError": 0.78,
+      "withinTolerance": false,
+      "rolloutConsistency": 0
+    },
+    {
+      "scenarioId": "68d7f4fc-42c9-46bd-a712-07191444615d",
+      "rollouts": [
+        {
+          "prediction": 7.15,
+          "reasoning": "Starting with the Office Oslo South benchmark (6.25%–7.50%), the property faces conflicting yield drivers. The primary compression factor is the 'Government or AAA-rated' tenant status, which significantly de-risks the cash flow and typically warrants a 25-40 bps reduction from the midpoint. However, this is heavily offset by two major risk factors: the building's age (pre-2000) and its status as a single-tenant SME-profile asset (despite the high credit rating mentioned, single-tenant concentration in older assets increases terminal value risk). Given the 'needs capex' status, we must price in the looming refurbishment costs and potential vacancy at lease end. While the tenant quality is excellent, the structural obsolescence and location (Oslo South) push the yield toward the higher end of the range. I have positioned the yield at 7.15%, reflecting a premium for the technical risk and capital expenditure requirements, slightly mitigated by the secure covenant.",
+          "latencyMs": 2748
+        },
+        {
+          "prediction": 7.15,
+          "reasoning": "Starting with the Office Oslo South benchmark (6.25%–7.50%), the property faces conflicting yield drivers. The primary compression factor is the 'Government or AAA-rated' tenant status, which significantly de-risks the cash flow and would typically push the yield toward the lower end of the range. However, this is heavily offset by two major risk factors: the 'pre-2000' building age requiring imminent capex and the 'single tenant concentration risk.' In the current Q3/Q4 2024 high-interest-rate environment, institutional investors penalize older, non-certified assets (brown discount) and SME-level concentration risk despite the high credit rating. I have positioned the yield at 7.15%, which is in the upper quartile of the Oslo South range, reflecting that the superior tenant credit is currently overshadowed by the technical obsolescence and the lack of BREEAM certification in a secondary location.",
+          "latencyMs": 2714
+        },
+        {
+          "prediction": 7.15,
+          "reasoning": "Starting with the Office Oslo South benchmark (6.25%–7.50%), the property faces conflicting yield drivers. The presence of a Government or AAA-rated tenant is a significant 'yield compressor' that would normally push the asset toward the lower end of the range (approx. 6.40%). However, this is heavily offset by two major risk factors: the building's age (pre-2000) which implies imminent Capex requirements and technical obsolescence, and the concentration risk of a single tenant. While the tenant's credit is impeccable, the lack of diversification in an older building in a secondary location like Oslo South necessitates a yield expansion. I have positioned the yield at 7.15%, reflecting a premium for the physical state and location, while giving some credit for the secure cash flow provided by the high-quality tenant.",
+          "latencyMs": 13550
+        },
+        {
+          "prediction": 7.15,
+          "reasoning": "Starting with the Office Oslo South benchmark (6.25%–7.50%), the property faces conflicting yield drivers. The primary compression factor is the tenant quality; a Government or AAA-rated corporate tenant significantly de-risks the cash flow, typically warranting a 30-40 bps reduction from the midpoint. However, this is heavily offset by the building's age (pre-2000) and looming capex requirements, which in the current high-interest rate environment of Q4 2024, adds a 30-35 bps premium due to refurbishment risk and ESG obsolescence. While the prompt mentions a 'Single SME' and 'Government/AAA' simultaneously, I have prioritized the Government/AAA status as the primary risk profile for the cash flow. Given the older building standard and the secondary location of Oslo South, the property sits in the upper quartile of the range. The yield of 7.15% reflects a 'bond-like' tenant security tempered by significant physical asset risk and the lack of BREEAM certification.",
+          "latencyMs": 2318
+        },
+        {
+          "prediction": 7.15,
+          "reasoning": "Starting with the Office Oslo South benchmark (6.25%–7.50%), the property faces conflicting yield drivers. The primary compression factor is the 'Government or AAA-rated' tenant status, which significantly de-risks the cash flow and would typically push the yield toward the lower end of the range. However, this is heavily offset by the 'Older building' status (pre-2000) which implies imminent Capex requirements and technical obsolescence, and the 'Single tenant concentration risk' which creates a binary vacancy risk at lease expiry. While the tenant quality is institutional grade, the physical asset risk and the SME-scale concentration (despite the high rating) necessitate a yield in the upper quartile of the bracket. I have applied a -35 bps adjustment for tenant credit, offset by a +25 bps adjustment for building age and a +15 bps premium for the single-tenant risk profile relative to a diversified multi-tenant benchmark.",
+          "latencyMs": 2688
+        }
+      ],
+      "meanPrediction": 7.15,
+      "stdDeviation": 0,
+      "minPrediction": 7.15,
+      "maxPrediction": 7.15,
+      "error": -0.13,
+      "absoluteError": 0.13,
+      "withinTolerance": true,
+      "rolloutConsistency": 100
+    },
+    {
+      "scenarioId": "1bd04512-24a9-4f76-bf16-7a3e879f625d",
+      "rollouts": [
+        {
+          "prediction": 6.85,
+          "reasoning": "The benchmark for Office Oslo South is 6.25%–7.50%. We start at the midpoint (6.875%) and apply offsetting adjustments. The high tenant quality (Government/AAA) provides significant security, justifying a compression of ~40 bps. However, the building's age (pre-2000) and identified capex needs introduce technical risk and potential future vacancy during refurbishment, necessitating an expansion of ~35-40 bps. While the lease length is not specified, the presence of a government tenant typically implies a stable WAULT. The net result is a yield that sits slightly below the midpoint of the range, reflecting a 'bond-like' income stream hedged against the physical obsolescence of the asset.",
+          "latencyMs": 2530
+        },
+        {
+          "prediction": 6.75,
+          "reasoning": "Starting with the Office Oslo South benchmark range of 6.25%–7.50%, the valuation is a tug-of-war between high-quality income and physical obsolescence. The presence of a Government or AAA-rated tenant is a significant de-risking factor, which would typically pull the yield toward the prime end of the range (approx. 6.25%-6.50%). However, the building's age (pre-2000) and stated need for capex introduce technical risk and future cash flow leakage, necessitating a 25-40 bps expansion from the prime floor to account for refurbishment costs and lack of BREEAM certification. Assuming a standard WAULT, the security of the covenant offsets the secondary nature of the building, resulting in a yield of 6.75%, placing it in the lower-middle portion of the regional bracket.",
+          "latencyMs": 2561
+        },
+        {
+          "prediction": 6.65,
+          "reasoning": "Starting with the Office Oslo South benchmark range of 6.25%–7.50%, we position the asset based on its specific risk profile. The presence of a Government or AAA-rated corporate tenant is a significant de-risking factor, typically warranting a 30-40 bps compression from the midpoint. However, this is heavily countered by the building's age (pre-2000) and identified capex needs, which introduces technical obsolescence risk and future cash flow leakage, requiring a 30-35 bps expansion. While the tenant quality pushes the yield toward the prime end of the local range (6.25%), the physical state of the asset prevents it from reaching the absolute floor. Assuming a standard WAULT, the yield settles at 6.65%, reflecting a 'flight to quality' in tenant credit balanced against the structural risks of the physical asset.",
+          "latencyMs": 2472
+        },
+        {
+          "prediction": 6.85,
+          "reasoning": "The benchmark for Office Oslo South in Q3 2024 is 6.25%–7.50%. We start with a baseline toward the lower-to-mid end of this range due to the exceptional tenant quality (Government/AAA-rated), which significantly mitigates credit risk. However, the property's age (pre-2000) and identified capex needs necessitate a yield expansion of approximately 30-40 bps to account for technical obsolescence and future capital requirements. While the strong tenant profile provides stability, the physical state of the asset in a non-prime location prevents it from reaching the tightest yields in the segment. A yield of 6.85% reflects a balanced risk premium for the building's condition, offset by the premium security of the cash flow.",
+          "latencyMs": 2368
+        },
+        {
+          "prediction": 6.75,
+          "reasoning": "Starting with the Office Oslo South benchmark (6.25%–7.50%), the valuation is a tug-of-war between exceptional tenant security and significant physical obsolescence. The Government/AAA-rated tenant provides maximum income security, justifying a compression of approximately 40 bps from the midpoint. However, the pre-2000 building age and identified CAPEX needs introduce substantial technical risk and future vacancy concerns once the current lease expires, necessitating a yield expansion of roughly 35-40 bps. These factors largely neutralize each other, positioning the asset slightly below the 6.875% midpoint. Given the Q4 closing context where investors are pricing in stabilized interest rates but remain cautious on 'brown' discounts for older assets, a yield of 6.75% reflects a fair risk-adjusted return for a 'bond-like' cash flow housed in a secondary physical structure.",
+          "latencyMs": 4028
+        }
+      ],
+      "meanPrediction": 6.77,
+      "stdDeviation": 0.075,
+      "minPrediction": 6.65,
+      "maxPrediction": 6.85,
+      "error": -0.06,
+      "absoluteError": 0.06,
+      "withinTolerance": true,
+      "rolloutConsistency": 100
+    },
+    {
+      "scenarioId": "081c954c-a551-4e6a-90ff-3044e9e64320",
+      "rollouts": [
+        {
+          "prediction": 6.5,
+          "reasoning": "The benchmark for Office Oslo East is 5.75%–7.25%. Given the lack of specific data on building age, WAULT, or tenant credit, I have positioned the asset at the midpoint of the range (6.50%). While a motivated seller often implies a 'liquidity discount' that could push the yield toward the higher end (7.25%) to ensure a quick sale, the absence of negative property-specific indicators suggests a standard market-clearing yield is the most professional starting point. This 6.50% reflects a balanced risk profile for a secondary Oslo hub, accounting for the typical mix of established but non-prime tenants and standard building qualities found in the East corridor.",
+          "latencyMs": 2066
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The benchmark for Office Oslo East is 5.75%–7.25%. Given the lack of specific data on WAULT, tenant credit, or BREEAM certification, I have positioned the asset at the midpoint of the range (6.50%). While a 'highly motivated seller' often implies a pricing discount to ensure execution speed, in a professional yield analysis, we first establish the Fair Market Value (FMV). A 6.50% yield represents a balanced risk profile for this submarket. However, if the motivation stems from underlying asset issues (short WAULT or high capex), the yield would drift toward the 7.25% ceiling. Conversely, if the asset is modern with a strong tenant, the motivated seller's need for speed might allow a buyer to capture the asset at this 6.50% 'market' rate rather than the sub-6% rate it might otherwise command in a competitive bidding process.",
+          "latencyMs": 2942
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The benchmark for Office Oslo East is 5.75%–7.25%. Without specific data on WAULT, tenant credit, or BREEAM certification, I have positioned the asset at the midpoint of the range (6.50%). While a motivated seller often implies a 'liquidity discount' that could push the yield toward the higher end (expansion) to ensure a certain execution, the current Q3 2024 market sentiment suggests that for a standard asset in this submarket, 6.50% represents a fair market clearing price. This assumes a standard building age and a medium-term WAULT (5-7 years). Any deviation in building quality (e.g., post-2015 construction) or tenant risk (e.g., government vs. SME) would necessitate a +/- 25-50 bps adjustment from this baseline.",
+          "latencyMs": 2574
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The benchmark for Office Oslo East is 5.75%–7.25%. Without specific data on WAULT, tenant credit, or BREEAM certification, I have positioned the asset at the midpoint of the range (6.50%). While a motivated seller often implies a 'liquidity discount' that could push the yield toward the higher end (expansion) to ensure a quick closing, the lack of negative property-specific indicators (such as short WAULT or high capex) suggests a neutral market position. This yield reflects a balanced risk profile for a secondary Oslo hub, accounting for the current high interest rate environment and the specific geographical risk premium associated with the East corridor compared to the CBD.",
+          "latencyMs": 2336
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The benchmark for Office Oslo East is 5.75%–7.25%. Given the lack of specific data on building age, WAULT, or tenant credit, I have positioned the asset at the midpoint of the range (6.50%). While the seller's high motivation and desire for a quick transaction typically necessitate a 'liquidity premium' or a slightly higher yield to attract immediate capital, this is balanced against the current Q3 2024 market sentiment where Oslo East offers a yield spread that is increasingly attractive to value-add and opportunistic investors. A 6.50% yield represents a fair market entry point that accounts for the inherent secondary location risk while remaining competitive enough to facilitate the requested expedited closing.",
+          "latencyMs": 2165
+        }
+      ],
+      "meanPrediction": 6.5,
+      "stdDeviation": 0,
+      "minPrediction": 6.5,
+      "maxPrediction": 6.5,
+      "error": 0,
+      "absoluteError": 0,
+      "withinTolerance": true,
+      "rolloutConsistency": 100
+    }
+  ],
+  "aggregateMetrics": {
+    "hitRate": 33.33,
+    "meanError": -0.27,
+    "rmse": 0.617,
+    "avgLatencyMs": 3455,
+    "directionalAccuracy": 50,
+    "avgStdDeviation": 0.074,
+    "avgConsistency": 35.56
+  }
+}

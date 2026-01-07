@@ -1,0 +1,570 @@
+{
+  "id": "4843b202-32d2-4fc2-9da0-d9d3d6554530",
+  "timestamp": "2026-01-07T13:37:12.597Z",
+  "domainId": "real-estate-yield",
+  "model": "google/gemini-3-flash-preview",
+  "promptStrategy": "benchmark-only",
+  "promptTemplate": "{{#facts.benchmarks}}\n{{{content}}}\n{{/facts.benchmarks}}\n\n---\n\nUsing the benchmark ranges above, estimate the yield for this property:\n\n{{scenario.contextDescription}}\n\nConsider where this property should be positioned within the relevant benchmark range based on its specific characteristics.\n\nReturn JSON only: {\"yield\": <number>, \"reasoning\": \"<explain benchmark selection and positioning>\"}\n\n",
+  "rolloutsPerScenario": 5,
+  "scenarios": [
+    {
+      "id": "954b1d4c-d538-4d56-a550-3bd6bc43d5ac",
+      "anchor": "office_oslo_skoyen",
+      "appliedDeltas": [
+        "breeam_certified"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Office Oslo Skøyen\n\nKey Characteristics:\n- BREEAM Excellent or Outstanding certification",
+      "groundTruth": {
+        "value": 5.6,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Skøyen): 5.75%\nBREEAM Excellent or Outstanding certification: -0.15%\nFinal: 5.60%"
+      },
+      "twinId": "b88d8ae1-0917-4f5a-a3bd-fe049b1198f2",
+      "twinDeltaChanged": "removed: breeam_certified"
+    },
+    {
+      "id": "b88d8ae1-0917-4f5a-a3bd-fe049b1198f2",
+      "anchor": "office_oslo_skoyen",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "Property Type: Office Oslo Skøyen",
+      "groundTruth": {
+        "value": 5.75,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Skøyen): 5.75%\nFinal: 5.75%"
+      },
+      "twinId": "954b1d4c-d538-4d56-a550-3bd6bc43d5ac",
+      "twinDeltaChanged": "removed: breeam_certified"
+    },
+    {
+      "id": "bf765ec1-7bde-4c74-9ac7-4cef72e23c52",
+      "anchor": "hotel_normal",
+      "appliedDeltas": [
+        "modern_building"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Hotel Normal & Secondary\n\nKey Characteristics:\n- Modern building (post-2015, high standard)",
+      "groundTruth": {
+        "value": 7.68,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Normal & Secondary): 7.875%\nModern building (post-2015, high standard): -0.2%\nFinal: 7.67%"
+      },
+      "twinId": "152a6746-bd4c-4040-80f9-e7ccb7d43e74",
+      "twinDeltaChanged": "removed: modern_building"
+    },
+    {
+      "id": "152a6746-bd4c-4040-80f9-e7ccb7d43e74",
+      "anchor": "hotel_normal",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "Property Type: Hotel Normal & Secondary",
+      "groundTruth": {
+        "value": 7.88,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Normal & Secondary): 7.875%\nFinal: 7.88%"
+      },
+      "twinId": "bf765ec1-7bde-4c74-9ac7-4cef72e23c52",
+      "twinDeltaChanged": "removed: modern_building"
+    },
+    {
+      "id": "665e37ae-6f60-4e5b-b4a6-a6eabd9bc06d",
+      "anchor": "retail_secondary",
+      "appliedDeltas": [
+        "long_lease"
+      ],
+      "distractors": [
+        "The building has excellent views of the fjord.",
+        "The building has a beautiful lobby with marble floors."
+      ],
+      "contextDescription": "Property Type: Retail Secondary\n\nKey Characteristics:\n- Long lease (>10 years WAULT) with creditworthy tenant\n\nAdditional Context:\n- The building has excellent views of the fjord.\n- The building has a beautiful lobby with marble floors.",
+      "groundTruth": {
+        "value": 8.07,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Secondary): 8.375%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nFinal: 8.07%"
+      },
+      "twinId": "1f87a465-4985-4093-a7c0-3abecbcd1105",
+      "twinDeltaChanged": "removed: long_lease"
+    },
+    {
+      "id": "1f87a465-4985-4093-a7c0-3abecbcd1105",
+      "anchor": "retail_secondary",
+      "appliedDeltas": [],
+      "distractors": [
+        "The building has excellent views of the fjord.",
+        "The building has a beautiful lobby with marble floors."
+      ],
+      "contextDescription": "Property Type: Retail Secondary\n\nAdditional Context:\n- The building has excellent views of the fjord.\n- The building has a beautiful lobby with marble floors.",
+      "groundTruth": {
+        "value": 8.38,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Secondary): 8.375%\nFinal: 8.38%"
+      },
+      "twinId": "665e37ae-6f60-4e5b-b4a6-a6eabd9bc06d",
+      "twinDeltaChanged": "removed: long_lease"
+    },
+    {
+      "id": "e0f8fe9d-6789-4fe5-aedd-ae4ca3ae05d7",
+      "anchor": "logistics_prime",
+      "appliedDeltas": [
+        "poor_micro_location",
+        "long_lease",
+        "prime_micro_location"
+      ],
+      "distractors": [
+        "The building has a beautiful lobby with marble floors."
+      ],
+      "contextDescription": "Property Type: Logistics Prime\n\nKey Characteristics:\n- Suboptimal micro-location (poor access, visibility)\n- Long lease (>10 years WAULT) with creditworthy tenant\n- Exceptional micro-location within the area\n\nAdditional Context:\n- The building has a beautiful lobby with marble floors.",
+      "groundTruth": {
+        "value": 5.93,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Prime): 6.125%\nSuboptimal micro-location (poor access, visibility): +0.35%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nExceptional micro-location within the area: -0.25%\nFinal: 5.92%"
+      },
+      "twinId": "1a0795f8-87ef-4789-8ca1-53ad368d41a7",
+      "twinDeltaChanged": "prime_micro_location → multi_tenant"
+    },
+    {
+      "id": "1a0795f8-87ef-4789-8ca1-53ad368d41a7",
+      "anchor": "logistics_prime",
+      "appliedDeltas": [
+        "poor_micro_location",
+        "long_lease",
+        "multi_tenant"
+      ],
+      "distractors": [
+        "The building has a beautiful lobby with marble floors."
+      ],
+      "contextDescription": "Property Type: Logistics Prime\n\nKey Characteristics:\n- Suboptimal micro-location (poor access, visibility)\n- Long lease (>10 years WAULT) with creditworthy tenant\n- Diversified tenant base (3+ tenants)\n\nAdditional Context:\n- The building has a beautiful lobby with marble floors.",
+      "groundTruth": {
+        "value": 6.03,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Prime): 6.125%\nSuboptimal micro-location (poor access, visibility): +0.35%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nDiversified tenant base (3+ tenants): -0.15%\nFinal: 6.02%"
+      },
+      "twinId": "e0f8fe9d-6789-4fe5-aedd-ae4ca3ae05d7",
+      "twinDeltaChanged": "prime_micro_location → multi_tenant"
+    },
+    {
+      "id": "f8699d9c-70b0-437e-892d-43b5cab76c9a",
+      "anchor": "hotel_normal",
+      "appliedDeltas": [
+        "long_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Hotel Normal & Secondary\n\nKey Characteristics:\n- Long lease (>10 years WAULT) with creditworthy tenant",
+      "groundTruth": {
+        "value": 7.58,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Normal & Secondary): 7.875%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nFinal: 7.58%"
+      },
+      "twinId": "34891307-871e-4371-aafd-2078797c8824",
+      "twinDeltaChanged": "long_lease → modern_building"
+    },
+    {
+      "id": "34891307-871e-4371-aafd-2078797c8824",
+      "anchor": "hotel_normal",
+      "appliedDeltas": [
+        "modern_building"
+      ],
+      "distractors": [],
+      "contextDescription": "Property Type: Hotel Normal & Secondary\n\nKey Characteristics:\n- Modern building (post-2015, high standard)",
+      "groundTruth": {
+        "value": 7.68,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Normal & Secondary): 7.875%\nModern building (post-2015, high standard): -0.2%\nFinal: 7.67%"
+      },
+      "twinId": "f8699d9c-70b0-437e-892d-43b5cab76c9a",
+      "twinDeltaChanged": "long_lease → modern_building"
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "954b1d4c-d538-4d56-a550-3bd6bc43d5ac",
+      "rollouts": [
+        {
+          "prediction": 5.25,
+          "reasoning": "The property is located in Oslo Skøyen, which has a benchmark yield range of 5.25%–6.25%. Given the 'BREEAM Excellent or Outstanding' certification, the property represents the highest tier of ESG standards and modern technical quality. Such premium sustainability credentials significantly reduce risk, attract high-quality tenants, and command a pricing premium, justifying a position at the absolute sharpest (lowest) end of the benchmark range.",
+          "latencyMs": 1870
+        },
+        {
+          "prediction": 5.25,
+          "reasoning": "The property falls within the Office Oslo Skøyen benchmark range of 5.25%–6.25%. Given the high-quality ESG profile (BREEAM Excellent or Outstanding), the property represents a prime asset with lower risk and higher liquidity. Such certifications typically command a 'green premium,' positioning the yield at the most aggressive (lowest) end of the market range.",
+          "latencyMs": 1859
+        },
+        {
+          "prediction": 5.25,
+          "reasoning": "The property is located in Oslo Skøyen, which has a benchmark yield range of 5.25%–6.25%. Given the 'BREEAM Excellent or Outstanding' certification, the property represents the highest tier of ESG standards and modern technical quality. Such premium sustainability credentials significantly reduce risk, lower operating costs, and increase attractiveness to institutional investors, justifying a position at the keenest (lowest) end of the provided benchmark range.",
+          "latencyMs": 1907
+        },
+        {
+          "prediction": 5.25,
+          "reasoning": "The property is located in Oslo Skøyen, which has a benchmark yield range of 5.25%–6.25%. High-quality ESG certifications, such as BREEAM Excellent or Outstanding, are primary drivers for prime pricing in the current market due to lower risk profiles and higher tenant demand. Therefore, the property is positioned at the sharpest (lowest) end of the benchmark range.",
+          "latencyMs": 1617
+        },
+        {
+          "prediction": 5.25,
+          "reasoning": "The property is located in Oslo Skøyen, which has a benchmark yield range of 5.25%–6.25%. Given the high-tier ESG credentials (BREEAM Excellent or Outstanding), the property represents prime quality within its submarket. Such certifications significantly reduce risk, lower operating costs, and increase attractiveness to institutional tenants, justifying a position at the keenest end (the minimum) of the provided range.",
+          "latencyMs": 1677
+        }
+      ],
+      "meanPrediction": 5.25,
+      "stdDeviation": 0,
+      "minPrediction": 5.25,
+      "maxPrediction": 5.25,
+      "error": -0.35,
+      "absoluteError": 0.35,
+      "withinTolerance": true,
+      "rolloutConsistency": 100
+    },
+    {
+      "scenarioId": "b88d8ae1-0917-4f5a-a3bd-fe049b1198f2",
+      "rollouts": [
+        {
+          "prediction": 5.75,
+          "reasoning": "The benchmark range for Office Oslo Skøyen is 5.25%–6.25%. A yield of 5.75% represents the midpoint of this range, serving as a neutral estimate for a standard, well-maintained property in this submarket. Without specific asset-level details (such as lease duration, tenant credit, or ESG certification), the property is positioned at the median to reflect average market risk and liquidity for the Skøyen area in Q3 2024.",
+          "latencyMs": 1708
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The benchmark range for Office Oslo Skøyen is 5.25%–6.25%. A yield of 5.75% represents the midpoint of this range, serving as a neutral estimate for a standard property in this submarket. Positioning would adjust toward 5.25% for prime assets with long-term ESG compliance and strong tenants, or toward 6.25% for older buildings with shorter lease terms or vacancy risks.",
+          "latencyMs": 1738
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The benchmark range for Office Oslo Skøyen is 5.25%–6.25%. Without specific property-level details (such as lease duration, tenant creditworthiness, or building energy class), a mid-point estimate of 5.75% is applied. This reflects a balanced position between prime assets at the lower bound and secondary/value-add assets at the upper bound within this specific submarket.",
+          "latencyMs": 1791
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The benchmark range for Office Oslo Skøyen is 5.25%–6.25%. Without specific property-level details (such as lease duration, tenant creditworthiness, or building energy class), a mid-point estimate of 5.75% is applied. This represents a balanced risk profile for a core/core-plus asset in this specific submarket.",
+          "latencyMs": 1887
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The benchmark range for Office Oslo Skøyen is 5.25%–6.25%. Without specific property-level details (such as lease duration, tenant creditworthiness, or building energy class), a midpoint estimate of 5.75% is assigned to represent a standard institutional-grade asset in this submarket.",
+          "latencyMs": 1965
+        }
+      ],
+      "meanPrediction": 5.75,
+      "stdDeviation": 0,
+      "minPrediction": 5.75,
+      "maxPrediction": 5.75,
+      "error": 0,
+      "absoluteError": 0,
+      "withinTolerance": true,
+      "rolloutConsistency": 100
+    },
+    {
+      "scenarioId": "bf765ec1-7bde-4c74-9ac7-4cef72e23c52",
+      "rollouts": [
+        {
+          "prediction": 6.5,
+          "reasoning": "The property falls under the 'Hotel Normal & Secondary' benchmark range of 6.50%–9.25%. Given that the building is modern (post-2015) and maintained to a high standard, it represents significantly lower physical and technical risk than the average asset in this category. Therefore, it is positioned at the most aggressive (lowest) end of the benchmark range.",
+          "latencyMs": 1951
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The property falls under the 'Hotel Normal & Secondary' benchmark range of 6.50%–9.25%. Given that the building is modern (post-2015) and maintained to a high standard, it represents significantly lower risk and higher quality than the typical assets in this category. Therefore, it is positioned at the most aggressive (lowest) end of the yield range.",
+          "latencyMs": 1934
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The property falls under the 'Hotel Normal & Secondary' benchmark range of 6.50%–9.25%. Given that the building is modern (post-2015) and maintained to a high standard, it represents significantly lower physical and capital expenditure risk than the average asset in this category. Therefore, it is positioned at the most aggressive (lowest) end of the provided yield range.",
+          "latencyMs": 1803
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The property falls under the 'Hotel Normal & Secondary' benchmark range of 6.50%–9.25%. Given that the building is modern (post-2015) and maintained to a high standard, it represents significantly lower physical and technical risk than the average asset in this category. Therefore, it is positioned at the most aggressive (lowest) end of the benchmark range.",
+          "latencyMs": 1917
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The property falls under the 'Hotel Normal & Secondary' benchmark (6.50%–9.25%). Given its modern construction (post-2015) and high standard, it represents significantly lower risk and higher quality than the average asset in this category. Therefore, it is positioned at the most aggressive (lowest) end of the range.",
+          "latencyMs": 1403
+        }
+      ],
+      "meanPrediction": 6.5,
+      "stdDeviation": 0,
+      "minPrediction": 6.5,
+      "maxPrediction": 6.5,
+      "error": -1.18,
+      "absoluteError": 1.18,
+      "withinTolerance": false,
+      "rolloutConsistency": 0
+    },
+    {
+      "scenarioId": "152a6746-bd4c-4040-80f9-e7ccb7d43e74",
+      "rollouts": [
+        {
+          "prediction": 7.88,
+          "reasoning": "The property falls within the 'Hotel Normal & Secondary' benchmark range of 6.50%–9.25%. Without specific property-level data (such as remaining lease term, operator creditworthiness, or exact location), the yield is positioned at the midpoint of the range (7.875%, rounded to 7.88%) to reflect a balanced risk profile between a stable secondary asset and a higher-risk opportunistic asset.",
+          "latencyMs": 1809
+        },
+        {
+          "prediction": 7.88,
+          "reasoning": "The property falls under the 'Hotel Normal & Secondary' benchmark range of 6.50%–9.25%. Without specific property-level details (such as location, operator strength, or lease duration), the yield is estimated at the midpoint of the range (7.875%, rounded to 7.88%) to reflect a balanced risk profile between a stable 'Normal' asset and a higher-risk 'Secondary' asset.",
+          "latencyMs": 1967
+        },
+        {
+          "prediction": 7.88,
+          "reasoning": "The property falls under the 'Hotel Normal & Secondary' benchmark range of 6.50%–9.25%. Without specific property-level details regarding location, lease duration, or operator creditworthiness, the yield is estimated at the midpoint (7.875%, rounded to 7.88%) to reflect a balanced risk profile between a stable secondary asset and a higher-risk opportunistic asset.",
+          "latencyMs": 2035
+        },
+        {
+          "prediction": 7.88,
+          "reasoning": "The property falls under the 'Hotel Normal & Secondary' benchmark range of 6.50%–9.25%. Without specific property details regarding location, lease length, or operator strength, the yield is estimated at the midpoint (7.875%, rounded to 7.88%) to reflect a balanced risk profile between a stable secondary asset and a higher-risk opportunistic asset.",
+          "latencyMs": 1837
+        },
+        {
+          "prediction": 7.88,
+          "reasoning": "The property falls under the 'Hotel Normal & Secondary' benchmark range of 6.50%–9.25%. Without specific property-level details (such as lease length, operator credit, or location quality), the yield is estimated at the midpoint of the range (7.875%, rounded to 7.88%) to reflect a balanced risk profile between a stable secondary asset and a higher-risk opportunistic asset.",
+          "latencyMs": 1806
+        }
+      ],
+      "meanPrediction": 7.88,
+      "stdDeviation": 0,
+      "minPrediction": 7.88,
+      "maxPrediction": 7.88,
+      "error": 0,
+      "absoluteError": 0,
+      "withinTolerance": true,
+      "rolloutConsistency": 100
+    },
+    {
+      "scenarioId": "665e37ae-6f60-4e5b-b4a6-a6eabd9bc06d",
+      "rollouts": [
+        {
+          "prediction": 7.25,
+          "reasoning": "The property falls under the 'Retail Secondary' benchmark (7.25%–9.50%). While the asset class is secondary, the long-term lease (>10 years WAULT) and high creditworthiness of the tenant significantly de-risk the investment, pushing the yield to the strongest (lowest) end of the range. Aesthetic features like fjord views and a marble lobby provide additional premium appeal, justifying a position at the absolute floor of the benchmark range.",
+          "latencyMs": 3051
+        },
+        {
+          "prediction": 7.25,
+          "reasoning": "The property falls under the 'Retail Secondary' benchmark (7.25%–9.50%). While the asset class is secondary, the long lease term (>10 years WAULT) and high tenant creditworthiness significantly de-risk the cash flow, justifying a position at the tightest end of the range. Although the fjord views and marble lobby are premium features, they have limited impact on the yield for a secondary retail asset compared to the strength of the lease contract, which anchors the valuation at the 7.25% floor.",
+          "latencyMs": 1979
+        },
+        {
+          "prediction": 7.25,
+          "reasoning": "The property falls under the 'Retail Secondary' benchmark (7.25%–9.50%). While the asset is classified as secondary, the long lease term (>10 years WAULT) and high tenant creditworthiness significantly de-risk the investment, pushing the yield to the strongest (lowest) end of the range. Aesthetic features like fjord views and a marble lobby provide additional residual value and tenant appeal, justifying a position at the absolute floor of the benchmark.",
+          "latencyMs": 1893
+        },
+        {
+          "prediction": 7.25,
+          "reasoning": "The property falls under the 'Retail Secondary' benchmark (7.25%–9.50%). While the asset class is secondary, the specific characteristics—particularly a long lease of over 10 years with a creditworthy tenant—significantly de-risk the investment. Although aesthetic features like fjord views and a marble lobby are less critical for retail than for office or hospitality, they contribute to the underlying residual value of the real estate. Given the high security of cash flow provided by the WAULT and tenant strength, the yield is positioned at the most aggressive (lowest) end of the secondary range.",
+          "latencyMs": 1972
+        },
+        {
+          "prediction": 7.25,
+          "reasoning": "The property falls under the 'Retail Secondary' benchmark (7.25%–9.50%). While the asset class is secondary, the specific characteristics—particularly a long lease of over 10 years with a creditworthy tenant—significantly de-risk the investment. Aesthetic features like fjord views and a marble lobby add premium appeal but are secondary to the strong WAULT and credit profile. Therefore, the property is positioned at the absolute sharpest end (lowest yield) of the secondary range.",
+          "latencyMs": 2398
+        }
+      ],
+      "meanPrediction": 7.25,
+      "stdDeviation": 0,
+      "minPrediction": 7.25,
+      "maxPrediction": 7.25,
+      "error": -0.82,
+      "absoluteError": 0.82,
+      "withinTolerance": false,
+      "rolloutConsistency": 0
+    },
+    {
+      "scenarioId": "1f87a465-4985-4093-a7c0-3abecbcd1105",
+      "rollouts": [
+        {
+          "prediction": 7.5,
+          "reasoning": "The property falls under the 'Retail Secondary' benchmark range of 7.25%–9.50%. While secondary retail typically carries higher risk due to location or tenant profile, the 'excellent fjord views' and 'marble lobby' are premium physical attributes that enhance the asset's residual value and aesthetic appeal. These factors justify a position toward the stronger (lower) end of the secondary range, though it remains above the 'Retail Normal' threshold due to its classification.",
+          "latencyMs": 2196
+        },
+        {
+          "prediction": 7.5,
+          "reasoning": "The property falls under the 'Retail Secondary' benchmark (7.25%–9.50%). While the asset is classified as secondary—likely due to location, tenant profile, or age—the specific characteristics (fjord views and a high-end marble lobby) are premium aesthetic features that enhance its appeal to potential occupiers and investors. These factors justify a position at the stronger (lower) end of the secondary yield range, though it remains constrained by its fundamental classification as secondary retail.",
+          "latencyMs": 2198
+        },
+        {
+          "prediction": 7.25,
+          "reasoning": "The property falls under the 'Retail Secondary' benchmark range of 7.25%–9.50%. While secondary retail typically carries higher risk due to location or tenant profile, the specific characteristics—excellent fjord views and a high-end marble lobby—are premium aesthetic and architectural features. These 'prime' attributes significantly enhance the asset's desirability and residual value, justifying a position at the most aggressive (lowest) end of the secondary yield spectrum.",
+          "latencyMs": 2088
+        },
+        {
+          "prediction": 7.5,
+          "reasoning": "The property falls under the 'Retail Secondary' benchmark range of 7.25%–9.50%. While the asset is classified as secondary (likely due to location or tenant profile), the 'excellent fjord views' and 'marble lobby' are premium physical attributes that enhance its attractiveness and residual value. These factors justify positioning the yield toward the stronger (lower) end of the secondary range, though it remains constrained by its fundamental classification.",
+          "latencyMs": 1759
+        },
+        {
+          "prediction": 7.5,
+          "reasoning": "The property falls under the 'Retail Secondary' benchmark range of 7.25%–9.50%. While secondary retail typically carries higher risk due to location or tenant profile, the 'excellent fjord views' and 'marble lobby' are premium physical attributes that enhance the asset's residual value and aesthetic appeal. These factors justify a position toward the stronger (lower) end of the secondary range, though it remains above prime/normal retail levels due to its fundamental classification.",
+          "latencyMs": 1975
+        }
+      ],
+      "meanPrediction": 7.45,
+      "stdDeviation": 0.1,
+      "minPrediction": 7.25,
+      "maxPrediction": 7.5,
+      "error": -0.93,
+      "absoluteError": 0.93,
+      "withinTolerance": false,
+      "rolloutConsistency": 0
+    },
+    {
+      "scenarioId": "e0f8fe9d-6789-4fe5-aedd-ae4ca3ae05d7",
+      "rollouts": [
+        {
+          "prediction": 5.75,
+          "reasoning": "The property falls within the Logistics Prime range (5.50%–6.75%). The long lease duration (>10 years) and high tenant creditworthiness are strong yield-compressing factors that push the estimate toward the lower end of the range. While the prompt contains contradictory information regarding micro-location ('suboptimal' vs 'exceptional'), an exceptional location within a prime segment typically warrants the prime floor; however, the 'suboptimal' note and the fact that a marble lobby adds little functional value to a logistics asset suggest a slight premium over the absolute minimum. Therefore, a yield of 5.75% represents a strong prime position slightly offset by these inconsistencies.",
+          "latencyMs": 2218
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property falls under the 'Logistics Prime' benchmark (5.50%–6.75%). The long lease duration (>10 years WAULT) and high creditworthiness of the tenant are strong yield-compressing factors that push the estimate toward the lower end of the range. While the prompt contains contradictory location data, the 'exceptional micro-location' and 'long lease' outweigh the 'suboptimal' note in a prime category. The marble lobby is a non-standard feature for logistics and adds marginal value but does not significantly impact yield. A position of 5.75% reflects a premium for income security while allowing a small buffer for the location inconsistencies.",
+          "latencyMs": 2217
+        },
+        {
+          "prediction": 5.85,
+          "reasoning": "The property falls within the Logistics Prime benchmark (5.50%–6.75%). The long lease (>10 years) and creditworthy tenant are significant de-risking factors that push the yield toward the lower (stronger) end of the range. However, the 'suboptimal micro-location' regarding access and visibility is a fundamental drawback for logistics operations, preventing it from hitting the absolute prime floor of 5.50%. The 'exceptional micro-location within the area' and the luxury lobby (largely irrelevant for logistics valuation) provide minor offsets, resulting in a positioning slightly below the midpoint of the prime range.",
+          "latencyMs": 2613
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property falls under the 'Logistics Prime' benchmark (5.50%–6.75%). The long lease duration (>10 years WAULT) and high creditworthiness of the tenant are strong yield-compressing factors that push the estimate toward the lower end of the range. While the prompt contains contradictory location data, the 'exceptional micro-location' is prioritized for logistics efficiency over the 'suboptimal' visibility, as logistics value is driven by operational access rather than public exposure. The marble lobby is considered a non-material factor for industrial valuations and does not further compress the yield. A positioning of 5.75% reflects a premium for income security while allowing a slight buffer for the location's specific access constraints.",
+          "latencyMs": 2216
+        },
+        {
+          "prediction": 5.85,
+          "reasoning": "The property falls within the Logistics Prime range (5.50%–6.75%). The long-term lease (>10 years) and creditworthy tenant provide significant income security, pushing the yield toward the lower (stronger) end of the range. However, the 'suboptimal micro-location' regarding access and visibility is a critical negative factor for logistics operations, counteracting the 'exceptional' positioning within that specific sub-area. The marble lobby is considered a non-essential luxury for industrial assets and adds negligible value to the yield. A positioning of 5.85% reflects a premium for tenant strength offset by the fundamental site access constraints.",
+          "latencyMs": 2531
+        }
+      ],
+      "meanPrediction": 5.79,
+      "stdDeviation": 0.049,
+      "minPrediction": 5.75,
+      "maxPrediction": 5.85,
+      "error": -0.14,
+      "absoluteError": 0.14,
+      "withinTolerance": true,
+      "rolloutConsistency": 100
+    },
+    {
+      "scenarioId": "1a0795f8-87ef-4789-8ca1-53ad368d41a7",
+      "rollouts": [
+        {
+          "prediction": 6.15,
+          "reasoning": "The property falls within the Logistics Prime benchmark (5.50%–6.75%). The long WAULT (>10 years) and high tenant creditworthiness are strong yield-compressing factors. However, the suboptimal micro-location is a significant risk for logistics, as accessibility is a primary value driver. The diversified tenant base reduces vacancy risk but adds management intensity compared to a single-tenant net lease. The aesthetic lobby (marble floors) is largely irrelevant for logistics valuation. Therefore, the yield is positioned in the upper-middle of the prime range to account for the location handicap despite the strong lease profile.",
+          "latencyMs": 2063
+        },
+        {
+          "prediction": 6.25,
+          "reasoning": "The property falls within the Logistics Prime range (5.50%–6.75%). The long WAULT (>10 years) and high creditworthiness of the tenants are strong yield-compressing factors. However, the 'suboptimal micro-location' is a significant risk for logistics assets where access is critical, pushing the yield toward the higher end of the prime bracket. The diversified tenant base reduces vacancy risk but increases management intensity compared to a single-tenant net lease. The aesthetic quality of the lobby (marble floors) is largely irrelevant for logistics valuation and does not offset the locational disadvantage. Therefore, a yield of 6.25% represents a position in the upper-middle of the prime range.",
+          "latencyMs": 2062
+        },
+        {
+          "prediction": 6.15,
+          "reasoning": "The property falls within the Logistics Prime benchmark (5.50%–6.75%). The long WAULT (>10 years) and high creditworthiness of the tenants provide significant security, pushing the yield toward the lower (stronger) end of the range. However, the suboptimal micro-location is a critical structural drawback for logistics, which offsets the lease strength. The aesthetic features (marble lobby) are largely irrelevant for logistics valuation. Therefore, the yield is positioned slightly above the midpoint of the prime range to account for the location risk while acknowledging the superior lease duration.",
+          "latencyMs": 3945
+        },
+        {
+          "prediction": 6.25,
+          "reasoning": "The property falls within the 'Logistics Prime' benchmark (5.50%–6.75%). The long lease duration (>10 years) and high creditworthiness of the tenants provide significant security, pushing the yield toward the lower end of the range. However, the suboptimal micro-location (poor access/visibility) is a critical drawback for logistics, preventing it from reaching the absolute prime floor of 5.50%. The diversified tenant base reduces vacancy risk but adds management complexity. The aesthetic lobby is largely irrelevant for logistics valuation. Therefore, a yield of 6.25% represents a balanced position: slightly above the midpoint to account for location risks, but tempered by the strong income security.",
+          "latencyMs": 2086
+        },
+        {
+          "prediction": 6.15,
+          "reasoning": "The property falls within the Logistics Prime range (5.50%–6.75%). The long WAULT (>10 years) and creditworthy tenants are strong yield-compressing factors. However, the suboptimal micro-location is a significant risk for logistics, pushing the yield toward the higher end of the prime bracket. The diversified tenant base reduces vacancy risk but adds management complexity compared to a single-tenant net lease. The aesthetic quality of the lobby (marble floors) is largely irrelevant for logistics valuation and does not offset the locational disadvantages.",
+          "latencyMs": 2170
+        }
+      ],
+      "meanPrediction": 6.19,
+      "stdDeviation": 0.049,
+      "minPrediction": 6.15,
+      "maxPrediction": 6.25,
+      "error": 0.16,
+      "absoluteError": 0.16,
+      "withinTolerance": true,
+      "rolloutConsistency": 100
+    },
+    {
+      "scenarioId": "f8699d9c-70b0-437e-892d-43b5cab76c9a",
+      "rollouts": [
+        {
+          "prediction": 6.5,
+          "reasoning": "The property falls within the 'Hotel Normal & Secondary' benchmark range of 6.50%–9.25%. Given the high-quality lease profile—specifically a long WAULT of over 10 years and a creditworthy tenant—the investment risk is significantly mitigated. These characteristics justify positioning the yield at the most aggressive (lowest) end of the range.",
+          "latencyMs": 1576
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The property falls under the 'Hotel Normal & Secondary' benchmark range of 6.50%–9.25%. Given the long-term lease (WAULT >10 years) and a creditworthy tenant, the investment risk is significantly mitigated. These characteristics justify positioning the yield at the most aggressive (lowest) end of the provided range.",
+          "latencyMs": 2034
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The property falls within the 'Hotel Normal & Secondary' benchmark range of 6.50%–9.25%. Given the high security provided by a long lease (WAULT >10 years) and a creditworthy tenant, the investment risk is significantly minimized. These factors justify positioning the yield at the most aggressive (lowest) end of the range.",
+          "latencyMs": 2070
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The property falls under the 'Hotel Normal & Secondary' benchmark (6.50%–9.25%). Given the long lease term (>10 years WAULT) and a creditworthy tenant, the investment risk is significantly mitigated. These characteristics justify positioning the yield at the most aggressive (lowest) end of the provided range.",
+          "latencyMs": 1412
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The property falls within the 'Hotel Normal & Secondary' benchmark range of 6.50%–9.25%. Given the high-quality lease structure (long WAULT of >10 years) and the low default risk associated with a creditworthy tenant, the property represents the lowest possible risk profile for this category. Therefore, it is positioned at the absolute prime end (the floor) of the specified range.",
+          "latencyMs": 1504
+        }
+      ],
+      "meanPrediction": 6.5,
+      "stdDeviation": 0,
+      "minPrediction": 6.5,
+      "maxPrediction": 6.5,
+      "error": -1.08,
+      "absoluteError": 1.08,
+      "withinTolerance": false,
+      "rolloutConsistency": 0
+    },
+    {
+      "scenarioId": "34891307-871e-4371-aafd-2078797c8824",
+      "rollouts": [
+        {
+          "prediction": 6.5,
+          "reasoning": "The property falls under the 'Hotel Normal & Secondary' benchmark range of 6.50%–9.25%. Given that the building is modern (post-2015) and maintained to a high standard, it represents significantly lower physical and technical risk than the average asset in this category. Therefore, it is positioned at the most aggressive (lowest) end of the yield range.",
+          "latencyMs": 2246
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The property falls under the 'Hotel Normal & Secondary' benchmark (6.50%–9.25%). Given its modern construction (post-2015) and high standard, it represents significantly lower risk and higher quality than the average asset in this category. Therefore, it is positioned at the most aggressive (lowest) end of the yield range.",
+          "latencyMs": 1350
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The property falls under the 'Hotel Normal & Secondary' benchmark range of 6.50%–9.25%. Given that the building is modern (post-2015) and maintained to a high standard, it represents significantly lower risk and higher quality than the average asset in this category. Therefore, it is positioned at the most aggressive (lowest) end of the benchmark range.",
+          "latencyMs": 1804
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The property falls under the 'Hotel Normal & Secondary' benchmark range of 6.50%–9.25%. Given that the building is modern (post-2015) and maintained to a high standard, it represents significantly lower risk and higher residual value than the average asset in this category. Therefore, it is positioned at the most aggressive (lowest) end of the yield range.",
+          "latencyMs": 1815
+        },
+        {
+          "prediction": 6.5,
+          "reasoning": "The property falls under the 'Hotel Normal & Secondary' benchmark (6.50%–9.25%). Given its modern construction (post-2015) and high standard, it represents significantly lower risk and higher quality than the average asset in this category. Therefore, it is positioned at the most aggressive (lowest) end of the yield range.",
+          "latencyMs": 1707
+        }
+      ],
+      "meanPrediction": 6.5,
+      "stdDeviation": 0,
+      "minPrediction": 6.5,
+      "maxPrediction": 6.5,
+      "error": -1.18,
+      "absoluteError": 1.18,
+      "withinTolerance": false,
+      "rolloutConsistency": 0
+    }
+  ],
+  "aggregateMetrics": {
+    "hitRate": 50,
+    "meanError": -0.552,
+    "rmse": 0.752,
+    "avgLatencyMs": 1993,
+    "directionalAccuracy": 80,
+    "avgStdDeviation": 0.02,
+    "avgConsistency": 50
+  }
+}
