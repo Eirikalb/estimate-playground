@@ -1,0 +1,564 @@
+{
+  "id": "27b4b63d-8e8d-4d78-8fd7-82a3388c3eb1",
+  "timestamp": "2026-01-18T21:49:44.605Z",
+  "domainId": "real-estate-yield",
+  "model": "google/gemini-flash-1.5",
+  "promptStrategy": "chain-of-thought",
+  "promptTemplate": "You are analyzing a commercial real estate property to determine its market yield.\r\n\r\n{{#facts.benchmarks}}\r\n{{{content}}}\r\n{{/facts.benchmarks}}\r\n\r\n---\r\n\r\n### Property Details\r\n\r\n{{scenario.contextDescription}}\r\n\r\n---\r\n\r\n### Instructions\r\n\r\nWork through this analysis step by step:\r\n\r\n**Step 1: Identify the Benchmark**\r\n- What location/segment does this property belong to?\r\n- What is the benchmark yield range for that segment?\r\n\r\n**Step 2: Position Within Range**\r\n- Is this a prime or secondary asset?\r\n- Where should it sit within the benchmark range?\r\n\r\n**Step 3: Apply Adjustments**\r\nConsider each factor and whether it pushes yield UP (more risk) or DOWN (less risk):\r\n- Tenant quality and creditworthiness\r\n- Lease length and WAULT\r\n- Building age and condition\r\n- Any special factors\r\n\r\n**Step 4: Calculate Final Yield**\r\n- Start with your positioned benchmark\r\n- Add/subtract adjustments\r\n- State your final yield estimate\r\n\r\nReturn your answer as JSON only, no markdown:\r\n{\"yield\": <number>, \"reasoning\": \"<your step-by-step reasoning>\"}\r\n\r\n",
+  "rolloutsPerScenario": 3,
+  "status": "completed",
+  "startedAt": "2026-01-18T21:49:44.605Z",
+  "useNarrativeDescriptions": true,
+  "narrativeModel": "openai/gpt-4o-mini",
+  "narrativesGenerated": 11,
+  "narrativesTotal": 11,
+  "scenarios": [
+    {
+      "id": "3eb7995c-54ec-4443-80f1-21e188606880",
+      "anchor": "residential",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Skogsveien 12 in the vibrant St. Hanshaugen district of Oslo, a quintessentially residential area distinguished by its lush green spaces and urban amenities. Nestled between the expansive St. Hanshaugen Park and the charming Aker River, the building is conveniently located approximately 300 meters from the nearest metro station, St. Hanshaugen, and is accessible via several tram lines, enhancing the site's connectivity to the greater Oslo area. The immediate vicinity offers a mix of cafes, restaurants, cultural venues, and schools, establishing it as a desirable residential neighborhood with robust rental demand.\n\nThe cadastral designation is gnr. 210, bnr. 15 in Oslo municipality, encompassing an owned plot of 1,200 m². Originally constructed in 1972, the building is a mid-rise residential property comprising six floors, with a total gross building area of approximately 3,500 m² BTA. The architectural design reflects the modernist movement of the 1970s, characterized by its functional layout and well-proportioned living spaces, complemented by large fenestrations that allow for abundant natural light. \n\nOver the past few years, the property has undergone significant technical upgrades to enhance its sustainability and operational efficiency. Notable improvements include the installation of a new energy-efficient heating system in 2018, refurbishment of common areas and the façade in 2019, and the modernization of the elevators in 2021. These upgrades not only contribute to the building's aesthetic appeal but also align it with contemporary energy efficiency standards. The property currently holds an energy rating of C, reflecting its efforts towards sustainability, with ongoing maintenance ensuring compliance with the latest technical regulations.\n\nThe property is primarily regulated for residential use under the municipal master plan, with additional provisions for ancillary retail services on the ground floor, which enhances the building's appeal to local residents. The tenancy structure is notably diverse, consisting of a mix of long-term residential leases alongside a small retail unit that caters to the daily needs of the community. Residential units range from compact one-bedroom apartments of approximately 45 m² to larger three-bedroom apartments of about 95 m², catering to a demographic that includes families, young professionals, and students, thereby ensuring a stable tenant mix.\n\nProximity to key landmarks such as Frogner Park and the Palace Gardens enhances the property's attractiveness. These areas not only offer recreational opportunities but also serve as cultural hubs, further stimulating demand for residential accommodation in the surrounding neighborhoods. The well-established cycling infrastructure, alongside pedestrian-friendly pathways, promotes a sustainable urban lifestyle, appealing to environmentally conscious tenants.\n\nThe ongoing developments in the area, including upcoming commercial projects and improvements to public transport facilities, are likely to further enhance the marketability of the property. Such factors combined with the established residential character of St. Hanshaugen contribute positively to the investment potential of Skogsveien 12, making it an appealing opportunity for investors seeking exposure to the robust Oslo residential market.\n\nIn conclusion, Skogsveien 12 presents a compelling investment proposition, characterized by its strategic location, comprehensive technical upgrades, and a well-rounded tenant profile that promises stability and potential for future growth in a flourishing urban environment.",
+      "groundTruth": {
+        "value": 5.38,
+        "tolerance": 0.35,
+        "calculation": "Base (Residential): 5.375%\nFinal: 5.38%"
+      }
+    },
+    {
+      "id": "1601acfb-025a-42e4-bad7-f4bcf6a3801d",
+      "anchor": "retail_prime",
+      "appliedDeltas": [
+        "single_tenant_sme",
+        "short_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Bogstadveien 25, situated in the heart of Oslo's prime retail district of Majorstuen. This vibrant area is renowned for its high street shopping and boasts a rich mix of international brands, dining options, and cultural attractions. The property lies approximately 300 metres from the Majorstuen metro station, providing direct access to the city’s extensive public transport network, including trams and buses, ensuring high footfall and exceptional visibility for retail operations. The immediate vicinity is characterized by key landmarks such as the popular shopping centre Paleet, the upscale Steen & Strøm, and the bustling Oslo City shopping centre, all contributing to a lively urban atmosphere.\n\nThe building, completed in 1985, is a modern retail block consisting of three floors above ground, with a total gross building area of approximately 1,200 m² BTA. The structure, built with a combination of reinforced concrete and glass, features large display windows that enhance visibility and accessibility, catering to the high consumer traffic typical of its location. The cadastral information for the property indicates it falls under gnr. 213, bnr. 14 in Oslo municipality, and occupies a plot of 450 m².\n\nNotably, the property is currently leased to a single SME tenant, creating a concentration risk that potential investors must consider. The lease is short-term, with less than three years remaining, which presents both opportunities for re-letting and challenges associated with tenant retention and vacancy management. This single-tenant structure provides a steady income stream but also underscores the need for strategic planning for potential future leasing scenarios.\n\nIn terms of property upgrades, several enhancements have been made over the years to maintain the building's modern appeal and functionality. A comprehensive façade renovation was completed in 2018, which included the installation of energy-efficient glazing, improving both aesthetic value and thermal performance. An internal refurbishment of retail spaces occurred in 2019, ensuring that the property meets contemporary retail standards while appealing to a diverse range of tenants. The most recent upgrade took place in 2022, which involved the installation of new HVAC systems to enhance energy efficiency and tenant comfort.\n\nThe property is regulated under the municipal master plan designated for mixed-use development, predominantly supporting retail and service functions. The tenancy structure is characterized by a strong focus on retail, with the current tenant operating a niche boutique that complements the surrounding retail mix. While the tenant’s operation is well-regarded and attracts a loyal customer base, the short lease term may require active asset management to mitigate potential vacancy risks and transition to new tenants as the lease expiration approaches.\n\nAccessibility remains a key advantage of this location, as Majorstuen serves as a significant transport hub connecting residents to various parts of Oslo and beyond. The property benefits from its proximity to high-traffic pedestrian areas, allowing for maximum exposure and footfall. Additionally, Bogstadveien is lined with a variety of shops, cafes, and restaurants, reinforcing the area's status as a shopping destination.\n\nIn summary, Bogstadveien 25 represents a compelling opportunity for investors to acquire a strategically located retail property in one of Oslo’s most sought-after districts. While the current single-tenant structure and short lease term introduce elements of concentration risk, the property’s prime location, recent upgrades, and strong retail environment present significant potential for future value enhancement.",
+      "groundTruth": {
+        "value": 6.58,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Prime): 5.625%\nSingle SME tenant (concentration risk): +0.45%\nShort lease (<3 years remaining): +0.5%\nFinal: 6.58%"
+      },
+      "twinId": "39b2abca-7b15-4100-92eb-f19c3534316a",
+      "twinDeltaChanged": "single_tenant_sme → modern_building"
+    },
+    {
+      "id": "39b2abca-7b15-4100-92eb-f19c3534316a",
+      "anchor": "retail_prime",
+      "appliedDeltas": [
+        "short_lease",
+        "modern_building"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Bogstadveien 45, in the highly sought-after Majorstuen district of Oslo, renowned for its vibrant retail environment and proximity to prominent shopping destinations. The site is conveniently located just 300 meters from the Majorstuen Metro station, which serves as a key transportation hub providing easy access to both the city center and surrounding neighborhoods. The surrounding area is characterized by bustling pedestrian traffic, with established high street shopping, a mix of international brands, and a rich blend of dining and entertainment options. Nearby landmarks include the popular Bislett Park and the upscale shopping center, Bogstadveien 50, which further enhances the property’s appeal within this dynamic retail context.\n\nThe building was constructed in 2017 and features a modern design that meets high architectural and sustainability standards. It consists of four stories, with a total gross building area of approximately 1,250 m² BTA. The construction utilizes a mix of steel and glass, providing an attractive façade that complements the contemporary aesthetic of the Majorstuen area. The cadastral designation is gnr. 221, bnr. 56 in Oslo municipality, encompassing a plot size of 450 m².\n\nInternally, the building features open-plan retail spaces with large glass frontages that enhance visibility and allow for ample natural light. The ground floor consists of 500 m² of retail space, fully fitted with modern amenities and designed to accommodate a range of retail functions. The upper floors, totaling 750 m², are currently configured for office use, providing flexible floor plates averaging around 250 m² per level.\n\nNotably, the property is subject to a short lease agreement, with less than three years remaining on the current tenancy. This offers a unique opportunity for investors seeking to reposition the asset or explore alternative uses in a prime retail location as the lease expiration approaches. The existing tenant operates a well-regarded retail brand, contributing to footfall and consumer engagement in the area.\n\nA series of technical upgrades have been implemented since the building's completion to maintain its high standard and operational efficiency. These include the installation of an energy-efficient HVAC system in 2018, enhanced with smart building technology for optimal climate control, and the addition of solar panels in 2020, which augment the building's sustainability credentials. The common areas and facilities were refreshed in 2022 to further elevate the tenant experience.\n\nThe regulatory framework permits a broad range of retail and office uses, ensuring the flexibility to adapt to changing market demands. The property is classified under the municipal master plan as \"kommersiell bebyggelse,\" emphasizing its intended use for retail and commercial activities.\n\nIn summary, Bogstadveien 45 represents an attractive investment opportunity within a prime retail district known for its high consumer spending and brand visibility. With its modern construction, strategic location, and potential for value-add through lease expiration, this property is poised to benefit from the ongoing growth and vibrancy of the Majorstuen area.",
+      "groundTruth": {
+        "value": 5.93,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Prime): 5.625%\nShort lease (<3 years remaining): +0.5%\nModern building (post-2015, high standard): -0.2%\nFinal: 5.92%"
+      },
+      "twinId": "1601acfb-025a-42e4-bad7-f4bcf6a3801d",
+      "twinDeltaChanged": "single_tenant_sme → modern_building"
+    },
+    {
+      "id": "ab91fc43-2a2a-45c7-8ae5-cbe94e747d4f",
+      "anchor": "retail_secondary",
+      "appliedDeltas": [
+        "multi_tenant"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Sjøgata 45 in the vibrant suburban retail zone of Bodø, situated conveniently between the major regional shopping centre, Glasshuset, and a prominent big-box retail complex. This strategic position ensures robust foot traffic and accessibility for a diverse customer base. Sjøgata is a main arterial route that provides direct access to the E6 highway, promoting car-dependent visits, supported by extensive on-site parking facilities accommodating over 100 vehicles. The immediate vicinity features a blend of retail, dining, and service-oriented businesses, positioning the property as a key player in the local commercial landscape.\n\nThe building, constructed in 2010, is a modern single-storey retail facility boasting a total gross building area of approximately 1,850 m² BTA. The property is situated on a plot of 2,500 m², with cadastral references gnr. 111, bnr. 22 in Bodø municipality. The structure is designed with a contemporary aesthetic featuring large glass facades that enhance visibility and natural light, appealing to both tenants and customers alike. The layout is highly adaptable, allowing for flexible tenant configurations and various retail formats. The building's construction utilizes reinforced concrete and high-quality materials, ensuring durability and minimal maintenance requirements.\n\nTransport connectivity to the property is exceptional, with direct access to the E6 highway facilitating efficient travel to and from the city centre and surrounding areas. Public transportation options include several bus routes servicing Sjøgata, with stops located within a short walking distance, providing easy access for those who prefer public transit. Additionally, the property benefits from proximity to the Bodø Airport, just a 10-minute drive away, enhancing its appeal to both retail tenants and customers alike.\n\nThe property's design and operational efficiency have been enhanced through significant technical upgrades in recent years. Notably, in 2018, the building underwent an energy-efficient retrofit including the installation of solar panels, improving its sustainability profile. Subsequent updates in 2020 included a modern LED lighting system throughout the premises and enhanced HVAC controls, ensuring a comfortable shopping environment while reducing operational costs. The latest upgrade in 2022 involved a comprehensive refurbishment of the external façade, further modernizing the aesthetic appeal of the property.\n\nThe tenancy structure of Sjøgata 45 is diversified, featuring three established tenants including a large retail grocery store, a popular electronics outlet, and a local fashion boutique. This diversified tenant base mitigates investment risk and promotes stable cash flows, aligning well with the characteristics of the surrounding retail environment. The tenants have been selected for their strong market presence and customer loyalty, which together contribute to attracting price-sensitive consumers who frequent this secondary retail location. \n\nThe property is classified under the municipal master plan for \"retail and services,\" reinforcing its intended use and operational viability. It benefits from being in a price-sensitive area, catering to a demographic that values affordability and accessibility, although this also introduces a moderate vacancy risk contingent on the performance of the anchor tenants.\n\nIn summary, Sjøgata 45 represents a prime opportunity within the Bodø retail market, characterized by its modern construction, diverse tenant mix, strategic location, and commitment to sustainability through recent upgrades. The property offers an attractive prospect for retail investments, set amidst a thriving suburban economy with solid fundamentals.",
+      "groundTruth": {
+        "value": 8.23,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Secondary): 8.375%\nDiversified tenant base (3+ tenants): -0.15%\nFinal: 8.22%"
+      },
+      "twinId": "33327683-e204-4de0-8ddd-70c70fdb6a2f",
+      "twinDeltaChanged": "multi_tenant → short_lease"
+    },
+    {
+      "id": "33327683-e204-4de0-8ddd-70c70fdb6a2f",
+      "anchor": "retail_secondary",
+      "appliedDeltas": [
+        "short_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Sjøgata 45 in the suburban retail district of Gjøvik, strategically positioned near major regional shopping centres and big-box retail outlets. This vibrant location benefits from its proximity to substantial traffic flows, being just off the E6 highway, which provides seamless access for both local and regional customers. The immediate vicinity features a variety of retail options, including grocery stores, electronics retailers, and dining establishments, catering to a price-sensitive demographic that frequents this secondary retail hub. The area is characterized by spacious parking facilities that accommodate the car-dependent nature of the clientele, with ample lot spaces available to enhance customer convenience.\n\nThe commercial building was originally constructed in 2003 and features a modern design that reflects contemporary retail architecture. It comprises a single floor with a gross building area of approximately 1,200 m² BTA, situated on a plot of 2,500 m² (cadastral reference gnr. 214, bnr. 32). The structure is primarily constructed from steel and glass, providing an open and inviting retail environment. The layout has been optimized for retail activities, with a spacious sales area complemented by stock and service rooms that support operational efficiency.\n\nRecent technical upgrades have enhanced the property's functionality and appeal. In 2018, the HVAC system was replaced to improve energy efficiency and indoor comfort, alongside the installation of new LED lighting to reduce energy consumption. Additionally, in 2021, the exterior façade received a fresh coat of paint and new signage to increase visibility and attract foot traffic. The property is currently rated D for energy efficiency, with potential for improvement through further sustainability initiatives.\n\nRegulatory context situates the property within the municipal master plan designated for retail and commercial use, allowing for a wide range of business activities. The current tenancy structure indicates that the building is fully leased to a single anchor tenant, a well-known retail chain, which significantly enhances the property's stability. However, it is critical to note that the lease is set to expire in less than three years, which introduces a potential vacancy risk that could impact future income generation. The reliance on this anchor tenant underscores the importance of ongoing tenant engagement and potential renegotiation strategies to ensure continued occupancy.\n\nTransport connectivity is robust, with easy access to the E6 highway, ensuring a steady flow of customers and logistical efficiency for deliveries. Public transport options are limited; however, there is a local bus service that connects the area to Gjøvik’s central transport hub, making it accessible for customers who prefer public transit.\n\nThe property’s location within a secondary retail area presents both opportunities and challenges. While the presence of nearby anchor tenants, such as larger department stores and supermarkets, typically drives foot traffic, the higher vacancy risk associated with short lease terms necessitates proactive management and marketing strategies. Given the current retail market dynamics in Norway, potential investors will need to consider the implications of the existing lease structure alongside plans for tenant retention or alternatives post-expiration.\n\nOverall, Sjøgata 45 stands as a modern retail facility in a strategically valuable location, with a strong current tenant profile, yet an awareness of its short lease term and market volatility is essential for assessing its long-term yield potential and investment viability.",
+      "groundTruth": {
+        "value": 8.88,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Secondary): 8.375%\nShort lease (<3 years remaining): +0.5%\nFinal: 8.88%"
+      },
+      "twinId": "ab91fc43-2a2a-45c7-8ae5-cbe94e747d4f",
+      "twinDeltaChanged": "multi_tenant → short_lease"
+    },
+    {
+      "id": "f93b7942-c652-4a2b-a5f0-e7dbf7cf8fc1",
+      "anchor": "office_oslo_lysaker",
+      "appliedDeltas": [
+        "long_lease",
+        "breeam_certified",
+        "government_tenant"
+      ],
+      "distractors": [
+        "The current owner has held the property for 15 years.",
+        "The property manager has won several industry awards."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Lilleakerveien 20 in the vibrant Lysaker district of Bærum, strategically positioned between Lysaker station and the bustling Fornebu area. The immediate vicinity encompasses prominent commercial developments including the Telenor headquarters and the Statoil building, underscoring the area's status as a corporate hub. This location benefits from excellent public transport accessibility; Lysaker station, a regional train hub, offers consistent connections to Oslo and beyond, while bus services facilitate easy commutes to Fornebu and other parts of the municipality. Additionally, the property boasts direct access to the E18 motorway, enhancing connectivity to the greater Oslo area. Future transport enhancements include the planned Fornebubanen metro line, further solidifying the area's status as a key transport node.\n\nThe property is a modern office building constructed in 2012, comprising six floors above ground, with a gross building area of approximately 8,300 m² BTA. Designed with contemporary architectural elements, the building features a striking glass façade and efficient floor plates averaging around 1,400 m². The structure is constructed with energy-efficient materials, ensuring a versatile and sustainable workspace that meets the demands of modern tenants. The cadastral designation is gnr. 48, bnr. 72 in Bærum municipality, with a owned plot size of 3,200 m².\n\nThis office building is leased on a long-term basis, with a weighted average unexpired lease term (WAULT) exceeding 10 years to a creditworthy government tenant, offering stability and predictability of income. The tenant’s strong financial standing, categorized as AAA-rated, further enhances the investment profile of the property.\n\nThe building is certified with a BREEAM Excellent rating, affirming its commitment to sustainability and energy efficiency. This certification is indicative of the property's advanced environmental performance, which includes effective waste management systems and energy-efficient technologies throughout its operations. The current owner has held the property for 15 years, overseeing strategic upgrades and improvements that align with evolving market trends.\n\nRecent technical upgrades to the building include the installation of a state-of-the-art ventilation and climate control system in 2020, ensuring optimal indoor environmental quality. Additionally, in 2021, the property underwent a comprehensive refurbishment of communal areas, including the lobby and exterior landscaping, significantly enhancing the overall aesthetic appeal and functionality of the space. The building features advanced security systems established in 2018, further ensuring a safe and secure environment for tenants and visitors alike.\n\nThe property is governed by the municipal master plan accommodating office use, supporting the ongoing trend towards modern workplaces in the suburban context of Lysaker. The tenancy structure is primarily dominated by the government tenant, which occupies approximately 95% of the total usable area, with ancillary facilities that include meeting rooms, collaborative spaces, and recreational areas. The property also includes limited retail spaces at the ground level, providing immediate amenities for tenants and visitors.\n\nIn summary, this property at Lilleakerveien 20 presents an exceptional opportunity for investors seeking a stable asset in a prime corporate location, underpinned by a long-term lease with a government tenant, complemented by superior environmental credentials and a strong management history. The combination of these factors positions the asset to perform robustly in both the short and long term within the rapidly evolving commercial real estate landscape of Norway.",
+      "groundTruth": {
+        "value": 5.45,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Lysaker): 6.25%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nBREEAM Excellent or Outstanding certification: -0.15%\nGovernment or AAA-rated corporate tenant: -0.35%\nFinal: 5.45%"
+      },
+      "twinId": "b1c911a3-2b3a-47f3-b238-2651e0583f2d",
+      "twinDeltaChanged": "government_tenant → modern_building"
+    },
+    {
+      "id": "b1c911a3-2b3a-47f3-b238-2651e0583f2d",
+      "anchor": "office_oslo_lysaker",
+      "appliedDeltas": [
+        "long_lease",
+        "breeam_certified",
+        "modern_building"
+      ],
+      "distractors": [
+        "The current owner has held the property for 15 years.",
+        "The property manager has won several industry awards."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is strategically located at Lysaker Torg 12 in the vibrant Lysaker district, a key business hub within the Bærum municipality, just a short distance from Fornebu and Sandvika. This prime location boasts exceptional accessibility, being approximately 500 meters from Lysaker station, which connects to regional train services and bus lines that offer direct routes to both Fornebu and central Oslo. The site also benefits from direct access to the E18 motorway, facilitating seamless transportation for both employees and visitors. Future development plans, including the Fornebubanen metro line, will further enhance the connectivity of this area, solidifying its status as a desirable destination for corporate headquarters.\n\nThe building, constructed in 2018, exemplifies modern architectural design and environmental responsibility, featuring a total gross building area of approximately 8,500 m² BTA across six floors with an impressive open-plan office layout. The structure is characterized by high-quality materials, including a reinforced concrete frame and large glass facades, creating a bright and inviting work environment. The property is situated on a well-maintained plot of 2,300 m², designated as gnr. 220, bnr. 15 within the municipal records. The design includes advanced building systems, such as energy-efficient HVAC and lighting solutions, which contribute to the property’s sustainability credentials.\n\nThe current ownership has maintained the property for 15 years, during which it has undergone significant technical upgrades to ensure it meets contemporary standards. Notable enhancements include the installation of a state-of-the-art HVAC system in 2019, a comprehensive façade refurbishment in 2020, and the implementation of energy-efficient solar panels in 2021. The property has achieved a BREEAM Excellent certification, underscoring its commitment to sustainability and environmental performance.\n\nThe property benefits from a long lease commitment, with a weighted average unexpired lease term (WAULT) exceeding 10 years, secured with a creditworthy tenant operating in the tech sector. This long-term occupancy enhances the investment appeal, providing stable income and mitigated vacancy risk. The tenancy structure predominantly features corporate offices, with flexible layouts catering to a range of uses, ensuring adaptability to market demands.\n\nSurrounding amenities include notable landmarks such as the Telenor headquarters and the Statoil building, which contribute to the area’s reputation as a hub for technology and telecommunications firms. The vicinity is characterized by modern office parks, restaurants, and retail facilities, fostering a dynamic environment conducive to business and innovation. The proximity to recreational areas along the waterfront adds to the attractiveness of this location for employees.\n\nThe property manager, recognized for excellence in the industry, has received several awards for outstanding management practices, ensuring that the building is maintained to the highest standards of quality and tenant satisfaction. This level of professionalism and service further enhances tenant retention and the overall value of the investment.\n\nIn summary, Lysaker Torg 12 is a modern, well-located office property with substantial long-term leasing stability, BREEAM Excellent certification, and a comprehensive history of technical upgrades, making it an attractive investment opportunity in the thriving commercial real estate market of Oslo's Lysaker district.",
+      "groundTruth": {
+        "value": 5.6,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Lysaker): 6.25%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nBREEAM Excellent or Outstanding certification: -0.15%\nModern building (post-2015, high standard): -0.2%\nFinal: 5.60%"
+      },
+      "twinId": "f93b7942-c652-4a2b-a5f0-e7dbf7cf8fc1",
+      "twinDeltaChanged": "government_tenant → modern_building"
+    },
+    {
+      "id": "2e74ba59-933f-4264-a988-4ca4ca613bb6",
+      "anchor": "office_oslo_skoyen",
+      "appliedDeltas": [
+        "long_lease",
+        "short_lease",
+        "government_tenant"
+      ],
+      "distractors": [
+        "Local politicians have expressed support for the area's development.",
+        "The current owner has held the property for 15 years."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Hoffsveien 15 in the Skøyen district of Oslo, nestled within an established office hub characterized by a vibrant mix of commercial and residential developments. This prime location is positioned approximately 500 meters from Skøyen station, providing access to regional trains and local transit services, while facilitating strong connectivity to Oslo’s city center via frequent bus services. The property enjoys close proximity to notable landmarks such as the Sjølyst shopping center, CC Vest, and the serene Hoff Park, contributing to an appealing environment for both employees and visitors.\n\nThe property consists of a modern office building originally constructed in 2010, showcasing a sleek contemporary architectural design with glass and steel facades. The building comprises seven floors, totaling a gross building area of approximately 3,800 m² BTA. The effective floor plates are designed to accommodate flexible office layouts, averaging about 550 m² per floor. The building features a robust concrete frame and high-quality interior finishes that align with modern corporate standards. Furthermore, the property is classified with a cadastral designation of gnr. 92, bnr. 32 in Oslo municipality, occupying a plot of 1,200 m².\n\nSignificant upgrades have been made to the property since its construction, including the installation of a modern HVAC system in 2018, the addition of energy-efficient LED lighting across all floors in 2019, and a comprehensive refurbishment of common areas in 2021 to enhance the building's appeal. The building currently holds an energy rating of B (green), reflecting its compliance with contemporary sustainability standards.\n\nThe property is strategically situated within a mixed-use urban environment, allowing for potential waterfront development and expansion in the future, a prospect that has garnered support from local politicians advocating for growth in the Skøyen area. This suburban character is complemented by urban density, making it a desirable location for office and retail operations.\n\nTenancy arrangements within the building are particularly noteworthy. The property features a long lease agreement with a creditworthy government tenant, which has a weighted average unexpired lease term (WAULT) of over 10 years. This ensures a stable income stream and mitigates market risks associated with short-term leasing dynamics. In contrast, a smaller portion of the building is currently leased to an AAA-rated corporate tenant, whose lease is set to expire in less than three years, presenting a strategic opportunity for potential investors to reposition this space based on market demands.\n\nThe tenancy structure is dominated by professional services and creative industries, ensuring a diverse tenant mix that enhances the property's resilience to economic fluctuations. The property has been meticulously maintained under the current owner's stewardship for the past 15 years, a period that has seen consistent occupancy and care for the building’s operational integrity.\n\nIn summary, Hoffsveien 15 represents a compelling investment opportunity, combining a highly desirable location with strong tenant profiles, significant lease durations, and recent property enhancements. The supportive local governmental stance on development further positions the property favorably in the context of Oslo's evolving commercial landscape, making it a promising asset for future growth and value appreciation.",
+      "groundTruth": {
+        "value": 5.6,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Skøyen): 5.75%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nShort lease (<3 years remaining): +0.5%\nGovernment or AAA-rated corporate tenant: -0.35%\nFinal: 5.60%"
+      },
+      "twinId": "9c32325c-ba52-460e-bfcc-c5c1fde6d444",
+      "twinDeltaChanged": "removed: government_tenant"
+    },
+    {
+      "id": "9c32325c-ba52-460e-bfcc-c5c1fde6d444",
+      "anchor": "office_oslo_skoyen",
+      "appliedDeltas": [
+        "long_lease",
+        "short_lease"
+      ],
+      "distractors": [
+        "Local politicians have expressed support for the area's development.",
+        "The current owner has held the property for 15 years."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Hoffsveien 12 in the vibrant Skøyen district of Oslo, a key area known for its established office cluster and mixed-use developments. Located approximately 300 meters from Skøyen station, the property benefits from excellent transport connectivity via regional and local trains, as well as a network of bus services that facilitate easy access to the city centre. The property is also conveniently located near major retail destinations such as Sjølyst shopping centre and CC Vest, and it is bordered by the picturesque Hoff Park, providing a blend of urban amenities and green spaces that enhance the quality of the work environment.\n\nThe building, originally constructed in 1980 and extensively refurbished in 2019, is a modern office property characterized by its sleek façade and efficient design. It comprises seven floors with a gross building area of approximately 3,500 m² BTA and is constructed with durable concrete and glass materials that promote natural light and energy efficiency. The property is registered under the cadastral designation gnr. 220, bnr. 15 in Oslo municipality, with an owned plot size of 1,200 m². The building's technical updates over the past decade include a significant refurbishment of the common areas in 2019, installation of energy-efficient lighting in 2021, and a comprehensive upgrade of the HVAC system in 2022, resulting in improved operational efficiency and enhanced tenant comfort. The property has an energy rating of B, reflecting its commitment to sustainability and reduced environmental impact.\n\nThe master plan for the area designates the property primarily for \"bebyggelse og anlegg,\" confirming its use as an office building while allowing for potential future development opportunities. Currently, the tenant mix is predominantly comprised of established professional services firms with a focus on consulting and technology sectors, indicating strong demand for office space in this location. The tenancy structure is anchored by a long lease of over 10 years with a creditworthy tenant, ensuring stable income generation. However, it is essential to note that there is a short lease term remaining on one portion of the space, which is set to expire in less than three years, creating an opportunity for future leasing strategies and potential rent increases.\n\nLocal politicians have expressed strong support for the ongoing development and revitalization of the Skøyen area, which bodes well for potential future appreciation in property values. This proactive stance on urban development further underscores the property's strategic positioning within a suburban area that has urban density and the potential for waterfront development, making it an attractive investment prospect for both local and international investors.\n\nIn summary, Hoffsveien 12 offers a unique opportunity to acquire a well-located office property within the thriving Skøyen district. The combination of a long-term lease with a reputable tenant, coupled with the existing short lease that presents potential for repositioning, positions this property as a compelling addition to any commercial real estate portfolio. The blend of urban amenities, excellent transport links, and a supportive development environment further enhances its appeal as a prime investment opportunity in Oslo's dynamic commercial landscape.",
+      "groundTruth": {
+        "value": 5.95,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Skøyen): 5.75%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nShort lease (<3 years remaining): +0.5%\nFinal: 5.95%"
+      },
+      "twinId": "2e74ba59-933f-4264-a988-4ca4ca613bb6",
+      "twinDeltaChanged": "removed: government_tenant"
+    },
+    {
+      "id": "a60893d9-c83f-4152-bff7-0f74857fb08a",
+      "anchor": "office_oslo_centre",
+      "appliedDeltas": [
+        "government_tenant",
+        "breeam_certified"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Karl Johans gate 49 in the heart of Oslo’s vibrant Sentrum district, flanked by the historic Oslo Cathedral to the east and the iconic Parliament building to the north. Just a short walk from Oslo Central Station, which serves as a major transport hub for all regional and national rail services, the property is well-positioned within the retail and commercial core of the city. The immediate vicinity is characterized by a blend of office spaces, high-end retail outlets, cultural institutions, and pedestrian-friendly zones, including the renowned Opera House and the Munch Museum. Accessibility is unparalleled, with the Jernbanetorget metro hub and an extensive tram network providing convenient public transport options.\n\nThe property is a modern office building constructed in 2010, showcasing contemporary architectural design with a striking glass façade that maximizes natural light and offers impressive views of the surrounding urban landscape. The building consists of eight floors, including a spacious ground level and a basement, with an approximate gross building area of 5,200 m² BTA. The property is situated on a plot of 800 m², designated in the cadastral register as gnr. 210, bnr. 12 in Oslo municipality, and is classified as a commercial property under the municipal zoning plan.\n\nInternally, the property features flexible and efficient office floor plates averaging 650 m², designed to accommodate both collaborative workspaces and private offices. The building has been equipped with state-of-the-art amenities, including energy-efficient HVAC systems, a modern access control system, and high-speed internet connectivity. Documented technical upgrades over the years include the installation of an intelligent building management system in 2018, a complete refurbishment of common areas and restrooms in 2020, and the addition of new outdoor terraces on the sixth and seventh floors in 2022, enhancing the tenant experience.\n\nThe property holds a prestigious BREEAM Excellent certification, demonstrating its commitment to sustainability and environmental responsibility. This certification is indicative of the building’s energy-efficient systems and materials used throughout the construction process, enhancing its attractiveness to a wide range of potential tenants. The tenancy structure is predominantly occupied by a government agency, ensuring a stable and secure income stream, with additional leasing to a AAA-rated corporate tenant specializing in technology services. This combination of high-quality tenants further solidifies the property’s standing as a prime investment opportunity in the Oslo commercial real estate market.\n\nThe current zoning allows for continued office use, with additional potential for retail integration on the ground floor, enhancing the building's revenue-generating capabilities. The existing tenants include a mix of professional services and public sector offices, with an average occupancy rate across the office floors maintained at a high level. Recent refurbishments have created an inviting and modern work environment, appealing to professionals looking for a prime location at the heart of Oslo.\n\nIn summary, this property at Karl Johans gate 49 presents an exceptional opportunity for investors seeking a strategically located office building with strong tenant profiles, sustainable certifications, and a commitment to maintaining high standards of operational efficiency. With its prime location, modern facilities, and a solid income base, this asset is positioned to provide long-term value and resilience in Oslo’s competitive commercial real estate market.",
+      "groundTruth": {
+        "value": 5.13,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Centre): 5.625%\nGovernment or AAA-rated corporate tenant: -0.35%\nBREEAM Excellent or Outstanding certification: -0.15%\nFinal: 5.13%"
+      },
+      "twinId": "852556dd-e17e-473c-8299-53d3acecb649",
+      "twinDeltaChanged": "removed: breeam_certified"
+    },
+    {
+      "id": "852556dd-e17e-473c-8299-53d3acecb649",
+      "anchor": "office_oslo_centre",
+      "appliedDeltas": [
+        "government_tenant"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Stortingsgata 21 in the heart of Oslo's Sentrum district, adjacent to the prominent Parliament building and within walking distance of the historic Oslo Cathedral. This prime location situates the building approximately 300 metres from Oslo Central Station, ensuring excellent connectivity through all national rail lines, metro services from Jernbanetorget station, and access to an extensive tram network. The surrounding area is characterized by a vibrant mix of retail and commercial spaces, cultural institutions, and pedestrian-friendly zones, making it a desirable destination for both businesses and visitors.\n\nConstructed in 1990, the office building stands as a modern example of commercial architecture, featuring a sleek glass façade that maximizes natural light while providing an efficient workspace. The property comprises 10 floors, including a basement level, with a total gross building area of approximately 5,250 m² BTA. The cadastral designation is gnr. 211, bnr. 45 in Oslo municipality, with an owned plot size of 900 m². Notable for its contemporary design, the property boasts flexible floor plates averaging 525 m², catering to a variety of office configurations that can accommodate modern tenants’ needs.\n\nThe building has been well-maintained, with significant technical upgrades conducted over the years, including the installation of energy-efficient HVAC systems in 2015, refurbishment of elevator systems in 2018, and a comprehensive façade upgrade in 2020 that enhanced both the aesthetics and energy efficiency of the property. Additional improvements include a new access control system implemented in 2022, which adds to the building's security and tenant convenience. The property currently holds an energy rating of C (efficient), adhering to contemporary energy standards and fostering a sustainable environment.\n\nThe tenancy structure of the property is primarily composed of government and AAA-rated corporate tenants, further solidifying its position as a stable investment opportunity within Oslo's commercial real estate market. The presence of high-caliber tenants not only ensures reliable rental income but also reflects the desirability of the location, contributing to low vacancy rates within the building. The diverse range of office users, from professional services to technology firms, underscores the building's versatility and appeal.\n\nIn terms of regulatory standing, the property is designated as \"bebyggelse og anlegg (fremtidig)\" in the municipal master plan, with the current use predominantly as office space complemented by ancillary meeting and storage areas. The lower levels house amenities such as a café, enhancing the tenant experience and contributing to the vibrant atmosphere of the Sentrum district. The office floors feature contemporary finishes, open-plan layouts, and meeting facilities, creating an environment conducive to collaboration and innovation.\n\nSurrounding landmarks including the Oslo Opera House, Munch Museum, and the Oslo Stock Exchange add to the attractiveness of this location, providing tenants with cultural and recreational opportunities nearby. The pedestrian-friendly environment encourages foot traffic, which is beneficial for both the tenants and the café operator on-site.\n\nOverall, Stortingsgata 21 represents an exceptional opportunity for investors seeking a well-located office property in Oslo’s commercial heart, supported by a strong tenancy profile and a history of strategic upgrades that enhance its operational efficiency and market appeal.",
+      "groundTruth": {
+        "value": 5.28,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Centre): 5.625%\nGovernment or AAA-rated corporate tenant: -0.35%\nFinal: 5.28%"
+      },
+      "twinId": "a60893d9-c83f-4152-bff7-0f74857fb08a",
+      "twinDeltaChanged": "removed: breeam_certified"
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "3eb7995c-54ec-4443-80f1-21e188606880",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.38,
+      "absoluteError": 5.38,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:50:35.297Z",
+      "completedAt": "2026-01-18T21:50:35.535Z"
+    },
+    {
+      "scenarioId": "1601acfb-025a-42e4-bad7-f4bcf6a3801d",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6.58,
+      "absoluteError": 6.58,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:50:35.297Z",
+      "completedAt": "2026-01-18T21:50:36.641Z"
+    },
+    {
+      "scenarioId": "39b2abca-7b15-4100-92eb-f19c3534316a",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.93,
+      "absoluteError": 5.93,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:50:35.297Z",
+      "completedAt": "2026-01-18T21:50:37.078Z"
+    },
+    {
+      "scenarioId": "ab91fc43-2a2a-45c7-8ae5-cbe94e747d4f",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -8.23,
+      "absoluteError": 8.23,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:50:37.287Z",
+      "completedAt": "2026-01-18T21:50:38.991Z"
+    },
+    {
+      "scenarioId": "33327683-e204-4de0-8ddd-70c70fdb6a2f",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -8.88,
+      "absoluteError": 8.88,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:50:37.287Z",
+      "completedAt": "2026-01-18T21:50:38.839Z"
+    },
+    {
+      "scenarioId": "f93b7942-c652-4a2b-a5f0-e7dbf7cf8fc1",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.45,
+      "absoluteError": 5.45,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:50:37.287Z",
+      "completedAt": "2026-01-18T21:50:37.332Z"
+    },
+    {
+      "scenarioId": "b1c911a3-2b3a-47f3-b238-2651e0583f2d",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.6,
+      "absoluteError": 5.6,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:50:39.198Z",
+      "completedAt": "2026-01-18T21:50:39.234Z"
+    },
+    {
+      "scenarioId": "2e74ba59-933f-4264-a988-4ca4ca613bb6",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.6,
+      "absoluteError": 5.6,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:50:39.198Z",
+      "completedAt": "2026-01-18T21:50:39.241Z"
+    },
+    {
+      "scenarioId": "9c32325c-ba52-460e-bfcc-c5c1fde6d444",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.95,
+      "absoluteError": 5.95,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:50:39.198Z",
+      "completedAt": "2026-01-18T21:50:39.275Z"
+    },
+    {
+      "scenarioId": "a60893d9-c83f-4152-bff7-0f74857fb08a",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.13,
+      "absoluteError": 5.13,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:50:39.481Z",
+      "completedAt": "2026-01-18T21:50:39.515Z"
+    },
+    {
+      "scenarioId": "852556dd-e17e-473c-8299-53d3acecb649",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-flash-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.28,
+      "absoluteError": 5.28,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:50:39.481Z",
+      "completedAt": "2026-01-18T21:50:41.252Z"
+    }
+  ],
+  "completedAt": "2026-01-18T21:50:41.256Z",
+  "aggregateMetrics": {
+    "hitRate": 0,
+    "meanError": -6.183,
+    "rmse": 6.296,
+    "avgLatencyMs": 0,
+    "directionalAccuracy": 0,
+    "avgStdDeviation": 0,
+    "avgConsistency": 0
+  }
+}

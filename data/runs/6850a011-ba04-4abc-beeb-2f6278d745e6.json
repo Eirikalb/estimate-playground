@@ -1,0 +1,624 @@
+{
+  "id": "6850a011-ba04-4abc-beeb-2f6278d745e6",
+  "timestamp": "2026-01-18T21:52:00.313Z",
+  "domainId": "real-estate-yield",
+  "model": "google/gemini-pro-1.5",
+  "promptStrategy": "chain-of-thought",
+  "promptTemplate": "You are analyzing a commercial real estate property to determine its market yield.\r\n\r\n{{#facts.benchmarks}}\r\n{{{content}}}\r\n{{/facts.benchmarks}}\r\n\r\n---\r\n\r\n### Property Details\r\n\r\n{{scenario.contextDescription}}\r\n\r\n---\r\n\r\n### Instructions\r\n\r\nWork through this analysis step by step:\r\n\r\n**Step 1: Identify the Benchmark**\r\n- What location/segment does this property belong to?\r\n- What is the benchmark yield range for that segment?\r\n\r\n**Step 2: Position Within Range**\r\n- Is this a prime or secondary asset?\r\n- Where should it sit within the benchmark range?\r\n\r\n**Step 3: Apply Adjustments**\r\nConsider each factor and whether it pushes yield UP (more risk) or DOWN (less risk):\r\n- Tenant quality and creditworthiness\r\n- Lease length and WAULT\r\n- Building age and condition\r\n- Any special factors\r\n\r\n**Step 4: Calculate Final Yield**\r\n- Start with your positioned benchmark\r\n- Add/subtract adjustments\r\n- State your final yield estimate\r\n\r\nReturn your answer as JSON only, no markdown:\r\n{\"yield\": <number>, \"reasoning\": \"<your step-by-step reasoning>\"}\r\n\r\n",
+  "rolloutsPerScenario": 3,
+  "status": "completed",
+  "startedAt": "2026-01-18T21:52:00.313Z",
+  "useNarrativeDescriptions": true,
+  "narrativeModel": "openai/gpt-4o-mini",
+  "narrativesGenerated": 12,
+  "narrativesTotal": 12,
+  "scenarios": [
+    {
+      "id": "fa615a44-8642-4f99-aeb3-7a3f23946b00",
+      "anchor": "office_oslo_east",
+      "appliedDeltas": [
+        "long_lease",
+        "short_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Gladengveien 22 in the emerging office district of Hasle, Oslo. Situated approximately 300 metres from the Hasle Line development and around 500 metres from the Helsfyr T-bane station, this location is rapidly transforming into a vibrant urban hub characterized by a mix of office, retail, and residential spaces. The surrounding area boasts significant infrastructure improvements, including enhanced public transport access and the establishment of Økern Portal, making it increasingly attractive for businesses seeking more affordable rents than those found in central Oslo. The property benefits from convenient access to major transport routes, including Ring 3, and a variety of bus connections serving eastern Oslo.\n\nThe building, constructed in 1991, is a distinctive multi-storey office property comprising seven floors with a total gross building area of approximately 6,800 m² BTA. The structure is characterized by its modern architectural design featuring large glass facades that enhance natural light and create an inviting atmosphere. The cadastral designation is gnr. 250, bnr. 12 in Oslo municipality, with an owned plot of 1,500 m². The building boasts a robust reinforced concrete frame and includes energy-efficient systems, contributing to its energy rating of C (light green).\n\nSignificant technical upgrades have been undertaken in recent years, enhancing the building's functionality and appeal. Notable improvements include the installation of a new ventilation system in 2017, which significantly improved indoor air quality; a complete refurbishment of the lobby area in 2019, creating an inviting and modern first impression; and a comprehensive upgrade of restroom facilities across all floors in 2021. The building's exterior was also re-painted in 2022, ensuring a fresh and contemporary appearance.\n\nThe property is regulated under the municipal master plan with the primary designation of \"bebyggelse og anlegg,\" and is predominantly utilized as an office building. The tenancy structure is notably robust, featuring a long lease agreement with a creditworthy tenant, providing a strong financial foundation for potential investors. Additionally, there is a short lease that will be expiring within the next three years, allowing for future repositioning or renegotiation opportunities to capture the increasing demand in this developing district.\n\nOffice spaces within the building are designed with flexibility in mind, accommodating a variety of layouts suitable for different business needs. The average floorplate measures around 970 m² and features open-plan layouts that can be easily adapted to suit tenant requirements. The property is home to a diverse mix of tenants, including technology firms, creative agencies, and professional services, reflecting the dynamic nature of the emerging Hasle district.\n\nPublic transport options are exceptionally strong, with the Helsfyr metro station providing direct access across Oslo and beyond. Furthermore, the proximity to key landmarks such as Valle Hovin, known for hosting events and concerts, adds to the vibrancy of the area and enhances the attractiveness of the property for both current and prospective tenants. The local environment is set for further growth, with ongoing urban development projects promising to enhance the overall appeal and accessibility of the location.\n\nIn conclusion, Gladengveien 22 represents a unique investment opportunity within a rapidly evolving office market, characterized by its strategic location, strong tenant profile, and potential for future growth. The combination of a long-term lease with a reliable tenant and a short lease provides flexibility and security, making this property a compelling choice for investors seeking to capitalize on the transformation of Oslo's eastern districts.",
+      "groundTruth": {
+        "value": 6.7,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo East): 6.5%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nShort lease (<3 years remaining): +0.5%\nFinal: 6.70%"
+      },
+      "twinId": "61708509-6ca0-439b-8cb0-73760036b6c5",
+      "twinDeltaChanged": "removed: long_lease"
+    },
+    {
+      "id": "61708509-6ca0-439b-8cb0-73760036b6c5",
+      "anchor": "office_oslo_east",
+      "appliedDeltas": [
+        "short_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Strømsveien 18 in the emerging office district of Hasle, Oslo. It lies in close proximity to the Hasle Line development and the Økern Portal, both of which are key components of the ongoing urban transformation in the area. Located approximately 700 metres from Helsfyr T-bane station, the property benefits from excellent public transport connectivity, including multiple bus lines serving the eastern Oslo region and easy access to Ring 3 road, facilitating efficient commutes for tenants and visitors alike. The immediate surroundings are characterized by a mix of modern office buildings, retail spaces, and vibrant public amenities, fostering a lively work environment. The cadastral designation for this property is gnr. 221, bnr. 12 in Oslo municipality, encompassing an owned plot of 1,250 m².\n\nThe building is a modern office structure completed in 2010, designed to meet contemporary corporate needs with a total gross building area of approximately 5,200 m² BTA. The property comprises six floors with a reinforced concrete frame, large glass facades, and an open-plan layout that promotes flexibility in workspace design. Specific features include high ceilings, natural lighting, and energy-efficient installations, which are increasingly attractive in today's real estate market. The building has undergone significant technical upgrades, including the installation of a new HVAC system in 2019, LED lighting retrofits in 2020, and the addition of solar panels on the rooftop in 2021, enhancing the property’s sustainability profile.\n\nRegulated under the municipal master plan with a primary designation of \"bebyggelse og anlegg (kontor)\", the property is predominantly utilized for office purposes, with a few ancillary service units on the ground floor. The tenancy structure is currently dominated by technology firms and creative agencies, reflecting the area's appeal to knowledge-intensive industries. Notably, the property has a short lease term, with less than three years remaining on the current agreements, presenting both an opportunity and a risk factor for potential investors. The overall floor area is divided across spacious office suites ranging from 300 m² to 700 m², with a mix of fully leased and partially vacant spaces that offer potential for immediate value-add through new leasing arrangements.\n\nImportantly, the property benefits from its strategic location within an urban transformation zone, which has seen increased investment and development in recent years. This evolving environment is expected to enhance the overall appeal of the area, making it a more attractive destination for prospective tenants seeking more affordable rents compared to central Oslo. Infrastructure improvements, along with the integration of green spaces and amenities, signal a strong potential for future capital appreciation.\n\nPublic transport access is a key selling point, with Helsfyr metro station providing direct connections to Oslo's city center and other major districts. Additionally, bus connections throughout eastern Oslo further enhance accessibility, making the property an appealing option for companies prioritizing transit-oriented locations for their employees.\n\nBeyond the highlighted technical upgrades and sustainability initiatives, detailed information regarding the building’s current operating expenses or its environmental certifications, such as BREEAM or LEED, is not available in the context. Overall, Strømsveien 18 represents a compelling investment opportunity within a transforming urban landscape, but potential investors should consider the implications of the short lease term on cash flow and tenancy stability.",
+      "groundTruth": {
+        "value": 7,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo East): 6.5%\nShort lease (<3 years remaining): +0.5%\nFinal: 7.00%"
+      },
+      "twinId": "fa615a44-8642-4f99-aeb3-7a3f23946b00",
+      "twinDeltaChanged": "removed: long_lease"
+    },
+    {
+      "id": "195a7743-4319-4d3b-b651-27516706793e",
+      "anchor": "office_trondheim",
+      "appliedDeltas": [
+        "multi_tenant",
+        "long_lease",
+        "prime_micro_location",
+        "single_tenant_sme"
+      ],
+      "distractors": [
+        "The building has excellent views of the fjord."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Munkegata 34 in the vibrant Midtbyen district of Trondheim, situated within walking distance to prominent landmarks such as the Nidaros Cathedral, NTNU university, and the scenic Bakklandet area. This strategic location places the building at the heart of a dynamic urban environment, characterized by a mix of educational institutions, historic architecture, and a burgeoning tech scene. The surrounding area is recognized as a startup and innovation hub, bolstered by the presence of SINTEF research facilities. Public transport connectivity is excellent, with Trondheim S station and multiple tram and bus lines providing seamless access to the city and beyond. Furthermore, the proximity to Værnes airport ensures convenient travel options for business professionals.\n\nConstructed in 1998, the building is a modern office property featuring six floors and a gross building area of approximately 3,250 m² BTA, with a built-up area of 540 m². The structure showcases contemporary architectural design with large glass facades that create a bright and welcoming work environment, complemented by remarkable views of the fjord. The cadastral designation for the property is gnr. 303, bnr. 45 in Trondheim municipality, with an owned plot size of 1,200 m². The building is constructed using a steel frame with energy-efficient glazing, ensuring both durability and sustainability.\n\nThe property benefits from a diversified tenant base consisting of three established tenants, creating a robust income stream and mitigating concentration risk. The largest tenant occupies the primary office space under a long-term lease agreement, which boasts a weighted average unexpired lease term (WAULT) exceeding 10 years. This creditworthy tenant is well-regarded within the technology sector, enhancing the property's appeal to potential investors. The remaining tenants consist of a reputable consultancy firm and a startup, both of which contribute to a balanced portfolio of tenants and further solidify the property's desirable investment profile.\n\nRecent upgrades have significantly improved the building's operational efficiency and tenant appeal. Key enhancements include the installation of a new energy-efficient heating and cooling system in 2020, refurbishment of common areas in 2021, and the addition of advanced security systems in 2022. These improvements not only ensure compliance with modern building regulations but also enhance overall tenant satisfaction and retention.\n\nThe property is primarily utilized as an office space but also accommodates a small café on the ground floor, providing additional amenities for tenants and visitors. The office layout is well-structured, with flexible configurations that cater to various office styles, ranging from open-plan workspaces to private offices, allowing tenants to adapt their environments as needed. Each floor features approximately 540 m² of lettable area, facilitating efficient space utilization and maximizing rental income potential.\n\nThe exceptional micro-location of Munkegata 34 within Midtbyen, combined with the diverse tenant mix and long lease agreements, positions the property as a prime investment opportunity in Trondheim's thriving commercial real estate market. The building’s proximity to major transportation nodes and its stunning views of the fjord further enhance its desirability, making it an attractive option for both current and prospective investors seeking a quality asset in a growing urban landscape. \n\nIn conclusion, Munkegata 34 stands as a testament to the evolution of Trondheim’s commercial real estate, embodying the fusion of modernity and tradition that defines this historic city.",
+      "groundTruth": {
+        "value": 6.5,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Trondheim): 6.75%\nDiversified tenant base (3+ tenants): -0.15%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nExceptional micro-location within the area: -0.25%\nSingle SME tenant (concentration risk): +0.45%\nFinal: 6.50%"
+      },
+      "twinId": "e369c25f-10f9-40e8-9dc1-954a29910995",
+      "twinDeltaChanged": "prime_micro_location → short_lease"
+    },
+    {
+      "id": "e369c25f-10f9-40e8-9dc1-954a29910995",
+      "anchor": "office_trondheim",
+      "appliedDeltas": [
+        "multi_tenant",
+        "long_lease",
+        "single_tenant_sme",
+        "short_lease"
+      ],
+      "distractors": [
+        "The building has excellent views of the fjord."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Olav Tryggvasons gate 22 in the vibrant Midtbyen district of Trondheim, situated in close proximity to key landmarks such as the historic Nidaros Cathedral, the Norwegian University of Science and Technology (NTNU), and the picturesque Bakklandet area. This strategic location places the building within a bustling urban environment characterized by a mix of academic institutions, tech startups, and cultural attractions, further enhanced by its excellent connectivity to public transportation. The Trondheim S station is just a short walk away, providing easy access to regional rail services, while local tram and bus networks ensure seamless mobility throughout the city. Additionally, Værnes Airport is conveniently accessible, bolstering the location's appeal for both tenants and visitors.\n\nThe building itself is a modern office property completed in 2010, designed with contemporary architecture that emphasizes sustainability and functionality. It comprises six floors, totaling approximately 3,500 m² BTA, with a gross area of 3,200 m² and a built-up area of 550 m². The structure features a combination of steel and glass facades, offering an abundance of natural light and stunning views of the fjord, which adds to the occupational appeal. The property is classified under the cadastral designation gnr. 170, bnr. 21 in Trondheim municipality, with an owned plot size of 800 m².\n\nRecent technical upgrades include the installation of state-of-the-art LED lighting and energy-efficient HVAC systems in 2021, as well as the refurbishment of common areas in 2022 to enhance tenant comfort and aesthetic appeal. The building is also equipped with high-speed internet connectivity, ensuring it meets the demands of modern businesses.\n\nThe property is primarily utilized as an office building, housing a diverse tenant base comprising three established businesses in the technology and professional services sectors, ensuring a steady stream of rental income. Notably, one of these tenants is a well-known SME that occupies a significant portion of the building, reflecting a concentration risk associated with a single lease. This tenant, however, has a long lease with a remaining term of over ten years, providing stability and predictability to the income stream. The remaining two tenants, while diversified, hold shorter leases with less than three years remaining, which may present opportunities for future lease negotiations and potential rental growth.\n\nThe property's zoning under the municipal master plan designates it for \"bebyggelse og anlegg (kontor),\" primarily supporting office use with potential for ancillary retail activities. The immediate area is highly regarded as a university and tech hub, fostering innovation and collaboration between academia and industry, making it an attractive location for businesses seeking to tap into the local talent pool and thriving entrepreneurial ecosystem.\n\nIn conclusion, the property at Olav Tryggvasons gate 22 presents a compelling opportunity for investors looking to enter the Trondheim commercial market. With its prime location, modern amenities, and a diversified tenant structure, this asset is well-positioned to benefit from the ongoing growth and development of the region, while also presenting a strategic opportunity to address the concentration risk associated with its SME tenant.",
+      "groundTruth": {
+        "value": 7.25,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Trondheim): 6.75%\nDiversified tenant base (3+ tenants): -0.15%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nSingle SME tenant (concentration risk): +0.45%\nShort lease (<3 years remaining): +0.5%\nFinal: 7.25%"
+      },
+      "twinId": "195a7743-4319-4d3b-b651-27516706793e",
+      "twinDeltaChanged": "prime_micro_location → short_lease"
+    },
+    {
+      "id": "7d687af6-bb30-4b66-b34d-da8ffa5d9617",
+      "anchor": "office_oslo_east",
+      "appliedDeltas": [
+        "long_lease"
+      ],
+      "distractors": [
+        "Transaction is expected to close in Q4."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Økernveien 32 in the Økern district of eastern Oslo, strategically positioned between the bustling Økern Portal and the emerging Hasle Line development. This location benefits from its proximity to the Helsfyr T-bane station, approximately 500 meters to the northwest, providing excellent connectivity throughout Oslo. The area is characterised by a dynamic urban landscape marked by ongoing transformation and development, making it an attractive office location with more affordable rents compared to central areas. The surrounding amenities include the expansive Valle Hovin sports complex and a variety of retail and dining options, enhancing the appeal of this developing office district. Connectivity is further bolstered by the Ring 3 road access and extensive bus routes facilitating movement across eastern Oslo.\n\nThe building is an innovative office property originally constructed in 2008, designed with a contemporary architectural style that incorporates sustainable building practices and modern workspace environments. It comprises six floors and encompasses a total gross building area of approximately 8,250 m² BTA, with a built-up area of 1,500 m². Each floor features a flexible layout conducive to both open-plan and individual office configurations, catering to the diverse needs of modern tenants. The structural design includes reinforced concrete with large glass façades, allowing for abundant natural light and an inviting atmosphere. The cadastral designation is gnr. 130, bnr. 12 in Oslo municipality, situated on a plot of 3,500 m², enhancing the potential for future expansions or amenity developments.\n\nThe property has been meticulously maintained and updated, with significant technical upgrades completed over the years. Notable enhancements include the installation of a new energy-efficient heating and cooling system in 2015, and a comprehensive renovation of the lobby and shared facilities in 2019 that improved accessibility and aesthetic appeal. In 2021, a state-of-the-art security and surveillance system was implemented, reflecting a commitment to tenant safety and comfort. The building holds an energy rating of B (green), underscoring its efficiency and sustainability, while its integration of energy-saving technologies contributes positively to operating costs.\n\nThe property is predominantly utilised as an office space, housing a variety of creditworthy tenants with a long lease term exceeding 10 years weighted average unexpired lease term (WAULT). This stable tenancy structure ensures a reliable income stream and mitigates potential vacancy risks, making it an attractive investment opportunity. The existing tenant mix includes firms from the professional services and technology sectors, drawn by the competitive rental rates and modern facilities. The flexibility of the office spaces allows for future reconfigurations to accommodate evolving tenant requirements.\n\nThe surrounding area is experiencing significant urban development, with both public and private investments enhancing infrastructure and amenities. The municipality's master plan designates this location for mixed-use development, indicating a positive outlook for future capital appreciation. The combination of a long lease with creditworthy tenants, coupled with the area's ongoing transformation, positions this property as a prudent investment in Oslo's commercial real estate market.\n\nThe transaction is expected to close in Q4, providing a timely opportunity for investors seeking to acquire a prime asset in one of Oslo's most promising office locations. The combination of robust tenant commitments, modern infrastructure, and strategic positioning within a growing urban area makes Økernveien 32 a compelling investment proposition within the competitive commercial real estate landscape.",
+      "groundTruth": {
+        "value": 6.2,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo East): 6.5%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nFinal: 6.20%"
+      },
+      "twinId": "f40268e5-b49e-44e6-8e1c-8cb49b041177",
+      "twinDeltaChanged": "long_lease → single_tenant_sme"
+    },
+    {
+      "id": "f40268e5-b49e-44e6-8e1c-8cb49b041177",
+      "anchor": "office_oslo_east",
+      "appliedDeltas": [
+        "single_tenant_sme"
+      ],
+      "distractors": [
+        "Transaction is expected to close in Q4."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Økernveien 8 in the rapidly evolving Økern district of Oslo East. This area is experiencing significant urban transformation, characterized by a growing mix of residential and commercial developments, making it an emerging office location within the city's expanding landscape. The site is approximately 300 meters from the Helsfyr T-bane station, providing excellent connectivity to Oslo's public transport network, and is easily accessible via Ring 3, facilitating seamless road transport. The surrounding area features key landmarks such as the Økern Portal, a modern commercial hub, and Valle Hovin, known for its outdoor recreational spaces, which further enhances the area’s appeal for businesses and employees alike.\n\nThe building is a modern office property constructed in 2010, reflecting contemporary architectural trends with an emphasis on functionality and sustainability. It comprises six floors, encompassing an approximate gross building area of 3,200 m² BTA, with floorplates averaging around 550 m². The structure is designed with modern materials, including a glass façade that allows for ample natural light, and is equipped with state-of-the-art building systems. The cadastral designation for the property is gnr. 130, bnr. 25 in Oslo municipality, with a plot size of 1,250 m².\n\nThe property has undergone several technical upgrades to enhance its operational efficiency and environmental performance. Notable improvements include the installation of energy-efficient HVAC systems in 2014, a comprehensive façade refurbishment in 2018 to improve thermal insulation, and the addition of solar panels on the roof in 2021, which contribute to the building's sustainability initiatives. The energy performance certificate indicates a rating of C, achieving compliance with contemporary energy standards and reflecting the owner’s commitment to minimizing operational costs and environmental impact.\n\nRegulated under the municipal master plan, the property is designated for mixed use, predominantly as an office building with potential for ancillary retail spaces. Currently, the tenancy is anchored by a single Small and Medium Enterprise (SME) tenant, which presents a concentration risk but also a stable income source. The tenant occupies approximately 85% of the total lettable area, while the remaining space is available for lease, allowing for potential revenue growth through diversification of the tenant mix in the future.\n\nSurrounding the building, the Økern district is undergoing significant development, with new office spaces and amenities emerging, which is expected to enhance the attractiveness of the area for prospective tenants. Ongoing developments in the Hasle Line area further signify a shift towards modern urban living and working environments, attracting various businesses and professionals seeking more affordable rents compared to central Oslo locations.\n\nPublic transport accessibility is robust, with the Helsfyr metro station providing direct connections to the city center and surrounding districts. Additionally, the area benefits from extensive bus connections throughout eastern Oslo, making it a convenient location for commuting employees. The strategic location along Økernveien ensures excellent visibility and accessibility, reinforcing the property's appeal to both the existing tenant and potential future tenants.\n\nThe transaction is anticipated to close in Q4, offering investors a timely opportunity to capitalize on the ongoing growth and development in the Økern district, while addressing the potential risks associated with tenant concentration through proactive property management strategies.",
+      "groundTruth": {
+        "value": 6.95,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo East): 6.5%\nSingle SME tenant (concentration risk): +0.45%\nFinal: 6.95%"
+      },
+      "twinId": "7d687af6-bb30-4b66-b34d-da8ffa5d9617",
+      "twinDeltaChanged": "long_lease → single_tenant_sme"
+    },
+    {
+      "id": "70b52cd1-cbeb-4c7e-be94-eb828532762b",
+      "anchor": "office_oslo_cbd",
+      "appliedDeltas": [
+        "short_lease",
+        "modern_building"
+      ],
+      "distractors": [
+        "The building has a beautiful lobby with marble floors.",
+        "The seller is highly motivated and wants a quick transaction."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Dronning Mauds gate 22 in the heart of the Aker Brygge district of central Oslo, bordering the vibrant waterfront and a short distance from key cultural landmarks. This prime location positions the building approximately 300 meters from Nationaltheatret station, which offers comprehensive transport options including all metro lines, regional rail services, and the airport express. The surrounding area features a dynamic mix of high-end retail, restaurants, and cultural institutions, including the Royal Palace, the Nobel Peace Center, and the Astrup Fearnley Museum. The immediate vicinity is characterized by an established central business district, featuring a dense urban fabric with significant diplomatic and institutional presence.\n\nThe building is a modern office structure completed in 2018, designed to meet high contemporary standards and cater to the needs of today’s businesses. It comprises eight floors with a total gross building area of approximately 5,200 m² BTA and a built-up area of 600 m². The property is defined by a sleek, glass façade that allows for abundant natural light in the workspaces, enhancing the overall atmosphere of the building. The cadastral designation is gnr. 210, bnr. 45 in Oslo municipality, with an owned plot measuring 800 m², providing ample space for the well-planned layout.\n\nInternally, the building boasts a stunning lobby adorned with marble floors, offering a sophisticated first impression to visitors. The office spaces are designed with flexibility in mind, accommodating various configurations for tenants. Each floor features modern technical installations, including advanced heating, ventilation, and air conditioning systems, ensuring comfort and efficiency throughout the year. The building has an energy rating of C, reflecting its modern construction and operational efficiencies, but does not hold specific green certifications such as BREEAM or LEED.\n\nThe property has a current tenancy structure dominated by office users engaged in professional services, technology, and finance, with a mix of retail and dining options on the ground floor. Notably, the building is subject to a short lease structure, with less than three years remaining on the current lease agreements. This feature presents an attractive opportunity for investors seeking to reposition or redevelop the asset in alignment with market conditions upon lease expiration.\n\nRecent renovations and upgrades have been undertaken to ensure the property remains competitive in the market. Significant technical improvements include the installation of energy-efficient lighting systems in 2020, an upgraded security system in 2021, and a complete refurbishment of the common areas in 2022. These enhancements not only elevate the tenant experience but also improve the building's operational efficiency.\n\nAccess to public transport is exceptional, with regular tram and bus services operating along Dronning Mauds gate, complemented by a nearby ferry terminal providing connections to Nesodden. The strategic location and robust transport links ensure that the property is easily accessible for both tenants and visitors alike.\n\nThe seller is highly motivated and is seeking a swift transaction, which may present an advantageous opportunity for potential buyers aiming to capitalize on the prime location and modern features of this asset. The combination of a contemporary building in a prestigious area, with a short lease term and a motivated seller, makes this property a compelling investment in the Oslo commercial real estate market.",
+      "groundTruth": {
+        "value": 5.18,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo CBD (Prime)): 4.875%\nShort lease (<3 years remaining): +0.5%\nModern building (post-2015, high standard): -0.2%\nFinal: 5.17%"
+      },
+      "twinId": "202d06b5-4b21-43a2-8be6-7692375041f0",
+      "twinDeltaChanged": "removed: modern_building"
+    },
+    {
+      "id": "202d06b5-4b21-43a2-8be6-7692375041f0",
+      "anchor": "office_oslo_cbd",
+      "appliedDeltas": [
+        "short_lease"
+      ],
+      "distractors": [
+        "The building has a beautiful lobby with marble floors.",
+        "The seller is highly motivated and wants a quick transaction."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Dronning Mauds gate 23 in the prestigious Vika district of Oslo's Central Business District (CBD). This prime location lies within walking distance of significant landmarks such as the Nationaltheatret, Oslo City Hall, and the Nasjonalmuseet, positioning it at the heart of Oslo's vibrant office, retail, and cultural scene. The immediate vicinity features a blend of high-profile corporate offices, boutique retail shops, and hospitality venues, while the presence of embassies and institutions enhances the area's reputation as a business hub. Public transport options are exceptional, with the Nationaltheatret station providing access to all metro lines, regional rail, and airport express services. Additionally, frequent tram and bus services from Dronning Mauds gate, coupled with the nearby ferry terminal to Nesodden, ensure comprehensive connectivity for tenants and visitors alike.\n\nThe building is a modern office structure, originally completed in 2012, and designed with a contemporary architectural flair that emphasizes both functionality and aesthetics. The property spans eight floors, including a basement, and offers a gross building area of approximately 5,200 m² BTA, with an owned plot of 1,050 m² as per the municipal records (gnr. 210, bnr. 14). Characterized by its sleek glass façade and open-plan office layouts, the building integrates advanced construction techniques which maximize natural light and energy efficiency. The technical specifications include reinforced concrete construction, designed to meet modern standards of durability and sustainability, reflecting ongoing investment in quality real estate.\n\nRecent upgrades have been executed to further enhance the asset's appeal; notable improvements include the installation of high-efficiency HVAC systems in 2020, a complete refurbishment of the lobby and common areas in 2021, and the addition of a state-of-the-art security system in 2022. These upgrades not only elevate the aesthetic appeal of the building but also contribute to its operational efficiency and tenant satisfaction. The property currently holds an energy rating of C (green), aligning with contemporary sustainability standards.\n\nThe current tenancy structure is notable, with the majority of leases set to expire in less than three years. This short lease term presents a unique opportunity for potential investors to reposition the asset in a recovering market, as they could undertake strategic leasing initiatives to capitalize on the growing demand for prime office space in Oslo's CBD. The current mix of tenants includes a blend of corporate offices and creative agencies which have historically shown resilience in the face of market fluctuations. However, the short-term lease situation may influence the property’s yield, as it allows for increased flexibility in tenant selection and rental terms.\n\nThe property is regulated under the municipal master plan, primarily designated for office use, complemented by ground-floor retail spaces that cater to the needs of the local workforce. The overall environment is further enhanced by the proximity to leisure and cultural attractions such as the Aker Brygge marina and the Royal Palace, fostering a dynamic and attractive workplace environment.\n\nThe seller is highly motivated and seeks a swift transaction, presenting an attractive opportunity for discerning investors looking to acquire a high-quality asset in one of Oslo’s premier office locations. Overall, Dronning Mauds gate 23 represents a compelling investment prospect, particularly for those looking to capitalize on the evolving landscape of the Oslo office market.",
+      "groundTruth": {
+        "value": 5.38,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo CBD (Prime)): 4.875%\nShort lease (<3 years remaining): +0.5%\nFinal: 5.38%"
+      },
+      "twinId": "70b52cd1-cbeb-4c7e-be94-eb828532762b",
+      "twinDeltaChanged": "removed: modern_building"
+    },
+    {
+      "id": "d27ca2f9-d2c2-467c-8ba4-38f08cf8347d",
+      "anchor": "retail_normal",
+      "appliedDeltas": [
+        "poor_micro_location",
+        "older_building",
+        "short_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Bogstadveien 123, nestled in the vibrant Majorstuen outskirts of Oslo. This location is characterized by a dynamic retail landscape, featuring an array of local shopping streets and neighborhood centers that cater to a diverse customer base. Bogstadveien, a prominent thoroughfare, is well-known for its mix of international chains and independent retailers, contributing to a stable footfall in the area. The property is conveniently positioned approximately 300 meters from Majorstuen metro station, which serves as a major junction for both metro and tram lines, ensuring excellent public transport connectivity. Additionally, the surrounding streets provide ample on-street parking, enhancing accessibility for both customers and employees.\n\nThe building, originally constructed in 1995, consists of three floors with a total gross building area (BTA) of approximately 1,200 m². The cadastral designation is gnr. 211, bnr. 45 in Oslo municipality, with the plot covering an area of 600 m². This retail property is structured as a reinforced concrete frame, featuring a modern façade with large glass windows, which enhances visibility and natural light within the retail spaces. It offers flexible floor plates averaging 400 m², accommodating a variety of retail layouts and configurations.\n\nDespite its modern design, the property does exhibit certain challenges affecting its market appeal. The micro-location has been characterized by suboptimal access and limited visibility from Bogstadveien, which may deter foot traffic compared to neighboring properties. Additionally, as the building approaches its third decade, it is recognized that capital expenditure (capex) will be necessary to address maintenance issues and to modernize the facility in accordance with contemporary retail standards. Such updates could include façade renovations, upgrading HVAC systems, and enhancing interior finishes.\n\nThe current tenancy structure reveals that the property is subject to a short lease term of less than three years, which presents both opportunities and challenges for prospective investors. While the short lease may allow for re-positioning or redevelopment plans, it also introduces potential vacancy risk and necessitates active management of tenant relations to ensure continued occupancy.\n\nIn terms of technical upgrades, the property has undergone several improvements over the years, including the installation of a new climate control system in 2018, a roof refurbishment in 2019, and an exterior painting project completed in early 2021. These upgrades have contributed to maintaining the building's aesthetics and functionality, yet further enhancements will be vital to remain competitive in the evolving retail market.\n\nThe property’s regulatory framework is guided by the municipal master plan, designating the area for \"bebyggelse og anlegg\" with a focus on retail functions. Its current usage as a retail space aligns with this designation, making it a compliant asset within the municipal context. The immediate vicinity is characterized by a mix of retail, dining, and residential developments, fostering a vibrant community atmosphere that attracts both local residents and visitors.\n\nIn summary, while the property at Bogstadveien 123 offers notable potential due to its location within the bustling Majorstuen retail district, various factors such as its suboptimal micro-location, the need for capital expenditure, and the short remaining lease period must be carefully considered by prospective investors. The evolving landscape of the Oslo retail market, combined with strategic asset management, may provide avenues to enhance the property’s value moving forward.",
+      "groundTruth": {
+        "value": 8.02,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Normal): 6.875%\nSuboptimal micro-location (poor access, visibility): +0.35%\nOlder building (pre-2000, needs capex): +0.3%\nShort lease (<3 years remaining): +0.5%\nFinal: 8.02%"
+      },
+      "twinId": "e92d343d-697d-45fc-b365-92f55563bfc1",
+      "twinDeltaChanged": "poor_micro_location → breeam_certified"
+    },
+    {
+      "id": "e92d343d-697d-45fc-b365-92f55563bfc1",
+      "anchor": "retail_normal",
+      "appliedDeltas": [
+        "older_building",
+        "short_lease",
+        "breeam_certified"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Bogstadveien 70 in the vibrant Majorstuen district of Oslo, a well-established retail area known for its diverse mix of shops, restaurants, and cafes. Positioned approximately 300 metres from the Majorstuen Metro Station, the building benefits from excellent connectivity to the broader city via frequent metro, tram, and bus services. The immediate vicinity features notable landmarks such as Majorstuen Shopping Centre and Stensparken, contributing to a stable footfall of both local residents and visitors. With good parking availability in the area, the property is ideally situated for retail operations catering to a local customer base.\n\nConstructed in 1994, the building is a retail property featuring a contemporary architectural style and spans three floors, with a total gross building area of approximately 1,200 m² BTA. The layout includes a ground floor retail space of 800 m², complemented by additional retail and storage areas on the upper levels. The property is situated on a plot of 600 m², with a cadastral designation of gnr. 212, bnr. 45 in Oslo municipality. The building is constructed using a steel frame with glass façades, ensuring a modern aesthetic and optimal natural light throughout the retail spaces.\n\nHistorically, the property has undergone several significant upgrades to enhance its operational efficiency and tenant appeal. In 2018, the building benefited from a comprehensive façade renovation, improving both its visual appeal and thermal performance. Additionally, new energy-efficient HVAC systems were installed in 2020, further enhancing tenant comfort while reducing operating costs. The building is currently certified with a BREEAM Excellent rating, reflecting its commitment to sustainability and environmental responsibility.\n\nThe property is currently leased to a mix of national retail chains and independent boutiques, although it has a short remaining lease term of less than three years. This aspect may present opportunities for potential buyers to re-negotiate lease terms or reposition the property to attract new tenants aligned with evolving market trends. The tenancy structure is predominantly retail-focused, serving a variety of consumer needs from fashion to lifestyle products, which has historically drawn a consistent flow of customers.\n\nRegulatory aspects indicate that the property falls within the municipal master plan designation for \"bebyggelse og anlegg,\" primarily supporting retail use. This classification ensures that the property is well-positioned for ongoing retail activities amidst a supportive commercial environment. Furthermore, the area is characterized by a blend of independent retailers and well-known chains, creating a dynamic shopping atmosphere that continues to attract a stable customer base.\n\nIn conclusion, while the building is an older structure requiring capital expenditure to modernize and maintain its competitive position, its BREEAM Excellent certification significantly enhances its appeal to environmentally-conscious tenants and investors. The proximity to Majorstuen Metro Station and the strategic location on Bogstadveien position this property as a valuable asset in a flourishing retail district, making it an attractive consideration for potential investors looking to capitalize on Oslo's resilient retail market.",
+      "groundTruth": {
+        "value": 7.53,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Normal): 6.875%\nOlder building (pre-2000, needs capex): +0.3%\nShort lease (<3 years remaining): +0.5%\nBREEAM Excellent or Outstanding certification: -0.15%\nFinal: 7.52%"
+      },
+      "twinId": "d27ca2f9-d2c2-467c-8ba4-38f08cf8347d",
+      "twinDeltaChanged": "poor_micro_location → breeam_certified"
+    },
+    {
+      "id": "c0653ef1-eb8e-432b-a53b-235399efdd8e",
+      "anchor": "logistics_prime",
+      "appliedDeltas": [
+        "breeam_certified",
+        "prime_micro_location",
+        "single_tenant_sme",
+        "long_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Lagerveien 12 in the prestigious Gardermoen area of Norway, within close proximity to Oslo Airport Gardermoen. This prime logistics location is strategically situated approximately 1 km from the E6 motorway, providing seamless access to major transport routes, including the E18 motorway. The surrounding area is characterized by significant logistics infrastructure, with major distribution hubs and rail freight terminals nearby, enhancing the attractiveness of this site as a last-mile distribution center.\n\nThe building was constructed in 2017, showcasing modern warehouse specifications that meet the demands of contemporary logistics operations. Comprising a single-story structure with a total gross building area of approximately 8,500 m² BTA, the property features high ceilings and a flexible layout ideal for various storage and distribution activities. The structure is constructed of reinforced concrete, with an insulated façade designed for energy efficiency. The cadastral designation is gnr. 301, bnr. 45 in Ullensaker municipality, with an owned plot size of 20,000 m², allowing ample space for both operational use and potential future expansion.\n\nThis property holds an impressive BREEAM Excellent certification, reflecting its commitment to sustainability and energy efficiency. This certification not only enhances its marketability but also positions it favorably within the increasingly eco-conscious logistics sector. The operational efficiency of the building is further enhanced by its exceptional micro-location, which provides immediate access to key transport networks and a diverse pool of potential labor from the surrounding districts.\n\nThe building is fully let to a single tenant, a well-established SME specializing in e-commerce logistics. This concentration of tenancy, while presenting some level of concentration risk, is mitigated by the tenant’s strong creditworthiness and a long lease agreement extending over 12 years, with a weighted average unexpired lease term (WAULT) that enhances the income stability of the investment. The lease includes annual rent escalations, ensuring that rental income maintains its competitiveness relative to market conditions.\n\nIn terms of technical upgrades, the property has been well-maintained since its completion, with several enhancements undertaken to optimize operational functionality. Notable upgrades include the installation of an advanced automated fire suppression system in 2018, LED lighting retrofits throughout the facility in 2019, and the addition of a high-capacity loading dock fitted with modern logistics technology in 2022. These improvements underscore the commitment to operational excellence and tenant satisfaction.\n\nThe logistics facility is strategically positioned within a burgeoning logistics hub, benefiting from proximity to key landmarks such as the Oslo Airport Gardermoen and major freight terminals, making it an ideal choice for businesses focused on efficient distribution channels. Public transport options are robust, with direct connections to the airport and major bus routes serving the surrounding areas. Additionally, the property’s location along Lagerveien provides convenient access for heavy vehicles, paving the way for efficient operations.\n\nThe property is regulated under the municipal master plan, designated for \"industri og næring\" purposes, ensuring its continued use as a logistics and distribution center. This regulatory framework supports the current use while also allowing for future flexibility in tenant operations, further adding to the property's investment appeal. \n\nIn conclusion, this modern logistics facility at Lagerveien 12 represents a compelling opportunity for investors seeking a high-quality asset with sustainable credentials, strategic location advantages, and a stable income profile secured by a long-term lease with a reputable tenant.",
+      "groundTruth": {
+        "value": 5.88,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Prime): 6.125%\nBREEAM Excellent or Outstanding certification: -0.15%\nExceptional micro-location within the area: -0.25%\nSingle SME tenant (concentration risk): +0.45%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nFinal: 5.88%"
+      },
+      "twinId": "8615250f-34dd-4dff-ae16-55760032cbb0",
+      "twinDeltaChanged": "removed: long_lease"
+    },
+    {
+      "id": "8615250f-34dd-4dff-ae16-55760032cbb0",
+      "anchor": "logistics_prime",
+      "appliedDeltas": [
+        "breeam_certified",
+        "prime_micro_location",
+        "single_tenant_sme"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is strategically located at Lagerveien 22, situated in the heart of the Alnabru district, renowned for its prime logistics capabilities. This area is characterized by its proximity to major logistics terminals and distribution hubs, positioning it as a key last-mile distribution center. The site benefits from exceptional transport connections, including immediate access to the E6 and E18 motorways, as well as a nearby rail freight terminal, facilitating efficient cargo movement throughout Norway. Additionally, the property is approximately 25 kilometers from Oslo Airport Gardermoen, enhancing its appeal for regional and international logistics operations.\n\nThe building, constructed in 2018, comprises a modern logistics facility with a gross building area of approximately 8,200 m² BTA, featuring a robust construction type that meets contemporary warehouse specifications. The property is built on a plot of 14,000 m², with cadastral references gnr. 299, bnr. 10 in Oslo municipality. The facility is designed to accommodate high-volume storage and distribution, offering clear heights of 10 meters, optimized loading docks, and ample parking spaces for both trucks and staff. The architectural layout is functional, promoting efficient workflow and operational flexibility.\n\nSignificantly, the property holds a BREEAM Excellent certification, underscoring its commitment to sustainability and energy efficiency. This certification not only enhances the property’s environmental profile but also positions it favorably in a market increasingly driven by sustainability considerations. The immediate surroundings of Lagerveien are primarily composed of similar logistics and warehousing facilities, creating a synergistic environment that fosters strong tenant demand.\n\nNotably, the tenancy structure is currently occupied by a single SME tenant, which introduces a concentration risk in terms of rental income. The tenant specializes in e-commerce logistics and has established a robust presence in the area, benefiting from the ongoing growth in online retail and last-mile delivery services. The lease agreement is structured for a term of five years, with options for renewal, providing a stable income stream while highlighting the importance of managing tenant concentration risks.\n\nThe property has undergone several technical upgrades since its completion, ensuring it remains at the forefront of modern logistics capabilities. In 2019, a state-of-the-art HVAC system was installed to improve climate control and energy efficiency. Subsequently, in 2021, the property received enhancements to its loading dock facilities to optimize freight handling and increase throughput. Additional improvements were made in 2022 with the installation of advanced security systems, including surveillance cameras and access control, further enhancing the operational safety of the logistics hub.\n\nRegulatory frameworks governing the property align with the municipal master plan, with the primary designation being \"bebyggelse og anlegg (fremtidig)\", focusing on logistics and distribution activities. The property is strategically positioned to capitalize on the growth of the logistics sector, bolstered by its modern specifications and sustainability credentials. The combination of its BREEAM Excellent status, exceptional micro-location within the Alnabru area, and the advantages presented by its single tenant structure position Lagerveien 22 as a compelling opportunity for potential investors seeking a high-quality logistics asset with future growth potential.",
+      "groundTruth": {
+        "value": 6.18,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Prime): 6.125%\nBREEAM Excellent or Outstanding certification: -0.15%\nExceptional micro-location within the area: -0.25%\nSingle SME tenant (concentration risk): +0.45%\nFinal: 6.17%"
+      },
+      "twinId": "c0653ef1-eb8e-432b-a53b-235399efdd8e",
+      "twinDeltaChanged": "removed: long_lease"
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "fa615a44-8642-4f99-aeb3-7a3f23946b00",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6.7,
+      "absoluteError": 6.7,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:52:50.345Z",
+      "completedAt": "2026-01-18T21:52:52.184Z"
+    },
+    {
+      "scenarioId": "61708509-6ca0-439b-8cb0-73760036b6c5",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -7,
+      "absoluteError": 7,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:52:50.345Z",
+      "completedAt": "2026-01-18T21:52:52.125Z"
+    },
+    {
+      "scenarioId": "195a7743-4319-4d3b-b651-27516706793e",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6.5,
+      "absoluteError": 6.5,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:52:50.345Z",
+      "completedAt": "2026-01-18T21:52:52.105Z"
+    },
+    {
+      "scenarioId": "e369c25f-10f9-40e8-9dc1-954a29910995",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -7.25,
+      "absoluteError": 7.25,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:52:52.394Z",
+      "completedAt": "2026-01-18T21:52:52.435Z"
+    },
+    {
+      "scenarioId": "7d687af6-bb30-4b66-b34d-da8ffa5d9617",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6.2,
+      "absoluteError": 6.2,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:52:52.394Z",
+      "completedAt": "2026-01-18T21:52:52.449Z"
+    },
+    {
+      "scenarioId": "f40268e5-b49e-44e6-8e1c-8cb49b041177",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6.95,
+      "absoluteError": 6.95,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:52:52.394Z",
+      "completedAt": "2026-01-18T21:52:52.433Z"
+    },
+    {
+      "scenarioId": "70b52cd1-cbeb-4c7e-be94-eb828532762b",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.18,
+      "absoluteError": 5.18,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:52:52.661Z",
+      "completedAt": "2026-01-18T21:52:54.359Z"
+    },
+    {
+      "scenarioId": "202d06b5-4b21-43a2-8be6-7692375041f0",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.38,
+      "absoluteError": 5.38,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:52:52.661Z",
+      "completedAt": "2026-01-18T21:52:52.716Z"
+    },
+    {
+      "scenarioId": "d27ca2f9-d2c2-467c-8ba4-38f08cf8347d",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -8.02,
+      "absoluteError": 8.02,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:52:52.661Z",
+      "completedAt": "2026-01-18T21:52:52.707Z"
+    },
+    {
+      "scenarioId": "e92d343d-697d-45fc-b365-92f55563bfc1",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -7.53,
+      "absoluteError": 7.53,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:52:54.564Z",
+      "completedAt": "2026-01-18T21:52:54.608Z"
+    },
+    {
+      "scenarioId": "c0653ef1-eb8e-432b-a53b-235399efdd8e",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.88,
+      "absoluteError": 5.88,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:52:54.564Z",
+      "completedAt": "2026-01-18T21:52:54.619Z"
+    },
+    {
+      "scenarioId": "8615250f-34dd-4dff-ae16-55760032cbb0",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 404 - {\"error\":{\"message\":\"No endpoints found for google/gemini-pro-1.5.\",\"code\":404},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6.18,
+      "absoluteError": 6.18,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:52:54.564Z",
+      "completedAt": "2026-01-18T21:52:54.657Z"
+    }
+  ],
+  "completedAt": "2026-01-18T21:52:54.660Z",
+  "aggregateMetrics": {
+    "hitRate": 0,
+    "meanError": -6.564,
+    "rmse": 6.614,
+    "avgLatencyMs": 0,
+    "directionalAccuracy": 0,
+    "avgStdDeviation": 0,
+    "avgConsistency": 0
+  }
+}

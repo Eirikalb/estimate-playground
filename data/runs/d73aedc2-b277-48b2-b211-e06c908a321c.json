@@ -1,0 +1,568 @@
+{
+  "id": "d73aedc2-b277-48b2-b211-e06c908a321c",
+  "timestamp": "2026-01-18T21:39:37.729Z",
+  "domainId": "real-estate-yield",
+  "model": "google/gemini-2.5-flash-preview",
+  "promptStrategy": "minimal",
+  "promptTemplate": "Estimate the market yield for this Norwegian commercial real estate property:\r\n\r\n{{scenario.contextDescription}}\r\n\r\nReturn JSON only: {\"yield\": <number>, \"reasoning\": \"<brief explanation>\"}\r\n\r\n",
+  "rolloutsPerScenario": 3,
+  "status": "completed",
+  "startedAt": "2026-01-18T21:39:37.729Z",
+  "useNarrativeDescriptions": true,
+  "narrativeModel": "openai/gpt-4o-mini",
+  "narrativesGenerated": 11,
+  "narrativesTotal": 11,
+  "scenarios": [
+    {
+      "id": "2e8ff7af-9608-4e6e-97f5-44e1355d3d0c",
+      "anchor": "hotel_prime",
+      "appliedDeltas": [
+        "prime_micro_location"
+      ],
+      "distractors": [
+        "The property manager has won several industry awards."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Hotellplassen 4, in the heart of Oslo Sentrum, strategically positioned just a short distance from the iconic Opera House and the historic Akershus Fortress. This prime hotel location benefits from its proximity to Central Station, providing seamless access to national and international rail connections, as well as direct airport express services. The surrounding area is characterized by a vibrant mix of culture, business, and tourism, featuring well-known international hotel brands, retail establishments, and dining options, contributing to high occupancy rates and premium room rates.\n\nThe hotel property occupies a prominent site with an ownership plot of 1,250 m² and is categorized under the cadastral designation gnr. 210, bnr. 14 in the municipality of Oslo. Originally constructed in 1998, the building exemplifies modern architectural design, featuring a sleek glass façade and contemporary styling. The hotel comprises 12 floors, including a basement, with a total gross building area of approximately 8,500 m² BTA. The layout consists of 150 guest rooms, a state-of-the-art conference center, a restaurant and bar, as well as fitness and wellness facilities, catering to both leisure and business travelers.\n\nPublic transport accessibility is exceptional, with the property situated within walking distance of major attractions such as the National Opera & Ballet and the vibrant waterfront at Aker Brygge. Moreover, the vicinity offers comprehensive metro and tram connections, enhancing the overall convenience for guests. This exceptional micro-location within Oslo Sentrum positions the hotel as a desirable lodging option for tourists and business visitors alike, ensuring sustained demand and a steady revenue stream.\n\nThe hotel property has undergone significant technical upgrades in recent years to maintain its competitive edge in the market. Notable enhancements include a full refurbishment of the guest room interiors in 2019, the installation of an energy-efficient heating and cooling system in 2020, and the renovation of the lobby and public areas in 2021. These upgrades have not only improved the aesthetic appeal but also enhanced operational efficiency, contributing to an environmentally friendly approach that aligns with current sustainability trends.\n\nThe building is regulated under the municipal master plan, primarily designated for \"hotell- og næringsvirksomhet,\" reflecting its intended use as a hotel with associated commercial activities. The tenancy structure showcases a robust mix of long-term corporate clients and transient guests, ensuring a diverse income base that mitigates risk. The on-site conference facilities further enhance the hotel's appeal, catering to corporate gatherings and events, thus reinforcing its position within the high-demand business tourism sector.\n\nThe property manager, an award-winning firm with a proven track record in the hospitality industry, has consistently implemented best practices in operations, contributing to superior guest experiences and maintaining high occupancy levels. Their expertise ensures that the hotel remains a competitive player in the bustling Oslo hotel market.\n\nIn summary, Hotellplassen 4 presents an outstanding opportunity for investors seeking a high-quality asset in one of Oslo's most coveted locations, characterized by its exceptional micro-location, strong transport links, and a well-rounded mix of offerings that cater to both tourists and business travelers. The combination of modern facilities, continued investment in upgrades, and the management's industry recognition further solidifies the property's potential for sustained success in the competitive hospitality market.",
+      "groundTruth": {
+        "value": 5.38,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Prime): 5.625%\nExceptional micro-location within the area: -0.25%\nFinal: 5.38%"
+      },
+      "twinId": "8b020b3b-3859-47be-b342-bd72e4b2cc03",
+      "twinDeltaChanged": "prime_micro_location → short_lease"
+    },
+    {
+      "id": "8b020b3b-3859-47be-b342-bd72e4b2cc03",
+      "anchor": "hotel_prime",
+      "appliedDeltas": [
+        "short_lease"
+      ],
+      "distractors": [
+        "The property manager has won several industry awards."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Parkveien 12, in the vibrant heart of Oslo Sentrum, mere steps away from the iconic Opera House and a short stroll from Akershus Fortress. This prime location places the property within a bustling area characterized by a mix of high-end retail, cultural institutions, and business amenities, making it a key attraction for both tourists and professionals. With direct access to Central Station, visitors enjoy seamless connectivity to regional and airport express services, whilst metro and tram options are readily available, enhancing the property's appeal for business travelers and leisure guests alike.\n\nThe subject property is a modern hotel building constructed in 2012, comprising a total of seven floors with a gross building area of approximately 3,250 m² BTA. The building features a contemporary architectural design that integrates sleek glass facades and open, airy interiors, promoting both aesthetics and functionality. The plot size is approximately 1,200 m², with cadastral references noted as gnr. 214, bnr. 8 in Oslo municipality. The hotel is designed to provide 120 guest rooms, along with a café and meeting facilities, catering to the needs of business and leisure travelers. \n\nPublic transport accessibility is exceptional, with the property located within walking distance to the Nationaltheatret metro station and major tram lines, ensuring ease of movement throughout the city. The surrounding area is a well-established tourist hub, featuring not only the Opera House and Akershus Fortress but also proximity to the Aker Brygge waterfront, renowned for its dining, shopping, and vibrant waterfront activities. This strategic positioning underscores the property’s attractiveness for both short-term and extended stays, which is reflected in the high occupancy rates typical for hotels in this locale.\n\nThe hotel is currently leased to a reputable international hotel brand, however, it is important to note that the lease has less than three years remaining, which presents a unique opportunity for a potential buyer to renegotiate terms or explore alternative uses for the property moving forward. Recent lease terminations and proposals have indicated strong interest from other hotel operators seeking to capitalize on the area’s robust demand dynamics.\n\nOn the operational front, the property benefits from a dedicated management team led by a highly regarded property manager, who has received several industry accolades for excellence in hospitality and guest services. Notable technical upgrades include the installation of energy-efficient HVAC systems in 2018, a comprehensive refurbishment of the lobby and communal areas in 2020, and the implementation of a smart room management system in 2021, which enhances the guest experience and operational efficiency.\n\nAs per the municipal master plan, the property is designated for \"bebyggelse og anlegg (fremtidig),\" affirming its use as a hotel with potential for mixed-use development in the future. The building’s amenities include conference rooms equipped with advanced audiovisual technology, a fitness center, and a rooftop terrace offering panoramic views of the Oslo skyline. \n\nThe hotel has a solid historical track record of high occupancy rates and premium room rates, thanks in part to its strategic location and the surrounding area's appeal. While the property is currently operated as a hotel, the flexibility of the lease structure combined with its prime location opens up possibilities for alternative uses, making this asset an attractive proposition for investors looking to diversify their portfolios in the highly competitive Oslo market. \n\nIn conclusion, Parkveien 12 presents a rare opportunity to acquire a well-located, modern hotel property with significant upside potential in a thriving area of Oslo, backed by a reputable management team and robust market fundamentals.",
+      "groundTruth": {
+        "value": 6.13,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Prime): 5.625%\nShort lease (<3 years remaining): +0.5%\nFinal: 6.13%"
+      },
+      "twinId": "2e8ff7af-9608-4e6e-97f5-44e1355d3d0c",
+      "twinDeltaChanged": "prime_micro_location → short_lease"
+    },
+    {
+      "id": "8c5c0491-32b8-4fd7-b76f-ca443b331671",
+      "anchor": "office_oslo_lysaker",
+      "appliedDeltas": [
+        "government_tenant",
+        "breeam_certified",
+        "modern_building"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Vollsveien 45 in the Lysaker district of Bærum, with close proximity to Fornebu and Sandvika. This prime office location is approximately 600 metres from Lysaker station, a key transport hub that provides regional train services to Oslo and beyond. The property benefits from excellent connectivity, including regular bus services to Fornebu and Oslo, direct access to the E18 motorway, and the planned Fornebubanen metro line, which will further enhance accessibility to Oslo City and the greater region. The area is characterized by modern office parks housing corporate headquarters, notably the Telenor headquarters and the Statoil building, contributing to a vibrant business ecosystem that focuses on technology, telecommunications, and professional services.\n\nThe building is a modern office structure completed in 2018, featuring an innovative design that emphasizes sustainability and functionality. It comprises seven floors, with a gross building area of approximately 8,200 m² BTA, designed to accommodate a variety of corporate tenants. The structural design incorporates reinforced concrete and glass façades, allowing for ample natural light, and the office spaces are configured to provide flexible floor plates ranging from 1,000 m² to 1,500 m² per floor. The cadastral designation is gnr. 155, bnr. 56 in Bærum municipality, with an owned plot of 3,200 m².\n\nThis property has achieved a BREEAM Excellent certification, reflecting its commitment to environmentally sustainable building practices. It features energy-efficient systems, including advanced HVAC technology and intelligent building management systems that optimize energy consumption. The extensive technical upgrades executed since the building's completion include the installation of a state-of-the-art lighting control system in 2019, solar panels added in 2020, and enhanced insulation measures implemented in 2021 to further align with sustainability goals. The property’s energy performance certificate is rated A, signifying its high energy efficiency.\n\nThe tenancy structure is anchored by a committed government tenant on a long-term lease, which provides stability and enhances the investment appeal of the property. In addition, the building accommodates a blend of other high-quality office users specializing in technology and professional services, contributing to a dynamic tenant mix that supports collaborative working environments. The property is currently 95% leased, with only minor vacancies that present opportunities for new tenants, while the seller guarantees lease income on the vacant spaces.\n\nSurrounding landmarks, including the picturesque Lysakerfjorden and the nearby shopping centre at Fornebu, further enhance the user experience of this commercial property. The area is a hub for innovation and corporate excellence, making it highly attractive to potential tenants. The combination of a government tenant, BREEAM Excellent certification, and modern construction standards post-2015, positions this property as a premier investment opportunity in a sought-after location.\n\nOverall, the property at Vollsveien 45 stands as a testament to modern architectural design and sustainable development, fulfilling both functional and environmental standards that are critical in today's commercial real estate market. Its strategic location, advanced technological features, and strong tenant profile ensure its desirability and potential for long-term value appreciation.",
+      "groundTruth": {
+        "value": 5.55,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Lysaker): 6.25%\nGovernment or AAA-rated corporate tenant: -0.35%\nBREEAM Excellent or Outstanding certification: -0.15%\nModern building (post-2015, high standard): -0.2%\nFinal: 5.55%"
+      },
+      "twinId": "a522a195-661a-40c0-9f4b-94934c607880",
+      "twinDeltaChanged": "government_tenant → multi_tenant"
+    },
+    {
+      "id": "a522a195-661a-40c0-9f4b-94934c607880",
+      "anchor": "office_oslo_lysaker",
+      "appliedDeltas": [
+        "breeam_certified",
+        "modern_building",
+        "multi_tenant"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Strandveien 20 in the vibrant Lysaker district of Oslo, which serves as a key part of the dynamic Bærum municipality. Situated approximately 300 metres from Lysaker station, the building benefits from exceptional transport connectivity, including frequent regional train services, bus connections to Fornebu and Oslo, as well as direct access to the E18 motorway. Future developments, such as the planned Fornebubanen metro line, will further enhance accessibility, solidifying Lysaker's position as a premier business hub. The immediate area boasts significant corporate landmarks, including the Telenor headquarters and Statoil building, while also being surrounded by modern office parks and high-quality amenities, making it an attractive location for businesses across various sectors.\n\nThe subject property, built in 2018, is a contemporary office building exemplifying high construction standards and modern design. It comprises six floors and offers an approximate gross building area of 5,120 m² BTA, providing flexible office spaces with efficient layouts. The architectural design incorporates high-quality materials and extensive glazing, maximizing natural light and creating an inviting work environment. The cadastral designation is gnr. 200, bnr. 22 in Bærum municipality, with an owned plot of 1,200 m². The property is certified with a BREEAM Excellent rating, underlining its commitment to sustainability and energy efficiency, which is increasingly vital for attracting high-caliber tenants in today's market.\n\nDesigned to cater to a diversified tenant base, the property is currently occupied by three distinct tenants, including a tech startup, a professional services firm, and a health and wellness company. This diversified occupancy not only mitigates potential risks associated with tenant turnover but also positions the property as a stable income-generating asset. The structured data indicates that office spaces range from 300 m² to 1,200 m² per tenant, accommodating varying business needs and promoting a synergistic environment.\n\nDocumented technical upgrades performed since the building's completion include the installation of a state-of-the-art HVAC system in 2019 to enhance indoor air quality and occupant comfort, as well as the integration of advanced energy-efficient LED lighting throughout the premises in 2020. Additional improvements, such as the installation of solar panels on the rooftop in 2021, reflect the property’s commitment to sustainability and further reduce operational costs for tenants.\n\nThe property is regulated under the municipal master plan with the primary designation of \"office and service buildings,\" and is utilized predominantly for office purposes. The layout features an open-plan design, complemented by meeting rooms and collaboration spaces that foster productivity and innovation. The ground floor includes a welcoming reception area and communal amenities, such as a café that enhances the tenant experience.\n\nAccess to the surrounding area is further facilitated by a network of pedestrian pathways and cycling lanes, promoting a healthy and active lifestyle among employees. Nearby attractions include various dining options, retail establishments, and recreational facilities, contributing to an appealing work-life balance for tenants.\n\nIn summary, the Strandveien 20 property represents a modern, sustainable investment opportunity in a prime commercial location within Lysaker. With its BREEAM Excellent certification, contemporary design, and diversified tenant occupancy, this property is well-positioned to meet the demands of today’s corporate landscape while providing a solid foundation for future growth.",
+      "groundTruth": {
+        "value": 5.75,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Lysaker): 6.25%\nBREEAM Excellent or Outstanding certification: -0.15%\nModern building (post-2015, high standard): -0.2%\nDiversified tenant base (3+ tenants): -0.15%\nFinal: 5.75%"
+      },
+      "twinId": "8c5c0491-32b8-4fd7-b76f-ca443b331671",
+      "twinDeltaChanged": "government_tenant → multi_tenant"
+    },
+    {
+      "id": "fe12fa37-2603-4b8d-b8e0-550aaab68272",
+      "anchor": "logistics_prime",
+      "appliedDeltas": [
+        "older_building",
+        "long_lease",
+        "breeam_certified"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Lagerveien 12 in the Berger district, strategically positioned within one of Norway's premier logistics hubs. This location is approximately 15 kilometers from Oslo city center and benefits from direct access to both the E6 and E18 motorways, ensuring seamless connectivity to major transport corridors. The surrounding area is characterized by a dense network of logistics terminals and distribution hubs, catering to high-demand sectors such as e-commerce and retail. Notable nearby landmarks include the Berger Logistics Terminal and proximity to the Oslo Airport Gardermoen, solidifying this property’s status as a last-mile distribution center.\n\nThe building, constructed in 1998, is a single-storey logistics facility with a gross building area of approximately 8,500 m² BTA. The property sits on a plot measuring 20,000 m², designated gnr. 302, bnr. 15 in the municipality of Vestby. The logistics center features a modern concrete construction with high ceilings, extensive loading docks, and ample parking facilities. Designed to meet contemporary warehouse specifications, it includes a clear height of 10 meters, making it suitable for various logistical operations.\n\nDespite its strong location and functional attributes, the property is an older building that will require capital expenditure (capex) to upgrade its facilities in line with current market standards. However, it benefits from a long lease agreement extending over 10 years with a creditworthy tenant, providing a stable income stream and mitigating vacancy risk. This extended WAULT (Weighted Average Unexpired Lease Term) positions the property favorably in terms of financial stability, appealing to prospective investors.\n\nThe building achieved BREEAM Excellent certification, reflecting its commitment to sustainability and energy efficiency. This certification is crucial in today’s market, as it enhances the property’s attractiveness to environmentally conscious tenants and investors alike.\n\nRecent upgrades to the property include the installation of a new energy-efficient HVAC system in 2021, enhancing comfort and operational efficiency. Additionally, in 2022, the property underwent significant refurbishment, including a complete overhaul of the external façade and the installation of new loading dock doors. These upgrades have improved the building's functionality and aesthetic appeal, while also contributing to its BREEAM certification.\n\nThe property is well-equipped to accommodate logistics operations, featuring multiple access points for trucks, an office space of approximately 500 m², and a dedicated area for shipping and receiving goods. The surrounding area is known for its strong tenant demand and low vacancy rates, which further underpins the investment potential of this asset.\n\nTransportation options are robust, with direct access to the E6 and E18 motorways facilitating efficient road transport. Additionally, the Berger Rail Freight Terminal is nearby, enhancing the logistics capabilities of the property and providing an alternative transport mode for goods. The proximity to Oslo Airport Gardermoen, approximately 25 kilometers to the north, further solidifies the site’s strategic importance for last-mile distribution.\n\nIn summary, Lagerveien 12 offers a compelling investment opportunity within a prime logistics location in Norway. While acknowledging the building's age and the need for capex, the long lease with a creditworthy tenant and its BREEAM Excellent certification present a balanced risk profile, ideal for investors seeking stable returns in the commercial real estate sector.",
+      "groundTruth": {
+        "value": 5.98,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Prime): 6.125%\nOlder building (pre-2000, needs capex): +0.3%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nBREEAM Excellent or Outstanding certification: -0.15%\nFinal: 5.97%"
+      },
+      "twinId": "354e1e9a-a7ee-4c80-beda-92db1ca1012d",
+      "twinDeltaChanged": "removed: long_lease"
+    },
+    {
+      "id": "354e1e9a-a7ee-4c80-beda-92db1ca1012d",
+      "anchor": "logistics_prime",
+      "appliedDeltas": [
+        "older_building",
+        "breeam_certified"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Lagerveien 12 in the Vestby district, an established logistics hub strategically positioned near the E6 motorway, offering exceptional connectivity to both Oslo and the wider region. This prime logistics location is characterized by its proximity to major distribution terminals and rail freight facilities, making it an ideal site for last-mile distribution services. The surrounding area features a robust infrastructure catering to logistical needs, with numerous distribution hubs and warehouses supporting a thriving commercial environment. The cadastral designation is gnr. 112, bnr. 45 in Vestby municipality, encompassing an owned plot of 12,500 m².\n\nThe building, constructed in 1998, is a single-storey warehouse facility with a gross building area of approximately 6,200 m² BTA. The structure is primarily constructed with reinforced concrete, ensuring durability and resilience suitable for logistical operations. This modern warehouse has large, flexible floor plates ideal for storage and distribution, complemented by a clear height of 7 meters, allowing for efficient racking systems. While the property boasts a BREEAM Excellent certification, reflecting its adherence to high environmental and sustainability standards, it is important to note that the building is older and will require capital expenditure for modernization to meet contemporary logistical demands.\n\nThe immediate vicinity benefits from strong transport connections, with direct access to the E6 and E18 motorways facilitating smooth transportation routes. Additionally, the site is located within close proximity to a rail freight terminal, enhancing the logistical capabilities for tenants seeking integrated supply chain solutions. The Gardermoen Airport, approximately 40 kilometers to the north, further amplifies the accessibility of this location for both personnel and freight movements.\n\nThe building's layout features multiple loading bays strategically positioned for efficient truck access, reducing turnaround times for deliveries and pickups. The current tenancy structure is predominantly occupied by logistics firms, reflecting strong demand for warehouse space in this prime area. The property benefits from a combination of long-term leases and shorter-term agreements, providing a balanced income stream while positioning the asset for potential value appreciation through strategic tenant retention and renewal.\n\nRecent technical upgrades include a comprehensive refurbishment of the warehouse roof in 2019, enhancing insulation and durability, and the installation of energy-efficient LED lighting throughout the premises in 2020, further supporting the building's environmental credentials. The building’s internal systems saw an overhaul in 2021, including the modernisation of the heating and ventilation systems to comply with advanced sustainability standards.\n\nThe property is governed by the municipal master plan, designated for \"logistikk og næring\" which aligns with its current use as a modern logistics facility. The extensive yard space surrounding the building allows for vehicle maneuverability, providing ample parking for staff and logistics operations. Further, the area has seen increasing interest from logistics operators, illustrating the ongoing growth potential of this property.\n\nIn summary, Lagerveien 12 presents a solid investment opportunity characterized by its prime logistics location, modern specifications with a BREEAM Excellent certification, and a tenancy structure that caters to the growing demand in the logistics sector. While the building requires capital expenditure due to its age, its strategic positioning and current operational capabilities present a compelling case for future growth in an evolving market landscape.",
+      "groundTruth": {
+        "value": 6.28,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Prime): 6.125%\nOlder building (pre-2000, needs capex): +0.3%\nBREEAM Excellent or Outstanding certification: -0.15%\nFinal: 6.27%"
+      },
+      "twinId": "fe12fa37-2603-4b8d-b8e0-550aaab68272",
+      "twinDeltaChanged": "removed: long_lease"
+    },
+    {
+      "id": "e267733f-420d-45f8-ac6c-18f199e9518d",
+      "anchor": "logistics_normal",
+      "appliedDeltas": [
+        "short_lease",
+        "older_building",
+        "multi_tenant",
+        "vacancy_risk"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Lagerveien 45 in the established secondary logistics area of Hønefoss, approximately 1.5 km from the city center and situated strategically between local industrial estates and smaller transport terminals. This location benefits from direct road access via the E16 highway, facilitating efficient connectivity to the greater Oslo region and beyond. However, the property has limited rail connections, which is typical for secondary logistics locations, positioning it as a viable option for regional distribution needs. Nearby landmarks include prominent local companies in the logistics and manufacturing sectors, contributing to an environment conducive to industrial activities.\n\nThe building, originally constructed in 1998, is a single-storey warehouse and logistics facility encompassing a gross building area of approximately 3,200 m² BTA, situated on a plot of 8,500 m². The structure is of standard industrial design with concrete block construction, featuring a clear height of 6 meters, loading docks, and ample parking facilities. The cadastral designation is gnr. 345, bnr. 12 in Ringerike municipality. \n\nCurrent ownership reveals that the property is under a diversified tenancy structure comprising three tenants from different industrial segments, yet it is noteworthy that the lease terms are relatively short, with less than three years remaining on the current agreements. Due to its older construction, the building requires considerable capital expenditure for renovation to meet modern logistics standards and tenant expectations. The current occupancy level reveals an imminent vacancy exceeding 20%, highlighting the necessity for strategic repositioning to enhance rental appeal and overall property value.\n\nAlthough the property has served as a functional logistic hub, a review of recent maintenance and improvement efforts indicates limited upgrades since its initial construction. Notable improvements include the installation of a new roof in 2015 and the refurbishment of the loading bays in 2018, which have helped maintain operational functionality. However, the need for additional capital expenditure is apparent to modernize the facility, improve energy efficiency, and adapt to contemporary logistics requirements. There are no reported sustainability certifications such as BREEAM or LEED, and the energy efficiency of the building is currently unclassified.\n\nThe surrounding area is characterized by older building stock typical of secondary logistics locations, dominated by smaller tenants that require flexible space solutions. This tenant demographic suggests a degree of income stability, albeit with the inherent risk associated with short lease terms. The immediate vicinity is home to various businesses within the logistics and warehousing sectors, further enhancing the property’s profile as a regional distribution center.\n\nIn summary, Lagerveien 45 presents an opportunity to acquire a strategically located logistics property with a diversified tenant base and significant potential for value enhancement through renovation. While the imminent vacancy and short lease terms present challenges, they also allow for the possibility to reposition the property within a growing regional market. The combination of road accessibility and proximity to established industrial estates underscores the potential for future tenant attraction and retention, making this property a noteworthy consideration for investors seeking opportunities in Norway’s commercial real estate landscape.",
+      "groundTruth": {
+        "value": 9.05,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Normal & Secondary): 8%\nShort lease (<3 years remaining): +0.5%\nOlder building (pre-2000, needs capex): +0.3%\nDiversified tenant base (3+ tenants): -0.15%\nCurrent or imminent vacancy (>20%): +0.4%\nFinal: 9.05%"
+      },
+      "twinId": "9ee403c6-7baf-415e-9fcd-3fa441db067d",
+      "twinDeltaChanged": "removed: short_lease"
+    },
+    {
+      "id": "9ee403c6-7baf-415e-9fcd-3fa441db067d",
+      "anchor": "logistics_normal",
+      "appliedDeltas": [
+        "older_building",
+        "multi_tenant",
+        "vacancy_risk"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Lagerveien 12 in the industrious region of Skedsmo, approximately 20 kilometers northeast of Oslo city center. This location is characterized by its secondary logistics capabilities, strategically positioned near local industrial estates and smaller transport terminals. The surrounding area is primarily comprised of older commercial buildings, serving a diverse base of smaller tenants that contribute to the regional economic landscape. Key transport connections include direct road access via the E6 highway, which facilitates efficient distribution routes to both Oslo and surrounding municipalities. While rail connections are limited, the proximity to regional distribution points enhances logistic capabilities. \n\nThe property is delineated under the cadastral designation gnr. 245, bnr. 17 in Skedsmo municipality, encompassing an owned plot of 1,250 m². Originally constructed in 1998, the building features a robust industrial design that accommodates warehousing and logistics operations. With a total gross building area of approximately 2,800 m² BTA, the structure comprises two floors with a combination of warehouse and office spaces, reflecting an efficient layout for logistical functions. \n\nThe building is constructed of reinforced concrete, with metal cladding that showcases a utilitarian aesthetic suitable for its logistics context. However, it is worth noting that the property is categorized as an older building, and the current condition indicates a need for capital expenditure (capex) focused on renovations and modernization to meet contemporary operational standards.\n\nInternally, the layout features approximately 1,600 m² of warehouse space and 1,200 m² of office facilities, partitioned into three distinct tenant units. This diversified tenant base currently comprises three tenants engaged in various small-scale distribution and logistics activities. However, the property does face an imminent vacancy of over 20%, impacting current cash flow and necessitating strategic repositioning to attract new tenants. \n\nRecent renovations have included a new roof installation in 2019 to enhance insulation and energy efficiency, alongside an upgrade of the heating, ventilation, and air conditioning (HVAC) systems in 2021 to improve tenant comfort and operational performance. Nevertheless, further updates are required to elevate the building's overall appeal and functionality, including enhancements to the office spaces and common areas to ensure compliance with modern building standards.\n\nThe property's regulatory status in the municipal master plan designates it primarily for “industri og lager” (industry and storage), making it suitable for continued use within the logistics sector. The immediate vicinity features a mix of secondary industrial properties, drawing a diverse tenant mix that underscores the area's role as an emerging logistics hub. Notable landmarks nearby include the Skedsmo Business Park and the Eidsvoll Industrial Estate, both of which reinforce the area's industrial character and likely future growth.\n\nIn summary, Lagerveien 12 presents a compelling investment opportunity within the secondary logistics market of Skedsmo. While the property benefits from a diversified tenant base and advantageous location, the challenges posed by its older building status and current vacancy levels highlight the need for strategic capital expenditure and tenant re-engagement to unlock its full potential. The property offers significant upside through targeted renovations and improved tenant relations, positioning it for future growth in a dynamic logistics landscape.",
+      "groundTruth": {
+        "value": 8.55,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Normal & Secondary): 8%\nOlder building (pre-2000, needs capex): +0.3%\nDiversified tenant base (3+ tenants): -0.15%\nCurrent or imminent vacancy (>20%): +0.4%\nFinal: 8.55%"
+      },
+      "twinId": "e267733f-420d-45f8-ac6c-18f199e9518d",
+      "twinDeltaChanged": "removed: short_lease"
+    },
+    {
+      "id": "12ea47bd-8f03-41af-8590-0f1d9f43a29b",
+      "anchor": "retail_prime",
+      "appliedDeltas": [
+        "modern_building",
+        "prime_micro_location",
+        "older_building"
+      ],
+      "distractors": [
+        "The building was recently featured in a architecture magazine."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Hegdehaugsveien 12, positioned in the heart of the Majorstuen district of Oslo, an area renowned for its vibrant retail and commercial activity. This prime retail location is situated approximately 300 metres from the Majorstuen metro station, providing direct access to multiple metro lines and ensuring excellent connectivity to the wider Oslo area. The immediate surroundings are characterized by high footfall pedestrian traffic and a mix of national and international brands, with nearby landmarks including the Oslo City shopping centre, Steen & Strøm, and Glasmagasinet, which collectively enhance the area's appeal as a shopping destination. The property lies within a thriving urban landscape, surrounded by bustling cafes, restaurants, and cultural venues that attract both locals and tourists alike.\n\nThis prominent retail building, originally constructed in 1998, features a modern design with a striking glass façade and is spread over four floors, encompassing a gross building area of approximately 1,200 m² BTA. The property is registered under the cadastral designation gnr. 222, bnr. 45 in Oslo municipality, with an owned plot size of 800 m². The building is classified as a commercial space, purpose-built for retail use, and includes ample display windows that enhance visibility and foot traffic. \n\nThe property's exceptional micro-location within Majorstuen cannot be overstated; it is directly adjacent to Bogstadveien, one of Oslo's most prestigious shopping streets, known for its high-end boutiques and lifestyle brands. The area boasts a dynamic mix of retail offerings, contributing to strong consumer spending and ensuring a steady flow of customers throughout the week.\n\nRecent enhancements to the building's infrastructure have been undertaken to maintain its high standard, including a major refurbishment completed in 2020. This renovation saw the installation of new energy-efficient lighting, upgraded HVAC systems, and a complete revamp of the ground floor retail space to align with modern retail trends. Furthermore, the property was featured in a recent architectural magazine, applauding its design and strategic location, which has helped to enhance its market visibility.\n\nIn addition to the modern building features, it is important to highlight a nearby older building at Hegdehaugsveien 10, constructed prior to 2000. This property, while historically significant, requires capital expenditure (capex) to meet modern standards, contrasting sharply with the high-quality specifications of Hegdehaugsveien 12. This juxtaposition of new and older retail spaces further enriches the shopping experience in the area, drawing in a diverse clientele.\n\nThe tenancy structure of Hegdehaugsveien 12 is currently fully occupied by well-established retail tenants, ensuring a consistent rental income stream. The ground floor comprises approximately 500 m² of retail space, while the upper floors, totaling 700 m², are utilized for additional retail and ancillary office space. This strategic distribution of space maximizes both visibility and accessibility for tenants, contributing positively to the overall occupancy rates within the property.\n\nThe property is governed by the municipal master plan, designated for commercial use, allowing for further development opportunities that could capitalize on the area's growth potential. Notably, the property aligns with municipal plans that encourage the sustained development of retail facilities in this high-demand area. \n\nIn summary, Hegdehaugsveien 12 represents a unique investment opportunity within Oslo’s retail market, offering a modern building in a prime location, complemented by recent high-standard upgrades and a fully let tenant structure. This combination of factors underscores the property’s strong position within the competitive retail landscape of Majorstuen.",
+      "groundTruth": {
+        "value": 5.48,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Prime): 5.625%\nModern building (post-2015, high standard): -0.2%\nExceptional micro-location within the area: -0.25%\nOlder building (pre-2000, needs capex): +0.3%\nFinal: 5.47%"
+      },
+      "twinId": "e56d0f55-d3ef-4445-bd34-f3adb6880d39",
+      "twinDeltaChanged": "prime_micro_location → single_tenant_sme"
+    },
+    {
+      "id": "e56d0f55-d3ef-4445-bd34-f3adb6880d39",
+      "anchor": "retail_prime",
+      "appliedDeltas": [
+        "modern_building",
+        "older_building",
+        "single_tenant_sme"
+      ],
+      "distractors": [
+        "The building was recently featured in a architecture magazine."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Bogstadveien 34, within the vibrant Majorstuen district of Oslo, a renowned retail hub characterized by high footfall and diverse shopping opportunities. The building is strategically located approximately 150 metres from the Majorstuen metro station, providing excellent transport connectivity with direct access to Oslo's extensive public transit system, including tram and bus services. This central location places it within a bustling area surrounded by notable landmarks such as the Oslo City shopping centre, Steen & Strøm, and Glasmagasinet, reinforcing its position as a prime retail destination.\n\nThe subject property is a modern retail building completed in 2018, comprising four floors with a total gross building area of approximately 1,800 m² BTA. The property is constructed with a contemporary design that features wide glass facades, allowing for significant natural light and an inviting retail environment. The structural layout optimizes the retail space, ensuring functional floor plates of around 450 m² per level, which is well-suited for high street retail operations. The property is registered under the cadastral number gnr. 211, bnr. 12 in Oslo municipality and sits on a plot of 600 m².\n\nThe building's design and construction have received accolades within the architectural community, including a feature in a prominent architecture magazine that highlights its aesthetic appeal and functional design. Furthermore, the property has been equipped with modern amenities, including energy-efficient HVAC systems, and has achieved a solid energy rating of B (green), reflecting its compliance with contemporary environmental standards.\n\nThe tenancy structure is currently dominated by a single small and medium-sized enterprise (SME) tenant, specializing in lifestyle retail, which introduces a concentration risk to the investment profile. While the tenant has a strong local presence, the reliance on a single occupant may pose challenges in terms of income stability. The property is currently leased on a long-term basis, providing steady rental income, but prospective buyers should note the potential implications of tenant concentration in their investment strategy.\n\nIn terms of historical technical upgrades, the building has undergone a series of enhancements since its completion. Notable improvements include the installation of a state-of-the-art security system in 2019, an upgrade to the façade for improved energy efficiency in 2021, and the addition of an outdoor seating area for the retail unit in 2022, which has increased foot traffic and customer engagement. This commitment to maintaining and enhancing the property’s appeal is indicative of a proactive management approach.\n\nThe surrounding area of Majorstuen is characterized by a mix of local boutiques and international brands, with a dynamic blend of shopping, dining, and entertainment options that cater to both residents and visitors alike. The presence of high street shopping and strong consumer spending patterns further affirm the property's desirability as a retail location. Additionally, the proximity to major transport arteries ensures that the property benefits from ongoing foot traffic, crucial for retail performance.\n\nIn summary, Bogstadveien 34 represents a modern retail investment opportunity in one of Oslo's most sought-after districts, characterized by its contemporary building standards and strategic location. However, potential investors should carefully consider the implications of tenant concentration and the ongoing need for capital expenditure to maintain the property’s competitive edge in the thriving Oslo retail market.",
+      "groundTruth": {
+        "value": 6.18,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Prime): 5.625%\nModern building (post-2015, high standard): -0.2%\nOlder building (pre-2000, needs capex): +0.3%\nSingle SME tenant (concentration risk): +0.45%\nFinal: 6.17%"
+      },
+      "twinId": "12ea47bd-8f03-41af-8590-0f1d9f43a29b",
+      "twinDeltaChanged": "prime_micro_location → single_tenant_sme"
+    },
+    {
+      "id": "3e06445d-3f21-4a5f-9ee6-7f303e00c33c",
+      "anchor": "office_bergen",
+      "appliedDeltas": [],
+      "distractors": [
+        "The building has excellent views of the fjord."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Bryggen 4 in the historic Bryggen district of Bergen, situated along the scenic harbor renowned for its UNESCO World Heritage status. This vibrant area is characterized by its unique wooden wharf buildings, bustling shops, and cultural landmarks, including the famous Fish Market and the Bergenhus Fortress. The property benefits from its prime central location, being approximately 300 meters from the Fløibanen funicular, providing easy access to the iconic mount Fløyen and panoramic views of the city and surrounding fjords.\n\nPublic transport connections are robust, with the Bergen light rail (Bybanen) providing frequent service from nearby stops, and Bergen Station, located just 1.2 kilometers away, offering regional and national train services. Flesland Airport is accessible via a 20-minute drive, further enhancing the property’s connectivity and appeal to both local and international tenants.\n\nThis corner office property, completed in 1982, showcases modernist architectural design with clean lines and extensive glass façades that maximize natural light and provide excellent views of the fjord. The building comprises seven floors, including a basement, with a total gross building area of approximately 3,500 m² BTA, as per the sales presentation, and a built-up area of 520 m². The property is situated on a plot of 1,200 m², referenced in the municipal cadastre as gnr. 123, bnr. 45.\n\nThe structural integrity of the building is reinforced by a steel frame and concrete construction, ensuring durability and a low maintenance profile. Notable technical upgrades have been implemented over the years, including the installation of an energy-efficient HVAC system in 2015, an elevator modernization in 2018, and the refurbishment of common areas in 2020. The property also underwent a façade renovation in 2022, enhancing its aesthetic appeal while improving energy efficiency, contributing to its sustainable profile.\n\nThe property is designated in the municipal master plan for commercial use, primarily serving as office space. The tenancy structure is composed of a diverse mix of tenants, predominantly in the professional services, technology, and creative industries. Each office floor offers flexible space ranging from 400 m² to 550 m², accommodating both open-plan and private office configurations. The building benefits from a mix of fully let office areas alongside strategically vacant spaces, which provide opportunities for rental growth.\n\nSituated in a dynamic urban setting, the immediate vicinity of the property is rich with amenities, including restaurants, cafes, and shops, catering to a wide range of needs for tenants and visitors alike. The proximity to key cultural landmarks and the scenic harbor enhances the attractiveness of the location, positioning it as a desirable site for businesses seeking a prestigious address in Bergen.\n\nThe property holds an energy rating of C, reflecting its commitment to energy efficiency while adhering to current environmental regulations. Although specific sustainability certifications such as BREEAM or LEED have not been reported, the recent upgrades towards energy-efficient systems signify a forward-thinking approach to property management.\n\nOverall, Bryggen 4 represents a compelling investment opportunity in a thriving commercial district, with its strategic location, modern amenities, and solid tenant mix contributing to its long-term viability in Bergen’s competitive real estate market.",
+      "groundTruth": {
+        "value": 6.25,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Bergen): 6.25%\nFinal: 6.25%"
+      }
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "2e8ff7af-9608-4e6e-97f5-44e1355d3d0c",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.38,
+      "absoluteError": 5.38,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:40:26.412Z",
+      "completedAt": "2026-01-18T21:40:26.501Z"
+    },
+    {
+      "scenarioId": "8b020b3b-3859-47be-b342-bd72e4b2cc03",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6.13,
+      "absoluteError": 6.13,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:40:26.412Z",
+      "completedAt": "2026-01-18T21:40:26.488Z"
+    },
+    {
+      "scenarioId": "8c5c0491-32b8-4fd7-b76f-ca443b331671",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.55,
+      "absoluteError": 5.55,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:40:26.412Z",
+      "completedAt": "2026-01-18T21:40:26.523Z"
+    },
+    {
+      "scenarioId": "a522a195-661a-40c0-9f4b-94934c607880",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.75,
+      "absoluteError": 5.75,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:40:26.734Z",
+      "completedAt": "2026-01-18T21:40:26.771Z"
+    },
+    {
+      "scenarioId": "fe12fa37-2603-4b8d-b8e0-550aaab68272",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.98,
+      "absoluteError": 5.98,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:40:26.734Z",
+      "completedAt": "2026-01-18T21:40:26.768Z"
+    },
+    {
+      "scenarioId": "354e1e9a-a7ee-4c80-beda-92db1ca1012d",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6.28,
+      "absoluteError": 6.28,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:40:26.734Z",
+      "completedAt": "2026-01-18T21:40:26.776Z"
+    },
+    {
+      "scenarioId": "e267733f-420d-45f8-ac6c-18f199e9518d",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -9.05,
+      "absoluteError": 9.05,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:40:26.982Z",
+      "completedAt": "2026-01-18T21:40:27.023Z"
+    },
+    {
+      "scenarioId": "9ee403c6-7baf-415e-9fcd-3fa441db067d",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -8.55,
+      "absoluteError": 8.55,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:40:26.982Z",
+      "completedAt": "2026-01-18T21:40:27.018Z"
+    },
+    {
+      "scenarioId": "12ea47bd-8f03-41af-8590-0f1d9f43a29b",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.48,
+      "absoluteError": 5.48,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:40:26.982Z",
+      "completedAt": "2026-01-18T21:40:27.020Z"
+    },
+    {
+      "scenarioId": "e56d0f55-d3ef-4445-bd34-f3adb6880d39",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6.18,
+      "absoluteError": 6.18,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:40:27.240Z",
+      "completedAt": "2026-01-18T21:40:27.295Z"
+    },
+    {
+      "scenarioId": "3e06445d-3f21-4a5f-9ee6-7f303e00c33c",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6.25,
+      "absoluteError": 6.25,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:40:27.240Z",
+      "completedAt": "2026-01-18T21:40:27.277Z"
+    }
+  ],
+  "completedAt": "2026-01-18T21:40:27.298Z",
+  "aggregateMetrics": {
+    "hitRate": 0,
+    "meanError": -6.416,
+    "rmse": 6.522,
+    "avgLatencyMs": 0,
+    "directionalAccuracy": 0,
+    "avgStdDeviation": 0,
+    "avgConsistency": 0
+  }
+}

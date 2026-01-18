@@ -1,0 +1,567 @@
+{
+  "id": "8a4d464e-3973-41ae-bc89-a2bcb9461169",
+  "timestamp": "2026-01-18T21:43:10.033Z",
+  "domainId": "real-estate-yield",
+  "model": "google/gemini-2.5-pro-preview",
+  "promptStrategy": "benchmark-only",
+  "promptTemplate": "{{#facts.benchmarks}}\r\n{{{content}}}\r\n{{/facts.benchmarks}}\r\n\r\n---\r\n\r\nUsing the benchmark ranges above, estimate the yield for this property:\r\n\r\n{{scenario.contextDescription}}\r\n\r\nConsider where this property should be positioned within the relevant benchmark range based on its specific characteristics.\r\n\r\nReturn JSON only: {\"yield\": <number>, \"reasoning\": \"<explain benchmark selection and positioning>\"}\r\n\r\n",
+  "rolloutsPerScenario": 3,
+  "status": "completed",
+  "startedAt": "2026-01-18T21:43:10.033Z",
+  "useNarrativeDescriptions": true,
+  "narrativeModel": "openai/gpt-4o-mini",
+  "narrativesGenerated": 11,
+  "narrativesTotal": 11,
+  "scenarios": [
+    {
+      "id": "b526d957-c866-4048-93eb-f883058da930",
+      "anchor": "retail_secondary",
+      "appliedDeltas": [
+        "long_lease",
+        "short_lease",
+        "prime_micro_location",
+        "government_tenant"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Sjøgata 45 in the vibrant suburban centre of Tromsø, situated prominently between the bustling regional shopping centre, Jekta Storsenter, and several well-known big-box retail outlets. This strategic micro-location ensures high visibility and foot traffic, making it an attractive proposition for retail ventures. The surrounding area is characterized by a mix of established retail brands and local businesses, catering to a price-sensitive customer base that frequents the out-of-town retail parks. The property enjoys excellent car-dependent access, supported by large parking areas that accommodate both customers and employees, along with proximity to major highway routes facilitating easy navigation to and from Tromsø and neighboring regions.\n\nThe building, originally constructed in 2008, is a modern single-storey retail structure comprising approximately 1,200 m² of gross building area (BTA). The property is constructed with durable materials to withstand the local climate, featuring an open layout ideal for retail purposes, including large display windows that enhance natural light and product visibility. The cadastral designation is gnr. 123, bnr. 456 in Tromsø municipality, with an owned plot measuring 3,000 m², allowing for ample outdoor space and potential for future expansions or additions.\n\nThe property is currently tenanted by a reputable AAA-rated corporate tenant, a leading national grocery chain, which has occupied the space since the building's inception. The lease has a weighted average unexpired lease term (WAULT) exceeding ten years, providing stability and security for potential investors. This long lease term significantly reduces vacancy risk and enhances the property’s overall yield profile. The tenant’s financial strength is assured, given its established presence and performance in the Norwegian retail market.\n\nNotably, the property has undergone several technical upgrades to improve efficiency and sustainability. The most recent renovations include the installation of energy-efficient LED lighting systems in 2019, a complete HVAC system upgrade in 2021 to enhance climate control and energy consumption, and the addition of solar panels in 2023 that have increased the building’s energy independence. This investment in infrastructure supports a reduced carbon footprint and positions the property favorably within the growing sustainable retail sector.\n\nTransport connections are robust, with several bus routes servicing the area, connecting customers to the greater Tromsø region. The proximity to the E8 highway ensures easy access for both shoppers and logistics, further enhancing the location's appeal for retail operations. The surrounding landscape boasts other notable landmarks such as the Tromsø Ice Domes and the Arctic Cathedral, which also draw visitors to the vicinity, benefiting all local businesses.\n\nIn summary, this property at Sjøgata 45 represents a prime retail investment opportunity within a key secondary retail location. The combination of a long-term lease with a creditworthy tenant, exceptional micro-location advantages, and recent technical upgrades provide a compelling case for this asset's resilience in the current market. With its strategic positioning and modern facilities, this property is well-equipped to meet the demands of the evolving retail landscape in Tromsø.",
+      "groundTruth": {
+        "value": 7.98,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Secondary): 8.375%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nShort lease (<3 years remaining): +0.5%\nExceptional micro-location within the area: -0.25%\nGovernment or AAA-rated corporate tenant: -0.35%\nFinal: 7.97%"
+      },
+      "twinId": "160ec925-cf65-401e-8e73-02c304bda769",
+      "twinDeltaChanged": "long_lease → breeam_certified"
+    },
+    {
+      "id": "160ec925-cf65-401e-8e73-02c304bda769",
+      "anchor": "retail_secondary",
+      "appliedDeltas": [
+        "short_lease",
+        "prime_micro_location",
+        "government_tenant",
+        "breeam_certified"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Sjøgata 12 in the vibrant suburban retail park of Hamar, situated strategically between the regional large-format shopping centre, CC Hamar, and key big-box retailers such as Elkjøp and Rusta. The site is approximately 1.5 km from the E6 highway, providing exceptional car-dependent access and benefiting from large parking areas that support the high foot traffic characteristic of this secondary retail location. The immediate vicinity includes various dining options, grocery chains, and a popular cinema, all of which contribute to a thriving retail environment. The cadastral designation is gnr. 50, bnr. 123 in Hamar municipality, encompassing a plot of 1,200 m².\n\nConstructed in 1998, the property is a well-maintained single-storey retail unit, offering a gross building area of approximately 800 m² BTA. The building features a steel frame construction with large glass facades, allowing for substantial natural light and visibility, which is advantageous for retail operations. The layout includes an expansive retail area, storage spaces, and customer amenities, designed to cater to a diverse clientele. The property has been certified with a BREEAM Excellent rating, underscoring its commitment to environmental sustainability and operational efficiency.\n\nThe structural integrity of the building has been enhanced through several technical upgrades which include the installation of a fully integrated HVAC system in 2015, LED lighting throughout in 2018, and a comprehensive facade refurbishment completed in 2021. All improvements have been carefully implemented to ensure compliance with contemporary standards, further solidifying the property's appeal to prospective tenants.\n\nThe property is currently leased to a government-backed retail tenant with a AAA credit rating, ensuring a stable income stream and reducing investment risk. However, the lease has a remaining term of less than three years, presenting a unique opportunity for potential buyers to renegotiate terms or attract new tenants aligned with their investment strategy.\n\nLocated in a secondary retail district, the property benefits from its exceptional micro-location within close proximity to prominent regional shopping centres and big-box retailers, which attract a price-sensitive customer base. Despite the higher vacancy risk typically associated with secondary retail markets, the strong anchor tenant mitigates this concern, ensuring a reliable income while highlighting the importance of leveraging the well-established surrounding retail ecosystem.\n\nPublic transport options are somewhat limited; however, the area is well serviced by local bus routes connecting to Hamar’s main transport hub, approximately 2 km away. The property’s accessibility by car, coupled with ample parking facilities, positions it well within the local retail landscape, catering predominantly to customers reliant on vehicular access.\n\nIn summary, Sjøgata 12 presents a compelling investment opportunity characterized by a strong institutional tenant, a prime micro-location within a competitive retail environment, and a notable BREEAM Excellent certification that reflects its operational sustainability. The property’s short lease term provides a strategic avenue for value enhancement, making it an attractive proposition for discerning investors seeking exposure to the resilient retail sector in Norway.",
+      "groundTruth": {
+        "value": 8.13,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Secondary): 8.375%\nShort lease (<3 years remaining): +0.5%\nExceptional micro-location within the area: -0.25%\nGovernment or AAA-rated corporate tenant: -0.35%\nBREEAM Excellent or Outstanding certification: -0.15%\nFinal: 8.13%"
+      },
+      "twinId": "b526d957-c866-4048-93eb-f883058da930",
+      "twinDeltaChanged": "long_lease → breeam_certified"
+    },
+    {
+      "id": "4807ac98-97ba-4a67-9f5e-c8ea9f3902fb",
+      "anchor": "hotel_normal",
+      "appliedDeltas": [
+        "government_tenant"
+      ],
+      "distractors": [
+        "The seller is highly motivated and wants a quick transaction."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Parkveien 12 in the vibrant district of Fornebu, approximately 3 kilometers from Oslo’s city center. This strategic location is notable for its proximity to key business and conference areas, with substantial connectivity to Oslo Airport Gardermoen and major highway networks, including the E18. The surrounding area is characterized by a mix of corporate offices, conference centers, and modern business parks, making it an ideal location for hotel operations catering to both regional business travelers and seasonal tourists. Landmarks such as the Telenor Arena and Fornebu S shopping center are within a short distance, enhancing the property’s appeal as a destination for both leisure and corporate clientele.\n\nThe property is a contemporary hotel building completed in 2016, designed with sustainability and modern hospitality in mind. It features six floors and a total gross building area of approximately 9,500 m² BTA, accommodating 150 guest rooms, various meeting and conference facilities, and a full-service restaurant. The architectural design emphasizes a blend of modern aesthetics and functionality, with spacious guest rooms featuring large windows that provide ample natural light. The building is constructed using durable materials with energy-efficient systems, aligning with contemporary environmental standards. The cadastral designation is gnr. 233, bnr. 45 in Bærum municipality, encompassing a total plot size of 3,500 m².\n\nThe property benefits from excellent transport connections, including an airport shuttle service and direct access to the E18 highway, facilitating easy commutes for both business and leisure guests. Additionally, the site offers ample on-site parking, accommodating guests and conference attendees, thereby enhancing its attractiveness as a versatile venue for events and gatherings.\n\nSignificant technical upgrades have been implemented since construction, enhancing the property's operational efficiency and guest experience. In 2019, the hotel underwent a comprehensive refurbishment of its lobby and restaurant, modernizing the aesthetic appeal and functionality of these key areas. The installation of a new energy-efficient HVAC system in 2021 further improved climate control throughout the property, resulting in enhanced guest comfort and reduced operational costs. In 2022, the hotel introduced a state-of-the-art digital check-in system to streamline guest services, reflecting a commitment to adapting to evolving market demands and enhancing the user experience.\n\nThe property is predominantly occupied by a reputable AAA-rated international hotel brand as a long-term tenant, ensuring consistent revenue generation. This partnership significantly strengthens the investment case for the property, as the established tenant brings both brand recognition and a loyal customer base that aligns with the area's business and conference focus. The tenancy structure is complemented by additional partnerships with local businesses for catering and event services, further diversifying revenue streams.\n\nThe property is regulated under the municipal master plan with a primary designation for \"hotel and conference facilities,\" underscoring its intended use and potential for further development in line with regional growth objectives. Planning considerations allow for potential expansion of service offerings, such as additional meeting spaces or leisure amenities, which could further enhance value and yield in alignment with market demands.\n\nThe seller is highly motivated and seeking a swift transaction, presenting an excellent opportunity for investors looking to acquire a high-quality asset in a prime location with strong fundamentals. The combination of an established tenant, strategic location, and ongoing investment in property upgrades positions this hotel as a compelling addition to any investment portfolio.",
+      "groundTruth": {
+        "value": 7.53,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Normal & Secondary): 7.875%\nGovernment or AAA-rated corporate tenant: -0.35%\nFinal: 7.53%"
+      },
+      "twinId": "08389086-c1b4-4cce-ab56-b5357f739117",
+      "twinDeltaChanged": "government_tenant → single_tenant_sme"
+    },
+    {
+      "id": "08389086-c1b4-4cce-ab56-b5357f739117",
+      "anchor": "hotel_normal",
+      "appliedDeltas": [
+        "single_tenant_sme"
+      ],
+      "distractors": [
+        "The seller is highly motivated and wants a quick transaction."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Parkveien 10, located in the vibrant business district of Fornebu, approximately 15 kilometers from Oslo's city center. The site is strategically positioned within a key conference area, adjacent to various business parks, including the well-known Fornebu Business Park and a range of corporate headquarters. The property is easily accessible via the E18 highway, providing seamless connectivity to Oslo Airport Gardermoen and surrounding regional cities. Public transport options include a nearby bus terminal with regular services to central Oslo, as well as an airport shuttle service. Ample parking is available on-site, catering to the needs of both guests and employees.\n\nOriginally constructed in 1993, the building encompasses a gross building area (BTA) of approximately 6,500 m², spread across five floors. The property is categorized under gnr. 57, bnr. 30 in Bærum municipality, with a plot size of 3,200 m². The structure is designed with a modern aesthetic, featuring a combination of glass and steel which reflects the contemporary architectural trends of the era. The layout prioritizes functionality, with spacious conference rooms and guest facilities that have been tailored to accommodate various corporate events and seasonal tourism influxes.\n\nRecent technical upgrades have enhanced the building's appeal and operational efficiency. Notable improvements include the installation of a new heating and cooling system in 2019, a complete façade renovation in 2021, and the addition of a state-of-the-art fire safety monitoring system in early 2023. These enhancements not only ensure compliance with the latest safety regulations but also contribute to improved energy efficiency. The property currently holds an energy rating of C, indicative of its sustainable design and operational practices.\n\nThe property operates predominantly as a hotel, catering to corporate clients visiting the area for conferences and business meetings, thus supporting the tenancy structure and generating consistent revenue streams. However, the building is currently let to a single small to medium-sized enterprise (SME) tenant, which presents a concentration risk due to dependency on one entity for rental income. This factor should be carefully considered by prospective buyers as it may influence the property's market yield.\n\nThe immediate vicinity is characterized by a strong business and conference focus, with several significant landmarks within close proximity, including the Telenor Expo conference center and the impressive Fornebu Park. Additionally, the area experiences seasonal variation in occupancy, particularly during peak conference periods, which aligns with the regional tourism trends. This is further enhanced by the hotel's strategic positioning close to the waterfront, offering scenic views that attract leisure travelers during the summer months.\n\nThe property is subject to the municipal master plan, designated primarily for \"commercial and service facilities,\" allowing for a variety of potential uses beyond its current hotel operation. This flexibility may provide additional avenues for value creation in the future. Notably, the seller is highly motivated and is seeking a quick transaction, presenting an opportunity for interested parties to secure the property promptly.\n\nOverall, Parkveien 10 represents a strategically positioned commercial asset within a thriving business district, presenting both opportunities for short-term revenue generation and potential for long-term capital appreciation, albeit with the caveat of concentration risk associated with the single SME tenant.",
+      "groundTruth": {
+        "value": 8.32,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Normal & Secondary): 7.875%\nSingle SME tenant (concentration risk): +0.45%\nFinal: 8.32%"
+      },
+      "twinId": "4807ac98-97ba-4a67-9f5e-c8ea9f3902fb",
+      "twinDeltaChanged": "government_tenant → single_tenant_sme"
+    },
+    {
+      "id": "bb0dce15-0b4d-4455-aecc-71db10df92e2",
+      "anchor": "logistics_prime",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Lagerveien 12 in the Berger district of Lørenskog, a prime logistics area strategically positioned within close proximity to major transport arteries and logistics hubs. Situated approximately 1.5 kilometers from the E6 motorway and within a 10-minute drive to the Oslo Gardermoen Airport, the property enjoys exceptional accessibility for both road and air freight. The surrounding area is characterized by modern logistics facilities, distribution centers, and extensive warehousing operations, making it a highly sought-after location for last-mile distribution services. Landmark enterprises such as PostNord and Bring Logistics are located nearby, reinforcing the area’s reputation as a vital logistics hub in Norway.\n\nThe property encompasses a purpose-built logistics facility constructed in 2016, comprising a single-story structure with a gross building area of approximately 8,450 m² BTA. The building features a clear height of 10 meters, meeting modern warehouse specifications conducive to efficient storage and distribution operations. Designed with operational efficiency in mind, the facility includes a high-quality concrete frame with insulated metal panel cladding, which enhances thermal performance and durability. The plot, measured at 18,000 m², is designated with cadastral reference gnr. 124, bnr. 56 in Lørenskog municipality, providing ample space for logistics operations, including parking and maneuvering areas for heavy vehicles.\n\nTransport connectivity is a key feature of this property, with immediate access to both the E6 and E18 motorways, facilitating seamless transport routes to Oslo and further afield. Additionally, the site is situated close to the Alnabru rail freight terminal, offering an integrated multimodal logistics solution that is pivotal for businesses looking to optimize their supply chains. The proximity to Oslo Gardermoen Airport further enhances the location's attractiveness for companies engaged in air freight and rapid delivery services.\n\nThe building's technical specifications have been meticulously maintained since its construction, with significant upgrades implemented to ensure operational excellence. Noteworthy enhancements include the installation of high-efficiency LED lighting throughout the facility in 2018, providing energy savings while enhancing operational visibility. In 2020, the loading dock was upgraded with state-of-the-art dock levelers to facilitate smooth loading and unloading processes, further improving operational efficiency. In 2022, an advanced HVAC system was introduced, optimizing temperature control and air quality within the warehouse environment. The facility is currently rated with an energy label of C, reflecting its energy-efficient design and operational practices.\n\nThe property is currently utilized as a logistics center, serving a prominent e-commerce retailer, with a lease term extending until 2026. The tenancy structure is characterized by a single-tenant arrangement, which ensures consistent rental income and mitigates vacancy risks associated with multiple tenants. The layout of the facility allows for flexible space usage, accommodating future modifications should business needs evolve. The property is compliant with the municipal master plan, primarily designated for logistics and warehousing purposes, ensuring alignment with local development strategies.\n\nIn summary, Lagerveien 12 represents an exceptional opportunity within the Berger district for investors seeking a modern, well-located logistics property with strong tenant demand and excellent transport links. The combination of high-quality construction, significant technical upgrades, and strategic location supports its status as a premier logistics facility in Norway’s growing e-commerce landscape.",
+      "groundTruth": {
+        "value": 6.13,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Prime): 6.125%\nFinal: 6.13%"
+      }
+    },
+    {
+      "id": "26ed6bfa-5d18-46e2-9eb7-c032902ac45c",
+      "anchor": "office_bergen",
+      "appliedDeltas": [
+        "poor_micro_location",
+        "older_building"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Nygårdsgaten 25 in the vibrant Marineholmen district of Bergen, strategically positioned between the scenic harbour and the historic Bryggen UNESCO site. This area is renowned for its blend of maritime and shipping industry presence alongside academic institutions, including the University of Bergen, which is located within a short walking distance. The immediate surroundings are characterized by a mix of office buildings, tech start-ups, and collaborative co-working spaces, contributing to a dynamic business environment. Accessibility is facilitated by the Bergen light rail (Bybanen) with a station located approximately 500 meters from the property, while the Bergen station, offering regional train services, is within 1 km. Flesland Airport is also within a 20-minute drive, enhancing the connectivity of this location.\n\nThe building is an office property constructed in 1998, featuring a modern design typical of the late 1990s commercial architecture. Comprising six floors, the building has a gross building area of approximately 3,250 m² BTA, with a built-up area of 540 m², and typical floor plates ranging from 500 to 550 m². The structural design utilizes reinforced concrete and large glass façades, which maximize natural light and provide an open atmosphere. The cadastral designation is gnr. 174, bnr. 19 in Bergen municipality, with an owned plot size of 1,000 m².\n\nHowever, the property does present some challenges. Its micro-location is suboptimal, characterized by limited visibility from main thoroughfares and somewhat challenging access routes, which may affect foot traffic and overall marketability. Additionally, while the building was constructed post-2000, it is considered older in terms of competitive office standards today and will require significant capital expenditures (capex) to upgrade its facilities to meet current tenant demands and sustainability benchmarks.\n\nIn terms of technical upgrades, the property has undergone several improvements to enhance its functionality and user experience. Notably, a complete façade renovation was carried out in 2015, which included the installation of energy-efficient windows and exterior insulation to improve thermal performance. In 2018, the building's HVAC system was upgraded to meet newer energy efficiency standards, and in 2020, two new lifts were installed to improve accessibility. However, further upgrades are necessary to modernize the space, including potential renovations of common areas and tenant suites.\n\nThe property is currently utilized predominantly as an office building, housing a range of tenants from professional services to tech start-ups. The tenancy structure includes both fully let and partially vacant spaces, with floor areas comprising approximately 450 m² to 550 m² per level. Additionally, there is a café on the ground floor, serving both tenants and nearby office workers, enhancing the overall appeal of the building. The structured data indicates a mix of long-term tenants and shorter-term lease agreements, reflecting a diverse income stream.\n\nRegulatory provisions for the property align with the municipal master plan designation for \"bebyggelse og anlegg (kontorformål)\", confirming its intended use as an office space. While the energy rating is not specified in the document, achieving compliance with upcoming energy regulations will be crucial for maintaining tenant interest and operational efficiency.\n\nIn summary, while the property at Nygårdsgaten 25 benefits from a notable Bergen location near key landmarks and commercial activity, its suboptimal micro-location and the age of the building necessitate a focus on capital improvements to enhance both tenant satisfaction and long-term strategic positioning in a competitive market.",
+      "groundTruth": {
+        "value": 6.9,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Bergen): 6.25%\nSuboptimal micro-location (poor access, visibility): +0.35%\nOlder building (pre-2000, needs capex): +0.3%\nFinal: 6.90%"
+      },
+      "twinId": "872a5f55-ede3-4cf7-8039-01b935549577",
+      "twinDeltaChanged": "poor_micro_location → short_lease"
+    },
+    {
+      "id": "872a5f55-ede3-4cf7-8039-01b935549577",
+      "anchor": "office_bergen",
+      "appliedDeltas": [
+        "older_building",
+        "short_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Lars Hilles gate 12 in the vibrant Marineholmen district of Bergen, a strategic location known for its proximity to the scenic harbour, the historic Bryggen UNESCO site, and the bustling Fish Market. This area is renowned as a hub for the maritime and shipping industry, while also serving as a key educational center due to the presence of several university institutions. The property benefits from excellent public transport connections, with the Bergen light rail (Bybanen) and regional train services readily accessible from Bergen station, approximately 1.5 kilometers to the south. Flesland Airport offers further connectivity, situated around 20 kilometers away, providing both domestic and international flight options. The area's rich cultural heritage, coupled with its dynamic business environment, makes it an attractive location for office tenants.\n\nThe building, completed in 1998, is a situated on an owned plot of 1,200 m² (gnr. 125, bnr. 6) and stands six stories tall, offering a gross building area of approximately 3,300 m² BTA. As a modern office property, it was designed with a contemporary aesthetic featuring curtain wall glazing, allowing for expansive views and abundant natural light throughout the interior spaces. The floorplates average around 550 m², with a flexible layout that supports various office configurations. \n\nDespite its relatively recent construction date, the property requires significant capital expenditures (capex) to address various maintenance and modernization needs, reflective of its pre-2000 status. Enhancements to building systems and interior finishes are necessary to meet contemporary tenant expectations and sustainability standards. The building's energy performance rating is currently classified as D, indicating room for improvement in energy efficiency.\n\nThe tenancy structure is of particular note; there are only a few years remaining on the current lease agreements, with an average of less than three years left. This short lease term presents both challenges and opportunities for potential investors, as it necessitates strategic planning for future leasing or redevelopment. The current tenant mix includes professional services and creative industries, which align well with the broader market trends in Marineholmen.\n\nThe property has undergone several technical upgrades over the years, including significant improvements to the HVAC system in 2010, which enhanced energy efficiency and tenant comfort. In 2015, a major refurbishment of common areas was completed, modernizing the reception and elevator lobbies. Recent sustainability initiatives, including the installation of LED lighting throughout the common areas and the implementation of a recycling program, were introduced in 2021, aiming to elevate the property’s appeal to environmentally conscious tenants.\n\nRegulated within the municipal master plan for office use, the building is primarily utilized for office purposes, with additional storage areas located in the basement. The immediate surroundings are characterized by a mix of modern office buildings and vibrant retail spaces, creating a lively urban atmosphere. Local landmarks, including the Fløibanen funicular, provide both cultural significance and recreational opportunities for tenants, while the proximity to public parks enhances the overall urban experience.\n\nIn conclusion, Lars Hilles gate 12 presents a unique opportunity for investors seeking exposure to the Bergen commercial real estate market. With its strategic location, existing tenant profile, and the potential for capital improvements, the property is well-positioned to capitalize on the area's growth dynamics, albeit with mindful consideration of the required capital expenditures and lease renewal strategies.",
+      "groundTruth": {
+        "value": 7.05,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Bergen): 6.25%\nOlder building (pre-2000, needs capex): +0.3%\nShort lease (<3 years remaining): +0.5%\nFinal: 7.05%"
+      },
+      "twinId": "26ed6bfa-5d18-46e2-9eb7-c032902ac45c",
+      "twinDeltaChanged": "poor_micro_location → short_lease"
+    },
+    {
+      "id": "50f942bd-cdf9-4226-885c-82d40b184bd3",
+      "anchor": "office_stavanger",
+      "appliedDeltas": [
+        "single_tenant_sme",
+        "vacancy_risk",
+        "government_tenant",
+        "short_lease"
+      ],
+      "distractors": [
+        "The property manager has won several industry awards.",
+        "The seller is highly motivated and wants a quick transaction."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Verksgata 12 in the vibrant Forus district of Stavanger, strategically located near the intersection of energy sector headquarters and burgeoning international business hubs. This location places it approximately 1 kilometer from Stavanger Cathedral, the Norwegian Petroleum Museum, and the picturesque Vågen harbour. The surrounding area is characterized by a compact city center, which seamlessly blends commercial, retail, and residential spaces, establishing Forus as a pivotal hub for the oil and gas industry. Public transport accessibility is excellent, with frequent bus services operating throughout the district, and proximity to Stavanger station providing regional train connections. The area is also conveniently accessible via main roads, facilitating straightforward travel to the Flesland airport for both domestic and international flights.\n\nThe property is a modern office building constructed in 2010, featuring a sleek design that reflects contemporary architectural standards. It comprises five floors, totaling approximately 2,750 m² BTA, underpinned by strong construction quality with a concrete frame and large glass facades that promote natural light throughout the premises. The cadastral designation is gnr. 24, bnr. 567 in Stavanger municipality, with an owned plot of 1,300 m². The building has been carefully maintained and includes a designated parking area, bicycle storage facilities, and green space that enhances the work environment.\n\nThe property benefits from a diverse tenancy structure primarily focused on the energy sector, with the current occupancy predominantly by a single small to medium-sized enterprise (SME) tenant. While this offers potential for stable cash flow, it is important to note the concentration risk associated with having a single tenant in place. Currently, over 20% of the building is vacant, with additional space anticipated to become available in the near term due to the tenant's strategic operational changes. This vacancy presents both opportunities for new leasing arrangements and challenges related to overall yield.\n\nThe current tenant is an established government contractor, recognized for its service to the oil and gas sector, ensuring a level of creditworthiness typically associated with AAA-rated corporate tenants. However, the lease term is relatively short, with less than three years remaining, highlighting a transitional phase that potential buyers will need to navigate.\n\nRecent technical upgrades to the building include the installation of a state-of-the-art HVAC system in 2021, ensuring compliance with modern energy efficiency standards, and a comprehensive refurbishment of common areas in 2022, enhancing both aesthetics and functionality. Additionally, the building’s energy efficiency has been rated B, reflecting a commitment to sustainable practices, although no additional environmental certifications such as BREEAM or LEED have been reported.\n\nThe regulatory context is supportive, as the property is included in the municipal master plan with the primary purpose of \"bebyggelse og anlegg\", indicating its continued use for office purposes. The surrounding area is expected to see further development, driven by ongoing investments in the energy sector and related industries.\n\nIn terms of management, the property manager has garnered several industry awards for excellence, adding a layer of confidence in operational standards and tenant relations. The seller is highly motivated, seeking a quick transaction, which may provide an advantageous entry point for potential investors looking to capitalize on the evolving commercial landscape in Stavanger’s Forus district.\n\nIn summary, this property presents a unique investment opportunity with significant potential for repositioning following the current lease expiration. With its prime location, solid construction, and a tenant backed by government contracts, this asset is poised for future growth amidst the dynamic energy sector in Norway.",
+      "groundTruth": {
+        "value": 8,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Stavanger): 7%\nSingle SME tenant (concentration risk): +0.45%\nCurrent or imminent vacancy (>20%): +0.4%\nGovernment or AAA-rated corporate tenant: -0.35%\nShort lease (<3 years remaining): +0.5%\nFinal: 8.00%"
+      },
+      "twinId": "47471acf-d97d-4346-84f2-689ed808a746",
+      "twinDeltaChanged": "government_tenant → long_lease"
+    },
+    {
+      "id": "47471acf-d97d-4346-84f2-689ed808a746",
+      "anchor": "office_stavanger",
+      "appliedDeltas": [
+        "single_tenant_sme",
+        "vacancy_risk",
+        "short_lease",
+        "long_lease"
+      ],
+      "distractors": [
+        "The property manager has won several industry awards.",
+        "The seller is highly motivated and wants a quick transaction."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Lagårdsveien 38 in the Forus district of Stavanger, an area characterized by its robust energy sector presence and proximity to key transportation nodes. Positioned approximately 1.5 kilometers from the bustling Sentrum, the building is strategically situated near the Stavanger Cathedral, the Norwegian Petroleum Museum, and the scenic Vågen harbour, which enhances its appeal for both local and international businesses. The property benefits from excellent transport connectivity, with Stavanger station offering regional train services and quick access to the Flesland airport via an extensive bus network, thus underscoring its accessibility for commuters and visitors alike.\n\nConstructed in 1995, the building comprises five floors and offers a gross building area of approximately 3,200 m² BTA. The structure is a modern office building featuring a steel frame with a glass façade, providing a contemporary workspace bathed in natural light. The cadastral designation is gnr. 34, bnr. 17 in Stavanger municipality, with an owned plot size of 1,200 m². The layout accommodates flexible office spaces, complemented by common meeting areas and a café on the ground floor. \n\nHistorically, the property has undergone several technical upgrades to enhance its operational efficiency and tenant comfort. Major improvements include the installation of energy-efficient HVAC systems in 2018, modernization of common areas in 2019, and a full façade refurbishing completed in 2021. However, it is important to note that the building currently faces a significant vacancy rate, exceeding 20%, stemming from the recent decision by its single SME tenant to downsize, resulting in a concentration risk that may affect future rental income. \n\nThe remaining lease period of less than three years for the current tenant introduces the potential for imminent re-leasing challenges. The property's appeal is further complicated by its overdependence on a single tenant, underscoring the importance of diversification in tenant mix moving forward. Despite these concerns, the property also presents an opportunity with the potential to secure a long-term lease with a creditworthy tenant, as evidenced by ongoing discussions with interested parties for a longer-term commitment exceeding ten years.\n\nThe immediate vicinity is dominated by other commercial properties, including headquarters for various energy firms, which illustrates the area’s significance as an oil and gas industry hub. This context lends the property a competitive advantage in attracting new tenants, provided leasing strategies are adjusted to mitigate the current concentration risk. \n\nMoreover, the property management team has garnered several industry awards for excellence in tenant relations and operational efficiency, reflecting a commitment to high standards in property management. This reputation can be leveraged to attract new tenants and secure longer lease terms, which is crucial given the current market dynamics.\n\nThe seller is highly motivated and seeking a quick transaction, thereby presenting a unique opportunity for potential investors to acquire a strategically located asset in a thriving commercial district. Buyers will need to consider the current vacancy, lease term dynamics, and tenant diversification strategies to fully realize the property's potential. \n\nIn summary, Lagårdsveien 38 offers a modern office environment with a supportive infrastructure in an economically vibrant area of Stavanger, yet requires a strategic approach to navigate the challenges posed by its current tenancy situation.",
+      "groundTruth": {
+        "value": 8.05,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Stavanger): 7%\nSingle SME tenant (concentration risk): +0.45%\nCurrent or imminent vacancy (>20%): +0.4%\nShort lease (<3 years remaining): +0.5%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nFinal: 8.05%"
+      },
+      "twinId": "50f942bd-cdf9-4226-885c-82d40b184bd3",
+      "twinDeltaChanged": "government_tenant → long_lease"
+    },
+    {
+      "id": "3fd522cf-cb4e-4539-9cb3-b654720e6006",
+      "anchor": "hotel_prime",
+      "appliedDeltas": [
+        "long_lease",
+        "modern_building"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Parkveien 22, in the prestigious Aker Brygge district of Oslo, renowned for its vibrant waterfront, high-end retail, and dining options. This prime location places the building within close proximity to notable landmarks such as the Oslo Opera House, which is approximately 500 meters away, and the historic Akershus Fortress. Additionally, Oslo Central Station is just a short 800-meter walk, providing excellent connectivity for both domestic and international travel. The area benefits from a robust transport network, including metro and tram connections, with direct airport express services readily accessible from the central station. The surrounding district is characterized by a mix of luxury hotels, corporate offices, and cultural attractions, making it a highly sought-after destination for tourists and business travelers alike.\n\nThe building itself, constructed in 2018, features a modern architectural design that harmoniously blends contemporary aesthetics with functionality. This six-story structure encompasses a gross building area of approximately 3,200 m² BTA, with high ceilings and large, floor-to-ceiling windows offering ample natural light and stunning views of the Oslo fjord. The design incorporates sustainable building practices, employing energy-efficient materials and technologies throughout its construction, contributing to its favorable environmental profile. The cadastral designation is gnr. 220, bnr. 11 in Oslo municipality, with a total plot size of 1,200 m².\n\nThe interior layout has been meticulously planned, allowing for flexible space configurations, ideal for a hotel setting. There are 150 guest rooms, including a variety of room types from standard to premium suites, catering to diverse market segments. Each room is equipped with modern amenities and has been designed to ensure comfort and luxury for guests. Notably, the property has secured a long-term lease agreement with a creditworthy tenant, with a weighted average unexpired lease term (WAULT) exceeding 10 years, ensuring stable cash flow and strong investment security.\n\nDocumented technical upgrades since the building's completion include the installation of an advanced HVAC system in 2019, a state-of-the-art security system in 2020, and enhancements to energy management systems in 2021. This continuous investment in the property’s infrastructure underscores the commitment to maintaining high operational standards, which is vital for maximizing occupancy rates and ensuring competitive room pricing.\n\nThe property is regulated under the municipal master plan with the main purpose \"hotell- og servicetilbud,\" and is fully operational as a hotel, featuring additional amenities such as a restaurant, fitness center, and conference facilities. The complementing services cater to both leisure and business guests, enhancing the overall appeal of the property. \n\nThe surrounding area boasts high occupancy rates and premium room rates, driven by its strategic location and the influx of tourists and business travelers. The Aker Brygge district is also home to several international hotel brands, reinforcing the competitive landscape that supports strong market demand.\n\nSustainability initiatives are at the forefront, with the property holding a certified energy label of B, reflecting its commitment to environmental responsibility. While the current material does not specify additional environmental certifications such as BREEAM or LEED, the energy-efficient features and modern design are indicative of a sustainable approach to property management.\n\nIn summary, Parkveien 22 offers an exceptional opportunity for investors seeking a premium hotel asset in one of Oslo's most desirable districts, characterized by a long-term lease with a reliable tenant, modern building specifications, and a strategic location that promises continued occupancy and revenue growth.",
+      "groundTruth": {
+        "value": 5.13,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Prime): 5.625%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nModern building (post-2015, high standard): -0.2%\nFinal: 5.13%"
+      },
+      "twinId": "cc98128f-aa70-4416-856c-e5f6317fab78",
+      "twinDeltaChanged": "removed: long_lease"
+    },
+    {
+      "id": "cc98128f-aa70-4416-856c-e5f6317fab78",
+      "anchor": "hotel_prime",
+      "appliedDeltas": [
+        "modern_building"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Hotellplassen 5, situated in the highly sought-after Aker Brygge district of central Oslo. This dynamic area is renowned for its blend of business and leisure, benefiting from a prime waterfront location adjacent to the Oslo Opera House and within walking distance to the Akershus Fortress and central station. Hotellplassen is a vibrant hub of activity, defined by its proximity to high-end retail, diverse dining options, and a range of international hotel brands, contributing to its reputation as a premium tourist destination. The property is easily accessible via metro and tram connections, while also offering direct airport express access from the nearby central station, enhancing its appeal to both business and leisure travelers.\n\nThe building, completed in 2017, is a modern hotel property that exemplifies contemporary architectural design and high construction standards. It boasts an impressive gross building area (BTA) of approximately 15,500 m², distributed over 12 floors, including a basement level. The property encompasses a total of 200 guest rooms, along with extensive conference facilities, a fitness center, and a rooftop bar with panoramic views of the Oslo Fjord. The structure is characterized by a sleek glass façade, adding to the sleek, modern aesthetic of the Aker Brygge waterfront.\n\nAccording to the cadastral registry, the property is designated as gnr. 217, bnr. 45, with an owned plot of 1,200 m². The hotel is constructed with state-of-the-art materials and innovative design features that adhere to modern sustainability practices, achieving an energy rating of B. The notable attributes of the building include high ceilings, expansive windows that flood the interiors with natural light, and spacious public areas designed to enhance guest experience.\n\nThe technical upgrade history of the hotel is noteworthy, with substantial investments made since its completion. In 2019, the hotel benefited from the installation of an advanced building management system to optimize energy usage, followed by the integration of smart room technology in 2021 to enhance guest comfort and operational efficiency. In 2022, the hotel underwent a comprehensive refurbishment of its dining facilities, including the bar and restaurant areas, to align with current hospitality trends, elevating the overall guest experience. Further enhancements included a refresh of the lobby area in 2023, showcasing contemporary art installations that reflect the local culture.\n\nThe property is situated within a master-planned area designated for mixed-use developments, primarily focusing on hospitality and commercial activities. Its operational model is predominantly hospitality-based, providing both accommodation and event spaces, catering to a diverse clientele comprising business travelers, tourists, and local events. The current tenancy structure encompasses a mix of room sales, event bookings, and dining services, contributing to a robust income stream.\n\nThe location is characterized by a high volume of pedestrian traffic, further enhanced by surrounding attractions and amenities that draw visitors year-round. The surrounding area is known for high occupancy rates and premium room rates, driven by its strategic positioning and high demand for quality accommodation. Furthermore, the hotel benefits from a favorable regulatory environment that supports the growth of hospitality ventures. \n\nIn conclusion, this modern hotel property on Hotellplassen 5 represents a unique investment opportunity in one of Oslo's most vibrant and economically resilient locations, ensuring both stability and potential for growth in a competitive market.",
+      "groundTruth": {
+        "value": 5.43,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Prime): 5.625%\nModern building (post-2015, high standard): -0.2%\nFinal: 5.42%"
+      },
+      "twinId": "3fd522cf-cb4e-4539-9cb3-b654720e6006",
+      "twinDeltaChanged": "removed: long_lease"
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "b526d957-c866-4048-93eb-f883058da930",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -7.98,
+      "absoluteError": 7.98,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:43:59.494Z",
+      "completedAt": "2026-01-18T21:44:10.541Z"
+    },
+    {
+      "scenarioId": "160ec925-cf65-401e-8e73-02c304bda769",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 6.5,
+          "reasoning": "```json\n{\n  \"yield\": 6.60,\n  \"reasoning\": \"The property is best classified under the 'Retail Normal' benchmark (6.50%",
+          "latencyMs": 10709
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 2.167,
+      "stdDeviation": 3.064,
+      "minPrediction": 0,
+      "maxPrediction": 6.5,
+      "error": -5.963,
+      "absoluteError": 5.963,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:43:59.494Z",
+      "completedAt": "2026-01-18T21:44:10.206Z"
+    },
+    {
+      "scenarioId": "4807ac98-97ba-4a67-9f5e-c8ea9f3902fb",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -7.53,
+      "absoluteError": 7.53,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:43:59.494Z",
+      "completedAt": "2026-01-18T21:44:10.864Z"
+    },
+    {
+      "scenarioId": "08389086-c1b4-4cce-ab56-b5357f739117",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -8.32,
+      "absoluteError": 8.32,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:44:11.068Z",
+      "completedAt": "2026-01-18T21:44:21.800Z"
+    },
+    {
+      "scenarioId": "bb0dce15-0b4d-4455-aecc-71db10df92e2",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 5.5,
+          "reasoning": "```json\n{\n  \"yield\": 5.75,\n  \"reasoning\": \"The property is classified under the 'Logistics Prime' benchmark (5.50%",
+          "latencyMs": 10077
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 1.833,
+      "stdDeviation": 2.593,
+      "minPrediction": 0,
+      "maxPrediction": 5.5,
+      "error": -4.297,
+      "absoluteError": 4.297,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:44:11.068Z",
+      "completedAt": "2026-01-18T21:44:21.467Z"
+    },
+    {
+      "scenarioId": "26ed6bfa-5d18-46e2-9eb7-c032902ac45c",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6.9,
+      "absoluteError": 6.9,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:44:11.068Z",
+      "completedAt": "2026-01-18T21:44:21.492Z"
+    },
+    {
+      "scenarioId": "872a5f55-ede3-4cf7-8039-01b935549577",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -7.05,
+      "absoluteError": 7.05,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:44:22.016Z",
+      "completedAt": "2026-01-18T21:44:32.232Z"
+    },
+    {
+      "scenarioId": "50f942bd-cdf9-4226-885c-82d40b184bd3",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -8,
+      "absoluteError": 8,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:44:22.016Z",
+      "completedAt": "2026-01-18T21:44:32.697Z"
+    },
+    {
+      "scenarioId": "47471acf-d97d-4346-84f2-689ed808a746",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -8.05,
+      "absoluteError": 8.05,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:44:22.016Z",
+      "completedAt": "2026-01-18T21:44:32.421Z"
+    },
+    {
+      "scenarioId": "3fd522cf-cb4e-4539-9cb3-b654720e6006",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.13,
+      "absoluteError": 5.13,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:44:32.903Z",
+      "completedAt": "2026-01-18T21:44:45.341Z"
+    },
+    {
+      "scenarioId": "cc98128f-aa70-4416-856c-e5f6317fab78",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.43,
+      "absoluteError": 5.43,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:44:32.903Z",
+      "completedAt": "2026-01-18T21:44:44.247Z"
+    }
+  ],
+  "completedAt": "2026-01-18T21:44:45.343Z",
+  "aggregateMetrics": {
+    "hitRate": 0,
+    "meanError": -6.786,
+    "rmse": 6.912,
+    "avgLatencyMs": 630,
+    "directionalAccuracy": 20,
+    "avgStdDeviation": 0.514,
+    "avgConsistency": 0
+  }
+}

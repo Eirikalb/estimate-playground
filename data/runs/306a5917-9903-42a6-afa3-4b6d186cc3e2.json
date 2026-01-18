@@ -1,0 +1,396 @@
+{
+  "id": "306a5917-9903-42a6-afa3-4b6d186cc3e2",
+  "timestamp": "2026-01-18T21:41:03.847Z",
+  "domainId": "real-estate-yield",
+  "model": "google/gemini-2.5-flash-preview",
+  "promptStrategy": "chain-of-thought",
+  "promptTemplate": "You are analyzing a commercial real estate property to determine its market yield.\r\n\r\n{{#facts.benchmarks}}\r\n{{{content}}}\r\n{{/facts.benchmarks}}\r\n\r\n---\r\n\r\n### Property Details\r\n\r\n{{scenario.contextDescription}}\r\n\r\n---\r\n\r\n### Instructions\r\n\r\nWork through this analysis step by step:\r\n\r\n**Step 1: Identify the Benchmark**\r\n- What location/segment does this property belong to?\r\n- What is the benchmark yield range for that segment?\r\n\r\n**Step 2: Position Within Range**\r\n- Is this a prime or secondary asset?\r\n- Where should it sit within the benchmark range?\r\n\r\n**Step 3: Apply Adjustments**\r\nConsider each factor and whether it pushes yield UP (more risk) or DOWN (less risk):\r\n- Tenant quality and creditworthiness\r\n- Lease length and WAULT\r\n- Building age and condition\r\n- Any special factors\r\n\r\n**Step 4: Calculate Final Yield**\r\n- Start with your positioned benchmark\r\n- Add/subtract adjustments\r\n- State your final yield estimate\r\n\r\nReturn your answer as JSON only, no markdown:\r\n{\"yield\": <number>, \"reasoning\": \"<your step-by-step reasoning>\"}\r\n\r\n",
+  "rolloutsPerScenario": 3,
+  "status": "completed",
+  "startedAt": "2026-01-18T21:41:03.847Z",
+  "useNarrativeDescriptions": true,
+  "narrativeModel": "openai/gpt-4o-mini",
+  "narrativesGenerated": 8,
+  "narrativesTotal": 8,
+  "scenarios": [
+    {
+      "id": "38479be3-b3a3-4dd7-bba0-e61bdce6ccee",
+      "anchor": "hotel_prime",
+      "appliedDeltas": [],
+      "distractors": [
+        "The current owner has held the property for 15 years."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Hotellplassen 5 in the heart of Oslo Sentrum, strategically positioned between the iconic Opera House and the bustling Central Station. This prime location places it within walking distance of major attractions such as the Akershus Fortress and the vibrant Aker Brygge waterfront, making it a prime destination for both business and leisure travelers. The area is characterized by a dynamic mix of high-end retail, international hotel brands, and cultural landmarks, contributing to the district's reputation as a top tourist and business hub. The property benefits from excellent transport accessibility, with direct airport express services from Central Station and convenient metro and tram connections nearby, ensuring seamless connectivity for guests.\n\nThe building itself is a modern hotel constructed in 2007, designed with a contemporary aesthetic that complements the surrounding architecture. The structure consists of 12 floors, encompassing approximately 15,200 m² BTA, with a robust construction type of reinforced concrete and an innovative façade featuring large glass panels that provide abundant natural light to the interior. The cadastral designation is gnr. 212, bnr. 45 in Oslo municipality, situated on a plot size of 1,200 m². The property is fully compliant with local zoning regulations, designated primarily for hotel and hospitality use.\n\nThe current owner has maintained the property for 15 years, during which significant upgrades have been implemented to enhance guest experience and operational efficiency. Notable upgrades include the installation of a state-of-the-art energy-efficient HVAC system in 2015, the modernization of the lobby and reception area in 2018, and a comprehensive refurbishment of guest rooms in 2020, which included the addition of contemporary furnishings and smart technology. Additionally, the property underwent a façade renovation in 2021, ensuring its visual appeal remains aligned with market expectations.\n\nThe property comprises 250 guest rooms, with various room types designed to cater to diverse clientele, from business travelers to families. Each room features modern amenities, including high-speed internet access, flat-screen televisions, and premium bedding, contributing to the hotel’s high occupancy rates and premium room rates. Meeting facilities on the top floor provide flexible spaces for events and conferences, with stunning views of the Oslo Fjord and the city skyline, further enhancing the property’s appeal to corporate guests.\n\nThe tenancy structure is predominantly self-operated, with the hotel currently leveraging a well-regarded brand that is recognized internationally for quality and service. This branding not only attracts a steady stream of visitors but also positively impacts the overall market positioning of the property. Given the high demand for accommodation in this area, particularly during peak tourist seasons and major events, the hotel consistently achieves strong performance in terms of occupancy.\n\nSurrounding amenities are abundant, with numerous restaurants, bars, and shops within a short walking distance, enriching the guest experience. The hotel is also conveniently located near cultural institutions, including the National Museum and the Munch Museum, making it an attractive option for leisure travelers seeking to explore the rich history and culture of Oslo.\n\nIn conclusion, Hotellplassen 5 represents an exceptional opportunity for investors seeking a high-quality asset in one of Oslo's most sought-after locations. The combination of a prime location, modern facilities, and a proven operational history under a reputable brand creates a compelling case for continued success and growth in this prime hotel market.",
+      "groundTruth": {
+        "value": 5.63,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Prime): 5.625%\nFinal: 5.63%"
+      }
+    },
+    {
+      "id": "30afe9f8-4aeb-42cf-9cdb-16e4dbf2d7ff",
+      "anchor": "residential",
+      "appliedDeltas": [
+        "short_lease",
+        "government_tenant"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Skogsveien 12, in the desirable residential area of St. Hanshaugen, Oslo. This location is approximately 300 meters from the extensive green spaces of St. Hanshaugen Park and within walking distance to the cultural attractions along Bislett and the Aker River. The area is characterized by a vibrant mix of residential, commercial, and leisure activities, with numerous cafes, boutique shops, and cultural venues contributing to its appeal. The property benefits from excellent public transport accessibility, including metro access at the St. Hanshaugen station and several tram lines running along Bislett, with dedicated cycling infrastructure enhancing the mobility options for residents and visitors alike.\n\nThe building, completed in 1972, is a modern multi-story residential structure with a total of eight floors and a gross building area of approximately 3,200 m² BTA, set on a plot of 650 m². The property's cadastral designation is gnr. 214, bnr. 29 in Oslo municipality. The structural design showcases a robust concrete frame with large window surfaces, providing ample natural light to the living spaces. The property features well-appointed residential units, predominantly comprising one and two-bedroom apartments, appealing to both long-term residents and transient tenants, thereby ensuring a consistent rental demand.\n\nRecent upgrades have been made to the property to enhance tenant comfort and operational efficiency. Key improvements include the renovation of common areas in 2021, the replacement of all windows in 2022 to enhance energy efficiency, and the installation of a new central heating system in 2023. These upgrades contribute positively to the tenant experience and align with contemporary living standards, although the building's energy rating remains at D due to its age and original construction standards.\n\nThe property is currently occupied by a government tenant with a lease set to expire in less than three years. This tenant profile, particularly in a high-demand area like St. Hanshaugen, provides a stable income stream while also presenting potential for new ownership to reposition the asset post-lease expiration. The combination of the short lease duration and the established AAA-rated corporate tenant is a critical factor influencing the property's market yield and investment profile.\n\nThe overall tenancy structure comprises a mix of residential units alongside communal facilities, including a bicycle storage room and laundry facilities, which are highly valued by residents. With a strong historical rental demand in St. Hanshaugen, characterized by its proximity to educational institutions and essential services, the property is well-positioned to attract a diverse tenant base.\n\nRegulatory aspects are in accordance with the municipal master plan, which designates the property for residential use (bebyggelse og anlegg). The building's configuration and zoning allow for potential future development or reimagining of the space once the current lease term concludes, providing an attractive opportunity for value enhancement.\n\nWhile specific environmental certifications such as BREEAM or LEED are not reported, the recent technical upgrades and ongoing maintenance indicate a commitment to quality standards and tenant satisfaction. The combination of a prime location, reliable tenant profile, and a potential for future value creation positions Skogsveien 12 as an attractive opportunity for investors seeking a residential asset in one of Oslo's most sought-after neighborhoods.",
+      "groundTruth": {
+        "value": 5.53,
+        "tolerance": 0.35,
+        "calculation": "Base (Residential): 5.375%\nShort lease (<3 years remaining): +0.5%\nGovernment or AAA-rated corporate tenant: -0.35%\nFinal: 5.53%"
+      },
+      "twinId": "dac448f9-7ecd-4975-b651-2fe5ea2dc685",
+      "twinDeltaChanged": "government_tenant → poor_micro_location"
+    },
+    {
+      "id": "dac448f9-7ecd-4975-b651-2fe5ea2dc685",
+      "anchor": "residential",
+      "appliedDeltas": [
+        "short_lease",
+        "poor_micro_location"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Skogsveien 12 in the vibrant district of Grünerløkka, known for its lively cultural scene and mixed-use developments. The building is situated approximately 300 meters from the Aker River and 500 meters from the lush green spaces of the nearby Sofienberg Park, providing both recreational opportunities and scenic views. The immediate vicinity is characterized by a blend of residential units, boutique shops, cafes, and art galleries, contributing to a dynamic urban atmosphere that attracts both locals and visitors alike. Access to public transportation is readily available, with the nearest metro station, Grünerløkka, a mere 400 meters away, along with several tram lines running along the major thoroughfares of the district. The area's cycling infrastructure is robust, making it a popular choice for commuters and residents.\n\nThe property comprises a four-story residential building originally constructed in 1992, exhibiting a contemporary architectural style with a mix of brick and glass facades. The total gross building area (BTA) is approximately 1,800 m², with a built-up area of 450 m². The cadastral designation is gnr. 225, bnr. 14 in Oslo municipality, with an owned land plot measuring 600 m². The building features a range of apartment units, including one and two-bedroom configurations, catering to a diverse tenant demographic. \n\nWhile the property benefits from its vibrant surroundings, it is important to note certain challenges that may impact its market appeal. The current lease agreements are of a short duration, with less than three years remaining on the primary contracts. This short-term lease structure introduces a degree of uncertainty in terms of future rental income and may require potential investors to consider renewal strategies or tenant reconfiguration. Additionally, the property's micro-location is deemed suboptimal due to limited visibility and access; while it is nestled in a lively area, the specific positioning on Skogsveien means that foot traffic is lower compared to more commercialized streets nearby. \n\nRecent technical upgrades have been implemented to enhance the building's appeal and operational efficiency. In 2020, a new heating system was installed, significantly improving energy efficiency. Additionally, in 2021, renovations to the communal areas were undertaken, which included modernizing the entryway and lobby, as well as updating lighting throughout the common spaces. The building has maintained a reasonable energy performance rating of D, aligning with general building regulations, although there are no current certifications such as BREEAM or LEED reported in the context.\n\nThe property is regulated under the municipal master plan designated for \"bebyggelse og anlegg (fremtidig),\" primarily for residential use. The tenant mix is predominantly residential, with a significant number of units currently occupied and a few vacant units that present an opportunity for immediate rental income upon re-leasing. However, the prospective buyer should be aware of the shorter lease terms, which could necessitate active management to secure new tenants in the near term.\n\nOverall, while Skogsveien 12 presents a promising investment opportunity in a sought-after location, the challenges of short leases and suboptimal micro-location must be carefully evaluated against the backdrop of the strong rental demand in the Grünerløkka district and its attractive urban amenities.",
+      "groundTruth": {
+        "value": 6.23,
+        "tolerance": 0.35,
+        "calculation": "Base (Residential): 5.375%\nShort lease (<3 years remaining): +0.5%\nSuboptimal micro-location (poor access, visibility): +0.35%\nFinal: 6.22%"
+      },
+      "twinId": "30afe9f8-4aeb-42cf-9cdb-16e4dbf2d7ff",
+      "twinDeltaChanged": "government_tenant → poor_micro_location"
+    },
+    {
+      "id": "e8d63e44-f608-4f0c-922a-6a850841b949",
+      "anchor": "retail_secondary",
+      "appliedDeltas": [
+        "multi_tenant",
+        "long_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Torggata 45 in the vibrant suburb of Sandnes, situated within a well-established secondary retail district characterized by an array of commercial establishments, including regional shopping centres and big-box retail outlets. This location benefits from its proximity to major traffic routes, with easy access to the E39 highway and substantial parking facilities available for both customers and employees. The surrounding area features a mix of local shops, dining establishments, and community services, catering to price-sensitive customers while fostering a pedestrian-friendly atmosphere. \n\nThis retail property was constructed in 1989 and encompasses three floors with a gross building area of approximately 2,500 m² BTA. The structure, comprising a combination of concrete and steel framework, presents a modern aesthetic with large windows and a well-organized layout suitable for diverse retail functions. The cadastral designation is gnr. 45, bnr. 12 in Sandnes municipality, with an owned plot measuring 2,850 m². Several notable upgrades have been implemented over the years, including a full façade renovation in 2015, the installation of energy-efficient HVAC systems in 2018, and an interior refurbishment completed in 2020, which enhanced the accessibility and aesthetics of the retail spaces.\n\nThe property benefits from a diversified tenant base, featuring three established tenants with a long lease term. The weighted average unexpired lease term (WAULT) exceeds 10 years, with the primary tenant being a well-known grocery chain recognized for its creditworthiness. This strategic mix not only bolsters the income stability of the property but also mitigates risks associated with vacancy in a secondary retail environment, which can be subject to higher turnover rates due to its dependency on anchor tenants.\n\nIn terms of transportation, the property enjoys robust connectivity, with bus services operating along Torggata and a nearby train station located approximately 1.5 km away, providing further access to regional and national destinations. The abundant parking spaces adjacent to the property enhance customer convenience, making it an attractive choice for shoppers.\n\nThe surrounding area is further characterized by several key landmarks, including the Sandnes Culture Centre and the nearby Kvadrat Shopping Centre, which attract a significant footfall and serve as anchor points for the local retail market. This vibrant context enhances the appeal of the subject property, positioning it strategically within Sandnes' commercial landscape.\n\nThe property is regulated under the municipal master plan with a primary designation for \"bebyggelse og anlegg,\" allowing for retail and commercial activities, thereby confirming its suitability as a retail site. The tenancy structure is predominantly retail-focused, with spaces ranging from approximately 400 m² to 1,000 m², accommodating various retail formats that cater to the local community’s needs.\n\nIn summary, Torggata 45 represents a compelling investment opportunity within a secondary retail location, characterized by a diversified tenant portfolio, long lease terms with creditworthy tenants, and a strong commitment to maintaining and enhancing property standards through ongoing technical upgrades. These elements collectively contribute to a resilient asset within the evolving retail landscape of Sandnes, presenting prospective buyers with a stable and strategically positioned opportunity in an otherwise competitive market.",
+      "groundTruth": {
+        "value": 7.93,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Secondary): 8.375%\nDiversified tenant base (3+ tenants): -0.15%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nFinal: 7.92%"
+      },
+      "twinId": "c3a1ca2f-3645-4e22-9537-0b450303d102",
+      "twinDeltaChanged": "removed: multi_tenant"
+    },
+    {
+      "id": "c3a1ca2f-3645-4e22-9537-0b450303d102",
+      "anchor": "retail_secondary",
+      "appliedDeltas": [
+        "long_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Storgata 22 in the bustling suburban area of Skien, located approximately 10 kilometers from the town center. This prominent location benefits from its proximity to several regional shopping centers, including Herkules and Skien Fritidspark, both of which attract significant foot traffic and serve as key destinations for shoppers and families alike. The area surrounding Storgata 22 is characterized by a mix of retail, dining, and entertainment options, making it an appealing destination for price-sensitive customers seeking convenience and variety. \n\nTransport accessibility is excellent, with the property being easily reachable by car due to its close proximity to the E18 highway, which connects Skien to major cities such as Oslo and Kristiansand. Additionally, the large parking area adjacent to the building accommodates a substantial number of vehicles, ensuring ample parking availability for both customers and employees. Public transport options are limited, reinforcing the car-dependent nature of the surrounding area.\n\nThe cadastral designation is gnr. 150, bnr. 34 in Skien municipality, comprising an owned plot of 1,200 m². The building, originally constructed in 1998, features a modern retail design with an approximate gross building area of 1,800 m² BTA. The structure is designed with a single floor and is constructed using durable materials, including steel and reinforced concrete, which provide a solid foundation for retail operations. \n\nSignificant technical upgrades have been made to the property in recent years, including the installation of a new HVAC system in 2020, enhancing energy efficiency and tenant comfort. The property also underwent façade refurbishment in 2022, which not only improved its aesthetic appeal but also contributed to better insulation and energy performance. The building has a current energy rating of C (moderate green), reflecting its compliance with contemporary environmental standards.\n\nThe property is zoned under the municipal master plan for \"handel og kontor,\" primarily designated for retail use but also allowing for ancillary office activities. The tenant has secured a long lease agreement extending over ten years, ensuring stable income from a creditworthy tenant. This long-term commitment is a critical aspect of the investment profile, providing investors with a reliable revenue stream despite the inherent risks associated with secondary retail locations.\n\nThe tenancy structure at Storgata 22 is predominantly occupied by a well-established supermarket chain, serving as the anchor tenant and driving customer traffic to the surrounding retail units. This reliance on a strong anchor tenant mitigates vacancy risks and enhances the property’s appeal to potential investors, given the historical performance and brand recognition of the tenant.\n\nSurrounding amenities include various dining establishments and smaller retail outlets, as well as recreational areas that attract local residents and contribute to a lively shopping atmosphere. The consistent foot traffic generated by both the supermarket and neighboring businesses further strengthens the property's position within the secondary retail market.\n\nIn conclusion, Storgata 22 offers a unique opportunity for investors to acquire a modern retail property in a strategic suburban location. With its long lease in place, creditworthy tenant, and a clear path for potential income growth, this property stands out as an attractive investment within the current commercial real estate landscape.",
+      "groundTruth": {
+        "value": 8.07,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Secondary): 8.375%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nFinal: 8.07%"
+      },
+      "twinId": "e8d63e44-f608-4f0c-922a-6a850841b949",
+      "twinDeltaChanged": "removed: multi_tenant"
+    },
+    {
+      "id": "cae6a05e-66b2-4786-a871-f76ef7df0273",
+      "anchor": "retail_prime",
+      "appliedDeltas": [],
+      "distractors": [
+        "There is a popular café on the ground floor."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Torggata 12, situated in the vibrant heart of Oslo, within walking distance from the bustling Karl Johan Gate and the historic Gråmunkehaugen Park. This prime retail location is characterized by a dynamic mix of high-end retail offerings, international brands, and a lively street atmosphere. The premises are set within an area experiencing significant foot traffic, underpinned by its close proximity to notable landmarks including the Oslo City shopping centre and Steen & Strøm, both of which are major draws for shoppers and tourists alike. The property enjoys excellent transport links, with direct access to the T-bane metro system at the Nationaltheatret station, as well as numerous bus lines servicing the surrounding area, ensuring a steady flow of visitors and local consumers.\n\nCovering a total plot area of 700 m², the property is registered under the cadastral designation gnr. 223, bnr. 14 in Oslo municipality. Originally constructed in 1980, the building comprises five floors, including a basement, with a gross building area of approximately 2,800 m² BTA. The structure is designed in a modern architectural style, characterized by large glass façades that enhance visibility and natural light while maintaining a contemporary aesthetic. Significant technical upgrades have been made over the years, including a comprehensive refurbishment of the ground floor retail space in 2021, the installation of energy-efficient heating and cooling systems in 2019, and façade enhancements in 2018 to improve insulation and energy performance.\n\nThe ground floor of the property is currently occupied by a popular café, which has become a local favourite for both residents and shoppers. This tenancy not only provides a steady stream of customers but also contributes to the overall vibrancy of the street. The upper levels are configured for retail use, offering flexible floor plates that can accommodate a variety of retail formats, from flagship stores to boutique shops.\n\nThe property is strategically positioned within an area known for its high consumer spending and affluent clientele, further bolstered by the presence of established brands and retailers. Surrounding streets, such as Bogstadveien and Hegdehaugsveien, are renowned for their premium shopping experiences, complementing the retail mix at Torggata 12. The area’s demographics indicate a strong potential customer base, comprising both local residents and a consistent stream of tourists drawn to the cultural attractions of Oslo.\n\nIn terms of regulatory context, the property is classified under the municipal master plan for commercial use, allowing for an array of retail operations. The tenancy structure is predominantly retail-focused, with current leasing arrangements ensuring an optimal mix of established brands and emerging retailers, thereby enhancing the property’s market appeal.\n\nThe building has been well-maintained, with a documented history of compliance with energy regulations. It holds an energy rating of C, reflecting its commitment to sustainable energy use and operational efficiency. Additional sustainability measures and certifications, such as BREEAM or LEED, are not currently available in the provided documentation.\n\nIn summary, Torggata 12 represents a prime investment opportunity in one of Oslo's most sought-after retail locations, characterized by strong footfall, a diverse mix of tenants, and a solid operational foundation, all set within a thriving urban environment that continues to attract a high volume of consumers.",
+      "groundTruth": {
+        "value": 5.63,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Prime): 5.625%\nFinal: 5.63%"
+      }
+    },
+    {
+      "id": "9b3047f8-8f5e-4ae2-9195-96a53749b573",
+      "anchor": "hotel_normal",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Hotellplassen 5 in the vibrant conference area of Stavanger, strategically positioned near the airport and within close proximity to several prominent landmarks including the Stavanger Forum and the Business Park. This location is known for its robust business focus, catering primarily to corporate clients and regional tourism, and benefits from a seasonal variation in demand due to ongoing conventions and corporate events. The surrounding area is characterized by a blend of hotels, office spaces, and recreational facilities, providing a dynamic environment conducive to both business and leisure activities.\n\nThe building, constructed in 2001, is a modern hotel complex featuring a total of seven floors along with a basement level, with a gross building area of approximately 7,250 m² BTA. The property sits on a plot of 2,500 m², designated as gnr. 45, bnr. 12 in Stavanger municipality, and is currently utilized as a hotel with meeting rooms, a restaurant, and fitness amenities. The architectural design embodies contemporary aesthetics with a focus on functionality, featuring large glass facades that promote natural light and offer views of the surrounding park and conference facilities.\n\nTransport access to the property is exceptional, highlighted by a dedicated airport shuttle service that connects guests to Stavanger Airport, just an 8-minute drive away. Furthermore, the property is situated near the E39 highway, facilitating convenient road access for both local and visiting clientele. Adequate parking facilities are available on-site, accommodating the needs of guests and staff alike.\n\nSignificant technical upgrades have been undertaken to enhance the property's operational efficiency and guest experience. Notable improvements include the installation of energy-efficient HVAC systems in 2015, refurbishment of guest rooms and common areas in 2018, and an upgrade of electronic key systems in 2020. The building has received environmental certifications, including a BREEAM rating of Very Good, reflecting its commitment to sustainability and adherence to modern building standards.\n\nThe hotel’s design caters to business travelers and conference attendees, featuring versatile meeting spaces that can accommodate events of varying sizes, ranging from intimate board meetings to larger conferences. The configuration of the conference rooms allows for a maximum capacity of 300 delegates, supported by state-of-the-art audio-visual technology. The present occupancy structure comprises a mix of corporate clients and tourists, with seasonal fluctuations due to the peak conference calendar, which heavily influences revenue streams.\n\nCurrent tenancy records indicate a strong occupancy rate driven by corporate demand, particularly from industries such as energy, IT, and maritime sectors prevalent in the region. The hotel also offers attractive corporate rates tailored for long-term clients, thereby enhancing its competitive positioning in the local market. The venue’s restaurant and bar have been well-received, contributing to additional revenue streams while providing a social hub for guests.\n\nThe land use designation under the municipal master plan is classified as \"hotell og konferanse,\" reflective of its operational purpose and aligned with Stavanger's strategic vision to develop as a leading conference destination in Norway. This zoning ensures that the property remains compliant with local regulations and preserves its operational viability while contributing to the surrounding business ecosystem.\n\nIn summary, Hotellplassen 5 presents a compelling investment opportunity within a thriving commercial landscape, characterized by excellent transport connectivity, a strong corporate client base, and a history of sustained operational improvements.",
+      "groundTruth": {
+        "value": 7.88,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Normal & Secondary): 7.875%\nFinal: 7.88%"
+      }
+    },
+    {
+      "id": "20e2774b-664d-47a2-a53e-e3fe9fe53bab",
+      "anchor": "office_bergen",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Nygårdsgaten 45 in the vibrant Laksevåg district of Bergen, situated just a short distance from the city center. This strategic location benefits from a mixed-use environment that combines both commercial and residential elements, enhancing the area's appeal for businesses and employees alike. The building is approximately 500 meters from the renowned Bryggen UNESCO site and within easy reach of the Fløibanen funicular and Bergenhus Fortress, both of which are significant cultural landmarks. Access to public transport is excellent, with the Bergen light rail (Bybanen) and Bergen station (regional trains) nearby, as well as convenient connections to Flesland airport for national and international travel. \n\nThe property spans an area of 1,200 m² BTA and consists of a modern six-story office building originally constructed in 2010. It features an attractive contemporary façade, characterized by large glass windows and a sleek metal cladding that reflects the maritime heritage of the city. The cadastral designation is gnr. 178, bnr. 9 in Bergen municipality, with a total owned plot size of 900 m². The design fosters a collaborative environment, comprising open-plan offices, meeting rooms, and breakout spaces. The office floors provide expansive views of the scenic harbor, enhancing the desirability of the workspace.\n\nThe building is constructed with a reinforced concrete frame and is designed to maximize natural light and energy efficiency. A series of technical upgrades have been implemented since its completion, including the installation of a new energy-efficient HVAC system in 2015, retrofitting of LED lighting throughout the premises in 2018, and a complete façade renovation in 2022 to improve thermal performance and aesthetic appeal. The property has an energy rating of B (green) and is compliant with current Norwegian building regulations, ensuring its sustainability credentials are robust.\n\nRegulated under the municipal master plan, the primary purpose of the property is designated for \"bebyggelse og anlegg (kontor)\", reflecting its use as a multifunctional office space. The tenancy structure is diverse, with occupants from the technology, maritime, and services sectors, which are integral to Bergen’s economy. The property boasts a mix of fully leased spaces alongside strategically vacant areas, providing a unique opportunity for potential investors to enhance revenue through leasing initiatives. Office areas per floor range from approximately 180 m² to 240 m², allowing for flexible leasing arrangements tailored to various tenant requirements.\n\nAdditionally, the ground floor houses a café that attracts foot traffic from nearby residents, office workers, and tourists, contributing positively to the overall tenant mix. The additional facilities include secure bicycle storage and parking spaces, meeting the needs of modern tenants while promoting sustainable transportation options. \n\nThe property is well-positioned strategically within Bergen’s historical trading city context, benefiting from the vibrant maritime and shipping industry as well as the city’s status as a university town. The area is characterized by its scenic harbor location, offering both cultural and recreational amenities, which enhance the quality of life for employees and visitors. Public transport options are plentiful, providing seamless connectivity to the rest of the Bergen metropolitan area, thus further solidifying the property’s attractiveness as a commercial hub.\n\nOverall, Nygårdsgaten 45 represents a compelling investment opportunity within Bergen's commercial real estate market, combining modern facilities, strategic location, and significant growth potential.",
+      "groundTruth": {
+        "value": 6.25,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Bergen): 6.25%\nFinal: 6.25%"
+      }
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "38479be3-b3a3-4dd7-bba0-e61bdce6ccee",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.63,
+      "absoluteError": 5.63,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:41:33.974Z",
+      "completedAt": "2026-01-18T21:41:34.034Z"
+    },
+    {
+      "scenarioId": "30afe9f8-4aeb-42cf-9cdb-16e4dbf2d7ff",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.53,
+      "absoluteError": 5.53,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:41:33.974Z",
+      "completedAt": "2026-01-18T21:41:34.070Z"
+    },
+    {
+      "scenarioId": "dac448f9-7ecd-4975-b651-2fe5ea2dc685",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6.23,
+      "absoluteError": 6.23,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:41:33.974Z",
+      "completedAt": "2026-01-18T21:41:34.123Z"
+    },
+    {
+      "scenarioId": "e8d63e44-f608-4f0c-922a-6a850841b949",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -7.93,
+      "absoluteError": 7.93,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:41:34.343Z",
+      "completedAt": "2026-01-18T21:41:34.423Z"
+    },
+    {
+      "scenarioId": "c3a1ca2f-3645-4e22-9537-0b450303d102",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -8.07,
+      "absoluteError": 8.07,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:41:34.343Z",
+      "completedAt": "2026-01-18T21:41:34.391Z"
+    },
+    {
+      "scenarioId": "cae6a05e-66b2-4786-a871-f76ef7df0273",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.63,
+      "absoluteError": 5.63,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:41:34.343Z",
+      "completedAt": "2026-01-18T21:41:34.391Z"
+    },
+    {
+      "scenarioId": "9b3047f8-8f5e-4ae2-9195-96a53749b573",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -7.88,
+      "absoluteError": 7.88,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:41:34.627Z",
+      "completedAt": "2026-01-18T21:41:34.681Z"
+    },
+    {
+      "scenarioId": "20e2774b-664d-47a2-a53e-e3fe9fe53bab",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: OpenRouter API error: 400 - {\"error\":{\"message\":\"google/gemini-2.5-flash-preview is not a valid model ID\",\"code\":400},\"user_id\":\"user_2zTEfrUho9s7zzlBOCALOzbTCVH\"}",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6.25,
+      "absoluteError": 6.25,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:41:34.627Z",
+      "completedAt": "2026-01-18T21:41:34.696Z"
+    }
+  ],
+  "completedAt": "2026-01-18T21:41:34.698Z",
+  "aggregateMetrics": {
+    "hitRate": 0,
+    "meanError": -6.644,
+    "rmse": 6.726,
+    "avgLatencyMs": 0,
+    "directionalAccuracy": 0,
+    "avgStdDeviation": 0,
+    "avgConsistency": 0
+  }
+}

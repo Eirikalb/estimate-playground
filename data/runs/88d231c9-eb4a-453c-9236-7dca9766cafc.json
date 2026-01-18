@@ -1,0 +1,563 @@
+{
+  "id": "88d231c9-eb4a-453c-9236-7dca9766cafc",
+  "timestamp": "2026-01-18T21:41:35.727Z",
+  "domainId": "real-estate-yield",
+  "model": "google/gemini-2.5-pro-preview",
+  "promptStrategy": "minimal",
+  "promptTemplate": "Estimate the market yield for this Norwegian commercial real estate property:\r\n\r\n{{scenario.contextDescription}}\r\n\r\nReturn JSON only: {\"yield\": <number>, \"reasoning\": \"<brief explanation>\"}\r\n\r\n",
+  "rolloutsPerScenario": 3,
+  "status": "completed",
+  "startedAt": "2026-01-18T21:41:35.727Z",
+  "useNarrativeDescriptions": true,
+  "narrativeModel": "openai/gpt-4o-mini",
+  "narrativesGenerated": 11,
+  "narrativesTotal": 11,
+  "scenarios": [
+    {
+      "id": "60f26e69-8aed-4ab4-b1a5-fca6f434ef05",
+      "anchor": "logistics_prime",
+      "appliedDeltas": [
+        "multi_tenant",
+        "single_tenant_sme",
+        "vacancy_risk"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is strategically located at Lagerveien 8 in the Alnabru district of Oslo, situated within a prime logistics hub that is ideally positioned to serve both national and international markets. This location benefits from direct access to the E6 and E18 motorways, ensuring seamless connectivity for transportation and distribution. The nearby landmarks include major logistics terminals and distribution centers, solidifying the area’s status as a crucial last-mile distribution hub. Public transport options are robust with close proximity to the Alnabru rail freight terminal, which offers efficient rail services for goods transport, enhancing the property’s appeal to logistics-oriented tenants.\n\nThe building was constructed in 2010 and features a modern warehouse design characterized by high ceilings and spacious layouts. It comprises a single-story structure with a gross building area of approximately 12,500 m² BTA, constructed using a steel frame with insulated panel cladding, optimized for logistics operations. The plot spans approximately 25,000 m² and is designated in the municipal land registry as gnr. 148, bnr. 23 in Oslo municipality. The property’s configuration allows for effective functionality, with loading docks designed for high-volume distribution and ample parking facilities for both staff and freight vehicles.\n\nRecent technical upgrades have further enhanced the property’s operational efficiency. In 2018, the installation of a new automated fire suppression system improved safety standards. In 2020, energy-efficient LED lighting was retrofitted throughout the building, and in 2022, a modern HVAC system was installed to optimize climate control in response to environmental considerations. Currently, the property has an energy rating of C, which aligns with contemporary sustainability standards, although there are no specific certifications such as BREEAM or LEED reported.\n\nThe tenancy structure is characterized by a diversified tenant base comprising multiple logistics and warehousing companies, which mitigates concentration risk. However, there is currently one single SME tenant occupying approximately 60% of the total space, presenting a concentration risk that may impact future rental stability. Additionally, it is important to note that the property is facing an imminent vacancy, as the SME tenant has announced plans to vacate over 20% of the total rental space within the next six months. This situation may present an opportunity for prospective buyers to re-evaluate and reposition the asset within the competitive logistics market.\n\nThe property is zoned under the municipal master plan for logistics and distribution use, ensuring that it is compliant with local regulations for commercial operations in the logistics sector. The current tenant mix is predominantly composed of logistics firms specializing in last-mile delivery and storage solutions, with space allocations effectively designed to support operational efficiencies. The building has been tailored to accommodate the evolving needs of the logistics sector, featuring flexible layouts that allow for easy reconfiguration based on tenant specifications.\n\nIn summary, this property at Lagerveien 8 offers an exceptional opportunity to acquire a modern logistics facility in a highly sought-after location, characterized by strong transportation links, a diversified tenant base with current concentration risk, and the potential for value enhancement through strategic leasing initiatives in light of imminent vacancy.",
+      "groundTruth": {
+        "value": 6.83,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Prime): 6.125%\nDiversified tenant base (3+ tenants): -0.15%\nSingle SME tenant (concentration risk): +0.45%\nCurrent or imminent vacancy (>20%): +0.4%\nFinal: 6.83%"
+      },
+      "twinId": "a2e3bcce-d939-4181-ab7f-0bcfefa98d93",
+      "twinDeltaChanged": "removed: vacancy_risk"
+    },
+    {
+      "id": "a2e3bcce-d939-4181-ab7f-0bcfefa98d93",
+      "anchor": "logistics_prime",
+      "appliedDeltas": [
+        "multi_tenant",
+        "single_tenant_sme"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Lagerveien 12 in the Alnabru logistics zone of Oslo, strategically positioned between E6 and E18 motorways. This prime logistics location is characterized by its proximity to major logistics terminals and distribution hubs, rendering it an essential part of the last-mile distribution network serving the greater Oslo region. The surrounding area boasts a dynamic mix of logistics and warehousing facilities, enhancing the appeal for potential tenants. Public transport options include direct access to the rail freight terminal nearby, facilitating efficient goods movement, while the Oslo Airport Gardermoen is located within a 20-minute drive, further enhancing connectivity for logistics operations.\n\nThe building is a modern logistics facility constructed in 2017, characterized by contemporary design and functional layout. Spanning three floors, it encompasses a total gross building area of approximately 8,500 m² BTA, with a plot size of 12,000 m², land parcel registered under cadastral designation gnr. 105, bnr. 34 in Oslo municipality. The structure is built using high-quality materials, with insulated steel cladding and reinforced concrete, ensuring durability and energy efficiency. The warehouse features a clear height of 10 meters, allowing for efficient utilization of vertical space, and has been designed with optimal workflow in mind, including multiple loading docks and ample turning radius for large vehicles.\n\nRecent technical upgrades include the installation of energy-efficient LED lighting throughout the premises in 2021, new dock levelers in 2022, and a state-of-the-art fire suppression system implemented in 2023. These enhancements contribute to the building's energy performance and operational efficiency, ensuring it meets the evolving demands of modern logistics tenants. The facility has received an energy rating of B, reflecting its commitment to sustainability and reduced operational costs.\n\nThe property currently accommodates a diversified tenant base, including three distinct tenants specializing in logistics, warehousing, and e-commerce fulfilment. This diversified tenancy reduces reliance on a single source of income and enhances market resilience. However, it is noteworthy that a significant portion of the property is occupied by a single small to medium-sized enterprise (SME) tenant, which presents a concentration risk that should be considered by prospective investors.\n\nAdditionally, the zoning regulations allow for further development potential, with the possibility of expanding the existing structure or introducing complementary facilities, subject to municipal approval. The current lease agreements with tenants are structured to provide stable cash flow, while the proximity to essential transport links and logistics infrastructure positions the property as a sought-after asset in a thriving market.\n\nIn summary, Lagerveien 12 presents a compelling opportunity for investors seeking a well-located logistics property in Oslo's rapidly evolving logistics sector. With its modern specifications, diversified tenant base, and strategic location within a prime logistics area, this property promises robust long-term potential while offering immediate income-generating capabilities.",
+      "groundTruth": {
+        "value": 6.43,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Prime): 6.125%\nDiversified tenant base (3+ tenants): -0.15%\nSingle SME tenant (concentration risk): +0.45%\nFinal: 6.42%"
+      },
+      "twinId": "60f26e69-8aed-4ab4-b1a5-fca6f434ef05",
+      "twinDeltaChanged": "removed: vacancy_risk"
+    },
+    {
+      "id": "b14f524c-1763-4c16-a11d-c33c0d49e261",
+      "anchor": "office_oslo_lysaker",
+      "appliedDeltas": [
+        "prime_micro_location"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Strandveien 45 in the prominent Lysaker district of Bærum municipality, strategically positioned between Lysaker station and Fornebu. Situated within a dynamic corporate environment, this office building benefits from an exceptional micro-location that directly enhances its market appeal and potential yield. The immediate vicinity features key landmarks, including the Telenor headquarters and the Statoil building, further solidifying its status as a central business hub characterized by a concentration of tech and telecom enterprises. The property is also conveniently located near public transport connections, with Lysaker station offering access to regional trains and numerous bus services connecting to both Fornebu and Oslo. The E18 motorway is easily accessible, while the planned Fornebubanen metro line will further improve connectivity in the near future.\n\nThe building is a modern office structure completed in 2018, designed with a focus on sustainability and tenant comfort. Spanning six floors with a total gross building area of approximately 7,500 m² BTA, the property boasts cutting-edge construction techniques and high-quality materials throughout. The layout includes flexible open-plan office spaces complemented by collaborative areas, meeting rooms, and breakout zones, catering to a diverse range of tenants. The structural design emphasizes natural light, featuring large, energy-efficient windows that foster a productive work environment. The cadastral designation is gnr. 218, bnr. 34 within Bærum municipality, with an owned plot size of 2,000 m², offering generous outdoor spaces and landscaped areas for tenant use.\n\nRecent upgrades underscore the property owner's commitment to maintaining a high-quality asset. Notable renovations include the installation of a state-of-the-art HVAC system in 2019, enhancing energy efficiency and tenant comfort. In 2021, a comprehensive refurbishment of the lobby and communal areas was completed, providing an inviting atmosphere for visitors and employees alike. Additionally, the property underwent façade improvements in 2022, further modernizing its exterior appeal. The building currently holds an energy rating of B (light green), indicating a strong commitment to sustainability, although further details on environmental certifications such as BREEAM or LEED are not available in the provided documentation.\n\nRegulatory compliance is assured, with the property being designated primarily for office use under the municipal master plan. The tenancy structure is diverse, encompassing technology firms, professional services, and creative industries, indicative of the area's dynamic business landscape. The office spaces range in size from 150 m² to 1,200 m², allowing for a mix of large and small tenants, while the current occupancy rate remains robust, reflecting the strong demand for office space in this sought-after location. The property also features ancillary amenities, including a café on the ground floor, which enhances the tenant experience and provides convenience for employees.\n\nThe exceptional micro-location of Strandveien 45, combined with its modern design and commitment to sustainability, positions this property as a highly attractive investment opportunity. Its proximity to major corporate headquarters, excellent transport links, and the vibrant business environment of Lysaker undoubtedly contribute to its competitive edge in the commercial real estate market. In summary, this asset presents a compelling opportunity for investors seeking to acquire a prime office property in one of Norway's most desirable business districts.",
+      "groundTruth": {
+        "value": 6,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Lysaker): 6.25%\nExceptional micro-location within the area: -0.25%\nFinal: 6.00%"
+      },
+      "twinId": "b0a30512-ed95-4a82-a0e9-c35a82f7fc73",
+      "twinDeltaChanged": "removed: prime_micro_location"
+    },
+    {
+      "id": "b0a30512-ed95-4a82-a0e9-c35a82f7fc73",
+      "anchor": "office_oslo_lysaker",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Lilleakerveien 12 in the Lysaker district of Bærum, strategically positioned near key commercial hubs and transport links. The building lies approximately 300 meters from Lysaker station, which serves as a vital regional transport hub, connecting commuters to Oslo and beyond via both train and bus. The surrounding area is characterized by its dynamic corporate environment, featuring notable landmarks such as the Telenor headquarters and the Statoil building, which consolidate Lysaker's reputation as a significant business location within the greater Oslo region. The property enjoys excellent visibility and accessibility, with immediate access to the E18 motorway and planned connections to the Fornebubanen metro, enhancing the appeal for tenants and visitors alike.\n\nThis office property, built in 1998, comprises a modern six-story structure with a total gross building area of approximately 5,250 m² BTA, distinctly designed for contemporary office use. The property is classified under the cadastral designation gnr. 124, bnr. 56 in Bærum municipality and occupies a plot size of 1,200 m². The architectural style reflects modern corporate design with a focus on functionality and efficiency, featuring a glass façade that maximizes natural light and offers expansive views of the surrounding area. The building is constructed using reinforced concrete with high-quality internal finishes, designed to meet the demands of a diverse range of tenants.\n\nOver the years, the property has undergone significant technical upgrades to enhance its operational efficiency and tenant appeal. Key improvements include the installation of a new energy-efficient HVAC system in 2015, which is complemented by a building management system installed in 2017 to optimize energy use and monitor building conditions. In addition, a complete refurbishment of the lobby and common areas was completed in 2019, enhancing the aesthetic appeal of the property. Recent upgrades include the installation of solar panels in 2022, which contribute to the building's sustainability efforts, generating renewable energy and reducing operational costs. The property currently holds an energy rating of C, reflecting its ongoing commitment to improving energy efficiency.\n\nThe tenancy structure of the property is predominantly composed of office users from various sectors, including technology, finance, and professional services, reflecting the area's emphasis on a tech and telecom cluster. The office floor plates range from approximately 400 m² to 600 m², providing flexible space configurations to accommodate both small and large enterprises. The current leasing structure includes a mix of long-term and short-term leases, providing stability and potential for future growth. The property features common amenities, including meeting rooms, a cafeteria, and ample parking facilities, further enhancing its attractiveness to prospective tenants.\n\nRegulatory status is aligned with the municipal master plan, which designates the area for commercial use, ensuring the property is compliant with local zoning requirements. As part of a thriving office park, the location benefits from an established business community, with amenities such as nearby restaurants, fitness centers, and retail options enhancing the workplace experience for tenants and their employees. \n\nOverall, Lilleakerveien 12 represents a prime investment opportunity within the vibrant commercial landscape of Lysaker, offering a well-maintained property with a strong tenant profile and significant potential for future value appreciation in a rapidly developing area.",
+      "groundTruth": {
+        "value": 6.25,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Lysaker): 6.25%\nFinal: 6.25%"
+      },
+      "twinId": "b14f524c-1763-4c16-a11d-c33c0d49e261",
+      "twinDeltaChanged": "removed: prime_micro_location"
+    },
+    {
+      "id": "749521b1-a2b2-40a9-aa95-961a17c0fa5a",
+      "anchor": "retail_normal",
+      "appliedDeltas": [
+        "government_tenant",
+        "short_lease"
+      ],
+      "distractors": [
+        "The current owner has held the property for 15 years.",
+        "The property manager has won several industry awards."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Torggata 45 in the vibrant Grünerløkka district of Oslo, which is known for its eclectic mix of retail, dining, and cultural experiences. Situated just a short distance from the popular Birkelunden park and the bustling shopping streets of Markveien and Thorvald Meyers gate, the property enjoys a prime spot within a well-established neighborhood retail environment. This locale is characterized by a strong local customer base, a mix of independent shops and well-known retail chains, and stable footfall throughout the year. Public transport accessibility is excellent, with numerous bus connections available from nearby bus stops on Torggata, as well as easy access to the Grünerløkka tram line, ensuring efficient connectivity to the wider Oslo metropolitan area. Additionally, parking facilities are available in the vicinity, accommodating both visitors and employees.\n\nThe building is a modern retail property originally constructed in 2010, featuring a contemporary architectural design that complements the vibrant street life of Torggata. It comprises four floors with a gross building area of approximately 1,200 m² BTA, according to the sales presentation, and occupies an owned plot of 450 m², with cadastral designation gnr. 224, bnr. 17 in Oslo municipality. The structure is designed with large glass facades that enhance visibility and foot traffic, reflecting the dynamic atmosphere of the surrounding area. The ground floor is dedicated to retail spaces featuring high ceilings and open layouts ideal for shops, while upper floors are designed for potential office or additional retail use, offering flexibility to future tenants.\n\nSignificant technical upgrades to the property include the installation of an energy-efficient HVAC system in 2021, which has improved climate control and reduced operating costs, as well as the refurbishment of retail units in 2022 to modernize interiors and enhance the customer experience. The property has been maintained to a high standard, with regular inspections ensuring compliance with safety and energy regulations. The building currently holds an energy rating of C (light green) and demonstrates adherence to sustainability practices through the use of energy-efficient materials and systems.\n\nThe tenancy structure of the property is noteworthy, as it is predominantly leased to a government-affiliated tenant, providing a stable income stream. However, it is important to note that the lease has less than three years remaining, introducing an element of risk but also the potential for future repositioning or renegotiation opportunities. The current owner has held the property for 15 years, benefitting from the location's appreciation and the steady performance of the tenant. The property is managed by a reputable property management firm that has received several industry awards, reflecting their commitment to excellence and tenant satisfaction.\n\nSurrounding the property are various landmarks, including local cafes, boutiques, and community centers, which contribute to the area's liveliness and attract both residents and visitors alike. The balance between established retail chains and independent businesses creates a unique shopping environment, while the proximity to cultural venues further enhances foot traffic.\n\nIn summary, Torggata 45 presents a compelling opportunity within Oslo's dynamic commercial real estate market, characterized by its sought-after location, strong tenant profile, and the potential for future growth. With its modern facilities and strategic positioning, this property is well-equipped to meet the demands of a diverse range of potential tenants in a thriving neighborhood.",
+      "groundTruth": {
+        "value": 7.03,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Normal): 6.875%\nGovernment or AAA-rated corporate tenant: -0.35%\nShort lease (<3 years remaining): +0.5%\nFinal: 7.03%"
+      },
+      "twinId": "37a26f4f-e91c-4ea1-8b89-02b355c48bea",
+      "twinDeltaChanged": "short_lease → long_lease"
+    },
+    {
+      "id": "37a26f4f-e91c-4ea1-8b89-02b355c48bea",
+      "anchor": "retail_normal",
+      "appliedDeltas": [
+        "government_tenant",
+        "long_lease"
+      ],
+      "distractors": [
+        "The current owner has held the property for 15 years.",
+        "The property manager has won several industry awards."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details*\n\nProperty Type: Retail Normal\n\n\n**Key Characteristics:**\n- Government or AAA-rated corporate tenant\n- Long lease (>10 years WAULT) with creditworthy tenant\n\n**Additional Context:**\n- The current owner has held the property for 15 years.\n- The property manager has won several industry awards.",
+      "groundTruth": {
+        "value": 6.23,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Normal): 6.875%\nGovernment or AAA-rated corporate tenant: -0.35%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nFinal: 6.23%"
+      },
+      "twinId": "749521b1-a2b2-40a9-aa95-961a17c0fa5a",
+      "twinDeltaChanged": "short_lease → long_lease"
+    },
+    {
+      "id": "24433fa3-e6cd-4fe1-b729-4ec4bd9799cb",
+      "anchor": "office_oslo_skoyen",
+      "appliedDeltas": [
+        "vacancy_risk",
+        "breeam_certified"
+      ],
+      "distractors": [
+        "The building has a beautiful lobby with marble floors.",
+        "The building has excellent views of the fjord."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is strategically situated at Hoffsveien 12 in the vibrant Skøyen district of Oslo, an area characterized by a mix of established office clusters and emerging residential developments. This prime location is approximately 500 meters from Skøyen station, which provides excellent connectivity via regional and local trains, as well as numerous bus routes that facilitate easy access to the city centre. The immediate vicinity features notable landmarks, including the bustling Sjølyst shopping centre, the CC Vest retail complex, and the serene Hoff Park, which collectively enhance the area’s appeal for both employees and visitors. The property also benefits from its proximity to the E18 motorway, ensuring seamless vehicular access for commuting and logistics.\n\nConstructed in 1985, this modern office building consists of six floors with a total gross building area of approximately 3,200 m² BTA. The architectural design features a concrete frame structure with large glass facades, maximizing natural light and providing excellent views of the Oslofjord, which is a significant attraction for potential tenants. The cadastral designation for the property is gnr. 213, bnr. 47 in Oslo municipality, encompassing a plot size of 1,200 m². \n\nThe property showcases a beautifully appointed lobby with elegant marble flooring, providing a welcoming atmosphere for tenants and guests alike. Recent upgrades undertaken include the installation of a new energy-efficient HVAC system in 2021, modernization of the elevators in 2022, and a comprehensive refurbishment of common areas in 2023, which has significantly enhanced the building’s appeal and functionality. Notably, the building is certified with a BREEAM Excellent rating, underscoring its commitment to sustainability and energy efficiency.\n\nDespite its strengths, the property currently has a vacancy rate exceeding 20%, presenting a strategic opportunity for prospective investors to capitalize on the potential for income growth through active leasing efforts and tenant engagement. The combination of the property’s established asset class and its location within a high-demand office market ensures that it remains an attractive proposition for a diverse range of commercial users, particularly in sectors such as technology, finance, and professional services.\n\nThe regulatory framework allows for a mix of uses under the municipal master plan, which is predominantly focused on \"bebyggelse og anlegg (fremtidig)\". The existing layout includes versatile office spaces ranging from approximately 300 m² to 600 m² per floor, accommodating both open-plan and cellular office configurations. The tenancy structure reflects a diverse tenant mix, including several high-profile companies, although the presence of vacant units provides an avenue for uplift in rental income.\n\nAdditionally, the property’s location within a burgeoning office landscape, complemented by ongoing waterfront development initiatives in the surrounding area, positions it favorably for future appreciation. As urban density increases and further commercial and residential projects are developed, this property stands to benefit from enhanced foot traffic and a broader tenant base.\n\nIn summary, the Hoffsveien 12 property is a well-located asset within Oslo's competitive office market, presenting both challenges and opportunities for prospective investors. Its BREEAM Excellent rating, recent technical upgrades, and remarkable views of the fjord further bolster its appeal, while the current vacancy presents a significant potential for value creation.",
+      "groundTruth": {
+        "value": 6,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Skøyen): 5.75%\nCurrent or imminent vacancy (>20%): +0.4%\nBREEAM Excellent or Outstanding certification: -0.15%\nFinal: 6.00%"
+      },
+      "twinId": "2d41a988-6bc9-4dc5-8ea9-58b948c7f528",
+      "twinDeltaChanged": "breeam_certified → poor_micro_location"
+    },
+    {
+      "id": "2d41a988-6bc9-4dc5-8ea9-58b948c7f528",
+      "anchor": "office_oslo_skoyen",
+      "appliedDeltas": [
+        "vacancy_risk",
+        "poor_micro_location"
+      ],
+      "distractors": [
+        "The building has a beautiful lobby with marble floors.",
+        "The building has excellent views of the fjord."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Hoffsveien 12 in the Skøyen district of Oslo, adjacent to the well-established office cluster and close to the Sjølyst shopping centre. Situated just 600 meters from Skøyen station, the property benefits from exceptional public transport accessibility, with regional and local train services as well as multiple bus connections that provide direct access to the city centre. Moreover, the proximity to the E18 motorway enhances vehicular access for commuters and clients. The area is characterized by a suburban feel with urban density, mixed residential and commercial spaces, and a promising waterfront development potential, underscoring its appeal for office users.\n\nThe building is a modern office structure completed in 2008, featuring a sleek, contemporary design that integrates with the vibrant Skøyen landscape. It comprises six floors, including a basement, with a total gross building area of approximately 3,100 m² BTA. The building rests on a cadastral designation of gnr. 88, bnr. 22 in Oslo municipality, occupying a plot of 1,200 m². The property showcases high-quality construction with reinforced concrete and a glass façade, allowing for ample natural light and excellent views of the nearby fjord.\n\nThis property is notable for its beautifully designed lobby, featuring elegant marble floors that create a welcoming atmosphere for tenants and visitors alike. While the building has been well-maintained, it currently faces a significant vacancy rate, with over 20% of its office spaces unoccupied. This situation presents a unique opportunity for a potential buyer to reposition and enhance the asset's value through strategic leasing efforts. \n\nDespite the attractive features and prime location, the property suffers from a suboptimal micro-location due to its limited visibility from the main road, Hoffsveien, and less-than-ideal access for pedestrians. This aspect may affect the attractiveness of the property to certain tenants looking for high-profile office space, thus influencing potential rental yields.\n\nIn terms of technical upgrades, the building has undergone several improvements since its completion, including the installation of new energy-efficient HVAC systems in 2015, which have significantly enhanced the overall environmental performance of the building. The common areas were refurbished in 2019, and the installation of new security systems occurred in 2020, further contributing to tenant satisfaction and safety.\n\nThe property is currently utilized predominantly for office purposes, with flexible floor plate designs averaging approximately 500 m² per floor, allowing for various workplace configurations. The tenancy structure includes a mix of professional services and knowledge-based industries. However, the presence of vacant office areas poses challenges in terms of cash flow, necessitating an astute approach to leasing strategies and tenant attraction.\n\nThe current energy rating of the building is classified as C, reflecting its compliance with contemporary energy efficiency standards, although no additional environmental certifications such as BREEAM or LEED are indicated in the provided materials. \n\nIn summary, while Hoffsveien 12 presents a solid investment opportunity given its prime location, beautiful architectural features, and potential for enhanced tenant occupancy, careful consideration of its current vacancy and micro-location challenges will be essential for maximizing the property's long-term yield prospects.",
+      "groundTruth": {
+        "value": 6.5,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Skøyen): 5.75%\nCurrent or imminent vacancy (>20%): +0.4%\nSuboptimal micro-location (poor access, visibility): +0.35%\nFinal: 6.50%"
+      },
+      "twinId": "24433fa3-e6cd-4fe1-b729-4ec4bd9799cb",
+      "twinDeltaChanged": "breeam_certified → poor_micro_location"
+    },
+    {
+      "id": "62eb19bd-5df4-49c0-b12b-7bd6155c3795",
+      "anchor": "retail_normal",
+      "appliedDeltas": [
+        "poor_micro_location"
+      ],
+      "distractors": [
+        "The building was recently featured in a architecture magazine."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Hegdehaugsveien 24 in the vibrant neighborhood of Majorstuen, Oslo. This area is known for its eclectic mix of retail offerings and cultural institutions, making it a popular destination for both locals and visitors. Hegdehaugsveien serves as a significant thoroughfare, positioned approximately 300 meters from the bustling Majorstuen metro station, which connects Line 1, 2, and 3 of the Oslo Metro. The immediate vicinity includes notable landmarks such as the Frogner Park, the Vigeland Sculpture Park, and an array of local cafes and boutique shops that contribute to a strong neighborhood retail character. While public transport accessibility is robust with bus connections nearby and the metro station within walking distance, it is essential to note that the property's micro-location presents suboptimal conditions regarding visibility and access due to its placement slightly set back from the main street.\n\nConstructed in 1985, the building is a four-story retail property with a total gross building area of approximately 1,200 m² BTA. The structure is characterized by a modern concrete façade and large display windows, which enhance the retail experience. The property is situated on a plot of 450 m², designated by the cadastral references gnr. 213, bnr. 45 in Oslo municipality. Its layout offers flexible retail spaces on the ground floor, complemented by storage and office areas on the upper levels. With typical floor plates of around 300 m², the building is well-suited for a variety of retail and service tenants.\n\nIn recent years, the property has undergone significant technical upgrades to enhance its appeal and functionality. Key improvements include the installation of energy-efficient HVAC systems in 2019, a comprehensive façade renovation in 2021, and the modernization of the interior common areas, completed in early 2023. These upgrades not only improve the building's aesthetic appeal but also ensure compliance with contemporary sustainability standards, although the building does not possess formal certifications such as BREEAM or LEED.\n\nRegulated under the municipal master plan for mixed-use development, the property is predominantly utilized for retail purposes, with various independent and chain stores as tenants. The current occupancy rate stands at approximately 85%, with a diverse tenant mix that supports stable footfall and a loyal local customer base. The retail environment is characterized by a blend of established brands and independent retailers, fostering a vibrant shopping experience that attracts both community members and tourists alike. \n\nDespite its positive attributes, the property does face challenges related to its micro-location, notably poor access and reduced visibility from the main thoroughfare. These factors are critical considerations for potential investors, as they may influence foot traffic and overall market performance. \n\nAdding to its allure, the property was recently featured in an architecture magazine for its innovative design and modern adaptations, enhancing its marketability in a competitive retail landscape. \n\nIn conclusion, Hegdehaugsveien 24 represents a compelling opportunity for investors looking to capitalize on the dynamic retail market in Majorstuen, while also addressing the challenges inherent in its suboptimal micro-location. The blend of recent upgrades, a strong tenant mix, and the ongoing appeal of the Majorstuen neighborhood position this property as a noteworthy prospect within Oslo’s commercial real estate landscape.",
+      "groundTruth": {
+        "value": 7.23,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Normal): 6.875%\nSuboptimal micro-location (poor access, visibility): +0.35%\nFinal: 7.22%"
+      },
+      "twinId": "f7f93079-54ef-4e79-9aab-d820e92b792f",
+      "twinDeltaChanged": "poor_micro_location → breeam_certified"
+    },
+    {
+      "id": "f7f93079-54ef-4e79-9aab-d820e92b792f",
+      "anchor": "retail_normal",
+      "appliedDeltas": [
+        "breeam_certified"
+      ],
+      "distractors": [
+        "The building was recently featured in a architecture magazine."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details*\n\nProperty Type: Retail Normal\n\n\n**Key Characteristics:**\n- BREEAM Excellent or Outstanding certification\n\n**Additional Context:**\n- The building was recently featured in a architecture magazine.",
+      "groundTruth": {
+        "value": 6.73,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Normal): 6.875%\nBREEAM Excellent or Outstanding certification: -0.15%\nFinal: 6.72%"
+      },
+      "twinId": "62eb19bd-5df4-49c0-b12b-7bd6155c3795",
+      "twinDeltaChanged": "poor_micro_location → breeam_certified"
+    },
+    {
+      "id": "59fa920d-0d57-4ca2-b1c8-237cbef74f3e",
+      "anchor": "retail_prime",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Torggata 55 in the vibrant district of St. Hanshaugen, Oslo, strategically positioned between the bustling shopping areas of Bislett and the cultural hub of Frogner. The building is conveniently located approximately 300 meters from the Nationaltheatret metro station and the Oslo City shopping centre, ensuring high visibility and foot traffic from both locals and tourists. The immediate area is characterized by a diverse mix of retail, dining, and entertainment options, with renowned nearby landmarks such as Steen & Strøm and Glasmagasinet enhancing the location's appeal. This prime retail position attracts a wide demographic of consumers, reflecting strong spending power and sustaining high volumes of pedestrian activity throughout the day.\n\nThe property encompasses a classic retail building originally constructed in 1972, designed to meet the evolving needs of contemporary retail while maintaining a distinctive architectural character. The structure features five floors, including a basement, with a gross building area of approximately 2,500 m² BTA. The cadastral designation is gnr. 211, bnr. 9 in Oslo municipality, occupying a plot of 600 m². The building is constructed using solid materials with a combination of reinforced concrete and glass facades, providing a modern aesthetic while ensuring durability.\n\nRecent modernization efforts have significantly enhanced the property’s functionality and appeal. Key upgrades include the installation of a new HVAC system in 2019, complete façade renovation in 2020, and the replacement of all windows with energy-efficient models in 2022. Additionally, the ground floor space has been fully remodeled to accommodate open-plan retail layouts, enhancing visibility and accessibility for future tenants. The property currently holds an energy rating of C, compliant with contemporary environmental standards, and is situated within a zone that allows for potential future enhancements in sustainability measures.\n\nThe property is governed by the municipal master plan, designated primarily for \"bebyggelse og anlegg (handel)\", facilitating its use as a retail establishment complemented by ancillary office space on upper floors. The tenancy structure predominantly features high-profile international brands, with a mix of both retail and office tenants occupying the upper levels, which are designed to support various business functions. Floor areas range from 350 m² to 600 m² across the five levels, with notable tenants contributing to a strong rental income stream.\n\nPublic transport access is exceptional, with multiple tram lines stopping nearby, and easy connections to local bus services further enhancing the location’s accessibility. The area is well-serviced, ensuring convenient transport links to other parts of Oslo, which is critical in maintaining foot traffic for retail operations. The surrounding streetscape is pedestrian-friendly, lined with cafes and restaurants that contribute to a lively atmosphere, making it an attractive destination for shoppers.\n\nThe property presents a unique opportunity for investors seeking a well-positioned retail asset in a thriving commercial district. The combination of prime location, modernized facilities, and a strong tenant mix positions this property favorably within Oslo's competitive retail market. Future developments in the vicinity promise to further enhance the attractiveness of Torggata as a leading shopping destination, solidifying its status as a sound investment in the heart of Oslo.",
+      "groundTruth": {
+        "value": 5.63,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Prime): 5.625%\nFinal: 5.63%"
+      }
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "60f26e69-8aed-4ab4-b1a5-fca6f434ef05",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6.83,
+      "absoluteError": 6.83,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:42:18.120Z",
+      "completedAt": "2026-01-18T21:42:29.250Z"
+    },
+    {
+      "scenarioId": "a2e3bcce-d939-4181-ab7f-0bcfefa98d93",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6.43,
+      "absoluteError": 6.43,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:42:18.120Z",
+      "completedAt": "2026-01-18T21:42:28.607Z"
+    },
+    {
+      "scenarioId": "b14f524c-1763-4c16-a11d-c33c0d49e261",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6,
+      "absoluteError": 6,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:42:18.120Z",
+      "completedAt": "2026-01-18T21:42:29.318Z"
+    },
+    {
+      "scenarioId": "b0a30512-ed95-4a82-a0e9-c35a82f7fc73",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6.25,
+      "absoluteError": 6.25,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:42:29.528Z",
+      "completedAt": "2026-01-18T21:42:40.155Z"
+    },
+    {
+      "scenarioId": "749521b1-a2b2-40a9-aa95-961a17c0fa5a",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -7.03,
+      "absoluteError": 7.03,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:42:29.528Z",
+      "completedAt": "2026-01-18T21:42:40.427Z"
+    },
+    {
+      "scenarioId": "37a26f4f-e91c-4ea1-8b89-02b355c48bea",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6.23,
+      "absoluteError": 6.23,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:42:29.528Z",
+      "completedAt": "2026-01-18T21:42:40.229Z"
+    },
+    {
+      "scenarioId": "24433fa3-e6cd-4fe1-b729-4ec4bd9799cb",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6,
+      "absoluteError": 6,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:42:40.645Z",
+      "completedAt": "2026-01-18T21:42:51.044Z"
+    },
+    {
+      "scenarioId": "2d41a988-6bc9-4dc5-8ea9-58b948c7f528",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6.5,
+      "absoluteError": 6.5,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:42:40.645Z",
+      "completedAt": "2026-01-18T21:42:53.909Z"
+    },
+    {
+      "scenarioId": "62eb19bd-5df4-49c0-b12b-7bd6155c3795",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -7.23,
+      "absoluteError": 7.23,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:42:40.645Z",
+      "completedAt": "2026-01-18T21:42:51.917Z"
+    },
+    {
+      "scenarioId": "f7f93079-54ef-4e79-9aab-d820e92b792f",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -6.73,
+      "absoluteError": 6.73,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:42:54.129Z",
+      "completedAt": "2026-01-18T21:43:05.382Z"
+    },
+    {
+      "scenarioId": "59fa920d-0d57-4ca2-b1c8-237cbef74f3e",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        },
+        {
+          "prediction": 0,
+          "reasoning": "Error: Failed to parse LLM response as JSON: Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+          "latencyMs": 0
+        }
+      ],
+      "meanPrediction": 0,
+      "stdDeviation": 0,
+      "minPrediction": 0,
+      "maxPrediction": 0,
+      "error": -5.63,
+      "absoluteError": 5.63,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:42:54.129Z",
+      "completedAt": "2026-01-18T21:43:08.993Z"
+    }
+  ],
+  "completedAt": "2026-01-18T21:43:08.997Z",
+  "aggregateMetrics": {
+    "hitRate": 0,
+    "meanError": -6.442,
+    "rmse": 6.458,
+    "avgLatencyMs": 0,
+    "directionalAccuracy": 0,
+    "avgStdDeviation": 0,
+    "avgConsistency": 0
+  }
+}

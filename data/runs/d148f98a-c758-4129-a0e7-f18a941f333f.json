@@ -1,0 +1,504 @@
+{
+  "id": "d148f98a-c758-4129-a0e7-f18a941f333f",
+  "timestamp": "2026-01-18T21:46:15.612Z",
+  "domainId": "real-estate-yield",
+  "model": "google/gemini-3-flash-preview",
+  "promptStrategy": "minimal",
+  "promptTemplate": "Estimate the market yield for this Norwegian commercial real estate property:\r\n\r\n{{scenario.contextDescription}}\r\n\r\nReturn JSON only: {\"yield\": <number>, \"reasoning\": \"<brief explanation>\"}\r\n\r\n",
+  "rolloutsPerScenario": 3,
+  "status": "completed",
+  "startedAt": "2026-01-18T21:46:15.612Z",
+  "useNarrativeDescriptions": true,
+  "narrativeModel": "openai/gpt-4o-mini",
+  "narrativesGenerated": 10,
+  "narrativesTotal": 10,
+  "scenarios": [
+    {
+      "id": "24655b97-9f4f-4697-b98f-65645491ef43",
+      "anchor": "office_oslo_skoyen",
+      "appliedDeltas": [
+        "prime_micro_location"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is strategically located at Drammensveien 65 in the Skøyen district of Oslo, nestled between the vibrant commercial hubs of Bestum and Hoff. This location boasts exceptional micro-location advantages, with immediate proximity to Skøyen station—serving both regional and local trains—providing seamless connectivity to the greater Oslo metropolitan area. The property is also situated near key landmarks such as Sjølyst shopping centre, CC Vest, and Hoff Park, which contribute to the area's appeal as a thriving mixed-use environment characterized by a blend of residential and commercial developments.\n\nEncompassing a total gross building area of approximately 6,200 m² BTA, the property consists of a modern office structure originally constructed in 2008. The building features seven floors, with a gross floor area per level averaging around 885 m², allowing for flexible space configurations suited to a variety of office layouts. The structure is constructed with a contemporary architectural design, utilizing energy-efficient materials and systems to enhance operational sustainability. The cadastral designation is gnr. 220, bnr. 14 in Oslo municipality, with an owned plot size of 1,200 m².\n\nThe surrounding area is characterized by an established office cluster, boasting a suburban ambiance complemented by urban density and significant waterfront development potential. With its strategic location along Drammensveien, access to the E18 motorway is also conveniently within reach, further enhancing connectivity for tenants and visitors alike. Public transport options are abundant, with numerous bus routes connecting to the city centre, while Skøyen station facilitates direct access to regional rail services, making this location highly desirable for businesses seeking accessibility.\n\nIn terms of technical specifications, the property has undergone a series of significant upgrades to maintain modern standards and ensure tenant satisfaction. Notable improvements include the installation of a new facade in 2019, enhancing both energy efficiency and aesthetic appeal. In 2020, the interior was fully refreshed with modern finishes and updated common areas, followed by the implementation of an advanced building management system in 2021 to optimize operational efficiency. Furthermore, the installation of a state-of-the-art HVAC system in 2022 has ensured superior climate control and energy management throughout the premises.\n\nRegulated under the municipal master plan with the primary purpose of \"bebyggelse og anlegg (kontor)\", this property predominantly serves as an office building, accommodating a diverse range of tenants, including firms in professional services, technology, and creative industries. The tenancy structure reflects a mixture of fully let spaces and strategically vacant areas, providing potential for new lease agreements. Current vacancy rates and tenant-specific details are not disclosed in the context of this presentation.\n\nThis office building is equipped with essential amenities including secure underground parking, bike storage facilities, and dedicated meeting rooms, making it attractive to a wide array of potential tenants. The property’s commitment to sustainability is further underscored by its energy rating B, which highlights its compliance with contemporary building regulations and environmental standards.\n\nOverall, this property at Drammensveien 65 presents an outstanding opportunity for investors and businesses alike, combining an exceptional micro-location with modern facilities and strong transport links, positioned perfectly within Oslo's dynamic commercial landscape.",
+      "groundTruth": {
+        "value": 5.5,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Skøyen): 5.75%\nExceptional micro-location within the area: -0.25%\nFinal: 5.50%"
+      },
+      "twinId": "6750c938-ae80-471a-b538-89c9afd556d5",
+      "twinDeltaChanged": "removed: prime_micro_location"
+    },
+    {
+      "id": "6750c938-ae80-471a-b538-89c9afd556d5",
+      "anchor": "office_oslo_skoyen",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Hoffsveien 12 in the Skøyen district of Oslo, strategically positioned within a vibrant office cluster that blends suburban charm with urban density. The building is approximately 300 meters from Skøyen station, providing access to both regional and local train services, while local bus connections offer direct routes to the city center. The proximity to the E18 motorway ensures efficient vehicular access to surrounding areas and further enhances the appeal for businesses seeking excellent transport links. Nearby amenities include Sjølyst shopping center, CC Vest, and the green spaces of Hoff Park, creating a dynamic environment that supports both work and leisure activities.\n\nThe property features an office building completed in 1990, showcasing a contemporary architectural design with a focus on functionality and efficiency. The structure comprises six floors, including a basement level, with a total gross building area of approximately 3,200 m² BTA as outlined in the sales presentation. The building footprint covers a plot of 1,200 m², designated as gnr. 211, bnr. 37 in Oslo municipality. Floor plates are designed around 550 m², facilitating flexible office configurations suitable for various business needs.\n\nConstructed with reinforced concrete and glass façade elements, the building exemplifies modern design principles, offering expansive window surfaces that maximize natural light. Recent technical upgrades include the installation of a new energy-efficient HVAC system in 2021, modernization of the elevator service in 2022, and the replacement of all windows with triple-glazed units in 2023, enhancing the building's energy performance while also improving acoustic comfort. The property currently holds an energy rating of C, reflecting its commitment to sustainability and reduced operational costs.\n\nThe property is regulated under the municipal master plan with the primary purpose designated as \"bebyggelse og anlegg (næringsliv)\", predominantly utilized as an office space with ancillary meeting rooms and a café on the ground floor. The tenancy structure is diverse, comprising a mix of professional services firms, creative industries, and tech-oriented businesses. Occupied office spaces vary in size from approximately 200 m² to 600 m², and the building maintains stable occupancy levels, further bolstered by a lease guarantee provided by the current owner for any temporarily vacant areas.\n\nSurrounding the property, the Skøyen district is recognized as a key business hub. The area's established office character is complemented by residential developments and mixed-use projects, offering employees a balanced lifestyle. The nearby Sjølyst shopping center presents a variety of retail options, restaurants, and fitness facilities, enhancing the attractiveness of the location for potential tenants. Additionally, Hoff Park offers a picturesque setting for outdoor activities and relaxation, further elevating the district's appeal.\n\nPublic transport options are robust, with Skøyen station serving as a central node for both rail and bus services, ensuring swift connections to Oslo's wider transport network. The accessibility provided by the E18 motorway further enhances the property's attractiveness for businesses looking to attract talent from across the region while facilitating ease of movement for clients and partners.\n\nOverall, the property at Hoffsveien 12 presents a compelling opportunity for investors seeking a well-located asset within Oslo’s thriving commercial landscape. With a blend of modern amenities, significant recent upgrades, and a strategic location in an established office cluster, this property stands out as a prime candidate for those looking to capitalize on the flourishing Oslo commercial real estate market.",
+      "groundTruth": {
+        "value": 5.75,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Skøyen): 5.75%\nFinal: 5.75%"
+      },
+      "twinId": "24655b97-9f4f-4697-b98f-65645491ef43",
+      "twinDeltaChanged": "removed: prime_micro_location"
+    },
+    {
+      "id": "87b97b73-facf-4e45-a81d-0e262dd5da68",
+      "anchor": "residential",
+      "appliedDeltas": [
+        "poor_micro_location",
+        "short_lease",
+        "modern_building"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Skogsveien 12 in the vibrant residential district of St. Hanshaugen, Oslo. Nestled between the lush greenery of St. Hanshaugen Park and the bustling urbanity of Bislett, this modern building offers a unique opportunity for potential investors. Located approximately 300 meters from the nearest metro station at St. Hanshaugen, the property benefits from strong public transport connections, including tram lines along Bislett and extensive cycling infrastructure, making it accessible for both residents and visitors. The surrounding area boasts a mix of established residential buildings, cafes, shops, and cultural amenities, enhancing its appeal within the urban fabric of Oslo.\n\nThe subject property is a contemporary residential building completed in 2018, featuring a total of six floors and a gross building area (BTA) of approximately 2,800 m². Constructed with a reinforced concrete frame and clad in high-quality, energy-efficient materials, the building adheres to modern architectural standards while providing attractive living spaces. The cadastral designation is gnr. 213, bnr. 45 in Oslo municipality, encompassing a plot size of 1,050 m². The layout consists of 30 residential units, with a mix of one and two-bedroom apartments that meet modern living requirements.\n\nDespite the property’s high construction quality and contemporary design, it is important to highlight that it is located in a suboptimal micro-location characterized by limited visibility and access. This aspect may influence future rental demand and occupancy rates. Additionally, the existing lease agreements of the residential units have less than three years remaining, which poses a short-term challenge for potential investors seeking long-term stability in rental income.\n\nNotable upgrades and renovations have been carried out since the building's completion, including the installation of a state-of-the-art energy management system in 2020, which significantly enhances energy efficiency and reduces operational costs. In 2021, the common areas were refurbished to modern standards, including updated lighting and improved landscaping around the building's perimeter. The building has also achieved an energy rating of B (green), reflecting its commitment to sustainability and reduced environmental impact.\n\nThe property is strategically positioned near key landmarks such as St. Hanshaugen Park and the Aker River, providing residents with ample recreational opportunities and access to scenic views. The immediate vicinity is home to various urban amenities, including grocery stores, schools, and health services, which contribute to a high quality of life for residents.\n\nThe surrounding area is characterized by a strong rental demand, driven by its proximity to major educational institutions and employment centers in Oslo. However, the current lease dynamics and the micro-location limitations necessitate careful consideration by prospective buyers. While the building's modernity and quality offer a solid foundation for investment, the short lease term and challenges regarding visibility and access should be factored into any financial projections and strategic planning.\n\nOverall, this property presents a compelling opportunity for investors seeking to enter the Oslo residential market, with the potential for value-add strategies aimed at improving occupancy and rental rates in the coming years.",
+      "groundTruth": {
+        "value": 6.03,
+        "tolerance": 0.35,
+        "calculation": "Base (Residential): 5.375%\nSuboptimal micro-location (poor access, visibility): +0.35%\nShort lease (<3 years remaining): +0.5%\nModern building (post-2015, high standard): -0.2%\nFinal: 6.02%"
+      },
+      "twinId": "d8ae237c-0f7f-4312-94ec-42e10d167a91",
+      "twinDeltaChanged": "poor_micro_location → vacancy_risk"
+    },
+    {
+      "id": "d8ae237c-0f7f-4312-94ec-42e10d167a91",
+      "anchor": "residential",
+      "appliedDeltas": [
+        "short_lease",
+        "modern_building",
+        "vacancy_risk"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Skogsveien 12 in the St. Hanshaugen district of Oslo, within a vibrant residential enclave characterized by its tree-lined streets and proximity to several urban amenities. Located approximately 300 metres from the bustling Bislett intersection and the picturesque St. Hanshaugen Park, the site benefits from its favorable location in an established urban area with a strong demand for residential rentals. The immediate vicinity boasts a variety of cafés, restaurants, and essential services, coupled with a rich cultural heritage visible in the charming architecture of the surrounding buildings. Public transport connectivity is robust, with metro access available at Majorstuen station and several tram lines servicing the area, alongside well-developed cycling infrastructure that promotes alternative commuting options.\n\nThe building is a modern residential property completed in 2018, exemplifying contemporary design and functionality. It consists of six floors with a gross building area (BTA) of approximately 2,850 m². The structure features a reinforced concrete frame with large glazing elements that enhance natural light penetration, creating inviting living spaces. The cadastral designation for the property is gnr. 215, bnr. 8 in Oslo municipality, with an owned plot size of 1,100 m². The building's design reflects a commitment to high-quality standards, utilizing energy-efficient materials and systems that comply with current regulations.\n\nRecently, the property underwent significant technical upgrades and refurbishments, including the installation of a state-of-the-art heating and cooling system in 2021, ensuring optimal energy efficiency and tenant comfort. In 2022, all common areas were refurbished to enhance aesthetic appeal and functionality, while the exterior received a fresh coat of paint and maintenance work was completed in 2023 to preserve its modern appearance. The property benefits from an energy rating of B (light green), indicating its efficiency and sustainability features.\n\nThe property is primarily utilized for residential purposes, with current tenancy arrangements indicating a mix of long-term leases and short-term rental options. Notably, the lease agreements currently in place are characterized by short terms, with less than three years remaining on the existing contracts. This aspect presents a unique opportunity for prospective investors to re-evaluate and potentially enhance the rental yield through new lease negotiations or conversions to longer-term contracts. Additionally, there is an imminent vacancy of more than 20% within the property, which further increases the prospect for value-added investment strategies and repositioning efforts.\n\nThe building's layout includes a variety of residential units ranging from studio apartments to spacious three-bedroom configurations, appealing to a diverse tenant demographic. The common areas are designed to encourage community interaction and foster a sense of belonging among residents. Amenities such as secured bicycle storage and a communal rooftop terrace overlooking the city skyline enhance the living experience and add value to the property.\n\nIn conclusion, the property at Skogsveien 12 presents a compelling investment opportunity in the St. Hanshaugen district, distinguished by its modern construction, strategic location, and potential for increased rental yield. The combination of short lease terms and imminent vacancy offers a unique chance for an astute investor to capitalize on the current market dynamics while benefiting from the strong underlying demand for residential living in this desirable area of Oslo.",
+      "groundTruth": {
+        "value": 6.08,
+        "tolerance": 0.35,
+        "calculation": "Base (Residential): 5.375%\nShort lease (<3 years remaining): +0.5%\nModern building (post-2015, high standard): -0.2%\nCurrent or imminent vacancy (>20%): +0.4%\nFinal: 6.08%"
+      },
+      "twinId": "87b97b73-facf-4e45-a81d-0e262dd5da68",
+      "twinDeltaChanged": "poor_micro_location → vacancy_risk"
+    },
+    {
+      "id": "cc2c117d-da01-45fe-9c7f-6f4edad01e2b",
+      "anchor": "logistics_normal",
+      "appliedDeltas": [],
+      "distractors": [
+        "The seller is highly motivated and wants a quick transaction."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Lagerveien 23, within a prominent secondary industrial area of Bergen, close to several well-established local industrial estates and smaller terminals. This strategic location places the building within a vibrant logistics hub, approximately 15 minutes from the Bergen city center and just a short drive from the E39 highway, facilitating efficient road transport connections. The immediate vicinity features a mix of logistics and storage facilities, reinforcing the area’s significance as a secondary logistics location. The cadastral designation for this property is gnr. 144, bnr. 56 in Bergen municipality, encompassing an owned plot of 3,500 m².\n\nOriginally constructed in 1978, the building is a single-story industrial facility designed with practical logistics functions in mind. It encompasses a gross building area of approximately 2,300 m² BTA, featuring a functional layout suited for a variety of tenants. The construction consists of reinforced concrete with a high clearance of 5 meters, making it adaptable for both warehousing and light manufacturing applications. The property is characterized by large loading bays that provide excellent accessibility for larger vehicles and ease of operation, essential for logistics activities.\n\nRecent technical upgrades have significantly improved the property’s functionality and energy efficiency. Notably, in 2020, the roof was replaced, enhancing the thermal insulation of the building. In 2021, a new energy-efficient LED lighting system was installed throughout the facility, and renovations in 2022 included the refurbishment of the loading bays and the installation of modern dock levellers. The building currently holds an energy rating of D (light orange), indicative of its compliance with modern energy efficiency standards, although additional sustainability certifications such as BREEAM or LEED have not been documented.\n\nThe property is primarily utilized for logistics and storage purposes, with a tenancy structure consisting of smaller local businesses within the logistics sector. The current tenant mix includes warehousing and distribution companies, which occupy approximately 80% of the total space, while 20% remains available for lease, presenting a unique opportunity for incoming investors. The property is adequately supported by local infrastructure, including regional distribution networks, albeit with limited rail connections that may impact certain logistics operations.\n\nAccessibility is a key factor affecting the property’s market yield. The building benefits from direct access to the regional road network, ensuring efficient transport links to both Bergen and surrounding regions. Local public transport options, while limited, are enhanced by nearby bus lines that connect to major transport hubs within the city. The surrounding area is characterized by older building stock, which may require ongoing renovations to meet evolving tenant demands, adding to the investment potential for future upgrades.\n\nThe seller is highly motivated and seeks a quick transaction, presenting a unique opportunity for buyers looking to capitalize on this established logistics location. The property’s recent technical enhancements, combined with its strategic positioning and active tenant base, suggest a promising outlook for future rental income and property appreciation. \n\nIn summary, Lagerveien 23 represents a compelling investment opportunity within a secondary logistics context, characterized by its functional design, advantageous transport access, and a supportive industrial environment, poised for growth and development in the coming years.",
+      "groundTruth": {
+        "value": 8,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Normal & Secondary): 8%\nFinal: 8.00%"
+      }
+    },
+    {
+      "id": "d7a3b2b4-36c8-4fb7-8a30-53b966b3a23b",
+      "anchor": "hotel_prime",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Konferanseveien 12 in the vibrant Aker Brygge area of central Oslo, strategically positioned between the iconic Oslo Opera House and Akershus Fortress. This prime location is within close proximity to Oslo's Central Station, approximately 800 metres away, providing seamless connections to both domestic and international transport. The immediate surroundings are characterized by a dynamic blend of offices, high-end retail, and an array of dining options, making it a favored locale for both tourists and business travelers alike. Aker Brygge itself is known for its waterfront promenades and cultural attractions, enhancing the overall appeal of the area as a bustling commercial hub. Public transportation options abound, including tram, bus, and metro services, all easily accessible within a short walking distance.\n\nThe property, originally built in 1988, features a modern architectural design with clean lines and a glass façade, contributing to its contemporary aesthetic. Comprising six floors with a total gross building area of approximately 3,200 m² BTA, the property is constructed with a reinforced concrete frame, ensuring structural integrity and durability. The cadastral designation is gnr. 220, bnr. 18 in Oslo municipality, with an owned plot measuring 1,200 m². The building benefits from large, open floorplates averaging 600 m² per floor, allowing for flexible configurations to accommodate various business needs.\n\nRecent technical upgrades include a comprehensive renovation of the lobby and common areas in 2020, enhancing the overall visitor experience with modern finishes and improved accessibility features. An energy-efficient HVAC system was installed in 2021, significantly reducing operational costs and improving the building's environmental footprint. Additionally, the façade underwent refurbishment in 2022, which included the installation of energy-efficient windows and exterior shading devices to optimize thermal performance. The property holds an energy rating of C (moderate green), indicating its commitment to sustainability while meeting current energy regulations.\n\nThe property is governed by the municipal master plan, designated for mixed-use development with an emphasis on commercial and hospitality functions. Currently, it is primarily utilized as a hotel, with a blend of guest rooms, conference facilities, and ancillary services. The tenancy structure is predominantly anchored by a well-regarded international hotel operator, providing a stable income stream, alongside additional retail space on the ground floor that caters to the vibrant pedestrian traffic in the area. The hotel features 120 guest rooms, ranging from standard to premium suites, combined with versatile meeting spaces that can accommodate various corporate events, further enhancing its attractiveness to business clientele.\n\nArea characteristics suggest that Aker Brygge is not only a prime tourist destination but also a thriving business location with high occupancy rates and premium room rates, bolstered by the presence of international hotel brands in the vicinity. The strategic positioning near key landmarks such as the Opera House and Akershus Fortress adds significant value, enhancing the property’s appeal to potential investors and operators. The property also benefits from direct access to the airport express train at Central Station, facilitating travel for both domestic and international visitors.\n\nIn conclusion, Konferanseveien 12 presents a compelling investment opportunity in one of Oslo’s most sought-after districts, combining a robust tenancy structure with strategic location advantages and a commitment to sustainability through recent upgrades. The property’s profile is characterized by its desirable attributes, positioning it favorably within the competitive commercial real estate landscape of the capital.",
+      "groundTruth": {
+        "value": 5.63,
+        "tolerance": 0.35,
+        "calculation": "Base (Hotel Prime): 5.625%\nFinal: 5.63%"
+      }
+    },
+    {
+      "id": "96de4644-b200-4b3b-ab5f-e7f21ea556cc",
+      "anchor": "retail_secondary",
+      "appliedDeltas": [
+        "single_tenant_sme",
+        "long_lease"
+      ],
+      "distractors": [
+        "The property manager has won several industry awards."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Torggata 27 in the suburban retail area of Bodø, a bustling hub approximately 2 km from the city center. This location benefits from its proximity to some of the largest regional shopping centres in Northern Norway, including the nearby City Nord and Bodø Storsenter, as well as various big-box retail outlets like IKEA and XXL. The area is characterized by a car-dependent accessibility, with ample parking spaces available for shoppers, and strategic proximity to the E6 highway, ensuring smooth transit for both customers and suppliers. The property's cadastral designation is gnr. 135, bnr. 12 in Bodø municipality, encompassing a plot size of 1,200 m².\n\nThe building itself, constructed in 2005, is a modern retail facility designed to accommodate a single SME tenant, which, while providing the opportunity for stable income, introduces a degree of concentration risk into the investment profile. With a gross building area of approximately 1,500 m² BTA, the property is structured over a single retail floor, featuring a high ceiling that enhances the spaciousness of the retail environment. The façade is primarily composed of glass and metal, allowing for excellent visibility and natural light, which are critical factors in attracting foot traffic.\n\nThe property's strategic location within a secondary retail sector means that it is well-positioned to serve price-sensitive customers, which is further bolstered by its long-standing lease agreement with a creditworthy tenant. The current lease term boasts a WAULT exceeding 10 years, ensuring a solid income stream and reducing vacancy risk, particularly important in the context of secondary retail locations where tenant turnover tends to be higher. The site is strategically anchored by this key tenant, fostering a stable retail environment that can attract complementary businesses to the area.\n\nPublic transport options, though limited in this suburban setting, are supplemented by a reliable bus service connecting to the city center and surrounding neighborhoods. The extensive parking facilities adjacent to the property further enhance its accessibility, catering primarily to shoppers who rely on personal vehicles. The surrounding area is primarily composed of retail establishments, service providers, and residential communities, creating a diverse customer base that frequents the local shops.\n\nRecent technical upgrades to the property include the installation of energy-efficient LED lighting throughout the retail space in 2020, improving the operational efficiency and sustainability of the building. In addition, the roof was refurbished in 2021 to ensure optimal insulation and weather resistance, while an updated HVAC system was introduced in 2022, contributing to a more comfortable shopping experience for customers. These enhancements not only help in reducing utility costs but also align the building with modern sustainability practices, although detailed certifications such as BREEAM or LEED are not reported in the available documentation.\n\nThe property is governed by the municipal master plan, designated for commercial use, primarily focused on retail and service functions, which aligns with the current use of the building. The tenancy structure is currently dominated by the single SME tenant, creating a straightforward operational model, although the inherent concentration risk necessitates careful consideration for potential investors.\n\nOverall, this property at Torggata 27 presents a compelling opportunity for investors seeking a well-positioned retail asset in a growing area with a long lease commitment from a creditworthy tenant, while the building manager, recognized with several industry awards, assures professional oversight and management of the property.",
+      "groundTruth": {
+        "value": 8.52,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Secondary): 8.375%\nSingle SME tenant (concentration risk): +0.45%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nFinal: 8.52%"
+      },
+      "twinId": "e09735db-77d0-4c07-b369-6495e090de9d",
+      "twinDeltaChanged": "single_tenant_sme → vacancy_risk"
+    },
+    {
+      "id": "e09735db-77d0-4c07-b369-6495e090de9d",
+      "anchor": "retail_secondary",
+      "appliedDeltas": [
+        "long_lease",
+        "vacancy_risk"
+      ],
+      "distractors": [
+        "The property manager has won several industry awards."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Sjøgata 45 in the idyllic suburban region of Ålesund, nestled between the vibrant commercial hub of the city and the picturesque fjords that characterize the area. This retail space occupies a prime position near the renowned Amfi Moa shopping center and the adjacent big-box retail outlets, making it an integral part of the local shopping landscape. The surrounding area is characterized by a mix of retail establishments, cafes, and essential services, catering primarily to price-sensitive customers who frequent secondary retail locations. Furthermore, the property boasts easy access for car-dependent consumers, with large parking facilities and proximity to the E136 highway, ensuring a steady flow of traffic.\n\nThe property is a modern retail building completed in 2010, designed with an emphasis on functionality and customer experience. Comprising two floors with a total gross building area of approximately 1,850 m² (BTA), the building features open-plan layouts that are conducive to various retail formats. The design includes ample glass facades, creating an inviting atmosphere and promoting natural light throughout the space. The cadastral designation is gnr. 36, bnr. 45 in Ålesund municipality, and the property sits on a plot of 1,500 m², providing substantial outdoor space for customer parking as well as potential expansions.\n\nA key aspect of this property is its long-term lease agreement with a creditworthy tenant, currently extending beyond a 10-year Weighted Average Unexpired Lease Term (WAULT), ensuring a stable income stream. However, it is important to note that the retail market in the vicinity is currently experiencing an imminent vacancy, with over 20% of the space left unoccupied, posing some risks related to tenant dependency on anchor retailers in the area. \n\nThe building's management is entrusted to a highly reputable property manager, recognized with several industry awards for excellence in service and operational efficiency, which enhances the property’s appeal to potential investors. Enhancements made to the property include a comprehensive refurbishment of the façade in 2021, the installation of energy-efficient LED lighting systems in 2022, and the upgrading of HVAC systems in 2023, which collectively contribute to a modern and efficient retail environment.\n\nTransport connectivity remains robust, with multiple bus routes servicing Sjøgata and surrounding areas, while the proximity to major road networks facilitates access from surrounding suburbs and out-of-town centers. This accessibility, combined with the strategic location near other retail giants, ensures that foot traffic remains steady, allowing for potential recovery of currently vacant spaces.\n\nIn summary, this property at Sjøgata 45 presents a unique investment opportunity in the Ålesund retail market, characterized by its modern construction, a long lease with a creditworthy tenant, and a strong award-winning property management team. The imminent vacancy presents both a challenge and an opportunity for astute investors looking to capitalize on the property’s potential, particularly in light of its strategic location and the established presence of nearby retail anchors.",
+      "groundTruth": {
+        "value": 8.48,
+        "tolerance": 0.35,
+        "calculation": "Base (Retail Secondary): 8.375%\nLong lease (>10 years WAULT) with creditworthy tenant: -0.3%\nCurrent or imminent vacancy (>20%): +0.4%\nFinal: 8.47%"
+      },
+      "twinId": "96de4644-b200-4b3b-ab5f-e7f21ea556cc",
+      "twinDeltaChanged": "single_tenant_sme → vacancy_risk"
+    },
+    {
+      "id": "a1c620db-cbdf-4510-af2d-cfb408ce0186",
+      "anchor": "office_oslo_cbd",
+      "appliedDeltas": [
+        "vacancy_risk",
+        "breeam_certified",
+        "multi_tenant"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Dronning Mauds gate 5, nestled in the vibrant Aker Brygge district of central Oslo, within the borough of Frogner. This prime office location is approximately 300 metres from the Nationaltheatret transport hub, which serves as a critical connection point for all metro lines, regional rail, and airport express services. The surrounding area is characterized by a dynamic mixed-use environment that integrates high-end retail, leisure, and dining options, complemented by cultural landmarks such as the Nobel Peace Center, the Royal Palace, and the Astrup Fearnley Museum. Aker Brygge marina is just a short stroll away, enhancing the appeal of the location for both tenants and visitors alike. \n\nThe property, designated under cadastral reference gnr. 205, bnr. 34 in Oslo municipality, occupies a plot of 1,200 m² and comprises a modern office building constructed in 2005. With a gross building area (BTA) of approximately 6,500 m², the structure features seven floors with flexible office floor plates averaging 900 m². The property is designed to meet contemporary needs, utilizing an efficient core-and-shell layout with large window surfaces that invite natural light, fostering a productive working environment. The building has achieved BREEAM Excellent certification, underscoring its commitment to sustainability and energy efficiency.\n\nSignificant technical upgrades have been implemented over the years, including the installation of energy-efficient HVAC systems in 2018, full interior refurbishment of communal areas in 2020, and the addition of solar panels on the roof in 2021 to further enhance the building's sustainability profile. The property has also undergone routine maintenance, including façade maintenance in 2022 and elevator upgrades in 2023. The current energy rating is B, reflecting the ongoing commitment to maintaining high environmental standards.\n\nDronning Mauds gate 5 features a diversified tenant base, currently accommodating three separate tenants engaged in various sectors, including technology, finance, and creative industries. It is noteworthy that the property features a current vacancy rate of over 20%, which presents potential for an incoming investor to enhance the yield through strategic leasing initiatives. The existing tenants are on multi-year leases, providing a stable income stream while also offering flexibility for future adjustments given the existing vacancies.\n\nThe property is strategically positioned within an established central business district, integrating seamlessly with the dense urban fabric of Aker Brygge and Vika. The area boasts a robust diplomatic and institutional presence, further elevating its status as a premium office location. Public transport options are excellent, with frequent tram and bus services from Aker Brygge, facilitating easy access for employees and clients alike. The ferry terminal nearby provides additional connectivity to Nesodden, while the surrounding road network allows for efficient vehicular access.\n\nThis office building is primarily utilized for professional services and knowledge-intensive activities, with supplementary spaces dedicated to common areas and amenities. It benefits from a well-thought-out layout that caters to modern work habits, with collaborative spaces and meeting rooms integrated throughout the building. Such features not only enhance tenant satisfaction but also contribute positively to tenant retention rates.\n\nIn summary, Dronning Mauds gate 5 represents a unique opportunity for investors seeking a property with a strategic location in Oslo’s CBD, a strong emphasis on sustainability, and significant potential for value enhancement through active management and leasing initiatives. The combination of a diversified tenant base, current vacancy levels, and BREEAM Excellent certification positions this property as a compelling investment in the vibrant Oslo commercial real estate market.",
+      "groundTruth": {
+        "value": 4.97,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo CBD (Prime)): 4.875%\nCurrent or imminent vacancy (>20%): +0.4%\nBREEAM Excellent or Outstanding certification: -0.15%\nDiversified tenant base (3+ tenants): -0.15%\nFinal: 4.97%"
+      },
+      "twinId": "dc53600f-41c9-47d6-96e1-2ea132b2807f",
+      "twinDeltaChanged": "removed: vacancy_risk"
+    },
+    {
+      "id": "dc53600f-41c9-47d6-96e1-2ea132b2807f",
+      "anchor": "office_oslo_cbd",
+      "appliedDeltas": [
+        "breeam_certified",
+        "multi_tenant"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Dronning Mauds gate 22 in the prestigious Vika district of central Oslo, located just a short walk from the iconic Nationaltheatret station and the bustling Aker Brygge waterfront. This prime office location benefits from a vibrant urban environment characterized by a mix of high-end retail, hospitality, and cultural institutions. Key landmarks in the vicinity include the Oslo City Hall, the Nasjonalmuseet, and the Nobel Peace Center, which collectively contribute to the area's reputation as a central business hub with a strong institutional presence. Public transport connections are exceptional, with Nationaltheatret station providing access to all metro lines, regional rail, and the airport express. Additional transport options include extensive tram and bus services from Aker Brygge, as well as a nearby ferry terminal offering connections to Nesodden.\n\nThe building, completed in 1989, is a modern office structure comprising eight floors with a gross building area of approximately 5,250 m² BTA. It is constructed of reinforced concrete and glass, showcasing a contemporary design that harmonizes with the surrounding architectural style. The plot measures 800 m² and is designated under cadastral reference gnr. 220, bnr. 12 in Oslo municipality. Notably, the property has been awarded a BREEAM Excellent certification, reflecting its commitment to sustainable building practices and energy efficiency, which enhances its appeal to environmentally conscious tenants.\n\nInternally, the building features an efficient layout with floorplates of approximately 650 m², designed to accommodate a diversified tenant base. Currently, the property is occupied by three tenants, including a prominent law firm, a creative agency, and a technology startup. This diverse mix not only reduces risk but also enhances the property's overall stability and appeal in the competitive office market. The tenancy structure supports a sustainable income stream, and the presence of high-profile tenants adds to the property's desirability.\n\nRecent renovations have ensured the building remains competitive within the market. Major upgrades include the installation of a new energy-efficient heating and cooling system in 2020, refurbishment of the common areas in 2021, and the replacement of all windows in 2022 to improve thermal performance and aesthetics. These enhancements contribute to the building's strong energy rating of B (light green) and its overall operational efficiency.\n\nThe property is governed by the municipal master plan, designated for \"bebyggelse og anlegg (kontor)\" with a primary use as an office building, further solidifying its status as a key player in Oslo's commercial property landscape. The proximity to essential amenities, coupled with the building’s sustainable features and diversified tenant mix, positions it as a valuable asset.\n\nIn summary, Dronning Mauds gate 22 is a modern office building that combines prime location, architectural quality, and sustainability with a proven income-generating profile. Its BREEAM Excellent certification underscores the property's commitment to environmental responsibility, while a diversified tenant base enhances its investment appeal. Whether for an investor seeking a trophy asset in the heart of Oslo’s CBD or a user looking for a prestigious office space, this property represents a compelling opportunity in the vibrant Vika district.",
+      "groundTruth": {
+        "value": 4.57,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo CBD (Prime)): 4.875%\nBREEAM Excellent or Outstanding certification: -0.15%\nDiversified tenant base (3+ tenants): -0.15%\nFinal: 4.57%"
+      },
+      "twinId": "a1c620db-cbdf-4510-af2d-cfb408ce0186",
+      "twinDeltaChanged": "removed: vacancy_risk"
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "24655b97-9f4f-4697-b98f-65645491ef43",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 4.85,
+          "reasoning": "The property is a modern (2008/renovated), energy-efficient (Grade B) office asset in Skøyen, Oslo's most established secondary CBD. While prime Oslo yields sit around 4.0-4.25%, Skøyen typically commands a premium of 50-75 bps. The high technical standard and proximity to Skøyen station justify a yield at the sharper end of the Skøyen market, though current interest rate levels and undisclosed vacancy risks prevent a sub-4.5% valuation.",
+          "latencyMs": 1711
+        },
+        {
+          "prediction": 4.65,
+          "reasoning": "The property is a modern (2008/renovated), energy-efficient (Grade B) office building in Skøyen, Oslo's most established secondary business district. Its proximity to Skøyen station and recent technical upgrades (HVAC, facade) command a premium. However, the yield is slightly higher than the Oslo CBD prime (approx. 4.0-4.25%) due to its location outside the immediate city center and the mention of 'strategically vacant areas' which introduces some leasing risk.",
+          "latencyMs": 2023
+        },
+        {
+          "prediction": 4.65,
+          "reasoning": "The property is a modern, high-quality office asset (Energy B, recent HVAC/facade upgrades) in Skøyen, Oslo's second-largest office hub. While prime CBD yields are lower, Skøyen typically commands a slight premium. The yield reflects the prime micro-location near Skøyen station and the 2008 construction year, balanced against current market interest rates and the mention of some strategic vacancies.",
+          "latencyMs": 1814
+        }
+      ],
+      "meanPrediction": 4.717,
+      "stdDeviation": 0.094,
+      "minPrediction": 4.65,
+      "maxPrediction": 4.85,
+      "error": -0.783,
+      "absoluteError": 0.783,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:46:47.435Z",
+      "completedAt": "2026-01-18T21:46:49.462Z"
+    },
+    {
+      "scenarioId": "6750c938-ae80-471a-b538-89c9afd556d5",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5.25,
+          "reasoning": "The property is located in Skøyen, Oslo's most established secondary business district. While prime Skøyen yields typically hover around 4.75-5.00%, this asset is a smaller 1990s building (3,200 sqm) rather than a Grade A flagship. The yield is compressed by recent technical upgrades (HVAC, windows, elevator) and an Energy Class C rating, but slightly elevated compared to prime due to the building's age and smaller floor plates (550 sqm) which cater to the SME market rather than blue-chip headquarters.",
+          "latencyMs": 2306
+        },
+        {
+          "prediction": 5.25,
+          "reasoning": "The property is located in Skøyen, Oslo's most established secondary business district. While prime Skøyen yields typically hover around 4.75-5.00%, this property is a 1990s build with a relatively small footprint (3,200 sqm). Recent technical upgrades (HVAC, windows, elevator) and an Energy Class C rating mitigate CAPEX risks, but the yield is slightly adjusted upward from prime levels to reflect the building's age and the current interest rate environment in the Norwegian market.",
+          "latencyMs": 1813
+        },
+        {
+          "prediction": 5.25,
+          "reasoning": "The property is located in Skøyen, Oslo's most established secondary business district. While prime Skøyen yields typically hover around 4.75-5.00%, this asset is a smaller 1990s building (3,200 sqm) rather than a Grade A flagship. The recent technical upgrades (HVAC, windows, elevator) and Energy Class C rating mitigate CAPEX risk, but the smaller floor plates and multi-tenant structure warrant a slight premium over prime yields. Current market conditions in Oslo for well-located, refurbished office assets in this segment typically range between 5.00% and 5.50%.",
+          "latencyMs": 2887
+        }
+      ],
+      "meanPrediction": 5.25,
+      "stdDeviation": 0,
+      "minPrediction": 5.25,
+      "maxPrediction": 5.25,
+      "error": -0.5,
+      "absoluteError": 0.5,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:46:47.435Z",
+      "completedAt": "2026-01-18T21:46:50.326Z"
+    },
+    {
+      "scenarioId": "87b97b73-facf-4e45-a81d-0e262dd5da68",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 4.25,
+          "reasoning": "The property is a modern (2018) residential asset in a prime Oslo district (St. Hanshaugen) with a strong B-rated energy profile. However, the yield is adjusted upward from prime levels (typically 3.5-3.75%) due to the suboptimal micro-location, short remaining lease terms (under 3 years) creating vacancy risk, and the current high interest rate environment in Norway.",
+          "latencyMs": 2054
+        },
+        {
+          "prediction": 4.15,
+          "reasoning": "The property is a modern (2018), energy-efficient (Grade B) residential asset in a prime Oslo district (St. Hanshaugen), which typically commands low yields (3.5%–4.0%). However, the yield is adjusted upward due to the suboptimal micro-location (limited visibility/access) and the significant rollover risk associated with short-term leases (WAULT < 3 years) in a fluctuating interest rate environment.",
+          "latencyMs": 1801
+        },
+        {
+          "prediction": 4.15,
+          "reasoning": "The property is a modern (2018), energy-efficient (Grade B) residential asset in a prime Oslo district (St. Hanshaugen), which typically commands low yields (3.5%–4.0%). However, the yield is adjusted upward due to the 'suboptimal micro-location' with poor visibility/access and the significant reinvestment risk posed by the short remaining lease terms (<3 years) on all 30 units.",
+          "latencyMs": 2205
+        }
+      ],
+      "meanPrediction": 4.183,
+      "stdDeviation": 0.047,
+      "minPrediction": 4.15,
+      "maxPrediction": 4.25,
+      "error": -1.847,
+      "absoluteError": 1.847,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:46:47.435Z",
+      "completedAt": "2026-01-18T21:46:49.645Z"
+    },
+    {
+      "scenarioId": "d8ae237c-0f7f-4312-94ec-42e10d167a91",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 4.15,
+          "reasoning": "The property is a modern (2018) residential asset in a prime Oslo location (St. Hanshaugen) with a strong B energy rating. While the prime residential yield in Oslo typically sits around 3.75-4.00%, a slight premium is added here due to the 'value-add' risk profile, specifically the high imminent vacancy (>20%) and short remaining lease terms (<3 years), which introduce short-term cash flow volatility despite the long-term upside potential.",
+          "latencyMs": 1737
+        },
+        {
+          "prediction": 4.15,
+          "reasoning": "The property is a modern (2018) residential asset in a prime Oslo location (St. Hanshaugen) with a high energy rating (B). While the prime residential yield in Oslo typically sits between 3.5% and 3.85%, a premium is added here due to the 'value-add' risk profile: the short WALT (under 3 years) and a significant imminent vacancy of over 20% introduce immediate leasing risk and operational costs, pushing the estimated market yield toward the 4.00-4.25% range.",
+          "latencyMs": 1906
+        },
+        {
+          "prediction": 4.25,
+          "reasoning": "The property is a modern (2018), energy-efficient (Grade B) residential asset in a prime Oslo location (St. Hanshaugen). While the low WAULT (under 3 years) and high vacancy (>20%) introduce short-term cash flow risk, they provide significant 'reversionary potential' to capture current market rents in a high-demand district. The yield reflects a premium over prime residential yields (typically 3.5-3.75%) due to the immediate vacancy risk and management intensity, balanced by the high technical quality and location prestige.",
+          "latencyMs": 1811
+        }
+      ],
+      "meanPrediction": 4.183,
+      "stdDeviation": 0.047,
+      "minPrediction": 4.15,
+      "maxPrediction": 4.25,
+      "error": -1.897,
+      "absoluteError": 1.897,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:46:50.541Z",
+      "completedAt": "2026-01-18T21:46:52.450Z"
+    },
+    {
+      "scenarioId": "cc2c117d-da01-45fe-9c7f-6f4edad01e2b",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 7.25,
+          "reasoning": "The property is a secondary logistics asset in Bergen with a mix of strengths and risks. Positive factors include recent technical upgrades (roof, LED, docks) and a strategic location near the E39. However, the yield is pushed upward by the 20% vacancy rate, the older construction year (1978), a 'D' energy rating, and the seller's high motivation for a quick transaction. A yield of 7.25% reflects the risk premium for a secondary location and the immediate need for leasing activity to stabilize income.",
+          "latencyMs": 2031
+        },
+        {
+          "prediction": 7.25,
+          "reasoning": "The property is a secondary logistics asset in Bergen with a high vacancy rate (20%) and older building stock (1978), which necessitates a risk premium. While recent technical upgrades and a 5m ceiling height are positive, the 'D' energy rating and the seller's high motivation for a quick transaction further push the yield upward toward the 7.00-7.50% range typical for secondary industrial locations in the current interest rate environment.",
+          "latencyMs": 1825
+        },
+        {
+          "prediction": 7.25,
+          "reasoning": "The yield reflects a secondary logistics location in Bergen with an older building (1978) and a 20% vacancy rate. While recent technical upgrades (roof, LED, docks) and a motivated seller provide upside, the lack of BREEAM certification, secondary industrial status, and local tenant profile necessitate a risk premium over prime logistics yields (typically 5.0-5.5%).",
+          "latencyMs": 1623
+        }
+      ],
+      "meanPrediction": 7.25,
+      "stdDeviation": 0,
+      "minPrediction": 7.25,
+      "maxPrediction": 7.25,
+      "error": -0.75,
+      "absoluteError": 0.75,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:46:50.541Z",
+      "completedAt": "2026-01-18T21:46:52.575Z"
+    },
+    {
+      "scenarioId": "d7a3b2b4-36c8-4fb7-8a30-53b966b3a23b",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 4.25,
+          "reasoning": "The property is a prime asset in Oslo's most prestigious district (Aker Brygge) with a strong international hotel tenant and recent technical upgrades (HVAC, facade). While the Energy C rating and 1988 build date prevent the absolute lowest 'trophy' yields (sub-4%), the strategic location and high-demand mixed-use profile justify a yield near the prime benchmark for Oslo commercial real estate.",
+          "latencyMs": 2057
+        },
+        {
+          "prediction": 4.25,
+          "reasoning": "The property is a prime asset in Oslo's most prestigious district (Aker Brygge) with a strong international hotel operator and recent technical upgrades. While the prime office yield in Oslo is currently around 4.00-4.25%, a slightly higher yield of 4.25% is applied to account for the hospitality focus and the Energy Class C rating, balanced against the exceptional location and 2020-2022 renovations.",
+          "latencyMs": 1873
+        },
+        {
+          "prediction": 4.25,
+          "reasoning": "The property is a prime asset in Oslo's most prestigious district (Aker Brygge) with a strong international hotel tenant and recent technical upgrades (HVAC, facade). While the Energy C rating and 1988 construction date prevent the absolute lowest 'trophy' yields (sub-4%), the strategic location and high-demand mixed-use profile support a yield at the lower end of the prime market range for Oslo.",
+          "latencyMs": 1893
+        }
+      ],
+      "meanPrediction": 4.25,
+      "stdDeviation": 0,
+      "minPrediction": 4.25,
+      "maxPrediction": 4.25,
+      "error": -1.38,
+      "absoluteError": 1.38,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:46:50.541Z",
+      "completedAt": "2026-01-18T21:46:52.602Z"
+    },
+    {
+      "scenarioId": "96de4644-b200-4b3b-ab5f-e7f21ea556cc",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 6.75,
+          "reasoning": "The yield reflects a secondary retail location in Bodø (outside the prime city center) and single-tenant concentration risk. However, the high WAULT (>10 years), creditworthy tenant, and recent technical upgrades (HVAC, roof, LED) provide significant stability, compressing the yield from typical regional secondary levels toward the 6.50-7.00% range.",
+          "latencyMs": 1830
+        },
+        {
+          "prediction": 6.75,
+          "reasoning": "The yield reflects a balance between the high security of a 10-year WAULT and recent technical upgrades against the risks of a single SME tenant, a secondary 'big-box' location in Bodø, and the current high interest rate environment in Norway.",
+          "latencyMs": 1279
+        },
+        {
+          "prediction": 6.75,
+          "reasoning": "The yield reflects a balance between the high security of a 10-year WAULT and recent technical upgrades against the risks of a single SME tenant, a secondary 'big-box' location in Bodø, and the current high interest rate environment in Norway.",
+          "latencyMs": 1224
+        }
+      ],
+      "meanPrediction": 6.75,
+      "stdDeviation": 0,
+      "minPrediction": 6.75,
+      "maxPrediction": 6.75,
+      "error": -1.77,
+      "absoluteError": 1.77,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:46:52.805Z",
+      "completedAt": "2026-01-18T21:46:54.637Z"
+    },
+    {
+      "scenarioId": "e09735db-77d0-4c07-b369-6495e090de9d",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 6.75,
+          "reasoning": "The property benefits from a modern build (2010), recent technical upgrades, and a strong WAULT (>10 years) with a creditworthy tenant. However, the 20% vacancy rate in a secondary 'big-box' retail location outside the city center, combined with the current high interest rate environment in Norway, necessitates a risk premium over prime yields. The yield reflects a balance between stable long-term cash flow and the idiosyncratic risk of the surrounding retail cluster's vacancy.",
+          "latencyMs": 1493
+        },
+        {
+          "prediction": 6.75,
+          "reasoning": "The property benefits from a modern build (2010), recent technical upgrades, and a strong WAULT (>10 years) with a creditworthy tenant. However, the yield is pushed upward by its secondary retail location in a regional market (Ålesund), high local vacancy rates (>20%), and the inherent risks associated with big-box retail and car-dependent consumer patterns in a shifting retail landscape.",
+          "latencyMs": 1460
+        },
+        {
+          "prediction": 6.75,
+          "reasoning": "The yield reflects a balance between the high-quality asset (modern 2010 build, recent HVAC/facade upgrades) and a strong 10-year WAULT with a creditworthy tenant, against the risks of a secondary 'big-box' location in a regional market (Ålesund). While the long lease provides security, the 20% local vacancy rate and the car-dependent, secondary nature of the retail micro-location necessitate a premium over prime Oslo retail yields (typically 4.5-5.0%), placing this in the 6.5%–7.0% range.",
+          "latencyMs": 2425
+        }
+      ],
+      "meanPrediction": 6.75,
+      "stdDeviation": 0,
+      "minPrediction": 6.75,
+      "maxPrediction": 6.75,
+      "error": -1.73,
+      "absoluteError": 1.73,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:46:52.805Z",
+      "completedAt": "2026-01-18T21:46:55.234Z"
+    },
+    {
+      "scenarioId": "a1c620db-cbdf-4510-af2d-cfb408ce0186",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 4.15,
+          "reasoning": "The property is a prime CBD asset in Oslo (Vika/Aker Brygge) with high ESG credentials (BREEAM Excellent). While prime yields for fully let assets in this district are currently around 3.75%–4.00%, the 20% vacancy rate and current interest rate environment necessitate a slight premium. The yield reflects a 'net initial' stance adjusted for the vacancy risk and the potential for value-add through leasing.",
+          "latencyMs": 2069
+        },
+        {
+          "prediction": 4.25,
+          "reasoning": "The property is a prime CBD asset in Oslo (Vika/Aker Brygge) with high ESG credentials (BREEAM Excellent). While prime yields for fully let assets in this area are currently around 3.75-4.00%, the 20% vacancy rate and current interest rate environment necessitate a risk premium, offset by the 'value-add' potential through leasing up the remaining space.",
+          "latencyMs": 1554
+        },
+        {
+          "prediction": 4.15,
+          "reasoning": "The property is a prime CBD asset in Oslo (Vika/Aker Brygge) with high ESG credentials (BREEAM Excellent). While prime yields for fully let assets in this district are currently around 3.75%–4.00%, the 20% vacancy rate and current market interest rate environment necessitate a slight premium. The yield reflects a 'net initial' stance adjusted for the vacancy risk and the potential upside from leasing the remaining space at market rents.",
+          "latencyMs": 1987
+        }
+      ],
+      "meanPrediction": 4.183,
+      "stdDeviation": 0.047,
+      "minPrediction": 4.15,
+      "maxPrediction": 4.25,
+      "error": -0.787,
+      "absoluteError": 0.787,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:46:52.805Z",
+      "completedAt": "2026-01-18T21:46:54.878Z"
+    },
+    {
+      "scenarioId": "dc53600f-41c9-47d6-96e1-2ea132b2807f",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 4.15,
+          "reasoning": "The property is a prime 'Trophy Asset' in Oslo's CBD (Vika) with a BREEAM Excellent certification and a high energy rating (B), which commands a green premium. While the 1989 construction is older, recent extensive renovations (2020-2022) and a diversified, high-profile tenant mix (law firm, tech) justify a yield near the prime benchmark, slightly adjusted for the smaller floorplates and multi-tenant structure.",
+          "latencyMs": 1606
+        },
+        {
+          "prediction": 4.15,
+          "reasoning": "The property is a prime 'Trophy Asset' in Oslo's CBD (Vika). The yield is driven by its prestigious location, BREEAM Excellent certification, and recent technical upgrades (Energy Class B). While the 1989 construction date typically suggests a higher yield, the 2020-2022 renovations and diversified, high-profile tenant mix (law firm, tech) compress the yield toward the prime benchmark, currently estimated around 4.00-4.25% in the 2024 Norwegian market environment.",
+          "latencyMs": 1920
+        },
+        {
+          "prediction": 4.15,
+          "reasoning": "The property is a prime CBD asset in Oslo's Vika district with a BREEAM Excellent certification and a Grade B energy rating, which commands a 'green premium.' While the 1989 construction is older, recent extensive renovations (2020-2022) and a high-profile tenant mix (law firm) align it closely with prime market yields, currently ranging between 4.00% and 4.35% for high-quality central office space.",
+          "latencyMs": 1474
+        }
+      ],
+      "meanPrediction": 4.15,
+      "stdDeviation": 0,
+      "minPrediction": 4.15,
+      "maxPrediction": 4.15,
+      "error": -0.42,
+      "absoluteError": 0.42,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T21:46:55.440Z",
+      "completedAt": "2026-01-18T21:46:57.364Z"
+    }
+  ],
+  "completedAt": "2026-01-18T21:46:57.366Z",
+  "aggregateMetrics": {
+    "hitRate": 0,
+    "meanError": -1.186,
+    "rmse": 1.314,
+    "avgLatencyMs": 1856,
+    "directionalAccuracy": 50,
+    "avgStdDeviation": 0.024,
+    "avgConsistency": 0
+  }
+}

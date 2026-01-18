@@ -1,0 +1,555 @@
+{
+  "id": "0fda8d39-543e-4dbc-b3c5-6426eb87df33",
+  "timestamp": "2026-01-18T22:01:56.488Z",
+  "domainId": "real-estate-yield",
+  "model": "openai/gpt-4o",
+  "promptStrategy": "chain-of-thought",
+  "promptTemplate": "You are analyzing a commercial real estate property to determine its market yield.\r\n\r\n{{#facts.benchmarks}}\r\n{{{content}}}\r\n{{/facts.benchmarks}}\r\n\r\n---\r\n\r\n### Property Details\r\n\r\n{{scenario.contextDescription}}\r\n\r\n---\r\n\r\n### Instructions\r\n\r\nWork through this analysis step by step:\r\n\r\n**Step 1: Identify the Benchmark**\r\n- What location/segment does this property belong to?\r\n- What is the benchmark yield range for that segment?\r\n\r\n**Step 2: Position Within Range**\r\n- Is this a prime or secondary asset?\r\n- Where should it sit within the benchmark range?\r\n\r\n**Step 3: Apply Adjustments**\r\nConsider each factor and whether it pushes yield UP (more risk) or DOWN (less risk):\r\n- Tenant quality and creditworthiness\r\n- Lease length and WAULT\r\n- Building age and condition\r\n- Any special factors\r\n\r\n**Step 4: Calculate Final Yield**\r\n- Start with your positioned benchmark\r\n- Add/subtract adjustments\r\n- State your final yield estimate\r\n\r\nReturn your answer as JSON only, no markdown:\r\n{\"yield\": <number>, \"reasoning\": \"<your step-by-step reasoning>\"}\r\n\r\n",
+  "rolloutsPerScenario": 3,
+  "status": "completed",
+  "startedAt": "2026-01-18T22:01:56.488Z",
+  "useNarrativeDescriptions": true,
+  "narrativeModel": "openai/gpt-4o-mini",
+  "narrativesGenerated": 11,
+  "narrativesTotal": 11,
+  "scenarios": [
+    {
+      "id": "7aa26599-33e5-461f-8f09-e9d0120c77a1",
+      "anchor": "office_oslo_centre",
+      "appliedDeltas": [
+        "single_tenant_sme",
+        "government_tenant",
+        "short_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Grensen 15 in the vibrant Sentrum district of Oslo, strategically positioned between Oslo Cathedral and the Parliament building. This central location places it within a dynamic urban environment, characterized by a mix of historical significance, retail vibrancy, and a strong commercial presence. The immediate vicinity is marked by significant landmarks including the Central Station, Opera House, Munch Museum, and the Oslo Stock Exchange, which collectively enhance the attractiveness of the area for businesses and visitors alike.\n\nPublic transport connectivity is exceptional, with Oslo Central Station providing access to national and international rail lines, while the Jernbanetorget metro hub facilitates seamless transitions between metro lines. The extensive tram network further enhances accessibility, making this property a highly desirable location for any office tenant. The surrounding streets are pedestrian-friendly, promoting a lively atmosphere ideal for both employees and clients.\n\nThe property is a modern office building originally constructed in 2010, featuring a contemporary design with a glass façade that allows for abundant natural light. Comprising seven floors, the building encompasses a gross building area of approximately 3,200 m² BTA, with flexible office floor plates averaging 450 m². The cadastral designation is gnr. 210, bnr. 5 in Oslo municipality, and the plot measures 600 m², ensuring a sustainable and efficient use of space in an urban context.\n\nIn terms of technical specifications, the building is constructed using reinforced concrete, with high-quality materials and finishes throughout. Documented upgrades include the installation of energy-efficient lighting in 2018, a full HVAC system upgrade in 2019, and the refurbishment of common areas in 2021 to enhance tenant experience. The building has achieved an energy rating of B, reflecting a commitment to sustainability, and is compliant with the latest energy efficiency regulations.\n\nThe property is predominantly occupied by a single SME tenant, which introduces a concentration risk to the tenancy structure. This tenant, however, is a reputable government contractor, providing a level of stability often associated with AAA-rated corporate tenants. Currently, the lease for this tenant has a short remaining term of under three years, presenting an opportunity for potential investors to renegotiate terms with the existing tenant or seek new tenants in a highly desirable market.\n\nThe property is regulated under the municipal master plan as an area designated for \"office, commercial, and service functions,\" which underscores its primary use as a high-quality office building. The building's functionality is further enhanced by on-site amenities including meeting rooms, a café on the ground floor, and secure bicycle storage, catering to the modern workforce’s needs.\n\nOverall, the location, building quality, and tenant profile present a compelling investment opportunity. The combination of strategic positioning in Oslo's commercial heart, alongside the high-profile nature of the existing tenant, offers the potential for future capital appreciation and rental growth. As the area continues to develop with new public transport enhancements and cultural initiatives, the property stands poised to benefit from the ongoing transformation of Oslo's urban landscape.",
+      "groundTruth": {
+        "value": 6.23,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Centre): 5.625%\nSingle SME tenant (concentration risk): +0.45%\nGovernment or AAA-rated corporate tenant: -0.35%\nShort lease (<3 years remaining): +0.5%\nFinal: 6.23%"
+      },
+      "twinId": "a2e8587a-7abc-40e6-9236-9e321bbfbdfd",
+      "twinDeltaChanged": "removed: single_tenant_sme"
+    },
+    {
+      "id": "a2e8587a-7abc-40e6-9236-9e321bbfbdfd",
+      "anchor": "office_oslo_centre",
+      "appliedDeltas": [
+        "government_tenant",
+        "short_lease"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is prominently located at Grensen 4, in the heart of Oslo's bustling Sentrum district, just a stone's throw away from key landmarks including the Oslo Cathedral and the Norwegian Parliament building. This prime office space is nestled within a vibrant urban environment, characterized by a rich mix of retail outlets, cultural institutions, and public amenities, making it a desirable location for both tenants and visitors alike. The area is well-served by extensive public transport options, with Jernbanetorget metro hub, Oslo Central Station, and numerous tram lines providing seamless connectivity across the city and beyond.\n\nThis corner office property, constructed in 1980, showcases a modernist architectural design typical of the late 20th century, featuring large curtain wall windows that allow for ample natural light. The building comprises six floors above ground plus one basement level, with a total gross building area of approximately 3,120 m² BTA, and a total plot size of 525 m². The cadastral designation for the property is gnr. 212, bnr. 14 in Oslo municipality. The property is designed for mixed-use, primarily serving as an office building with supplementary retail space on the ground floor.\n\nSignificant technical upgrades have been undertaken recently to enhance the building's functionality and sustainability. Notable improvements include the installation of a new energy-efficient heating and cooling system in 2019, the refurbishment of common areas and restrooms in early 2021, and the replacement of the building's façade with thermally efficient glass panels in 2022. Additionally, the building has received an energy performance certificate rated C, reflecting its compliance with current energy efficiency standards.\n\nThe current tenancy structure is primarily dominated by a prestigious government tenant occupying approximately 60% of the office space, with a lease set to expire in less than three years. This offers a unique opportunity for a potential investor to reposition the asset post-lease termination. The remaining office space is leased to several AAA-rated corporate tenants, providing a stable income stream while maintaining a blend of diversified tenancy.\n\nSurrounding the property, the first floor is home to a well-established café, enhancing the building's appeal and foot traffic. The office floors above are designed with efficiency in mind, with flexible layouts that cater to various office configurations, ranging from open-plan spaces to private offices. Floor plates are approximately 520 m², facilitating an adaptable workspace environment.\n\nThe property benefits from its proximity to several cultural institutions, including the nearby Opera House and the Munch Museum, which adds significant value to its location by enhancing the area's attractiveness for prospective tenants. The vibrant atmosphere of the Sentrum district, coupled with pedestrian-friendly zones, further enhances the appeal of the property as a hub for professional activity.\n\nIn summary, Grensen 4 presents a compelling investment opportunity in a prime location within Oslo's historic city centre. With a strong government anchor tenant, a brief lease duration creating potential for value enhancement, and a suite of recent technical upgrades, this property is strategically positioned for future growth in a dynamic urban setting.",
+      "groundTruth": {
+        "value": 5.78,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Centre): 5.625%\nGovernment or AAA-rated corporate tenant: -0.35%\nShort lease (<3 years remaining): +0.5%\nFinal: 5.78%"
+      },
+      "twinId": "7aa26599-33e5-461f-8f09-e9d0120c77a1",
+      "twinDeltaChanged": "removed: single_tenant_sme"
+    },
+    {
+      "id": "2ca33041-c977-4be3-93f0-23e42b9e6867",
+      "anchor": "office_oslo_cbd",
+      "appliedDeltas": [],
+      "distractors": [
+        "The seller is highly motivated and wants a quick transaction."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Dronning Mauds gate 23 in the Aker Brygge district of central Oslo, adjacent to the vibrant waterfront, and within walking distance of key cultural and institutional landmarks. This prime location lies approximately 300 metres from both the Nobel Peace Center and the Aker Brygge marina, positioning it firmly within Oslo's established central business district. The surrounding environment is characterized by a dense mixed-use inner-city fabric, featuring a blend of high-end retail, dining establishments, and office spaces, underlined by the presence of the Royal Palace and the Astrup Fearnley Museum nearby. \n\nTransport accessibility is exemplary, facilitated by the Nationaltheatret station, which is just a short stroll away and serves all metro lines, regional rail, and the airport express. Frequent tram and bus services operate from Aker Brygge, and a ferry terminal providing connections to Nesodden enhances the site's overall connectivity. The area boasts a dynamic urban streetscape, with road access via Dronning Mauds gate and surrounding thoroughfares, ensuring seamless transport links for both tenants and visitors.\n\nThe subject property is a striking office building originally constructed in 2003, designed with modern architectural principles that prioritise natural light and open workspaces. The structure comprises a total of seven floors, inclusive of a basement level, with a gross building area of approximately 5,250 m² BTA. The property is situated on a plot measuring 800 m², designated as gnr. 211, bnr. 7 in Oslo municipality. Noteworthy features of the building include its high-quality façade materials and energy-efficient building systems, reflecting a commitment to sustainability and modern design.\n\nSignificant technical upgrades have been implemented throughout the building's history, including the installation of a new heating and cooling system in 2018, which significantly improved energy efficiency and occupant comfort. In 2020, the communal areas underwent a comprehensive renovation to enhance aesthetics and functionality, followed by the upgrading of the fire safety systems in 2021 to ensure compliance with the latest regulations. The property has been awarded an energy rating of C, indicating efficient energy consumption practices in line with current standards.\n\nRegulatory frameworks support the predominant use of the building as office space, with supplementary areas allocated for dining and meeting facilities. The tenancy structure is diverse, featuring a mix of established corporate tenants involved in technology, finance, and professional services, with current occupancy levels reflecting a strong demand for office space in this prestigious district. The average floor plate size of approximately 750 m² allows for flexible tenant fit-out options, further enhancing its attractiveness in the competitive Oslo office market.\n\nThe property also benefits from a prime location, with proximity to key landmarks such as the Nationaltheatret, Oslo City Hall, and the Nasjonalmuseet, which not only enhance its prestige but also contribute to the overall vibrancy of the area. The Aker Brygge district is renowned for its rich cultural offerings and leisure amenities, making it an appealing choice for both tenants and visitors alike.\n\nThe seller is highly motivated and is seeking a swift transaction, presenting an excellent opportunity for prospective purchasers looking to acquire a prime asset in one of Oslo's most sought-after office locations. This is a unique chance to invest in a property that combines modern design, excellent transport links, and a prestigious location, all while benefiting from a strong tenant mix in a thriving business environment.",
+      "groundTruth": {
+        "value": 4.88,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo CBD (Prime)): 4.875%\nFinal: 4.88%"
+      }
+    },
+    {
+      "id": "4d9146cc-7336-490d-aa32-2b31de744db0",
+      "anchor": "office_oslo_skoyen",
+      "appliedDeltas": [
+        "poor_micro_location"
+      ],
+      "distractors": [
+        "There is a popular café on the ground floor.",
+        "Local politicians have expressed support for the area's development."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Hoffsveien 12 in the Skøyen district of Oslo, nestled within a vibrant office cluster in the borough of Ullern. This location is strategically positioned approximately 300 metres from Skøyen station, a key transport hub offering regional and local train services, as well as multiple bus connections to the city centre. The surrounding area is characterized by a mix of residential and commercial developments, with key landmarks including Sjølyst shopping centre, CC Vest, and the picturesque Hoff Park, which enhances the district’s appeal as a desirable office location.\n\nThe building, constructed in 1980, is a well-maintained, multi-storey office property featuring six floors and a total gross building area of approximately 3,200 m² BTA. The structure is designed in a modernist architectural style, characterized by its efficient layout and extensive glazing, which allows for ample natural light in all office spaces. The plot measures 1,200 m² with cadastral designation gnr. 212, bnr. 45 in Oslo municipality, providing a spacious setting for both operational needs and potential future development.\n\nAccessibility is a vital factor for this property, as it finds itself in a suboptimal micro-location, with somewhat limited visibility from major thoroughfares and less direct access to transport options compared to other office developments in the area. However, the recent development initiatives in Skøyen, coupled with local politicians expressing strong support for the area's growth, signal an opportunity for enhanced future accessibility and visibility.\n\nThe property features a popular café on the ground floor, which not only serves the building’s tenants but also attracts local foot traffic, contributing positively to the overall atmosphere of the office space. Amenities within the building include various meeting rooms, breakout areas, and a dedicated parking facility that accommodates 40 vehicles, providing convenience for employees and visitors alike.\n\nSignificant technical upgrades to the property have been made over the years, with notable renovations including the installation of energy-efficient windows in 2010, a complete refurbishment of the lobby and common areas in 2015, and an upgrade of the HVAC system in 2018, all aimed at improving energy performance and tenant comfort. The building currently holds an energy rating of C, reflecting its compliance with modern sustainability standards in the commercial real estate market.\n\nThe property is regulated under the municipal master plan for \"bebyggelse og anlegg\", primarily serving an office function with the potential for supplementary retail or service-oriented uses at the ground level due to its mixed-use zoning. The tenancy structure comprises a diverse range of corporate tenants predominantly engaged in professional services and creative industries, providing a stable income stream while also reflecting the dynamic nature of the Skøyen office market.\n\nWhile the current vacancy rate is not disclosed, it is important to note that the property benefits from a combination of fully occupied floors along with some available spaces, enhancing its potential for leasing in a recovering market. The building’s unique features, combined with its strategic location, position it as an attractive asset for investors seeking to capitalize on the ongoing development and revitalization of the Skøyen area. \n\nOverall, Hoffsveien 12 represents a compelling opportunity, balancing a well-established office environment with the potential for future appreciation as local infrastructure improvements are realized and the area continues to evolve.",
+      "groundTruth": {
+        "value": 6.1,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Skøyen): 5.75%\nSuboptimal micro-location (poor access, visibility): +0.35%\nFinal: 6.10%"
+      },
+      "twinId": "2228e76b-c4c5-49b4-ab49-74aa10fb2dc7",
+      "twinDeltaChanged": "removed: poor_micro_location"
+    },
+    {
+      "id": "2228e76b-c4c5-49b4-ab49-74aa10fb2dc7",
+      "anchor": "office_oslo_skoyen",
+      "appliedDeltas": [],
+      "distractors": [
+        "There is a popular café on the ground floor.",
+        "Local politicians have expressed support for the area's development."
+      ],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Hoffsveien 12 in the prominent Skøyen district of Oslo, nestled between the tranquil Bestum and the bustling Sjølyst shopping area. This strategic location is approximately 300 metres from Skøyen station, a key transport hub connecting both regional and local train services, complemented by excellent bus connections to the city centre and convenient access to the E18 motorway. The surrounding area is characterized by its established office cluster, offering a blend of suburban calm with urban density, and is enhanced by potential waterfront development opportunities. Nearby landmarks include the vibrant Sjølyst shopping centre, CC Vest, and the serene Hoff Park, adding to the appeal of this mixed-use environment.\n\nThe building was originally constructed in 1980, designed as a modern office facility with a sleek façade and functional layout that has stood the test of time. It comprises six floors, including a basement, with a total gross building area of approximately 3,500 m² BTA. The property is built on a plot of 1,200 m², recorded under the cadastral references gnr. 164, bnr. 32 in Oslo municipality. The structure features a combination of reinforced concrete and steel framing, allowing for flexible office configurations and efficient use of space. The building boasts large window surfaces, promoting an abundance of natural light and providing captivating views of the surrounding area.\n\nRecent technical upgrades have enhanced the property’s functionality and appeal to tenants. Notable improvements include the installation of energy-efficient HVAC systems in 2019, a complete façade refurbishment in 2020, and the modernization of the common areas and restrooms in 2021. The building's energy performance has been rated C, reflecting its compliance with contemporary energy standards and contributing to a sustainable operational profile. Additional upgrades include new carpeting and interior finishes on all floors completed in 2023, ensuring a modern and professional environment for tenants and visitors alike.\n\nThe property is zoned for office use in the municipal master plan, with flexible regulations that support mixed-use developments. The current tenancy structure consists predominantly of professional service firms, tech companies, and a selection of creative industries, contributing to a dynamic workplace atmosphere. The flexible office layouts range from 200 m² to 600 m² per floor, accommodating both large and small businesses. Notably, the ground floor features a popular café, which serves as a social hub for tenants and visitors, enhancing the overall tenant experience and adding value to the property.\n\nLocal politicians have expressed strong support for ongoing development in the Skøyen area, recognizing its potential for further growth and urbanization. This sentiment reflects a broader commitment to enhancing infrastructure and amenities, which positions the property advantageously for future demand. The combination of professional office space, vibrant surroundings, and transport accessibility positions Hoffsveien 12 as a prime opportunity for investors seeking to capitalize on Oslo's evolving commercial landscape.\n\nIn summary, Hoffsveien 12 presents a compelling investment opportunity characterized by its strategic location, modern office facilities, and a supportive regulatory environment. With a history of consistent upgrades and a diverse tenant mix, this property is poised for continued success in the competitive Oslo commercial real estate market.",
+      "groundTruth": {
+        "value": 5.75,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Oslo Skøyen): 5.75%\nFinal: 5.75%"
+      },
+      "twinId": "4d9146cc-7336-490d-aa32-2b31de744db0",
+      "twinDeltaChanged": "removed: poor_micro_location"
+    },
+    {
+      "id": "239250d3-dc57-4393-ad96-16b6e6f33be1",
+      "anchor": "logistics_normal",
+      "appliedDeltas": [
+        "poor_micro_location",
+        "government_tenant"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property at Lagerveien 12 is situated in a secondary logistics zone in the municipality of Skedsmo, approximately 20 kilometers northeast of Oslo’s city center. This location is characterized by a mix of regional distribution centers and smaller industrial estates, providing a supportive environment for logistics and warehousing operations. The proximity to local industrial estates and smaller terminals contributes to the area’s focus on supporting smaller tenants, while the limited visibility and access from main transport routes create a suboptimal micro-location for larger corporate logistics operations. \n\nThe building itself, constructed in 1980, is a single-story warehouse facility with a total gross building area (BTA) of approximately 6,200 m². The structure features a traditional steel frame construction with composite metal cladding, designed to withstand heavy industrial use. The site is registered under the cadastral designation gnr. 123, bnr. 45 in Skedsmo municipality, encompassing a total land area of 10,000 m², allowing for ample parking and loading areas necessary for the intended logistics functions.\n\nAccessibility is primarily via road, with direct connections to the E6 and E18 highways facilitating transportation to regional and national markets. However, the property benefits from limited rail connections, which could restrict certain logistics functionalities and affect potential tenant interest. The surrounding area includes various infrastructure support, such as gas stations and service facilities, which cater to the logistics sector but lack the robust public transport options found in central urban settings.\n\nThe building currently houses a government tenant, which enhances the security of cash flows associated with the property. While the presence of a AAA-rated corporate tenant is a positive aspect, the overall tenant base is smaller, emphasizing the need for potential renovations to attract additional, high-caliber tenants in the competitive logistics market. The asset is characterized by a functional layout, with a clear span warehouse design and multiple loading docks, although it would require substantial refurbishment to meet modern standards and improve overall operational efficiency.\n\nOver the years, the property has undergone several technical upgrades to maintain its functionality. Notable improvements include the installation of a new HVAC system in 2015, enhancements to loading dock facilities in 2018, and a complete roof refurbishment in 2020. Despite these upgrades, the building still requires additional renovations, particularly in the areas of insulation and energy efficiency, to align with current regulatory requirements and tenant expectations. As of the latest evaluation, the building retains an energy rating of D, which indicates room for improvement in sustainability metrics.\n\nThe property is regulated under the municipal master plan designated for \"industriområde,\" affirming its intended use as a warehouse and logistics facility. Its primary usage is currently as a distribution center with ancillary office space, which constitutes approximately 10% of the total area. The tenancy structure reflects the skew towards governmental tenants, but as the market evolves, there is significant potential for tenant diversification through strategic marketing and property upgrades.\n\nIn summary, while Lagerveien 12 presents unique challenges due to its suboptimal micro-location and the need for further investment in renovations, the presence of a government tenant provides a stable income foundation. This property offers an opportunity for investors looking to capitalize on the growing demand for logistics solutions in the region, albeit with a critical eye on the necessary enhancements to maximize its potential and appeal to a broader tenant audience.",
+      "groundTruth": {
+        "value": 8,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Normal & Secondary): 8%\nSuboptimal micro-location (poor access, visibility): +0.35%\nGovernment or AAA-rated corporate tenant: -0.35%\nFinal: 8.00%"
+      },
+      "twinId": "077b2568-4b4c-4adb-b813-81b936b7a38f",
+      "twinDeltaChanged": "removed: government_tenant"
+    },
+    {
+      "id": "077b2568-4b4c-4adb-b813-81b936b7a38f",
+      "anchor": "logistics_normal",
+      "appliedDeltas": [
+        "poor_micro_location"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Lagerveien 23 in the secondary industrial area of Moss, approximately 5 kilometers from the city center and easily accessible via the E6 motorway. The surrounding context is characterized by local industrial estates, smaller logistics terminals, and distribution centers, which together form an established yet secondary logistics hub. This micro-location presents specific challenges, notably suboptimal access and visibility, which could impact the property’s attractiveness to potential tenants. Despite these limitations, the area retains a functional industrial character that has supported various smaller tenant operations.\n\nThe building, constructed in 1978, is a single-story logistics facility comprising a gross building area of approximately 3,500 m² BTA. It features a traditional steel frame construction with a concrete floor, designed to accommodate warehousing and light manufacturing activities. The property is situated on a plot of 10,000 m², with cadastral references gnr. 56, bnr. 29 in Moss municipality. The expansive outdoor area includes loading docks and ample parking space, essential for logistics operations. The property’s design allows for flexible internal configurations, with clear heights of approximately 6 meters, facilitating the storage of various goods.\n\nPublic transport connections are limited, with the nearest bus stop located approximately 1 kilometer from the property along Terminalveien, while the closest railway station is about 3 kilometers away, which may reduce its appeal for logistics companies that prefer direct rail access for freight transport. Nevertheless, the property benefits from excellent road connectivity via the E6 motorway, providing direct links to Oslo and other major urban centers.\n\nThe building has undergone several technical upgrades over the years to enhance its functionality and energy efficiency. Notable improvements include the installation of a new HVAC system in 2015, a roof refurbishment in 2018, and an energy-efficient LED lighting upgrade in 2020, contributing to a better operational environment for tenants. Despite these improvements, the property has specific renovation requirements to modernize its facilities and improve overall aesthetic appeal, which presents an opportunity for value-added investment.\n\nCurrently, the property is utilized predominantly for warehouse and distribution purposes, accommodating a small tenant base consisting mainly of local businesses involved in retail and distribution. The tenancy structure highlights a relatively high vacancy rate, which can be attributed to the aforementioned suboptimal micro-location and the need for renovations, impacting the overall market yield. The flexible floor space allows for potential reconfiguration to attract new tenants, enhancing the viability of the property in the competitive logistics market.\n\nZoning regulations indicate that the property is classified for industrial use, aligning with its current operational profile and allowing for various logistics-related activities. However, the local master plan does not foresee significant changes, which may limit future development options. The combination of older building stock and the surrounding smaller tenant base underscores the necessity for strategic repositioning of the asset to better meet contemporary logistics demands.\n\nAlthough the property is not certified under any environmental schemes such as BREEAM or LEED, the recent upgrades indicate a commitment to improving energy sustainability, though further investment may be required to achieve more substantial environmental performance metrics. The opportunity for enhancement through renovation and modernization presents a strategic avenue for potential investors looking to capitalize on the evolving logistics landscape in the region. Overall, while the property possesses certain limitations tied to its location and condition, it also offers significant upside potential, making it an intriguing investment proposition for discerning buyers.",
+      "groundTruth": {
+        "value": 8.35,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Normal & Secondary): 8%\nSuboptimal micro-location (poor access, visibility): +0.35%\nFinal: 8.35%"
+      },
+      "twinId": "239250d3-dc57-4393-ad96-16b6e6f33be1",
+      "twinDeltaChanged": "removed: government_tenant"
+    },
+    {
+      "id": "a581b2e3-fdaa-4eee-a5c1-0a007f947666",
+      "anchor": "logistics_prime",
+      "appliedDeltas": [
+        "modern_building",
+        "older_building",
+        "prime_micro_location",
+        "single_tenant_sme"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Lagerveien 12 in the prestigious Alnabru logistics district of Oslo, strategically positioned between major logistics terminals and distribution hubs. This site is approximately 700 meters from the E6 motorway, providing seamless access for heavy goods transport, and is also within close proximity to the Alnabru rail freight terminal, enhancing its appeal for logistics and distribution operations. The area is characterized by a robust logistics framework, catering to last-mile distribution needs, with a strong tenant demand driven by the ongoing expansion of e-commerce and supply chain logistics. Adjacent landmarks include the newly developed Alnabru terminal complex and proximity to the Oslo Airport Gardermoen, both of which solidify the location's reputation as a prime logistics hub.\n\nThe building is a modern warehouse facility constructed in 2018, offering high-standard specifications tailored for contemporary logistics operations. It comprises a single-storey structure with a gross building area of approximately 9,500 m² BTA. The building features a steel frame construction with precast concrete walls and insulated roofing, designed to meet the latest safety and sustainability standards, reflecting an exceptional micro-location within the highly sought-after Alnabru area. The property sits on a plot of 15,000 m², with cadastral designation gnr. 188, bnr. 22 in Oslo municipality, allowing for ample space for vehicle maneuvering and loading/unloading operations.\n\nThe warehouse benefits from significant technical upgrades since its completion, including the installation of an advanced fire suppression system in 2019, energy-efficient LED lighting throughout the facility in 2020, and a state-of-the-art HVAC system in 2021. The building has achieved an impressive energy rating of B (green) and is compliant with national building regulations (TEK 2017), ensuring it meets the high environmental standards expected in today's logistics market.\n\nThe property is currently leased to a single SME tenant specializing in e-commerce logistics, representing a concentration risk within the tenancy structure. Although the single-tenant arrangement provides a steady income stream, the risks associated with tenant concentration are acknowledged within the context of the investment. The tenant occupies the entire space, utilizing it for warehousing and distribution activities, which speaks to the building's suitability for modern logistical needs.\n\nThe zoning regulations under the municipal master plan designate the site primarily for \"transport, communications, and storage,\" reflecting the strategic importance of the location for logistics-related businesses. The immediate area is characterized by similar modern logistics facilities, which contributes to a competitive environment conducive to growth and stability in tenant demand. \n\nTransport connections are further reinforced by proximity to multiple bus routes servicing the area, facilitating employee access, while the efficient link to the E6 and E18 motorways supports freight movement. Additionally, the nearby Alnabru rail terminal provides a vital rail freight link, enhancing the logistic capabilities of the building and attracting tenants seeking integrated transport solutions.\n\nIn conclusion, this property represents an attractive opportunity for investors seeking to capitalize on the rising demand for modern logistics spaces in Norway. Its strategic location, high construction standards, and recent technical upgrades position it well in the market, albeit with the acknowledged concentration risk associated with its single SME tenant.",
+      "groundTruth": {
+        "value": 6.43,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Prime): 6.125%\nModern building (post-2015, high standard): -0.2%\nOlder building (pre-2000, needs capex): +0.3%\nExceptional micro-location within the area: -0.25%\nSingle SME tenant (concentration risk): +0.45%\nFinal: 6.42%"
+      },
+      "twinId": "92227c1a-ad18-4868-bf0e-f182c160a277",
+      "twinDeltaChanged": "removed: single_tenant_sme"
+    },
+    {
+      "id": "92227c1a-ad18-4868-bf0e-f182c160a277",
+      "anchor": "logistics_prime",
+      "appliedDeltas": [
+        "modern_building",
+        "older_building",
+        "prime_micro_location"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Logistikkveien 45 in the Berger district, strategically positioned within the prime logistics hub of Norway. This location is approximately 2 kilometers from the E6 motorway and its intersection with the E18, ensuring seamless access for both road and rail transport. The property is nestled near major logistics terminals and distribution hubs, creating an ideal environment for logistics and supply chain operations. Berger's robust infrastructure includes facilities for rail freight, enhancing the attractiveness for businesses engaged in both regional and cross-border logistics. This area is characterized as a key last-mile distribution hub, with significant tenant demand evident among logistics operators seeking modern facilities.\n\nThe building is a modern logistics facility completed in 2020, reflecting high standards in warehouse construction. It comprises a single-story structure with a gross building area of approximately 15,000 m² BTA. The property features clear heights of 10 meters, allowing for optimal storage and operational efficiency, with state-of-the-art loading docks equipped for high-volume distribution activities. The construction type includes a steel frame and insulated panel walls, ensuring durability and low maintenance costs. The cadastral designation is gnr. 164, bnr. 22 in Lørenskog municipality, with an owned plot size of 30,000 m², providing ample space for future expansion or outdoor logistics operations.\n\nSurrounding the property, the logistics landscape is enriched by nearby landmarks, including major retail distribution centers and fulfillment warehouses. The Berger district is recognized for its modern logistics specifications, catering to the growing demand for efficient supply chain solutions. Transport options are comprehensive, with direct access to the E6 and E18 motorways, facilitating swift transportation to both Oslo and key regional markets. In addition to road access, the proximity to the rail freight terminal further enhances the logistical capabilities of the location, offering businesses flexibility in transport modes.\n\nThe property has been designed with an emphasis on sustainability and energy efficiency. It is equipped with solar panels installed in 2021, contributing to a reduced carbon footprint. Furthermore, advanced climate control systems were integrated in 2022, enhancing energy efficiency and comfort for operational staff. The facility has been rated B in energy performance, indicating a strong commitment to environmental standards. However, there is a substantial older building located adjacent to the modern warehouse on the same plot, originally constructed in 1995, which requires significant capital expenditure for refurbishment and is currently under consideration for redevelopment.\n\nThe property is regulated in the municipal master plan as \"bebyggelse og anlegg (eksisterende og fremtidig)\", allowing for continued use as a logistics and distribution center. The existing tenancy structure is primarily composed of logistics operators, including a national courier service and a regional distribution company, which have committed to long-term leases, reflecting the strong demand for space within this highly sought-after logistics area. The modern building has been fully let since its completion, while the older building, although in need of capex, provides additional value as a potential redevelopment opportunity.\n\nIn summary, the property at Logistikkveien 45 is positioned in an exceptional micro-location that benefits from robust transport links and a growing logistics market. With modern building specifications and a fully operational tenant structure, it represents a valuable asset in the rapidly evolving logistics sector. The combination of a high-standard modern facility alongside an older structure with redevelopment potential presents a unique opportunity for investors seeking exposure to the commercial real estate market in Norway’s logistic sectors.",
+      "groundTruth": {
+        "value": 5.98,
+        "tolerance": 0.35,
+        "calculation": "Base (Logistics Prime): 6.125%\nModern building (post-2015, high standard): -0.2%\nOlder building (pre-2000, needs capex): +0.3%\nExceptional micro-location within the area: -0.25%\nFinal: 5.97%"
+      },
+      "twinId": "a581b2e3-fdaa-4eee-a5c1-0a007f947666",
+      "twinDeltaChanged": "removed: single_tenant_sme"
+    },
+    {
+      "id": "a3c4ca33-31f8-4eca-8824-3527936347e0",
+      "anchor": "office_bergen",
+      "appliedDeltas": [
+        "single_tenant_sme"
+      ],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is situated at Nygårdsgaten 42 in the vibrant Laksevåg district of Bergen, strategically positioned between the waterfront and the bustling city center. This location benefits from its proximity to key landmarks, including the historic Bryggen UNESCO site, the Fløibanen funicular, and the renowned Fish Market, which are all within walking distance. Additionally, the Bergenhus Fortress lies approximately 1.5 kilometers away, reinforcing the area's cultural significance. Public transport access is exceptional, with the Bergen light rail (Bybanen) providing frequent services to the city center and the Bergen station, which connects regional trains and offers direct services to Flesland Airport.\n\nThe property consists of a modern office building, constructed in 2010, featuring a contemporary architectural design that harmonizes with the surrounding urban landscape. The building encompasses six floors and offers a total gross building area of approximately 3,200 m² BTA. The structure is predominantly built from reinforced concrete, with extensive glass facades that provide ample natural light and stunning views of the harbour. The cadastral designation is gnr. 123, bnr. 45 in Bergen municipality, with an owned plot size of 1,200 m², allowing for a functional layout ideal for office use.\n\nInterior specifications include flexible floor plates averaging 600 m² per level, providing the opportunity for customizable tenant layouts. The building is equipped with state-of-the-art amenities, including energy-efficient HVAC systems, high-speed internet connectivity, and modern fire safety systems. The property has been maintained to a high standard, with significant technical upgrades over the years, including the installation of a new energy-efficient heating system in 2015, an upgraded security system in 2018, and the refurbishment of communal areas in 2021 that enhanced the overall aesthetic appeal and functionality of the premises.\n\nThe current tenancy structure is notable, as the entire office space is leased to a single SME tenant, which introduces a concentration risk to the property’s income stream. This single-tenant occupancy underscores the importance of tenant creditworthiness and stability for future income projections. The tenant operates in the professional services sector, leveraging the property's strategic location to access a diverse client base in Bergen's growing business landscape.\n\nThe building's regulatory status is consistent with the municipal master plan, designated for \"Kontor og næring\" (office and commercial use), and it is currently utilized exclusively as an office space with minimal supplementary facilities. There are no additional environmental certifications, such as BREEAM or LEED, reported in the provided material, and while the building has an energy rating of C, this rating reflects its compliance with modern energy efficiency standards.\n\nSurrounding area characteristics further enhance the appeal of the property, with Laksevåg being a hub for the maritime and shipping industries, as well as a growing university city with a vibrant student population. The scenic harbour location not only attracts local businesses but also promotes a dynamic atmosphere that benefits employees working in the area. The surrounding urban environment features a blend of historic and contemporary buildings, contributing to a unique office setting that is both professional and attractive.\n\nIn summary, this property at Nygårdsgaten 42 presents a unique investment opportunity characterized by its modern facilities, strategic location, and the single-tenant arrangement that provides both stability and inherent concentration risk. Potential investors are encouraged to consider the implications of tenant concentration on long-term yield potential while recognizing the advantages of being situated in a thriving economic district of Bergen.",
+      "groundTruth": {
+        "value": 6.7,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Bergen): 6.25%\nSingle SME tenant (concentration risk): +0.45%\nFinal: 6.70%"
+      },
+      "twinId": "f5405dcd-40c6-4cc9-a34e-d9a50bf2a4da",
+      "twinDeltaChanged": "removed: single_tenant_sme"
+    },
+    {
+      "id": "f5405dcd-40c6-4cc9-a34e-d9a50bf2a4da",
+      "anchor": "office_bergen",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "## Property Information\n\n*Overview of property details, ownership, and certifications*\n\nThe property is located at Nygårdsgaten 24, situated in the vibrant Marineholmen district of Bergen. This area is known for its dynamic mix of commercial activities, primarily driven by the maritime and shipping industry, as well as the presence of educational institutions, including the University of Bergen. The property lies approximately 300 meters from the scenic harbor and within walking distance of notable landmarks such as Bryggen, a UNESCO World Heritage site, and the Fløibanen funicular, which provides access to panoramic views of the city. The well-connected public transport network includes the Bergen light rail (Bybanen) and regional train services from Bergen station, ensuring excellent mobility for tenants and visitors alike.\n\nThe building, originally constructed in 1987, is a modern office property featuring a sleek design that integrates glass and steel elements, contributing to its contemporary appeal. The property comprises six floors with a total gross building area of approximately 3,200 m² BTA. The structured data indicates a gross area of 3,150 m² and a built-up area of 530 m², offering efficient floor plates averaging around 530 m² per level. The structure is built with reinforced concrete, ensuring durability and a solid foundation for various office configurations. The cadastral designation is gnr. 232, bnr. 45 in Bergen municipality, encompassing a plot of 600 m², allowing for a well-defined footprint with potential for future expansion.\n\nRecent technical upgrades have significantly improved the property’s functionality and energy efficiency. These enhancements include the installation of energy-efficient windows and exterior cladding in 2019, a new HVAC system implemented in 2020, and the refurbishment of common areas in 2021. The building has achieved an energy rating of C, reflecting its compliance with contemporary sustainability standards. While specific details regarding additional environmental certifications such as BREEAM or LEED are not available in the current context, the property demonstrates an ongoing commitment to maintaining modern standards of energy performance and tenant comfort.\n\nThe property is regulated within the municipal master plan with a primary designation for \"Bebyggelse og anlegg\" (buildings and installations), predominantly serving as an office space complemented by ancillary meeting rooms and a café on the ground floor. The tenancy structure, as outlined in the sales presentation, features a diverse range of office users, including technology firms, consultancy agencies, and creative industries. The aggregate office areas per floor range from approximately 400 m² to 600 m², with several floors currently fully leased and a portion of the space designated for future leasing opportunities. The presence of a vibrant café enhances the building's appeal, providing tenants with convenient amenities and a social hub.\n\nPublic transport accessibility is robust, with multiple Bybanen stops within a short walking distance, facilitating easy connections to and from the city center and other key districts. The property is also conveniently located near the Flesland airport, which is approximately 18 kilometers away, providing a seamless transition for business travelers. The surrounding area features a blend of historic architecture and modern developments, with easy access to the picturesque waterfront, offering tenants a unique working environment steeped in Bergen's rich maritime heritage.\n\nWith its strategic location, modern amenities, and ongoing investment in upgrades, Nygårdsgaten 24 represents a valuable asset for potential investors seeking to capitalize on Bergen's growing commercial landscape while benefiting from the city's cultural and historical significance.",
+      "groundTruth": {
+        "value": 6.25,
+        "tolerance": 0.35,
+        "calculation": "Base (Office Bergen): 6.25%\nFinal: 6.25%"
+      },
+      "twinId": "a3c4ca33-31f8-4eca-8824-3527936347e0",
+      "twinDeltaChanged": "removed: single_tenant_sme"
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "7aa26599-33e5-461f-8f09-e9d0120c77a1",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in the Sentrum district of Oslo, which is part of the Office Oslo Centre market. The benchmark yield range for this segment is 5.00%–6.25%. Step 2: Position Within Range - The property is a prime asset due to its central location, modern design, and high-quality construction. It should sit towards the lower end of the benchmark range, around 5.00% to 5.25%. Step 3: Apply Adjustments - Tenant quality is high due to the government contractor tenant, which is stable and similar to AAA-rated tenants, pushing the yield down. However, the lease length is short (under three years), introducing some risk and pushing the yield up slightly. The building age and condition are excellent due to recent upgrades and energy-efficient features, pushing the yield down. Overall, the adjustments balance out, maintaining the yield at the lower end of the range. Step 4: Calculate Final Yield - Starting with a positioned benchmark of 5.00%, the adjustments for tenant quality and building condition push the yield slightly down, while the short lease term pushes it slightly up, resulting in a final yield estimate of 5.0%.",
+          "latencyMs": 4085
+        },
+        {
+          "prediction": 5,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in the Sentrum district of Oslo, which is part of the 'Office Oslo Centre' market segment. The benchmark yield range for this segment is 5.00%–6.25%. Step 2: Position Within Range - The property is a prime asset due to its central location, modern design, and high-quality construction. It should sit towards the lower end of the benchmark range, around 5.00%. Step 3: Apply Adjustments - Tenant quality and creditworthiness: The tenant is a reputable government contractor, which is a positive factor, pushing the yield down. Lease length and WAULT: The lease has a short remaining term of under three years, introducing some risk, pushing the yield up slightly. Building age and condition: The building is relatively new (constructed in 2010) and has undergone recent upgrades, which is a positive factor, pushing the yield down. Special factors: The property's excellent location and accessibility, along with its energy efficiency, are positive factors, pushing the yield down. Step 4: Calculate Final Yield - Starting with the positioned benchmark of 5.00%, the adjustments for tenant quality, building condition, and special factors push the yield down, while the short lease term pushes it up slightly. The final yield estimate is 5.00%.",
+          "latencyMs": 3945
+        },
+        {
+          "prediction": 5,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in the Sentrum district of Oslo, which is considered part of the 'Office Oslo Centre' market segment. The benchmark yield range for this segment is 5.00%–6.25%. Step 2: Position Within Range - This is a prime asset due to its central location, modern construction, and high-quality specifications. It should sit towards the lower end of the benchmark range. Step 3: Apply Adjustments - Tenant quality is high as the tenant is a reputable government contractor, which reduces risk and pushes yield down. However, the short remaining lease term introduces some risk, pushing yield slightly up. The building is relatively new (constructed in 2010) and has been well-maintained with recent upgrades, which pushes yield down. The strategic location and high demand for office space in this area also push yield down. Step 4: Calculate Final Yield - Starting with a positioned benchmark of 5.00%, adjustments for tenant quality and building condition push the yield slightly down, but the short lease term adds a minor upward adjustment. The final yield estimate is 5.0%.",
+          "latencyMs": 5231
+        }
+      ],
+      "meanPrediction": 5,
+      "stdDeviation": 0,
+      "minPrediction": 5,
+      "maxPrediction": 5,
+      "error": -1.23,
+      "absoluteError": 1.23,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T22:02:51.356Z",
+      "completedAt": "2026-01-18T22:02:56.589Z"
+    },
+    {
+      "scenarioId": "a2e8587a-7abc-40e6-9236-9e321bbfbdfd",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in Oslo's Sentrum district, which is part of the 'Office Oslo Centre' market segment. The benchmark yield range for this segment is 5.00%–6.25%. Step 2: Position Within Range - This property is considered a prime asset due to its central location, government anchor tenant, and recent upgrades. Therefore, it should be positioned towards the lower end of the benchmark range, around 5.00%–5.25%. Step 3: Apply Adjustments - Tenant quality and creditworthiness: The presence of a prestigious government tenant and AAA-rated corporate tenants suggests a lower risk, pushing yield down. Lease length and WAULT: The government lease is set to expire in less than three years, which introduces some risk, potentially pushing yield up slightly. Building age and condition: Despite being constructed in 1980, the building has undergone significant recent upgrades, improving its condition and reducing risk, pushing yield down. Special factors: The property's prime location and proximity to cultural institutions enhance its attractiveness, pushing yield down. Step 4: Calculate Final Yield - Starting with a positioned benchmark of 5.00%, the adjustments for tenant quality, building condition, and special factors push the yield down slightly, while the lease length introduces a minor upward pressure. Overall, the final yield estimate is 5.0%.",
+          "latencyMs": 4500
+        },
+        {
+          "prediction": 5.25,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in Oslo Centre, which falls under the 'Office Oslo Centre' category. The benchmark yield range for this segment is 5.00%–6.25%. Step 2: Position Within Range - This is a prime asset due to its central location, proximity to key landmarks, and high-quality tenants, suggesting it should be positioned towards the lower end of the benchmark range. Step 3: Apply Adjustments - Tenant quality and creditworthiness are high, with a prestigious government tenant and AAA-rated corporate tenants, pushing the yield down. The lease length is relatively short with the government tenant, which introduces some risk and pushes the yield slightly up. The building is older but has undergone significant recent upgrades, which improves its condition and pushes the yield down. Special factors include its prime location and recent technical upgrades, which further push the yield down. Step 4: Calculate Final Yield - Starting from the lower end of the range at 5.00%, the adjustments for tenant quality and building condition push the yield down, but the short lease length introduces some risk, resulting in a final yield estimate of 5.25%.",
+          "latencyMs": 4032
+        },
+        {
+          "prediction": 5,
+          "reasoning": "Step 1: The property is located in Oslo's Sentrum district, which falls under 'Office Oslo Centre'. The benchmark yield range for this segment is 5.00%–6.25%. Step 2: The property is a prime asset due to its central location, prestigious government tenant, and recent upgrades, positioning it towards the lower end of the benchmark range. Step 3: Tenant quality is high with a government tenant and AAA-rated corporate tenants, pushing yield down. The lease length is relatively short with the main tenant, which could increase risk slightly, but the opportunity for repositioning post-lease expiration is a positive factor. The building's age is mitigated by recent significant upgrades, pushing yield down. Special factors include the property's proximity to cultural institutions and its vibrant location, further enhancing its appeal and reducing risk. Step 4: Starting at the lower end of the benchmark range (5.00%), adjustments for high tenant quality, recent upgrades, and prime location support maintaining the yield at 5.00%.",
+          "latencyMs": 3742
+        }
+      ],
+      "meanPrediction": 5.083,
+      "stdDeviation": 0.118,
+      "minPrediction": 5,
+      "maxPrediction": 5.25,
+      "error": -0.697,
+      "absoluteError": 0.697,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T22:02:51.356Z",
+      "completedAt": "2026-01-18T22:02:55.858Z"
+    },
+    {
+      "scenarioId": "2ca33041-c977-4be3-93f0-23e42b9e6867",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 4.75,
+          "reasoning": "Step 1: The property is located in the Aker Brygge district of central Oslo, which is part of the Oslo CBD office market. The benchmark yield range for this segment is 4.50%–5.25%. Step 2: The property is a prime asset due to its central location, modern design, and high-quality tenants, suggesting it should be positioned towards the lower end of the benchmark range. Step 3: Tenant quality is high with established corporate tenants, pushing yield down. The building is relatively modern with significant upgrades, pushing yield down. The energy rating of C is adequate but not exceptional, having a neutral effect. The motivated seller and strong demand for office space in this area also suggest a lower yield. Step 4: Starting at the lower end of the benchmark range (4.50%), the high tenant quality and modern building condition justify a slight increase to 4.75% to account for any minor risks or market conditions.",
+          "latencyMs": 3646
+        },
+        {
+          "prediction": 4.75,
+          "reasoning": "Step 1: The property is located in the Aker Brygge district of central Oslo, which is part of the Oslo CBD office market. The benchmark yield range for this segment is 4.50%–5.25%. Step 2: The property is a prime asset due to its central location, modern design, and strong tenant mix. Therefore, it should sit towards the lower end of the benchmark range. Step 3: The factors influencing the yield include: Tenant quality and creditworthiness - The property has a diverse mix of established corporate tenants, which is a positive factor, pushing yield down. Lease length and WAULT - The information provided does not specify the lease length or WAULT, so no adjustment is made here. Building age and condition - The building is relatively modern, constructed in 2003, with significant upgrades in recent years, which is a positive factor, pushing yield down. Special factors - The property's prime location, excellent transport links, and proximity to cultural landmarks further enhance its attractiveness, pushing yield down. Step 4: Starting with the lower end of the benchmark range at 4.50%, the positive factors suggest a slightly higher yield within the prime range. Therefore, the final estimated yield is 4.75%.",
+          "latencyMs": 4014
+        },
+        {
+          "prediction": 4.75,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in the Aker Brygge district of central Oslo, which is part of the Oslo CBD. The benchmark yield range for Office Oslo CBD is 4.50%–5.25%. Step 2: Position Within Range - This is a prime asset due to its location in the central business district, modern design, and strong tenant mix. It should sit towards the lower end of the benchmark range. Step 3: Apply Adjustments - Tenant quality and creditworthiness: The property has a diverse mix of established corporate tenants, which is a positive factor pushing the yield down. Lease length and WAULT: The strong demand for office space in this district suggests favorable lease terms, pushing the yield down. Building age and condition: The building, constructed in 2003 with significant upgrades, is in good condition, pushing the yield down. Special factors: The property's prime location and excellent transport links further enhance its attractiveness, pushing the yield down. Step 4: Calculate Final Yield - Starting from the lower end of the benchmark range (4.50%), the positive factors suggest a slight increase to account for any residual risks, resulting in a final yield estimate of 4.75%.",
+          "latencyMs": 4005
+        }
+      ],
+      "meanPrediction": 4.75,
+      "stdDeviation": 0,
+      "minPrediction": 4.75,
+      "maxPrediction": 4.75,
+      "error": -0.13,
+      "absoluteError": 0.13,
+      "withinTolerance": true,
+      "rolloutConsistency": 100,
+      "startedAt": "2026-01-18T22:02:51.356Z",
+      "completedAt": "2026-01-18T22:02:55.373Z"
+    },
+    {
+      "scenarioId": "4d9146cc-7336-490d-aa32-2b31de744db0",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5.75,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in the Skøyen district of Oslo, which falls under the 'Office Oslo Skøyen' segment. The benchmark yield range for this segment is 5.25%–6.25%. Step 2: Position Within Range - The property is a well-maintained, multi-storey office building with modernist architectural style and significant technical upgrades, suggesting it is closer to a prime asset within the Skøyen segment. However, its suboptimal micro-location with limited visibility and access compared to other developments suggests it might not be at the very low end of the range. Therefore, it should sit slightly above the midpoint of the benchmark range. Step 3: Apply Adjustments - Tenant quality and creditworthiness appear stable due to a diverse range of corporate tenants, which is neutral. The building's age (constructed in 1980) is offset by significant renovations, which is neutral to slightly positive. The energy rating of C is average, and the property's strategic location with potential for future appreciation due to local development initiatives is positive. However, the suboptimal micro-location and limited visibility push the yield slightly up. Step 4: Calculate Final Yield - Starting from a positioned benchmark of 5.50%, adjustments for suboptimal micro-location and limited visibility (+0.25%) lead to a final yield estimate of 5.75%.",
+          "latencyMs": 5192
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "Step 1: The property is located in the Skøyen district of Oslo, which places it in the 'Office Oslo Skøyen' segment. The benchmark yield range for this segment is 5.25%–6.25%. Step 2: The property is a well-maintained, multi-storey office building with modern amenities and a strategic location near a key transport hub, suggesting it is closer to a prime asset within the Skøyen market. However, its suboptimal micro-location with limited visibility and access suggests it may not be at the very top of the prime range. Therefore, it should sit in the middle of the benchmark range, around 5.75%. Step 3: Tenant quality and creditworthiness appear stable with a diverse range of corporate tenants, which is neutral. The building age is older, constructed in 1980, but it has undergone significant renovations, which is positive. The energy rating of C is average, and the presence of a popular café and amenities is positive. The potential for future appreciation due to local development initiatives is also positive. These factors collectively suggest a slight downward adjustment from the mid-point of the range. Step 4: Starting from the mid-point of the benchmark range at 5.75%, the positive factors balance out the suboptimal location, resulting in a final yield estimate of 5.75%.",
+          "latencyMs": 5180
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "Step 1: The property is located in the Skøyen district of Oslo, which falls under the 'Office Oslo Skøyen' segment. The benchmark yield range for this segment is 5.25%–6.25%. Step 2: The property is a secondary asset due to its suboptimal micro-location with limited visibility and less direct access to transport options. Therefore, it should be positioned towards the higher end of the benchmark range, around 6.00%. Step 3: Adjustments include: Tenant quality and creditworthiness are likely stable due to the diverse range of corporate tenants, which is neutral. The building's age is a factor, but it has been well-maintained with significant technical upgrades, slightly pushing the yield down. The energy rating of C is average, so it does not significantly impact the yield. The strategic location in a developing area with political support for growth is a positive factor, slightly reducing the yield. Overall, these factors suggest a slight downward adjustment from the initial positioning. Step 4: Starting at 6.00%, the adjustments for building condition and strategic location reduce the yield estimate to 5.75%.",
+          "latencyMs": 4720
+        }
+      ],
+      "meanPrediction": 5.75,
+      "stdDeviation": 0,
+      "minPrediction": 5.75,
+      "maxPrediction": 5.75,
+      "error": -0.35,
+      "absoluteError": 0.35,
+      "withinTolerance": true,
+      "rolloutConsistency": 100,
+      "startedAt": "2026-01-18T22:02:56.795Z",
+      "completedAt": "2026-01-18T22:03:01.993Z"
+    },
+    {
+      "scenarioId": "2228e76b-c4c5-49b4-ab49-74aa10fb2dc7",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5.75,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in the Skøyen district of Oslo, which falls under the 'Office Oslo Skøyen' segment. The benchmark yield range for this segment is 5.25%–6.25%. Step 2: Position Within Range - Given the property's strategic location, modern facilities, and recent upgrades, it can be considered a prime asset within the Skøyen area. Therefore, it should sit towards the lower end of the benchmark range, around 5.25% to 5.50%. Step 3: Apply Adjustments - The tenant quality is strong, with professional service firms and tech companies, which is a positive factor that could push the yield down. The building has undergone recent upgrades, enhancing its condition, which also supports a lower yield. However, the building's age (constructed in 1980) might introduce some risk, slightly pushing the yield up. The energy performance rating of C is average, not significantly impacting the yield. Considering these factors, the yield might be slightly adjusted upwards to account for the building's age. Step 4: Calculate Final Yield - Starting from a positioned benchmark of 5.50%, the adjustments for building age and condition suggest a final yield estimate of 5.75%.",
+          "latencyMs": 4281
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in the Skøyen district of Oslo, which falls under the 'Office Oslo Skøyen' segment. The benchmark yield range for this segment is 5.25%–6.25%. Step 2: Position Within Range - The property can be considered a prime asset due to its strategic location, recent upgrades, and diverse tenant mix. Therefore, it should sit towards the lower end of the benchmark range, around 5.25%–5.75%. Step 3: Apply Adjustments - Tenant quality and creditworthiness are strong, with a mix of professional service firms and tech companies, which pushes the yield down. The building has undergone recent upgrades, improving its condition and appeal, which also pushes the yield down. The building's age (constructed in 1980) might push the yield slightly up, but this is mitigated by the upgrades. The supportive regulatory environment and potential for future growth in the Skøyen area further support a lower yield. Step 4: Calculate Final Yield - Starting at the lower end of the benchmark range (5.25%), adjustments for tenant quality, building condition, and growth potential suggest a slight increase within the lower range, resulting in a final yield estimate of 5.75%.",
+          "latencyMs": 4984
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "Step 1: The property is located in the Skøyen district of Oslo, which falls under the 'Office Oslo Skøyen' segment. The benchmark yield range for this segment is 5.25%–6.25%. Step 2: The property can be considered a prime asset due to its strategic location, recent upgrades, and diverse tenant mix. It should sit towards the lower end of the benchmark range, around 5.25%–5.75%. Step 3: Tenant quality is strong, with a mix of professional service firms, tech companies, and creative industries, which pushes the yield down. The building has been recently upgraded, which also pushes the yield down. However, the building's age (constructed in 1980) and its energy performance rating of C might push the yield slightly up. The strategic location and ongoing development in the area are positive factors that push the yield down. Step 4: Starting with a positioned benchmark of 5.50%, adjustments for tenant quality and recent upgrades push it down to 5.25%, but considering the building's age and energy rating, a slight upward adjustment results in a final yield estimate of 5.75%.",
+          "latencyMs": 5505
+        }
+      ],
+      "meanPrediction": 5.75,
+      "stdDeviation": 0,
+      "minPrediction": 5.75,
+      "maxPrediction": 5.75,
+      "error": 0,
+      "absoluteError": 0,
+      "withinTolerance": true,
+      "rolloutConsistency": 100,
+      "startedAt": "2026-01-18T22:02:56.795Z",
+      "completedAt": "2026-01-18T22:03:02.307Z"
+    },
+    {
+      "scenarioId": "239250d3-dc57-4393-ad96-16b6e6f33be1",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 8,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in a secondary logistics zone in Skedsmo, which aligns with the 'Logistics Normal & Secondary' segment. The benchmark yield range for this segment is 6.50%–9.50%. Step 2: Position Within Range - Given the property's suboptimal micro-location, older construction, and need for renovations, it is considered a secondary asset. It should sit towards the higher end of the benchmark range. Step 3: Apply Adjustments - Tenant quality is high due to the government tenant, which pushes yield down slightly. However, the building's age, condition, and need for further renovations push the yield up. The limited rail connections and suboptimal location also increase risk, pushing the yield up further. Step 4: Calculate Final Yield - Starting from the higher end of the range due to secondary status (around 8.00%), adjustments for tenant quality (downward) and building condition/location (upward) balance out, resulting in a final yield estimate of 8.00%.",
+          "latencyMs": 3762
+        },
+        {
+          "prediction": 7.75,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in a secondary logistics zone near Oslo, so it falls under 'Logistics Normal & Secondary' with a benchmark yield range of 6.50%–9.50%. Step 2: Position Within Range - The property is a secondary asset due to its suboptimal micro-location and older construction, suggesting it should be positioned towards the higher end of the range. Step 3: Apply Adjustments - The presence of a government tenant with strong creditworthiness is a positive factor, pushing yield down slightly. However, the need for substantial renovations, the building's age, and the D energy rating push the yield up due to increased risk. The limited rail connections and suboptimal location also contribute to a higher yield. Step 4: Calculate Final Yield - Starting from the upper end of the range at 9.00%, the government tenant's creditworthiness slightly lowers the yield, while the other factors increase it. Therefore, the final yield estimate is 7.75%.",
+          "latencyMs": 3850
+        },
+        {
+          "prediction": 7.75,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in a secondary logistics zone in Skedsmo, northeast of Oslo. It falls under the 'Logistics Normal & Secondary' segment with a benchmark yield range of 6.50%–9.50%. Step 2: Position Within Range - This is a secondary asset due to its suboptimal micro-location and older building condition. It should sit towards the higher end of the benchmark range. Step 3: Apply Adjustments - Tenant quality is strong due to the presence of a government tenant, which pushes the yield down slightly. However, the building's age, condition, and need for renovations push the yield up. The limited rail connections and suboptimal location also increase risk, pushing the yield up. Step 4: Calculate Final Yield - Starting from the higher end of the range (9.00%), the government tenant quality reduces risk slightly (-0.25%), but the building's condition and location increase risk (+1.00%). Final yield estimate is 7.75%.",
+          "latencyMs": 3730
+        }
+      ],
+      "meanPrediction": 7.833,
+      "stdDeviation": 0.118,
+      "minPrediction": 7.75,
+      "maxPrediction": 8,
+      "error": -0.167,
+      "absoluteError": 0.167,
+      "withinTolerance": true,
+      "rolloutConsistency": 100,
+      "startedAt": "2026-01-18T22:02:56.795Z",
+      "completedAt": "2026-01-18T22:03:00.653Z"
+    },
+    {
+      "scenarioId": "077b2568-4b4c-4adb-b813-81b936b7a38f",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 8.25,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in a secondary industrial area of Moss, which aligns with the 'Logistics Normal & Secondary' segment. The benchmark yield range for this segment is 6.50%–9.50%. Step 2: Position Within Range - This property is a secondary asset due to its location in a secondary logistics hub with suboptimal access and visibility. It should sit towards the higher end of the benchmark range. Step 3: Apply Adjustments - Tenant quality and creditworthiness: The property has a small tenant base with local businesses, indicating higher risk, pushing the yield up. Lease length and WAULT: The high vacancy rate suggests shorter lease terms, increasing risk and pushing the yield up. Building age and condition: The building was constructed in 1978 and, despite some upgrades, requires further renovation, which increases risk and pushes the yield up. Any special factors: The property's excellent road connectivity via the E6 motorway is a positive factor, slightly reducing risk and pushing the yield down. Step 4: Calculate Final Yield - Starting from the higher end of the benchmark range (9.00%), adjustments for tenant quality, vacancy, and building condition push the yield up, while road connectivity slightly reduces it. The final estimated yield is 8.25%.",
+          "latencyMs": 6125
+        },
+        {
+          "prediction": 8.25,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in a secondary industrial area of Moss, which aligns with the 'Logistics Normal & Secondary' segment. The benchmark yield range for this segment is 6.50%–9.50%. Step 2: Position Within Range - Given the property's secondary location, older building stock, and high vacancy rate, it is considered a secondary asset. It should sit towards the higher end of the benchmark range. Step 3: Apply Adjustments - Tenant quality and creditworthiness: The property has a small tenant base with local businesses, which may not have strong creditworthiness, pushing yield up. Lease length and WAULT: The high vacancy rate suggests short lease terms or upcoming expirations, pushing yield up. Building age and condition: The building is older (constructed in 1978) and requires renovations, pushing yield up. Any special factors: The property's suboptimal access and visibility, along with limited public transport connections, further increase risk, pushing yield up. Step 4: Calculate Final Yield - Starting at the higher end of the range (9.00%), adjustments for tenant quality, lease length, building condition, and special factors suggest a final yield estimate of 8.25%.",
+          "latencyMs": 5106
+        },
+        {
+          "prediction": 8.25,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in a secondary industrial area in Moss, which falls under 'Logistics Normal & Secondary' with a benchmark yield range of 6.50%–9.50%. Step 2: Position Within Range - This is a secondary asset due to its suboptimal location, older building stock, and high vacancy rate. It should sit towards the higher end of the benchmark range. Step 3: Apply Adjustments - Tenant quality and creditworthiness: High vacancy and local businesses suggest higher risk, pushing yield up. Lease length and WAULT: High vacancy implies shorter leases, pushing yield up. Building age and condition: Built in 1978 with some upgrades but still requires renovations, pushing yield up. Special factors: Good road connectivity is a positive factor, but limited public transport and no environmental certifications are negatives, pushing yield up. Step 4: Calculate Final Yield - Starting at the higher end of the range (9.00%), adjustments for high vacancy, older building, and limited transport access push the yield up to 8.25%.",
+          "latencyMs": 4939
+        }
+      ],
+      "meanPrediction": 8.25,
+      "stdDeviation": 0,
+      "minPrediction": 8.25,
+      "maxPrediction": 8.25,
+      "error": -0.1,
+      "absoluteError": 0.1,
+      "withinTolerance": true,
+      "rolloutConsistency": 100,
+      "startedAt": "2026-01-18T22:03:02.513Z",
+      "completedAt": "2026-01-18T22:03:08.643Z"
+    },
+    {
+      "scenarioId": "a581b2e3-fdaa-4eee-a5c1-0a007f947666",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5.75,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in the Alnabru logistics district of Oslo, which is known for logistics operations. Therefore, it belongs to the 'Logistics Prime' segment. The benchmark yield range for this segment is 5.50%–6.75%. Step 2: Position Within Range - The property is a modern warehouse facility with high-standard specifications and recent technical upgrades, making it a prime asset within its segment. It should sit towards the lower end of the benchmark range, around 5.50%–5.75%. Step 3: Apply Adjustments - The property is leased to a single SME tenant, which introduces concentration risk, pushing the yield slightly up. The building is relatively new (constructed in 2018) and in excellent condition, which would typically push the yield down. However, the tenant's SME status and the associated concentration risk are significant factors. Step 4: Calculate Final Yield - Starting from the lower end of the range at 5.50%, the concentration risk with a single SME tenant suggests a modest upward adjustment. Therefore, the final estimated yield is 5.75%.",
+          "latencyMs": 5154
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in the Alnabru logistics district of Oslo, which falls under the 'Logistics Prime' category. The benchmark yield range for Logistics Prime is 5.50%–6.75%. Step 2: Position Within Range - This is a prime asset due to its strategic location in a major logistics hub, modern construction, and high standards. It should sit towards the lower end of the benchmark range, closer to 5.50%. Step 3: Apply Adjustments - The property has a single SME tenant, which introduces tenant concentration risk, pushing the yield slightly up. The building is relatively new (constructed in 2018) and has undergone significant technical upgrades, which is favorable and pushes the yield down. The tenant's specialization in e-commerce logistics is a positive factor given the growth in this sector, slightly pushing the yield down. Overall, the tenant concentration risk is the primary factor pushing the yield up. Step 4: Calculate Final Yield - Starting at the lower end of the benchmark (5.50%), the tenant concentration risk pushes the yield up to around 5.75%.",
+          "latencyMs": 4586
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "Step 1: The property is located in the Alnabru logistics district of Oslo, which falls under the 'Logistics Prime' segment. The benchmark yield range for Logistics Prime is 5.50%–6.75%. Step 2: The property is a modern warehouse facility constructed in 2018 with high-standard specifications and recent technical upgrades, positioning it as a prime asset within its segment. Therefore, it should sit towards the lower end of the benchmark range. Step 3: The tenant is a single SME specializing in e-commerce logistics, which presents a concentration risk, pushing the yield slightly up. The building is modern and in excellent condition, with recent upgrades and a high energy rating, pushing the yield down. The strategic location and strong tenant demand in the area also push the yield down. Step 4: Starting with a positioned benchmark of 5.50%, the concentration risk adjustment pushes the yield up by 0.25%, resulting in a final yield estimate of 5.75%.",
+          "latencyMs": 4364
+        }
+      ],
+      "meanPrediction": 5.75,
+      "stdDeviation": 0,
+      "minPrediction": 5.75,
+      "maxPrediction": 5.75,
+      "error": -0.68,
+      "absoluteError": 0.68,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T22:03:02.513Z",
+      "completedAt": "2026-01-18T22:03:07.673Z"
+    },
+    {
+      "scenarioId": "92227c1a-ad18-4868-bf0e-f182c160a277",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5.75,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in the Berger district, a prime logistics hub in Norway. Therefore, it belongs to the 'Logistics Prime' segment with a benchmark yield range of 5.50%–6.75%. Step 2: Position Within Range - The property is a modern logistics facility completed in 2020, indicating it is a prime asset. Given its strategic location and modern specifications, it should sit towards the lower end of the benchmark range. Step 3: Apply Adjustments - Tenant quality and creditworthiness are strong due to long-term leases with logistics operators, pushing the yield down. The lease length and WAULT are favorable, further reducing risk and yield. The building is modern and in excellent condition, pushing the yield down. The presence of an older building requiring capex could introduce some risk, slightly pushing the yield up. Overall, the adjustments suggest a yield slightly above the lower end of the range. Step 4: Calculate Final Yield - Starting with a positioned benchmark of 5.50%, adjustments for tenant quality, lease length, and building condition push the yield down, while the older building's capex requirement pushes it up slightly. The final yield estimate is 5.75%.",
+          "latencyMs": 4997
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in the Berger district, which is a prime logistics hub in Norway. Therefore, it belongs to the 'Logistics Prime' segment. The benchmark yield range for this segment is 5.50%–6.75%. Step 2: Position Within Range - The property is a modern logistics facility completed in 2020 with high standards, located in a prime logistics area with strong tenant demand. This suggests it is a prime asset, likely positioning it towards the lower end of the benchmark range. Step 3: Apply Adjustments - Tenant quality and creditworthiness: The property has long-term leases with logistics operators, including a national courier service, indicating strong tenant quality, which pushes the yield down. Lease length and WAULT: Long-term leases further reduce risk, pushing the yield down. Building age and condition: The modern building is in excellent condition, but the presence of an older building requiring significant capital expenditure introduces some risk, pushing the yield up slightly. Special factors: The property's sustainability features (solar panels, energy efficiency) and strategic location with excellent transport links enhance its attractiveness, pushing the yield down. Step 4: Calculate Final Yield - Starting at the lower end of the benchmark range (5.50%), adjustments for strong tenant quality and lease length push the yield down, while the older building's condition pushes it up slightly. Considering all factors, the final yield estimate is 5.75%.",
+          "latencyMs": 5589
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "Step 1: The property is located in the Berger district, a prime logistics hub in Norway, which places it in the 'Logistics Prime' segment. The benchmark yield range for this segment is 5.50%–6.75%. Step 2: The property is a prime asset due to its modern construction, strategic location, and high tenant demand, suggesting it should be positioned towards the lower end of the benchmark range. Step 3: Adjustments include: Tenant quality and creditworthiness are high due to long-term leases with reputable logistics operators, pushing yield down. The lease length and WAULT are favorable, also pushing yield down. The building is modern and in excellent condition, further pushing yield down. However, the presence of an older building requiring significant capex introduces some risk, pushing yield up slightly. Step 4: Starting with a positioned benchmark of 5.50%, the positive factors (tenant quality, lease length, building condition) suggest a lower yield, but the risk from the older building suggests a slight increase. Therefore, the final yield estimate is 5.75%.",
+          "latencyMs": 4017
+        }
+      ],
+      "meanPrediction": 5.75,
+      "stdDeviation": 0,
+      "minPrediction": 5.75,
+      "maxPrediction": 5.75,
+      "error": -0.23,
+      "absoluteError": 0.23,
+      "withinTolerance": true,
+      "rolloutConsistency": 100,
+      "startedAt": "2026-01-18T22:03:02.513Z",
+      "completedAt": "2026-01-18T22:03:08.109Z"
+    },
+    {
+      "scenarioId": "a3c4ca33-31f8-4eca-8824-3527936347e0",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 6.25,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in Bergen and is an office building. The benchmark yield range for Office Bergen is 5.25%–7.25%. Step 2: Position Within Range - The property is a modern office building constructed in 2010 with contemporary design and state-of-the-art amenities. However, it lacks additional environmental certifications like BREEAM or LEED, and has an energy rating of C. Given these factors, it is likely a secondary asset, suggesting a mid-to-upper range position within the benchmark. Step 3: Apply Adjustments - Tenant quality and creditworthiness: The single-tenant occupancy introduces concentration risk, which pushes the yield up. Lease length and WAULT: Not specified, but single-tenant occupancy generally implies a longer lease, which could stabilize income and push yield down. Building age and condition: The building is relatively new and well-maintained, pushing the yield down. Special factors: The strategic location in a vibrant district with good transport links is a positive factor, pushing the yield down. Considering these factors, the yield is adjusted slightly upwards from the midpoint of the range due to tenant concentration risk. Step 4: Calculate Final Yield - Starting from a midpoint of 6.25% within the range, adjustments for tenant concentration risk push the yield slightly higher, but location and building condition push it back down, resulting in a final yield estimate of 6.25%.",
+          "latencyMs": 4838
+        },
+        {
+          "prediction": 6.25,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in Bergen and is used as an office space. Therefore, it belongs to the 'Office Bergen' segment with a benchmark yield range of 5.25%–7.25%. Step 2: Position Within Range - The property is a modern office building with high-quality amenities and a strategic location, but it lacks environmental certifications and has a single SME tenant, which introduces concentration risk. This suggests it is not a prime asset but rather a secondary one, positioning it towards the middle to higher end of the range. Step 3: Apply Adjustments - Tenant quality and creditworthiness: The single SME tenant introduces concentration risk, pushing the yield up. Lease length and WAULT: Not specified, but single tenancy suggests potential risk, pushing the yield up. Building age and condition: Modern building with recent upgrades, pushing the yield down. Special factors: Lack of environmental certifications and energy rating of C, pushing the yield up. Step 4: Calculate Final Yield - Starting from the middle of the benchmark range at 6.25%, the concentration risk and lack of certifications push the yield slightly higher, while the modern condition and strategic location balance it out, resulting in a final yield estimate of 6.25%.",
+          "latencyMs": 4498
+        },
+        {
+          "prediction": 6.25,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in Bergen and used as an office building. Therefore, it belongs to the 'Office Bergen' segment with a benchmark yield range of 5.25%–7.25%. Step 2: Position Within Range - The property is modern, constructed in 2010, and well-maintained with recent upgrades, suggesting it is closer to a prime asset. However, it lacks additional environmental certifications like BREEAM or LEED, which would typically be expected for a prime asset. Therefore, it should sit slightly above the midpoint of the range. Step 3: Apply Adjustments - The single SME tenant introduces a concentration risk, which pushes the yield up due to increased risk. The tenant's creditworthiness and lease length are not specified, but the single-tenant nature suggests potential volatility in income, further pushing the yield up. The building's age and condition are positive factors, but the lack of environmental certifications and the energy rating of C are neutral to slightly negative factors. Step 4: Calculate Final Yield - Starting from a positioned benchmark of around 6.00%, adjustments for tenant concentration risk and lack of certifications push the yield up to approximately 6.25%.",
+          "latencyMs": 4092
+        }
+      ],
+      "meanPrediction": 6.25,
+      "stdDeviation": 0,
+      "minPrediction": 6.25,
+      "maxPrediction": 6.25,
+      "error": -0.45,
+      "absoluteError": 0.45,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-18T22:03:08.861Z",
+      "completedAt": "2026-01-18T22:03:13.702Z"
+    },
+    {
+      "scenarioId": "f5405dcd-40c6-4cc9-a34e-d9a50bf2a4da",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 6,
+          "reasoning": "Step 1: Identify the Benchmark - The property is located in Bergen and serves as an office space. Therefore, it belongs to the 'Office Bergen' segment with a benchmark yield range of 5.25%–7.25%. Step 2: Position Within Range - The property is a modern office building with recent upgrades, located in a vibrant district with good transport links and amenities. It is likely considered a prime asset within Bergen, suggesting a position towards the lower end of the benchmark range. Step 3: Apply Adjustments - Tenant quality and creditworthiness: The property has a diverse range of office users, which is positive, but specific creditworthiness details are not provided, suggesting a neutral impact. Lease length and WAULT: The presence of fully leased floors and future leasing opportunities indicates a stable income stream, slightly lowering risk. Building age and condition: Despite being constructed in 1987, recent upgrades and a good energy rating (C) improve its condition, slightly lowering risk. Special factors: The property's strategic location near educational institutions, the harbor, and cultural landmarks adds appeal, slightly lowering risk. Step 4: Calculate Final Yield - Starting at the lower end of 5.25% due to its prime nature, adjustments for tenant diversity, stable leasing, and recent upgrades suggest a slight increase in yield to account for any uncertainties, resulting in a final yield estimate of 6.0%.",
+          "latencyMs": 4661
+        },
+        {
+          "prediction": 6,
+          "reasoning": "Step 1: The property is located in Bergen and is an office building. Therefore, it falls under the 'Office Bergen' segment with a benchmark yield range of 5.25%–7.25%. Step 2: The property is modern, with recent upgrades and a diverse tenant mix, suggesting it is closer to a prime asset. This positions it towards the lower end of the benchmark range, around 5.75%. Step 3: Considering adjustments: The tenant quality appears diverse and stable, which is positive, but specific creditworthiness details are not provided, so no adjustment. The building has undergone significant upgrades, improving its condition and energy efficiency, which is positive and suggests a downward adjustment. However, the building is relatively old (constructed in 1987), which could push the yield upwards slightly. The presence of a vibrant café and good transport links are positive factors, potentially lowering the yield slightly. Overall, these factors suggest a slight upward adjustment from the initial position, resulting in a final yield estimate of 6.0%.",
+          "latencyMs": 4002
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "Step 1: The property is located in Bergen and serves primarily as an office space, placing it in the 'Office Bergen' segment. The benchmark yield range for this segment is 5.25%–7.25%. Step 2: Considering the property's modern design, recent upgrades, and strategic location in a vibrant district, it is more likely to be considered a prime asset within Bergen's office market. Therefore, it should sit towards the lower end of the benchmark range, around 5.25% to 6.00%. Step 3: Adjustments include: Tenant quality appears diverse and robust, which would push the yield down slightly. The building's age is offset by recent upgrades, maintaining a modern standard, which also pushes the yield down. The energy rating of C is adequate but not exceptional, which might slightly push the yield up. The lack of specific environmental certifications like BREEAM or LEED could also slightly push the yield up. Overall, these factors suggest a slight upward adjustment from the lower end of the range. Step 4: Starting from a positioned benchmark of 5.50%, considering the adjustments, the final yield estimate is 5.75%.",
+          "latencyMs": 4085
+        }
+      ],
+      "meanPrediction": 5.917,
+      "stdDeviation": 0.118,
+      "minPrediction": 5.75,
+      "maxPrediction": 6,
+      "error": -0.333,
+      "absoluteError": 0.333,
+      "withinTolerance": true,
+      "rolloutConsistency": 66.67,
+      "startedAt": "2026-01-18T22:03:08.861Z",
+      "completedAt": "2026-01-18T22:03:13.526Z"
+    }
+  ],
+  "completedAt": "2026-01-18T22:03:13.705Z",
+  "aggregateMetrics": {
+    "hitRate": 63.64,
+    "meanError": -0.397,
+    "rmse": 0.523,
+    "avgLatencyMs": 4529,
+    "directionalAccuracy": 40,
+    "avgStdDeviation": 0.032,
+    "avgConsistency": 60.61
+  }
+}
