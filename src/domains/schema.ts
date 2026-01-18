@@ -141,12 +141,16 @@ export const BenchmarkRunSchema = z.object({
   status: z.enum(["generating_narratives", "running", "completed", "failed"]).default("running"),
   startedAt: z.string().optional(),
   completedAt: z.string().optional(),
-  
+
   // Narrative generation tracking
   useNarrativeDescriptions: z.boolean().optional(),
   narrativeModel: z.string().optional(),
   narrativesGenerated: z.number().optional(), // Count of narratives generated so far
   narrativesTotal: z.number().optional(), // Total narratives to generate
+
+  // Test set reference (if run was created from a test set)
+  testSetName: z.string().optional(),
+  testSetVersion: z.string().optional(),
 
   scenarios: z.array(ScenarioSchema),
   results: z.array(ScenarioResultSchema),
@@ -176,4 +180,24 @@ export const PromptTemplateSchema = z.object({
 });
 
 export type PromptTemplate = z.infer<typeof PromptTemplateSchema>;
+
+// Test Set Schema
+// A versioned collection of scenarios for reproducible testing
+export const TestSetSchema = z.object({
+  name: z.string(), // Unique identifier (e.g., "baseline-v1")
+  version: z.string(), // Semantic version (e.g., "1.0.0")
+  description: z.string(), // What this test set covers
+  created: z.string(), // ISO timestamp
+  domainId: z.string(),
+  scenarioCount: z.number(),
+  seed: z.number().optional(), // Seed used to generate (for reference)
+  generateTwins: z.boolean(),
+  useNarrativeDescriptions: z.boolean(),
+  narrativeModel: z.string().optional(),
+  sourceRunId: z.string().optional(), // If created from an existing run
+  scenarios: z.array(ScenarioSchema),
+  changelog: z.array(z.string()).optional(), // Version history
+});
+
+export type TestSet = z.infer<typeof TestSetSchema>;
 

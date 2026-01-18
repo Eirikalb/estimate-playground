@@ -5,11 +5,13 @@ import type {
   DomainConfig,
   ExpertFacts,
   PromptTemplate,
+  TestSet,
 } from "@/domains/schema";
 
 // Paths
 const DATA_DIR = path.join(process.cwd(), "data");
 const RUNS_DIR = path.join(DATA_DIR, "runs");
+const TEST_SETS_DIR = path.join(DATA_DIR, "test-sets");
 const DOMAINS_DIR = path.join(process.cwd(), "src", "domains");
 const TEMPLATES_DIR = path.join(process.cwd(), "src", "prompts", "templates");
 
@@ -19,6 +21,7 @@ const TEMPLATES_DIR = path.join(process.cwd(), "src", "prompts", "templates");
 async function ensureDirectories() {
   await fs.mkdir(DATA_DIR, { recursive: true });
   await fs.mkdir(RUNS_DIR, { recursive: true });
+  await fs.mkdir(TEST_SETS_DIR, { recursive: true });
 }
 
 // ============ Benchmark Runs ============
@@ -212,5 +215,74 @@ function getTemplateDescription(name: string): string {
     "benchmark-only": "Only benchmark ranges, no additional guidance",
   };
   return descriptions[name] ?? "Custom template";
+}
+
+// ============ Test Sets ============
+
+/**
+ * Save a test set to disk
+ */
+export async function saveTestSet(testSet: TestSet): Promise<void> {
+  await ensureDirectories();
+  const filePath = path.join(TEST_SETS_DIR, `${testSet.name}.json`);
+  await fs.writeFile(filePath, JSON.stringify(testSet, null, 2));
+}
+
+/**
+ * Load a test set by name
+ */
+export async function loadTestSet(name: string): Promise<TestSet | null> {
+  try {
+    const filePath = path.join(TEST_SETS_DIR, `${name}.json`);
+    const content = await fs.readFile(filePath, "utf-8");
+    return JSON.parse(content) as TestSet;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * List all test sets (metadata only, without full scenarios)
+ */
+export async function listTestSets(): Promise<Array<Omit<TestSet, 'scenarios'>>> {
+  await ensureDirectories();
+
+  try {
+    const files = await fs.readdir(TEST_SETS_DIR);
+    const jsonFiles = files.filter((f) => f.endsWith(".json"));
+
+    const testSets: Array<Omit<TestSet, 'scenarios'>> = [];
+    for (const file of jsonFiles) {
+      try {
+        const content = await fs.readFile(path.join(TEST_SETS_DIR, file), "utf-8");
+        const testSet = JSON.parse(content) as TestSet;
+        // Omit scenarios to reduce payload size for listing
+        const { scenarios, ...metadata } = testSet;
+        testSets.push(metadata);
+      } catch {
+        // Skip invalid files
+      }
+    }
+
+    // Sort by created date descending (newest first)
+    testSets.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
+
+    return testSets;
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Delete a test set
+ */
+export async function deleteTestSet(name: string): Promise<boolean> {
+  try {
+    const filePath = path.join(TEST_SETS_DIR, `${name}.json`);
+    await fs.unlink(filePath);
+    return true;
+  } catch {
+    return false;
+  }
 }
 

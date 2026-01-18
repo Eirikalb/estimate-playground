@@ -5,6 +5,7 @@ import {
   saveBenchmarkRun,
   loadDomainConfig,
   loadExpertFacts,
+  loadTestSet,
 } from "@/lib/storage";
 import { generateScenarios } from "@/lib/generator";
 import { generateNarrativeDescription, generateFallbackDescription } from "@/lib/narrative-generator";
@@ -22,6 +23,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const {
+      testSetName, // NEW: Use scenarios from an existing test set
       domainId,
       model,
       promptTemplate,
@@ -34,10 +36,56 @@ export async function POST(request: Request) {
       narrativeModel = "openai/gpt-4o-mini",
     } = body;
 
+    // Determine if using test set or generating scenarios
+    let actualDomainId = domainId;
+    let skeletonScenarios;
+    let testSetVersion: string | undefined;
+
+    if (testSetName) {
+      // Load scenarios from existing test set
+      const testSet = await loadTestSet(testSetName);
+      if (!testSet) {
+        return NextResponse.json(
+          { error: `Test set "${testSetName}" not found` },
+          { status: 404 }
+        );
+      }
+
+      skeletonScenarios = testSet.scenarios;
+      actualDomainId = testSet.domainId;
+      testSetVersion = testSet.version;
+
+      console.log(`Using test set: ${testSetName} (${testSet.scenarioCount} scenarios)`);
+    } else {
+      // Generate new scenarios
+      if (!domainId) {
+        return NextResponse.json(
+          { error: "domainId is required when not using a test set" },
+          { status: 400 }
+        );
+      }
+
+      // Get API key for potential narrative generation
+      const apiKey = process.env.OPENROUTER_API_KEY;
+
+      // Load domain config
+      const domainConfig = await loadDomainConfig(domainId);
+      if (!domainConfig) {
+        return NextResponse.json({ error: "Domain not found" }, { status: 404 });
+      }
+
+      // Generate scenario skeletons (fast, synchronous)
+      skeletonScenarios = generateScenarios(domainConfig, {
+        count: scenarioCount,
+        generateTwins,
+        seed,
+      });
+    }
+
     // Validate required fields
-    if (!domainId || !model || !promptTemplate) {
+    if (!model || !promptTemplate) {
       return NextResponse.json(
-        { error: "domainId, model, and promptTemplate are required" },
+        { error: "model and promptTemplate are required" },
         { status: 400 }
       );
     }
@@ -55,8 +103,8 @@ export async function POST(request: Request) {
     }
 
     // Load domain config and facts
-    const domainConfig = await loadDomainConfig(domainId);
-    const expertFacts = await loadExpertFacts(domainId);
+    const domainConfig = await loadDomainConfig(actualDomainId);
+    const expertFacts = await loadExpertFacts(actualDomainId);
 
     if (!domainConfig || !expertFacts) {
       return NextResponse.json({ error: "Domain not found" }, { status: 404 });
@@ -65,13 +113,6 @@ export async function POST(request: Request) {
     // Create run ID and start time
     const runId = uuidv4();
     const startedAt = new Date().toISOString();
-
-    // First, generate scenario skeletons (fast, synchronous)
-    const skeletonScenarios = generateScenarios(domainConfig, {
-      count: scenarioCount,
-      generateTwins,
-      seed,
-    });
 
     // Initialize placeholder results
     const initialResults: ScenarioResult[] = skeletonScenarios.map((scenario) => ({
@@ -89,20 +130,24 @@ export async function POST(request: Request) {
     }));
 
     // Create initial run - either generating narratives or running directly
+    const shouldGenerateNarratives = !testSetName && useNarrativeDescriptions;
+
     const run: BenchmarkRun = {
       id: runId,
       timestamp: startedAt,
-      domainId,
+      domainId: actualDomainId,
       model,
       promptStrategy: promptTemplateId || "custom",
       promptTemplate,
       rolloutsPerScenario: rollouts,
-      status: useNarrativeDescriptions ? "generating_narratives" : "running",
+      status: shouldGenerateNarratives ? "generating_narratives" : "running",
       startedAt,
+      testSetName, // NEW: Reference to test set if used
+      testSetVersion, // NEW: Version of test set if used
       useNarrativeDescriptions,
       narrativeModel: useNarrativeDescriptions ? narrativeModel : undefined,
-      narrativesGenerated: useNarrativeDescriptions ? 0 : undefined,
-      narrativesTotal: useNarrativeDescriptions ? skeletonScenarios.length : undefined,
+      narrativesGenerated: shouldGenerateNarratives ? 0 : undefined,
+      narrativesTotal: shouldGenerateNarratives ? skeletonScenarios.length : undefined,
       scenarios: skeletonScenarios,
       results: initialResults,
     };
@@ -110,8 +155,8 @@ export async function POST(request: Request) {
     // Save initial run state
     await saveBenchmarkRun(run);
 
-    // If using narrative descriptions, generate them in parallel batches
-    if (useNarrativeDescriptions) {
+    // If using narrative descriptions (and not from test set), generate them in parallel batches
+    if (shouldGenerateNarratives) {
       console.log(`Generating ${skeletonScenarios.length} scenarios with LLM-based narratives (parallel)...`);
       
       const NARRATIVE_BATCH_SIZE = 5; // Process 5 narratives in parallel
