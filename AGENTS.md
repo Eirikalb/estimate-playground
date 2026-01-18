@@ -51,6 +51,12 @@ Real estate yield estimation (rental yield %). This is a good test domain becaus
 
 See `/knowledge/` for timestamped learnings, experiment reports, and iteration notes. This is our running log of what we discover.
 
+## Testing Approach (Critical)
+
+**Use fixed testsets to isolate model/prompt performance from scenario variance.** Generate scenarios once with controlled parameters (anchor types, deltas, distractors, seed), save as versioned testsets in `data/test-sets/`, then run the same testset across all model/prompt combinations. This eliminates random scenario difficulty as a variable and enables true apples-to-apples comparison—essential for measuring whether improvements come from better prompts/models versus easier scenarios.
+
+**Batch testing workflow:** Create a baseline testset from a successful run using `scripts/create-testset-from-run.js`, then use `scripts/batch-test.js` to run it across all configurations in parallel. Compare results by hit rate and RMSE on identical scenarios. Version testsets when scenarios change, track testset references in run metadata for reproducibility, and maintain separate smoke (5-10 scenarios) and comprehensive (20-30 scenarios) testsets for fast iteration versus thorough validation.
+
 ---
 
 *This file provides context for AI agents working on this codebase. Keep it updated as the project evolves.*

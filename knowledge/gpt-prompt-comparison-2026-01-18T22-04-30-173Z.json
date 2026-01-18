@@ -1,0 +1,91 @@
+{
+  "timestamp": "2026-01-18T22:04:30.175Z",
+  "config": {
+    "scenarioCount": 6,
+    "generateTwins": true,
+    "rolloutsPerScenario": 3,
+    "domainId": "real-estate-yield"
+  },
+  "models": [
+    {
+      "id": "openai/gpt-4o",
+      "name": "GPT-4o"
+    },
+    {
+      "id": "openai/gpt-4o-mini",
+      "name": "GPT-4o-mini"
+    }
+  ],
+  "prompts": {
+    "current": "chain-of-thought",
+    "enhanced": "chain-of-thought-enhanced"
+  },
+  "results": [
+    {
+      "model": "GPT-4o-mini",
+      "modelId": "openai/gpt-4o-mini",
+      "prompt": "chain-of-thought",
+      "runId": "942cd0f5-1c3d-4f70-9d47-c775ebf27368",
+      "metrics": {
+        "hitRate": 54.55,
+        "meanError": -0.48,
+        "rmse": 0.654,
+        "avgLatencyMs": 6309,
+        "directionalAccuracy": 40,
+        "avgStdDeviation": 0.067,
+        "avgConsistency": 54.55
+      }
+    },
+    {
+      "model": "GPT-4o-mini",
+      "modelId": "openai/gpt-4o-mini",
+      "prompt": "chain-of-thought-enhanced",
+      "runId": "41bb08e2-35e0-4798-a9fd-bd7c6fab61ce",
+      "metrics": {
+        "hitRate": 54.55,
+        "meanError": -0.253,
+        "rmse": 0.461,
+        "avgLatencyMs": 4646,
+        "directionalAccuracy": 60,
+        "avgStdDeviation": 0.064,
+        "avgConsistency": 57.58
+      }
+    },
+    {
+      "model": "GPT-4o",
+      "modelId": "openai/gpt-4o",
+      "prompt": "chain-of-thought",
+      "runId": "0fda8d39-543e-4dbc-b3c5-6426eb87df33",
+      "metrics": {
+        "hitRate": 63.64,
+        "meanError": -0.397,
+        "rmse": 0.523,
+        "avgLatencyMs": 4529,
+        "directionalAccuracy": 40,
+        "avgStdDeviation": 0.032,
+        "avgConsistency": 60.61
+      }
+    },
+    {
+      "model": "GPT-4o",
+      "modelId": "openai/gpt-4o",
+      "prompt": "chain-of-thought-enhanced",
+      "runId": "c4c7b27e-4b2b-4037-9318-4b7bba347764",
+      "metrics": {
+        "hitRate": 45.45,
+        "meanError": -0.405,
+        "rmse": 0.466,
+        "avgLatencyMs": 4102,
+        "directionalAccuracy": 60,
+        "avgStdDeviation": 0.043,
+        "avgConsistency": 51.52
+      }
+    }
+  ],
+  "baseline": {
+    "model": "Gemini 3 Flash",
+    "prompt": "chain-of-thought",
+    "hitRate": 90,
+    "rmse": 0.24
+  }
+}

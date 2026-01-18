@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-01-18T21:37:46.893Z",
+  "config": {
+    "scenarioCount": 6,
+    "generateTwins": true,
+    "rolloutsPerScenario": 3,
+    "domainId": "real-estate-yield"
+  },
+  "models": [
+    {
+      "id": "google/gemini-2.5-flash-preview",
+      "name": "Gemini 2.5 Flash"
+    },
+    {
+      "id": "google/gemini-2.5-pro-preview",
+      "name": "Gemini 2.5 Pro"
+    }
+  ],
+  "promptTemplates": [
+    "minimal",
+    "benchmark-only",
+    "chain-of-thought"
+  ],
+  "results": [
+    {
+      "model": "Gemini 2.5 Flash",
+      "modelId": "google/gemini-2.5-flash-preview",
+      "promptTemplate": "minimal",
+      "error": "Benchmark failed: {\"error\":\"OPENROUTER_API_KEY not configured\"}"
+    },
+    {
+      "model": "Gemini 2.5 Flash",
+      "modelId": "google/gemini-2.5-flash-preview",
+      "promptTemplate": "benchmark-only",
+      "error": "Benchmark failed: {\"error\":\"OPENROUTER_API_KEY not configured\"}"
+    },
+    {
+      "model": "Gemini 2.5 Flash",
+      "modelId": "google/gemini-2.5-flash-preview",
+      "promptTemplate": "chain-of-thought",
+      "error": "Benchmark failed: {\"error\":\"OPENROUTER_API_KEY not configured\"}"
+    },
+    {
+      "model": "Gemini 2.5 Pro",
+      "modelId": "google/gemini-2.5-pro-preview",
+      "promptTemplate": "minimal",
+      "error": "Benchmark failed: {\"error\":\"OPENROUTER_API_KEY not configured\"}"
+    },
+    {
+      "model": "Gemini 2.5 Pro",
+      "modelId": "google/gemini-2.5-pro-preview",
+      "promptTemplate": "benchmark-only",
+      "error": "Benchmark failed: {\"error\":\"OPENROUTER_API_KEY not configured\"}"
+    },
+    {
+      "model": "Gemini 2.5 Pro",
+      "modelId": "google/gemini-2.5-pro-preview",
+      "promptTemplate": "chain-of-thought",
+      "error": "Benchmark failed: {\"error\":\"OPENROUTER_API_KEY not configured\"}"
+    }
+  ]
+}
