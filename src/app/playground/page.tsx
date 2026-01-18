@@ -255,7 +255,9 @@ export default function Playground() {
     } catch (error) {
       alert("Error: " + (error instanceof Error ? error.message : "Unknown"));
     }
-    setRunningBenchmark(false);
+    // Reset button state after 1 second so user can start another benchmark
+    // The actual benchmark runs in the background
+    setTimeout(() => setRunningBenchmark(false), 1000);
   };
 
   const getErrorColor = (error: number) => {
