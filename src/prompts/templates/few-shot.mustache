@@ -5,17 +5,17 @@ Here are three example valuations:
 **Example 1:**
 Property: Office building in Oslo CBD, built 2018, government tenant (Ministry of Finance), 12 years remaining on lease, BREEAM Excellent.
 Analysis: Prime CBD location (4.50-5.25% range). Government tenant and long lease = very low risk. Modern building with certification. Position at low end of range, slight compression for quality.
-Result: {"yield": 4.50, "reasoning": "Prime CBD, government tenant, long lease, modern certified building - bond-like characteristics justify lowest yields"}
+Result: {"reasoning": "Prime CBD, government tenant, long lease, modern certified building - bond-like characteristics justify lowest yields", "yield": 4.50}
 
 **Example 2:**
 Property: Office building in Oslo Lysaker, built 2005, single tenant (mid-sized IT company), 4 years remaining on lease.
 Analysis: Lysaker range is 5.50-7.00%. Single corporate tenant with medium lease. Building is 20 years old. Position mid-range, slight expansion for tenant and building factors.
-Result: {"yield": 6.50, "reasoning": "Lysaker mid-range positioning, single tenant adds concentration risk, older building needs consideration, medium lease term"}
+Result: {"reasoning": "Lysaker mid-range positioning, single tenant adds concentration risk, older building needs consideration, medium lease term", "yield": 6.50}
 
 **Example 3:**
 Property: Logistics warehouse outside Bergen, built 1995, three tenants (logistics companies), average 6 years remaining.
 Analysis: Logistics Normal range 6.50-9.50%. Diversified tenants good. Old building is concern. Medium lease. Secondary location.
-Result: {"yield": 7.75, "reasoning": "Secondary logistics location, older building requiring capex, partially offset by diversified tenant base and reasonable lease terms"}
+Result: {"reasoning": "Secondary logistics location, older building requiring capex, partially offset by diversified tenant base and reasonable lease terms", "yield": 7.75}
 
 ---
 
@@ -23,5 +23,5 @@ Now evaluate this property:
 
 {{scenario.contextDescription}}
 
-Return JSON only: {"yield": <number>, "reasoning": "<your analysis following the same pattern>"}
+Return JSON only: {"reasoning": "<your analysis following the same pattern>", "yield": <number>}
 
