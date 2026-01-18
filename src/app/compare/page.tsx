@@ -103,18 +103,32 @@ export default function Compare() {
     id: run.id,
   }));
 
-  // Color palette for charts
-  const COLORS = [
-    "hsl(var(--chart-1))",
-    "hsl(var(--chart-2))",
-    "hsl(var(--chart-3))",
-    "hsl(var(--chart-4))",
-    "hsl(var(--chart-5))",
-  ];
+  // Color mapping by provider
+  const getModelColor = (modelName: string): string => {
+    const lowerModel = modelName.toLowerCase();
+
+    // OpenAI models - black/gray
+    if (lowerModel.includes('gpt') || lowerModel.includes('openai')) {
+      return '#1f1f1f'; // black/dark gray
+    }
+
+    // Gemini models - blue
+    if (lowerModel.includes('gemini') || lowerModel.includes('google')) {
+      return '#4285f4'; // Google blue
+    }
+
+    // Claude models - orange
+    if (lowerModel.includes('claude') || lowerModel.includes('anthropic') || lowerModel.includes('sonnet') || lowerModel.includes('opus') || lowerModel.includes('haiku')) {
+      return '#f97316'; // orange
+    }
+
+    // Fallback colors for other providers
+    return '#a855f7'; // purple fallback
+  };
 
   const modelColors: Record<string, string> = {};
-  Object.keys(byModel).forEach((model, i) => {
-    modelColors[model] = COLORS[i % COLORS.length];
+  Object.keys(byModel).forEach((model) => {
+    modelColors[model] = getModelColor(model);
   });
 
   return (
@@ -186,7 +200,11 @@ export default function Compare() {
                           borderRadius: "8px",
                         }}
                       />
-                      <Bar dataKey="hitRate" fill="hsl(var(--chart-1))" radius={[0, 4, 4, 0]} />
+                      <Bar dataKey="hitRate" radius={[0, 4, 4, 0]}>
+                        {modelChartData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={getModelColor(entry.name)} />
+                        ))}
+                      </Bar>
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -212,7 +230,11 @@ export default function Compare() {
                           borderRadius: "8px",
                         }}
                       />
-                      <Bar dataKey="rmse" fill="hsl(var(--chart-2))" radius={[0, 4, 4, 0]} />
+                      <Bar dataKey="rmse" radius={[0, 4, 4, 0]}>
+                        {modelChartData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={getModelColor(entry.name)} />
+                        ))}
+                      </Bar>
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -294,7 +316,7 @@ export default function Compare() {
                           borderRadius: "8px",
                         }}
                       />
-                      <Bar dataKey="hitRate" fill="hsl(var(--chart-3))" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="hitRate" fill="var(--chart-3)" radius={[4, 4, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -320,7 +342,7 @@ export default function Compare() {
                           borderRadius: "8px",
                         }}
                       />
-                      <Bar dataKey="rmse" fill="hsl(var(--chart-4))" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="rmse" fill="var(--chart-4)" radius={[4, 4, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -381,7 +403,7 @@ export default function Compare() {
                       {scatterData.map((entry, index) => (
                         <Cell
                           key={`cell-${index}`}
-                          fill={modelColors[entry.model] || COLORS[0]}
+                          fill={modelColors[entry.model] || '#a855f7'}
                         />
                       ))}
                     </Scatter>
