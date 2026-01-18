@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import type { PromptTemplate, Scenario, ScenarioResult, RolloutResult } from "@/domains/schema";
+import type { PromptTemplate, Scenario, ScenarioResult, RolloutResult, TestSet } from "@/domains/schema";
 import { AVAILABLE_MODELS } from "@/lib/openrouter";
 
 interface PlaygroundRollout {
@@ -36,30 +36,71 @@ interface PlaygroundResult {
 export default function Playground() {
   const router = useRouter();
   const [templates, setTemplates] = useState<PromptTemplate[]>([]);
+  const [testSets, setTestSets] = useState<Array<Omit<TestSet, 'scenarios'>>>([]);
+
+  // State with defaults (will be hydrated from localStorage after mount)
   const [selectedTemplate, setSelectedTemplate] = useState<string>("");
   const [customTemplate, setCustomTemplate] = useState<string>("");
   const [selectedModel, setSelectedModel] = useState<string>("openai/gpt-4o-mini");
+  const [useTestSet, setUseTestSet] = useState<boolean>(true);
+  const [selectedTestSet, setSelectedTestSet] = useState<string>("");
   const [scenarioCount, setScenarioCount] = useState<number>(5);
-  const [rolloutsPerScenario, setRolloutsPerScenario] = useState<number>(1);
+  const [rolloutsPerScenario, setRolloutsPerScenario] = useState<number>(3);
   const [seed, setSeed] = useState<number>(Date.now());
   const [useNarrativeDescriptions, setUseNarrativeDescriptions] = useState<boolean>(true);
   const [narrativeModel, setNarrativeModel] = useState<string>("openai/gpt-4o-mini");
-  
+
   const [loading, setLoading] = useState(false);
   const [previewLoading, setPreviewLoading] = useState(false);
   const [result, setResult] = useState<PlaygroundResult | null>(null);
   const [runningBenchmark, setRunningBenchmark] = useState(false);
+  const [lastRunId, setLastRunId] = useState<string | null>(null);
+  const [isHydrated, setIsHydrated] = useState(false);
 
+  // Hydrate from localStorage on mount (client-side only)
   useEffect(() => {
+    // Load saved settings from localStorage
+    const savedTemplate = localStorage.getItem('playground_template');
+    const savedModel = localStorage.getItem('playground_model');
+    const savedUseTestSet = localStorage.getItem('playground_useTestSet');
+    const savedTestSet = localStorage.getItem('playground_testSet');
+    const savedScenarioCount = localStorage.getItem('playground_scenarioCount');
+    const savedRollouts = localStorage.getItem('playground_rollouts');
+    const savedNarratives = localStorage.getItem('playground_narratives');
+    const savedNarrativeModel = localStorage.getItem('playground_narrativeModel');
+
+    if (savedTemplate) setSelectedTemplate(savedTemplate);
+    if (savedModel) setSelectedModel(savedModel);
+    if (savedUseTestSet !== null) setUseTestSet(savedUseTestSet !== 'false');
+    if (savedTestSet) setSelectedTestSet(savedTestSet);
+    if (savedScenarioCount) setScenarioCount(parseInt(savedScenarioCount));
+    if (savedRollouts) setRolloutsPerScenario(parseInt(savedRollouts));
+    if (savedNarratives !== null) setUseNarrativeDescriptions(savedNarratives !== 'false');
+    if (savedNarrativeModel) setNarrativeModel(savedNarrativeModel);
+
+    setIsHydrated(true);
+
+    // Load templates
     fetch("/api/templates")
       .then((res) => res.json())
       .then((data) => {
         setTemplates(data);
-        if (data.length > 0) {
+        if (data.length > 0 && !savedTemplate) {
           setSelectedTemplate(data[0].id);
           setCustomTemplate(data[0].template);
         }
       });
+
+    // Load test sets
+    fetch("/api/test-sets")
+      .then((res) => res.json())
+      .then((data) => {
+        setTestSets(data);
+        if (data.length > 0 && !savedTestSet) {
+          setSelectedTestSet(data[0].name);
+        }
+      })
+      .catch((err) => console.error("Failed to load test sets:", err));
   }, []);
 
   useEffect(() => {
@@ -68,6 +109,55 @@ export default function Playground() {
       setCustomTemplate(template.template);
     }
   }, [selectedTemplate, templates]);
+
+  // Save settings to localStorage when they change (after hydration)
+  useEffect(() => {
+    if (isHydrated && selectedTemplate) {
+      localStorage.setItem('playground_template', selectedTemplate);
+    }
+  }, [selectedTemplate, isHydrated]);
+
+  useEffect(() => {
+    if (isHydrated) {
+      localStorage.setItem('playground_model', selectedModel);
+    }
+  }, [selectedModel, isHydrated]);
+
+  useEffect(() => {
+    if (isHydrated) {
+      localStorage.setItem('playground_useTestSet', String(useTestSet));
+    }
+  }, [useTestSet, isHydrated]);
+
+  useEffect(() => {
+    if (isHydrated && selectedTestSet) {
+      localStorage.setItem('playground_testSet', selectedTestSet);
+    }
+  }, [selectedTestSet, isHydrated]);
+
+  useEffect(() => {
+    if (isHydrated) {
+      localStorage.setItem('playground_scenarioCount', String(scenarioCount));
+    }
+  }, [scenarioCount, isHydrated]);
+
+  useEffect(() => {
+    if (isHydrated) {
+      localStorage.setItem('playground_rollouts', String(rolloutsPerScenario));
+    }
+  }, [rolloutsPerScenario, isHydrated]);
+
+  useEffect(() => {
+    if (isHydrated) {
+      localStorage.setItem('playground_narratives', String(useNarrativeDescriptions));
+    }
+  }, [useNarrativeDescriptions, isHydrated]);
+
+  useEffect(() => {
+    if (isHydrated) {
+      localStorage.setItem('playground_narrativeModel', narrativeModel);
+    }
+  }, [narrativeModel, isHydrated]);
 
   const handlePreview = async () => {
     setPreviewLoading(true);
@@ -124,28 +214,41 @@ export default function Playground() {
     setLoading(false);
   };
 
-  const handleRunBenchmark = async () => {
+  const handleRunBenchmark = async (stayOnPage = false) => {
     setRunningBenchmark(true);
+    setLastRunId(null);
     try {
+      const requestBody: any = {
+        model: selectedModel,
+        promptTemplate: customTemplate,
+        promptTemplateId: selectedTemplate,
+        rolloutsPerScenario,
+      };
+
+      if (useTestSet && selectedTestSet) {
+        // Use test set
+        requestBody.testSetName = selectedTestSet;
+      } else {
+        // Generate scenarios
+        requestBody.domainId = "real-estate-yield";
+        requestBody.scenarioCount = scenarioCount;
+        requestBody.generateTwins = true;
+        requestBody.seed = seed;
+        requestBody.useNarrativeDescriptions = useNarrativeDescriptions;
+        requestBody.narrativeModel = narrativeModel;
+      }
+
       const res = await fetch("/api/runs", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          domainId: "real-estate-yield",
-          model: selectedModel,
-          promptTemplate: customTemplate,
-          promptTemplateId: selectedTemplate,
-          scenarioCount,
-          rolloutsPerScenario,
-          generateTwins: true,
-          seed,
-          useNarrativeDescriptions,
-          narrativeModel,
-        }),
+        body: JSON.stringify(requestBody),
       });
       const data = await res.json();
       if (res.ok) {
-        router.push(`/runs/${data.id}`);
+        setLastRunId(data.id);
+        if (!stayOnPage) {
+          router.push(`/runs/${data.id}`);
+        }
       } else {
         alert(data.error || "Error running benchmark");
       }
@@ -168,14 +271,19 @@ export default function Playground() {
     return "text-red-400";
   };
 
-  const totalApiCalls = scenarioCount * 2 * rolloutsPerScenario;
+  const selectedTestSetData = testSets.find(ts => ts.name === selectedTestSet);
+  const effectiveScenarioCount = useTestSet && selectedTestSetData
+    ? selectedTestSetData.scenarioCount
+    : scenarioCount * 2; // *2 for twins
+  const totalApiCalls = effectiveScenarioCount * rolloutsPerScenario;
+  const narrativeCalls = useTestSet ? 0 : (useNarrativeDescriptions ? scenarioCount * 2 : 0);
 
   return (
     <div className="container max-w-screen-2xl py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">Playground</h1>
         <p className="text-muted-foreground mt-2">
-          Experiment with prompt templates and test single scenarios
+          Experiment with prompt templates and run benchmarks with fixed test sets or generated scenarios
         </p>
       </div>
 
@@ -226,7 +334,92 @@ export default function Playground() {
                 </Select>
               </div>
 
-              <div className="grid grid-cols-3 gap-4">
+              <Separator />
+
+              {/* Test Set Selection */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <label className="text-sm font-medium">Use Test Set</label>
+                    <p className="text-xs text-muted-foreground">
+                      Use fixed scenarios from a test set instead of generating new ones
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setUseTestSet(!useTestSet)}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                      useTestSet ? "bg-blue-500" : "bg-muted"
+                    }`}
+                  >
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                        useTestSet ? "translate-x-6" : "translate-x-1"
+                      }`}
+                    />
+                  </button>
+                </div>
+
+                {useTestSet && (
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">
+                      Select Test Set
+                    </label>
+                    <Select value={selectedTestSet} onValueChange={setSelectedTestSet}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Choose a test set..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {testSets.length === 0 ? (
+                          <div className="p-2 text-sm text-muted-foreground">
+                            No test sets available
+                          </div>
+                        ) : (
+                          testSets.map((testSet) => (
+                            <SelectItem key={testSet.name} value={testSet.name}>
+                              <div className="flex flex-col">
+                                <span className="font-medium">{testSet.name}</span>
+                                <span className="text-xs text-muted-foreground">
+                                  {testSet.scenarioCount} scenarios • v{testSet.version}
+                                </span>
+                              </div>
+                            </SelectItem>
+                          ))
+                        )}
+                      </SelectContent>
+                    </Select>
+                    {selectedTestSetData && (
+                      <p className="text-xs text-muted-foreground mt-2">
+                        {selectedTestSetData.description}
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              <Separator />
+
+              {/* Rollouts - always visible */}
+              <div>
+                <label className="text-sm font-medium mb-2 block">
+                  Rollouts per Scenario
+                  <span className="text-muted-foreground text-xs ml-1">(1-10)</span>
+                </label>
+                <Input
+                  type="number"
+                  min={1}
+                  max={10}
+                  value={rolloutsPerScenario}
+                  onChange={(e) => setRolloutsPerScenario(Math.max(1, Math.min(10, parseInt(e.target.value) || 1)))}
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Multiple rollouts enable variance estimation
+                </p>
+              </div>
+
+              {!useTestSet && (
+                <>
+                  <Separator />
+                  <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-sm font-medium mb-2 block">
                     Scenarios
@@ -240,19 +433,6 @@ export default function Playground() {
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-2 block">
-                    Rollouts
-                    <span className="text-muted-foreground text-xs ml-1">(1-10)</span>
-                  </label>
-                  <Input
-                    type="number"
-                    min={1}
-                    max={10}
-                    value={rolloutsPerScenario}
-                    onChange={(e) => setRolloutsPerScenario(Math.max(1, Math.min(10, parseInt(e.target.value) || 1)))}
-                  />
-                </div>
-                <div>
                   <label className="text-sm font-medium mb-2 block">Seed</label>
                   <Input
                     type="number"
@@ -262,9 +442,7 @@ export default function Playground() {
                 </div>
               </div>
 
-              <Separator />
-              
-              {/* Narrative Generation Toggle */}
+              {/* Narrative Generation Toggle (only when not using test set) */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div>
@@ -311,8 +489,22 @@ export default function Playground() {
                   </div>
                 )}
               </div>
+                </>
+              )}
 
-              {rolloutsPerScenario > 1 && (
+              {/* Info boxes */}
+              {useTestSet && selectedTestSetData && (
+                <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 text-sm">
+                  <span className="text-blue-400">
+                    Using fixed testset: <strong>{effectiveScenarioCount} scenarios</strong> already generated.
+                    {selectedTestSetData.useNarrativeDescriptions && (
+                      <span className="ml-1">(with narratives)</span>
+                    )}
+                  </span>
+                </div>
+              )}
+
+              {!useTestSet && rolloutsPerScenario > 1 && (
                 <div className="bg-muted/50 rounded-lg p-3 text-sm">
                   <span className="text-muted-foreground">
                     Running {rolloutsPerScenario} rollouts per scenario enables variance estimation.
@@ -324,11 +516,11 @@ export default function Playground() {
                   </span>
                 </div>
               )}
-              
-              {useNarrativeDescriptions && (
+
+              {!useTestSet && useNarrativeDescriptions && (
                 <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3 text-sm">
                   <span className="text-purple-400">
-                    Narrative generation will add ~{scenarioCount * 2} LLM calls before evaluation.
+                    Narrative generation will add ~{narrativeCalls} LLM calls before evaluation.
                   </span>
                 </div>
               )}
@@ -361,33 +553,72 @@ export default function Playground() {
           {/* Actions */}
           <Card>
             <CardContent className="pt-6">
-              <div className="flex gap-3 flex-wrap">
-                <Button
-                  onClick={handlePreview}
-                  variant="outline"
-                  disabled={previewLoading}
-                >
-                  {previewLoading 
-                    ? (useNarrativeDescriptions ? "Generating Narrative..." : "Generating...") 
-                    : (useNarrativeDescriptions ? "Generate Preview (+ Narrative)" : "Generate Preview")}
-                </Button>
-                <Button
-                  onClick={handleRunSingle}
-                  variant="secondary"
-                  disabled={loading || !result?.scenario}
-                >
-                  {loading 
-                    ? `Running ${rolloutsPerScenario} rollout${rolloutsPerScenario > 1 ? "s" : ""}...` 
-                    : `Run ${rolloutsPerScenario > 1 ? `${rolloutsPerScenario} Rollouts` : "Single Scenario"}`}
-                </Button>
-                <Button
-                  onClick={handleRunBenchmark}
-                  disabled={runningBenchmark}
-                >
-                  {runningBenchmark
-                    ? `Starting benchmark...`
-                    : `Run Benchmark (${useNarrativeDescriptions ? scenarioCount * 2 + totalApiCalls : totalApiCalls} calls)`}
-                </Button>
+              <div className="space-y-3">
+                <div className="flex gap-3 flex-wrap">
+                  <Button
+                    onClick={handlePreview}
+                    variant="outline"
+                    disabled={previewLoading}
+                  >
+                    {previewLoading
+                      ? (useNarrativeDescriptions ? "Generating Narrative..." : "Generating...")
+                      : (useNarrativeDescriptions ? "Generate Preview (+ Narrative)" : "Generate Preview")}
+                  </Button>
+                  <Button
+                    onClick={handleRunSingle}
+                    variant="secondary"
+                    disabled={loading || !result?.scenario}
+                  >
+                    {loading
+                      ? `Running ${rolloutsPerScenario} rollout${rolloutsPerScenario > 1 ? "s" : ""}...`
+                      : `Run ${rolloutsPerScenario > 1 ? `${rolloutsPerScenario} Rollouts` : "Single Scenario"}`}
+                  </Button>
+                </div>
+
+                <div className="flex gap-3 flex-wrap items-center">
+                  <Button
+                    onClick={() => handleRunBenchmark(false)}
+                    disabled={runningBenchmark || (useTestSet && !selectedTestSet)}
+                    className="flex-1"
+                  >
+                    {runningBenchmark
+                      ? `Starting benchmark...`
+                      : useTestSet
+                        ? `Run Benchmark (${totalApiCalls} calls)`
+                        : `Run Benchmark (${narrativeCalls + totalApiCalls} calls)`}
+                  </Button>
+                  <Button
+                    onClick={() => handleRunBenchmark(true)}
+                    disabled={runningBenchmark || (useTestSet && !selectedTestSet)}
+                    variant="outline"
+                  >
+                    Run & Stay
+                  </Button>
+                </div>
+
+                {lastRunId && !runningBenchmark && (
+                  <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3 text-sm flex items-center justify-between">
+                    <span className="text-emerald-400">
+                      ✓ Benchmark started
+                    </span>
+                    <div className="flex gap-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => router.push(`/runs/${lastRunId}`)}
+                      >
+                        View Run
+                      </Button>
+                      <Button
+                        size="sm"
+                        onClick={() => handleRunBenchmark(true)}
+                        disabled={useTestSet && !selectedTestSet}
+                      >
+                        Run Another
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>

@@ -37,8 +37,9 @@ export const AVAILABLE_MODELS = [
   { id: "openai/gpt-4o", name: "GPT-4o", provider: "OpenAI" },
   { id: "openai/gpt-4o-mini", name: "GPT-4o Mini", provider: "OpenAI" },
   { id: "openai/gpt-4-turbo", name: "GPT-4 Turbo", provider: "OpenAI" },
-  { id: "openai/gpt-5-2", name: "GPT-5.2", provider: "OpenAI" },
-  { id: "openai/gpt-5-2-mini", name: "GPT-5.2 Mini", provider: "OpenAI" },
+  { id: "openai/gpt-5.2", name: "GPT-5.2", provider: "OpenAI" },
+  { id: "openai/gpt-5.1", name: "GPT-5.1", provider: "OpenAI" },
+  {id: "anthropic/claude-opus-4.5", name: "Claude 4.5 Opus", provider: "Anthropic" },
   {id: "anthropic/claude-sonnet-4.5", name: "Claude 4.5 Sonnet", provider: "Anthropic" },
   { id: "anthropic/claude-sonnet-4", name: "Claude Sonnet 4", provider: "Anthropic" },
   { id: "anthropic/claude-3.5-sonnet", name: "Claude 3.5 Sonnet", provider: "Anthropic" },
@@ -108,6 +109,63 @@ export async function callOpenRouter(
 }
 
 /**
+ * Sanitize JSON string by escaping control characters inside string values.
+ * 
+ * Some models (e.g., Claude Opus) output JSON with literal newlines inside
+ * string values instead of escaped \n sequences. This causes JSON.parse()
+ * to fail with "Bad control character in string literal".
+ * 
+ * This function walks through the JSON, tracks whether we're inside a string,
+ * and escapes any unescaped control characters it finds.
+ */
+function sanitizeJsonString(jsonStr: string): string {
+  let result = '';
+  let inString = false;
+  let escaped = false;
+  
+  for (let i = 0; i < jsonStr.length; i++) {
+    const char = jsonStr[i];
+    const code = jsonStr.charCodeAt(i);
+    
+    if (escaped) {
+      result += char;
+      escaped = false;
+      continue;
+    }
+    
+    if (char === '\\') {
+      escaped = true;
+      result += char;
+      continue;
+    }
+    
+    if (char === '"') {
+      inString = !inString;
+      result += char;
+      continue;
+    }
+    
+    // If we're inside a string and hit a control character, escape it
+    if (inString && code < 32) {
+      if (code === 10) { // newline
+        result += '\\n';
+      } else if (code === 13) { // carriage return
+        result += '\\r';
+      } else if (code === 9) { // tab
+        result += '\\t';
+      } else {
+        // Other control chars: use unicode escape
+        result += '\\u' + code.toString(16).padStart(4, '0');
+      }
+    } else {
+      result += char;
+    }
+  }
+  
+  return result;
+}
+
+/**
  * Parse JSON from LLM response, handling various formats
  */
 function parseJsonResponse(content: string): Prediction {
@@ -128,7 +186,16 @@ function parseJsonResponse(content: string): Prediction {
   }
 
   try {
-    const parsed = JSON.parse(jsonStr);
+    // Sanitize JSON to handle models that output literal control characters
+    // inside string values (e.g., literal newlines instead of \n)
+    const sanitizedJson = sanitizeJsonString(jsonStr);
+    
+    let parsed = JSON.parse(sanitizedJson);
+    
+    // Handle double-encoded JSON (when model returns a JSON string literal)
+    if (typeof parsed === 'string') {
+      parsed = JSON.parse(parsed);
+    }
     
     // Validate with Zod schema
     const result = PredictionSchema.safeParse(parsed);
@@ -146,7 +213,39 @@ function parseJsonResponse(content: string): Prediction {
 
     throw new Error(`Invalid prediction format: ${result.error.message}`);
   } catch (e) {
-    // If JSON parsing fails, try to extract a number from the response
+    // If JSON parsing fails, try multiple fallback strategies
+    
+    // Strategy 1: Look for "yield": X.XX pattern (even if full JSON failed)
+    // This is the most reliable since it's explicitly the yield field
+    const yieldJsonMatch = content.match(/"yield"\s*:\s*(\d+\.?\d*)/);
+    if (yieldJsonMatch) {
+      return {
+        yield: parseFloat(yieldJsonMatch[1]),
+        reasoning: content,
+      };
+    }
+    
+    // Strategy 2: Look for "Final: X.XX%" or "= Final: X.XX%" pattern
+    // This matches the chain-of-thought calculation output format
+    const finalMatch = content.match(/(?:=\s*)?Final:\s*(\d+\.?\d*)\s*%/i);
+    if (finalMatch) {
+      return {
+        yield: parseFloat(finalMatch[1]),
+        reasoning: content,
+      };
+    }
+    
+    // Strategy 3: Look for "yield of X.XX%" or "yield: X.XX%" in text
+    const yieldTextMatch = content.match(/yield(?:\s+of)?\s*:?\s*(\d+\.?\d*)\s*%/i);
+    if (yieldTextMatch) {
+      return {
+        yield: parseFloat(yieldTextMatch[1]),
+        reasoning: content,
+      };
+    }
+    
+    // Strategy 4: Last resort - find the first percentage (original behavior)
+    // This is less reliable but better than failing completely
     const yieldMatch = content.match(/(\d+\.?\d*)\s*%/);
     if (yieldMatch) {
       return {

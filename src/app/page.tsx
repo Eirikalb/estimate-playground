@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -13,11 +13,35 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import type { BenchmarkRun } from "@/domains/schema";
+
+type SortField = "date" | "hitRate" | "rmse" | "avgStdDev";
+type SortDirection = "asc" | "desc";
+
+// Default filter state
+const DEFAULT_SORT_FIELD: SortField = "date";
+const DEFAULT_SORT_DIRECTION: SortDirection = "desc";
 
 export default function Dashboard() {
   const [runs, setRuns] = useState<BenchmarkRun[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  // Sorting state
+  const [sortField, setSortField] = useState<SortField>(DEFAULT_SORT_FIELD);
+  const [sortDirection, setSortDirection] = useState<SortDirection>(DEFAULT_SORT_DIRECTION);
+  
+  // Filter state - now arrays for multi-select
+  const [modelFilters, setModelFilters] = useState<string[]>([]);
+  const [strategyFilters, setStrategyFilters] = useState<string[]>([]);
+  const [testSetFilter, setTestSetFilter] = useState<string>("all");
 
   useEffect(() => {
     fetch("/api/runs")
@@ -28,6 +52,144 @@ export default function Dashboard() {
       })
       .catch(() => setLoading(false));
   }, []);
+  
+  // Extract unique values for filters
+  const uniqueModels = useMemo(() => {
+    const models = [...new Set(runs.map((r) => r.model))];
+    return models.sort();
+  }, [runs]);
+  
+  const uniqueStrategies = useMemo(() => {
+    const strategies = [...new Set(runs.map((r) => r.promptStrategy))];
+    return strategies.sort();
+  }, [runs]);
+  
+  const uniqueTestSets = useMemo(() => {
+    const testSets = [...new Set(runs.map((r) => r.testSetName).filter(Boolean))] as string[];
+    return testSets.sort();
+  }, [runs]);
+  
+  // Filter and sort runs
+  const filteredAndSortedRuns = useMemo(() => {
+    let filtered = runs;
+    
+    // Apply filters (multi-select for model and strategy)
+    if (modelFilters.length > 0) {
+      filtered = filtered.filter((r) => modelFilters.includes(r.model));
+    }
+    if (strategyFilters.length > 0) {
+      filtered = filtered.filter((r) => strategyFilters.includes(r.promptStrategy));
+    }
+    if (testSetFilter !== "all") {
+      if (testSetFilter === "none") {
+        filtered = filtered.filter((r) => !r.testSetName);
+      } else {
+        filtered = filtered.filter((r) => r.testSetName === testSetFilter);
+      }
+    }
+    
+    // Apply sorting
+    const sorted = [...filtered].sort((a, b) => {
+      let comparison = 0;
+      
+      switch (sortField) {
+        case "date":
+          comparison = new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
+          break;
+        case "hitRate":
+          const aHitRate = a.aggregateMetrics?.hitRate ?? -1;
+          const bHitRate = b.aggregateMetrics?.hitRate ?? -1;
+          comparison = aHitRate - bHitRate;
+          break;
+        case "rmse":
+          const aRmse = a.aggregateMetrics?.rmse ?? Infinity;
+          const bRmse = b.aggregateMetrics?.rmse ?? Infinity;
+          comparison = aRmse - bRmse;
+          break;
+        case "avgStdDev":
+          const aStdDev = a.aggregateMetrics?.avgStdDeviation ?? Infinity;
+          const bStdDev = b.aggregateMetrics?.avgStdDeviation ?? Infinity;
+          comparison = aStdDev - bStdDev;
+          break;
+      }
+      
+      return sortDirection === "asc" ? comparison : -comparison;
+    });
+    
+    return sorted;
+  }, [runs, modelFilters, strategyFilters, testSetFilter, sortField, sortDirection]);
+  
+  // Toggle sort direction or change field
+  const handleSort = (field: SortField) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    } else {
+      setSortField(field);
+      // Default directions: date desc, metrics desc (higher hit rate = better, lower rmse/stddev = better shown first)
+      setSortDirection(field === "date" || field === "hitRate" ? "desc" : "asc");
+    }
+  };
+  
+  // Toggle model filter
+  const toggleModelFilter = (model: string) => {
+    setModelFilters(prev => 
+      prev.includes(model) 
+        ? prev.filter(m => m !== model)
+        : [...prev, model]
+    );
+  };
+  
+  // Toggle strategy filter
+  const toggleStrategyFilter = (strategy: string) => {
+    setStrategyFilters(prev => 
+      prev.includes(strategy) 
+        ? prev.filter(s => s !== strategy)
+        : [...prev, strategy]
+    );
+  };
+  
+  // Clear all filters
+  const clearFilters = () => {
+    setModelFilters([]);
+    setStrategyFilters([]);
+    setTestSetFilter("all");
+  };
+  
+  // Reset to defaults (including sort)
+  const resetToDefaults = () => {
+    clearFilters();
+    setSortField(DEFAULT_SORT_FIELD);
+    setSortDirection(DEFAULT_SORT_DIRECTION);
+  };
+  
+  // Check if any filters are active
+  const hasActiveFilters = modelFilters.length > 0 || strategyFilters.length > 0 || testSetFilter !== "all";
+  const hasNonDefaultState = hasActiveFilters || sortField !== DEFAULT_SORT_FIELD || sortDirection !== DEFAULT_SORT_DIRECTION;
+  
+  // Sort indicator component
+  const SortIndicator = ({ field }: { field: SortField }) => {
+    if (sortField !== field) return <span className="text-muted-foreground/50 ml-1">↕</span>;
+    return <span className="ml-1">{sortDirection === "asc" ? "↑" : "↓"}</span>;
+  };
+  
+  // Filter badge component with X button
+  const FilterBadge = ({ label, onRemove }: { label: string; onRemove: () => void }) => (
+    <Badge variant="secondary" className="gap-1 pr-1">
+      {label}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onRemove();
+        }}
+        className="ml-1 rounded-full hover:bg-muted-foreground/20 p-0.5"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </Badge>
+  );
 
   const formatDate = (timestamp: string) => {
     return new Date(timestamp).toLocaleDateString("en-US", {
@@ -110,10 +272,63 @@ export default function Dashboard() {
       {/* Runs Table */}
       <Card>
         <CardHeader>
-          <CardTitle>Recent Runs</CardTitle>
-          <CardDescription>
-            All benchmark runs sorted by most recent
-          </CardDescription>
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <CardTitle>Benchmark Runs</CardTitle>
+                <CardDescription>
+                  {filteredAndSortedRuns.length} of {runs.length} runs
+                  {hasActiveFilters && " (filtered)"}
+                </CardDescription>
+              </div>
+              <div className="flex gap-2">
+                {hasActiveFilters && (
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={clearFilters}
+                  >
+                    Clear filters
+                  </Button>
+                )}
+                {hasNonDefaultState && (
+                  <Button 
+                    variant="ghost" 
+                    size="sm"
+                    onClick={resetToDefaults}
+                  >
+                    Reset to default
+                  </Button>
+                )}
+              </div>
+            </div>
+            
+            {/* Active filter badges */}
+            {hasActiveFilters && (
+              <div className="flex flex-wrap gap-2">
+                {modelFilters.map(model => (
+                  <FilterBadge 
+                    key={model} 
+                    label={model.split("/").pop() || model}
+                    onRemove={() => toggleModelFilter(model)}
+                  />
+                ))}
+                {strategyFilters.map(strategy => (
+                  <FilterBadge 
+                    key={strategy} 
+                    label={strategy.replace(/-/g, " ")}
+                    onRemove={() => toggleStrategyFilter(strategy)}
+                  />
+                ))}
+                {testSetFilter !== "all" && (
+                  <FilterBadge 
+                    label={testSetFilter === "none" ? "No Test Set" : testSetFilter}
+                    onRemove={() => setTestSetFilter("all")}
+                  />
+                )}
+              </div>
+            )}
+          </div>
         </CardHeader>
         <CardContent>
           {loading ? (
@@ -133,23 +348,182 @@ export default function Dashboard() {
                 <Button>Create First Run</Button>
               </Link>
             </div>
+          ) : filteredAndSortedRuns.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center mb-4">
+                <span className="text-2xl">🔍</span>
+              </div>
+              <h3 className="font-semibold mb-2">No matching runs</h3>
+              <p className="text-muted-foreground mb-4">
+                Try adjusting your filters
+              </p>
+              <Button 
+                variant="outline"
+                onClick={clearFilters}
+              >
+                Clear filters
+              </Button>
+            </div>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Model</TableHead>
-                  <TableHead>Strategy</TableHead>
+                  <TableHead 
+                    className="cursor-pointer hover:bg-muted/50 select-none"
+                    onClick={() => handleSort("date")}
+                  >
+                    Date<SortIndicator field="date" />
+                  </TableHead>
+                  <TableHead className="p-0">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <button className="flex items-center gap-1 px-2 py-3 w-full h-full hover:bg-muted/50 text-left font-medium text-sm">
+                          Model
+                          {modelFilters.length > 0 && (
+                            <span className="ml-1 rounded-full bg-primary text-primary-foreground text-xs px-1.5 py-0.5">
+                              {modelFilters.length}
+                            </span>
+                          )}
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-auto opacity-50">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                          </svg>
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="start" className="w-56">
+                        <DropdownMenuLabel>Filter by Model</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        {uniqueModels.map((model) => (
+                          <DropdownMenuCheckboxItem
+                            key={model}
+                            checked={modelFilters.includes(model)}
+                            onCheckedChange={() => toggleModelFilter(model)}
+                          >
+                            {model.split("/").pop()}
+                          </DropdownMenuCheckboxItem>
+                        ))}
+                        {modelFilters.length > 0 && (
+                          <>
+                            <DropdownMenuSeparator />
+                            <button
+                              className="w-full px-2 py-1.5 text-sm text-left hover:bg-accent rounded-sm"
+                              onClick={() => setModelFilters([])}
+                            >
+                              Clear model filters
+                            </button>
+                          </>
+                        )}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableHead>
+                  <TableHead className="p-0">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <button className="flex items-center gap-1 px-2 py-3 w-full h-full hover:bg-muted/50 text-left font-medium text-sm">
+                          Strategy
+                          {strategyFilters.length > 0 && (
+                            <span className="ml-1 rounded-full bg-primary text-primary-foreground text-xs px-1.5 py-0.5">
+                              {strategyFilters.length}
+                            </span>
+                          )}
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-auto opacity-50">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                          </svg>
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="start" className="w-56">
+                        <DropdownMenuLabel>Filter by Strategy</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        {uniqueStrategies.map((strategy) => (
+                          <DropdownMenuCheckboxItem
+                            key={strategy}
+                            checked={strategyFilters.includes(strategy)}
+                            onCheckedChange={() => toggleStrategyFilter(strategy)}
+                          >
+                            {strategy.replace(/-/g, " ")}
+                          </DropdownMenuCheckboxItem>
+                        ))}
+                        {strategyFilters.length > 0 && (
+                          <>
+                            <DropdownMenuSeparator />
+                            <button
+                              className="w-full px-2 py-1.5 text-sm text-left hover:bg-accent rounded-sm"
+                              onClick={() => setStrategyFilters([])}
+                            >
+                              Clear strategy filters
+                            </button>
+                          </>
+                        )}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableHead>
+                  <TableHead className="p-0">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <button className="flex items-center gap-1 px-2 py-3 w-full h-full hover:bg-muted/50 text-left font-medium text-sm">
+                          Test Set
+                          {testSetFilter !== "all" && (
+                            <span className="ml-1 rounded-full bg-primary text-primary-foreground text-xs px-1.5 py-0.5">
+                              1
+                            </span>
+                          )}
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-auto opacity-50">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                          </svg>
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="start" className="w-56">
+                        <DropdownMenuLabel>Filter by Test Set</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuCheckboxItem
+                          checked={testSetFilter === "all"}
+                          onCheckedChange={() => setTestSetFilter("all")}
+                        >
+                          All Test Sets
+                        </DropdownMenuCheckboxItem>
+                        <DropdownMenuCheckboxItem
+                          checked={testSetFilter === "none"}
+                          onCheckedChange={() => setTestSetFilter("none")}
+                        >
+                          No Test Set
+                        </DropdownMenuCheckboxItem>
+                        <DropdownMenuSeparator />
+                        {uniqueTestSets.map((testSet) => (
+                          <DropdownMenuCheckboxItem
+                            key={testSet}
+                            checked={testSetFilter === testSet}
+                            onCheckedChange={() => setTestSetFilter(testSet)}
+                          >
+                            {testSet}
+                          </DropdownMenuCheckboxItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableHead>
                   <TableHead>Scenarios</TableHead>
                   <TableHead>Rollouts</TableHead>
-                  <TableHead>Hit Rate</TableHead>
-                  <TableHead>RMSE</TableHead>
-                  <TableHead>Avg σ</TableHead>
+                  <TableHead 
+                    className="cursor-pointer hover:bg-muted/50 select-none"
+                    onClick={() => handleSort("hitRate")}
+                  >
+                    Hit Rate<SortIndicator field="hitRate" />
+                  </TableHead>
+                  <TableHead 
+                    className="cursor-pointer hover:bg-muted/50 select-none"
+                    onClick={() => handleSort("rmse")}
+                  >
+                    RMSE<SortIndicator field="rmse" />
+                  </TableHead>
+                  <TableHead 
+                    className="cursor-pointer hover:bg-muted/50 select-none"
+                    onClick={() => handleSort("avgStdDev")}
+                  >
+                    Avg σ<SortIndicator field="avgStdDev" />
+                  </TableHead>
                   <TableHead></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {runs.map((run) => (
+                {filteredAndSortedRuns.map((run) => (
                   <TableRow key={run.id}>
                     <TableCell className="font-mono text-sm">
                       <div className="flex items-center gap-2">
@@ -169,6 +543,15 @@ export default function Dashboard() {
                     </TableCell>
                     <TableCell className="capitalize">
                       {run.promptStrategy.replace(/-/g, " ")}
+                    </TableCell>
+                    <TableCell className="text-sm">
+                      {run.testSetName ? (
+                        <Badge variant="outline" className="font-mono text-xs">
+                          {run.testSetName}
+                        </Badge>
+                      ) : (
+                        <span className="text-muted-foreground">—</span>
+                      )}
                     </TableCell>
                     <TableCell className="font-mono">
                       {run.scenarios.length}
