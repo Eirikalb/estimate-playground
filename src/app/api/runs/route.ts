@@ -14,7 +14,6 @@ import { callOpenRouterMultiple, type OpenRouterConfig } from "@/lib/openrouter"
 import {
   evaluateMultipleRollouts,
   calculateAggregateMetrics,
-  calculateConfidenceScore,
   calculateScenarioDifficulty,
   detectErrorPattern,
   analyzeErrorPatterns,
@@ -277,7 +276,6 @@ export async function POST(request: Request) {
           const result = evaluateMultipleRollouts(scenario, llmResults);
           
           // Calculate additional metrics
-          const confidence = calculateConfidenceScore(scenario, result);
           const difficulty = calculateScenarioDifficulty(scenario, domainConfig);
           const errorPattern = detectErrorPattern(scenario, result, domainConfig);
           
@@ -288,7 +286,6 @@ export async function POST(request: Request) {
               status: "completed" as const,
               startedAt: scenarioStartedAt,
               completedAt: new Date().toISOString(),
-              confidence,
               difficulty,
               errorPattern,
             },

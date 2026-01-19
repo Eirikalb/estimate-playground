@@ -26,7 +26,7 @@ import type { BenchmarkRun } from "@/domains/schema";
 import { formatCostCompact } from "@/lib/pricing";
 import { AVAILABLE_DOMAINS, getShortDomainName } from "@/components/domain-selector";
 
-type SortField = "date" | "hitRate" | "rmse" | "avgStdDev" | "avgConfidence" | "cost";
+type SortField = "date" | "hitRate" | "rmse" | "avgStdDev" | "cost";
 type SortDirection = "asc" | "desc";
 
 // Default filter state
@@ -119,11 +119,6 @@ export default function Dashboard() {
           const bStdDev = b.aggregateMetrics?.avgStdDeviation ?? Infinity;
           comparison = aStdDev - bStdDev;
           break;
-        case "avgConfidence":
-          const aConf = a.aggregateMetrics?.avgConfidence ?? -1;
-          const bConf = b.aggregateMetrics?.avgConfidence ?? -1;
-          comparison = aConf - bConf;
-          break;
         case "cost":
           const aCost = a.aggregateMetrics?.totalCost ?? -1;
           const bCost = b.aggregateMetrics?.totalCost ?? -1;
@@ -143,8 +138,8 @@ export default function Dashboard() {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
       setSortField(field);
-      // Default directions: date desc, metrics where higher is better (hitRate, confidence) desc, lower is better (rmse, stddev, cost) asc
-      setSortDirection(field === "date" || field === "hitRate" || field === "avgConfidence" ? "desc" : "asc");
+      // Default directions: date desc, hitRate desc (higher is better), lower is better (rmse, stddev, cost) asc
+      setSortDirection(field === "date" || field === "hitRate" ? "desc" : "asc");
     }
   };
   
@@ -583,12 +578,6 @@ export default function Dashboard() {
                   </TableHead>
                   <TableHead
                     className="cursor-pointer hover:bg-muted/50 select-none"
-                    onClick={() => handleSort("avgConfidence")}
-                  >
-                    Conf.<SortIndicator field="avgConfidence" />
-                  </TableHead>
-                  <TableHead
-                    className="cursor-pointer hover:bg-muted/50 select-none"
                     onClick={() => handleSort("cost")}
                   >
                     Cost<SortIndicator field="cost" />
@@ -658,11 +647,6 @@ export default function Dashboard() {
                     <TableCell className="font-mono">
                       {run.aggregateMetrics?.avgStdDeviation !== undefined
                         ? run.aggregateMetrics.avgStdDeviation.toFixed(3)
-                        : "—"}
-                    </TableCell>
-                    <TableCell className="font-mono">
-                      {run.aggregateMetrics?.avgConfidence !== undefined
-                        ? run.aggregateMetrics.avgConfidence
                         : "—"}
                     </TableCell>
                     <TableCell className="font-mono">

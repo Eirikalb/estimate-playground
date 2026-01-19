@@ -47,7 +47,6 @@ export function generateSummaryCSV(run: BenchmarkRun): string {
     "Absolute Error",
     "Within Tolerance",
     "Rollout Consistency",
-    "Confidence",
     "Status",
   ];
 
@@ -67,7 +66,6 @@ export function generateSummaryCSV(run: BenchmarkRun): string {
       result?.absoluteError ?? "",
       result?.withinTolerance ?? "",
       result?.rolloutConsistency ?? "",
-      result?.confidence?.score ?? "",
       result?.status ?? "pending",
     ];
   });

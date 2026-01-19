@@ -249,12 +249,6 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
     return "text-red-400";
   };
 
-  const getConfidenceColor = (score: number) => {
-    if (score >= 80) return "text-emerald-400";
-    if (score >= 60) return "text-amber-400";
-    return "text-red-400";
-  };
-
   const getDifficultyColor = (score: number) => {
     if (score < 30) return "text-emerald-400";
     if (score < 60) return "text-amber-400";
@@ -480,12 +474,6 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
                   {run.aggregateMetrics.avgConsistency?.toFixed(0) || "—"}%
                 </div>
               </div>
-              <div className="bg-card border rounded-lg px-3 py-2">
-                <div className="text-xs text-muted-foreground">Confidence</div>
-                <div className={`text-lg font-mono font-bold ${getConfidenceColor(run.aggregateMetrics.avgConfidence || 0)}`}>
-                  {run.aggregateMetrics.avgConfidence ?? "—"}
-                </div>
-              </div>
             </>
           )}
         </div>
@@ -516,7 +504,6 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
                     <TableHead className="w-[70px]">{hasMultipleRollouts ? "Mean" : "Pred"}</TableHead>
                     {hasMultipleRollouts && <TableHead className="w-[60px]">σ</TableHead>}
                     <TableHead className="w-[70px]">Error</TableHead>
-                    {hasMultipleRollouts && <TableHead className="w-[50px]">Conf.</TableHead>}
                     <TableHead className="w-[40px]"></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -579,11 +566,6 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
                         <TableCell className={`font-mono text-xs ${!isPending && !isRunning ? getErrorColor(result.error) : ""}`}>
                           {isPending || isRunning ? "—" : `${result.error > 0 ? "+" : ""}${result.error.toFixed(3)}`}
                         </TableCell>
-                        {hasMultipleRollouts && (
-                          <TableCell className={`font-mono text-xs ${!isPending && !isRunning && result.confidence ? getConfidenceColor(result.confidence.score) : ""}`}>
-                            {isPending || isRunning ? "—" : (result.confidence?.score ?? "—")}
-                          </TableCell>
-                        )}
                         <TableCell>
                           {isPending && <span className="text-muted-foreground">—</span>}
                           {isRunning && <span className="text-amber-400 animate-pulse">⋯</span>}
@@ -800,20 +782,6 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
                           <div className="text-[10px] text-muted-foreground">In Tol.</div>
                           <div className="font-mono text-sm font-bold">
                             {selectedScenario.result.rolloutConsistency.toFixed(0)}%
-                          </div>
-                        </div>
-                        <div className={`p-2 rounded text-center ${
-                          selectedScenario.result.confidence
-                            ? selectedScenario.result.confidence.level === "high"
-                              ? "bg-emerald-500/10 border border-emerald-500/20"
-                              : selectedScenario.result.confidence.level === "medium"
-                              ? "bg-amber-500/10 border border-amber-500/20"
-                              : "bg-red-500/10 border border-red-500/20"
-                            : "bg-muted/50"
-                        }`}>
-                          <div className="text-[10px] text-muted-foreground">Confidence</div>
-                          <div className={`font-mono text-sm font-bold ${selectedScenario.result.confidence ? getConfidenceColor(selectedScenario.result.confidence.score) : ""}`}>
-                            {selectedScenario.result.confidence?.score ?? "—"}
                           </div>
                         </div>
                       </>
