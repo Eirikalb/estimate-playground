@@ -421,21 +421,20 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
         <div className={`grid gap-2 mb-4 ${hasMultipleRollouts ? "grid-cols-9" : "grid-cols-6"}`}>
           <div className="bg-card border rounded-lg px-3 py-2">
             <div className="text-xs text-muted-foreground">Hit Rate</div>
-            <div className={`text-lg font-mono font-bold ${getHitRateColor(run.aggregateMetrics.hitRate)}`}>
-              {run.aggregateMetrics.hitRate.toFixed(1)}%
+            <div className={`text-lg font-mono font-bold ${run.aggregateMetrics.hitRate != null ? getHitRateColor(run.aggregateMetrics.hitRate) : ""}`}>
+              {run.aggregateMetrics.hitRate != null ? `${run.aggregateMetrics.hitRate.toFixed(1)}%` : "—"}
             </div>
           </div>
           <div className="bg-card border rounded-lg px-3 py-2">
             <div className="text-xs text-muted-foreground">RMSE</div>
             <div className="text-lg font-mono font-bold">
-              {run.aggregateMetrics.rmse.toFixed(3)}
+              {run.aggregateMetrics.rmse != null ? run.aggregateMetrics.rmse.toFixed(3) : "—"}
             </div>
           </div>
           <div className="bg-card border rounded-lg px-3 py-2">
             <div className="text-xs text-muted-foreground">Mean Error</div>
             <div className="text-lg font-mono font-bold">
-              {run.aggregateMetrics.meanError > 0 ? "+" : ""}
-              {run.aggregateMetrics.meanError.toFixed(3)}
+              {run.aggregateMetrics.meanError != null ? `${run.aggregateMetrics.meanError > 0 ? "+" : ""}${run.aggregateMetrics.meanError.toFixed(3)}` : "—"}
             </div>
           </div>
           <div className="bg-card border rounded-lg px-3 py-2">
@@ -556,15 +555,15 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
                           {scenario.groundTruth.value.toFixed(2)}%
                         </TableCell>
                         <TableCell className="font-mono text-xs">
-                          {isPending || isRunning ? "—" : `${result.meanPrediction.toFixed(2)}%`}
+                          {isPending || isRunning ? "—" : result.meanPrediction != null ? `${result.meanPrediction.toFixed(2)}%` : "—"}
                         </TableCell>
                         {hasMultipleRollouts && (
-                          <TableCell className={`font-mono text-xs ${!isPending && !isRunning ? getConsistencyColor(result.stdDeviation) : ""}`}>
-                            {isPending || isRunning ? "—" : result.stdDeviation.toFixed(3)}
+                          <TableCell className={`font-mono text-xs ${!isPending && !isRunning && result.stdDeviation != null ? getConsistencyColor(result.stdDeviation) : ""}`}>
+                            {isPending || isRunning ? "—" : result.stdDeviation != null ? result.stdDeviation.toFixed(3) : "—"}
                           </TableCell>
                         )}
-                        <TableCell className={`font-mono text-xs ${!isPending && !isRunning ? getErrorColor(result.error) : ""}`}>
-                          {isPending || isRunning ? "—" : `${result.error > 0 ? "+" : ""}${result.error.toFixed(3)}`}
+                        <TableCell className={`font-mono text-xs ${!isPending && !isRunning && result.error != null ? getErrorColor(result.error) : ""}`}>
+                          {isPending || isRunning ? "—" : result.error != null ? `${result.error > 0 ? "+" : ""}${result.error.toFixed(3)}` : "—"}
                         </TableCell>
                         <TableCell>
                           {isPending && <span className="text-muted-foreground">—</span>}
@@ -757,7 +756,7 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
                     <div className="bg-amber-500/10 border border-amber-500/20 p-2 rounded text-center">
                       <div className="text-[10px] text-amber-400">Mean</div>
                       <div className="font-mono text-sm font-bold text-amber-400">
-                        {selectedScenario.result.meanPrediction.toFixed(2)}%
+                        {selectedScenario.result.meanPrediction != null ? `${selectedScenario.result.meanPrediction.toFixed(2)}%` : "—"}
                       </div>
                     </div>
                     <div className={`p-2 rounded text-center ${
@@ -766,22 +765,22 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
                         : "bg-red-500/10 border border-red-500/20"
                     }`}>
                       <div className="text-[10px] text-muted-foreground">Error</div>
-                      <div className={`font-mono text-sm font-bold ${getErrorColor(selectedScenario.result.error)}`}>
-                        {selectedScenario.result.error > 0 ? "+" : ""}{selectedScenario.result.error.toFixed(3)}%
+                      <div className={`font-mono text-sm font-bold ${selectedScenario.result.error != null ? getErrorColor(selectedScenario.result.error) : ""}`}>
+                        {selectedScenario.result.error != null ? `${selectedScenario.result.error > 0 ? "+" : ""}${selectedScenario.result.error.toFixed(3)}%` : "—"}
                       </div>
                     </div>
                     {hasMultipleRollouts && selectedScenario.result.rollouts.length > 1 && (
                       <>
                         <div className="bg-muted/50 p-2 rounded text-center">
                           <div className="text-[10px] text-muted-foreground">σ</div>
-                          <div className={`font-mono text-sm font-bold ${getConsistencyColor(selectedScenario.result.stdDeviation)}`}>
-                            {selectedScenario.result.stdDeviation.toFixed(3)}
+                          <div className={`font-mono text-sm font-bold ${selectedScenario.result.stdDeviation != null ? getConsistencyColor(selectedScenario.result.stdDeviation) : ""}`}>
+                            {selectedScenario.result.stdDeviation != null ? selectedScenario.result.stdDeviation.toFixed(3) : "—"}
                           </div>
                         </div>
                         <div className="bg-muted/50 p-2 rounded text-center">
                           <div className="text-[10px] text-muted-foreground">In Tol.</div>
                           <div className="font-mono text-sm font-bold">
-                            {selectedScenario.result.rolloutConsistency.toFixed(0)}%
+                            {selectedScenario.result.rolloutConsistency != null ? `${selectedScenario.result.rolloutConsistency.toFixed(0)}%` : "—"}
                           </div>
                         </div>
                       </>
@@ -820,8 +819,9 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
                   </h4>
                   <Accordion type="single" collapsible className="space-y-1">
                     {selectedScenario.result.rollouts.map((rollout, i) => {
-                      const error = rollout.prediction - selectedScenario.scenario.groundTruth.value;
-                      const withinTol = Math.abs(error) <= selectedScenario.scenario.groundTruth.tolerance;
+                      const hasPrediction = rollout.prediction != null;
+                      const error = hasPrediction ? rollout.prediction - selectedScenario.scenario.groundTruth.value : null;
+                      const withinTol = error != null && Math.abs(error) <= selectedScenario.scenario.groundTruth.tolerance;
                       
                       return (
                         <AccordionItem 
@@ -833,21 +833,31 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
                             <div className="flex items-center justify-between w-full pr-2">
                               <div className="flex items-center gap-3">
                                 <span className="text-xs text-muted-foreground w-6">#{i + 1}</span>
-                                <span className={`font-mono text-sm font-bold ${getErrorColor(error)}`}>
-                                  {rollout.prediction.toFixed(2)}%
-                                </span>
-                                <span className={`text-xs ${withinTol ? "text-emerald-400" : "text-red-400"}`}>
-                                  ({error > 0 ? "+" : ""}{error.toFixed(3)}%)
-                                </span>
+                                {hasPrediction ? (
+                                  <>
+                                    <span className={`font-mono text-sm font-bold ${getErrorColor(error!)}`}>
+                                      {rollout.prediction!.toFixed(2)}%
+                                    </span>
+                                    <span className={`text-xs ${withinTol ? "text-emerald-400" : "text-red-400"}`}>
+                                      ({error! > 0 ? "+" : ""}{error!.toFixed(3)}%)
+                                    </span>
+                                  </>
+                                ) : (
+                                  <span className="text-red-400 text-sm">Failed</span>
+                                )}
                               </div>
                               <div className="flex items-center gap-2">
                                 <span className="text-xs text-muted-foreground">
                                   {rollout.latencyMs}ms
                                 </span>
-                                {withinTol ? (
-                                  <span className="text-emerald-400 text-xs">✓</span>
+                                {hasPrediction ? (
+                                  withinTol ? (
+                                    <span className="text-emerald-400 text-xs">✓</span>
+                                  ) : (
+                                    <span className="text-red-400 text-xs">✗</span>
+                                  )
                                 ) : (
-                                  <span className="text-red-400 text-xs">✗</span>
+                                  <span className="text-red-400 text-xs">!</span>
                                 )}
                               </div>
                             </div>

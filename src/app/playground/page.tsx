@@ -18,7 +18,6 @@ import {
 import { Separator } from "@/components/ui/separator";
 import type { PromptTemplate, Scenario, ScenarioResult, RolloutResult, TestSet } from "@/domains/schema";
 import { AVAILABLE_MODELS } from "@/lib/openrouter";
-import { DomainSelector } from "@/components/domain-selector";
 
 interface PlaygroundRollout {
   prediction: number;
@@ -40,7 +39,6 @@ export default function Playground() {
   const [testSets, setTestSets] = useState<Array<Omit<TestSet, 'scenarios'>>>([]);
 
   // State with defaults (will be hydrated from localStorage after mount)
-  const [selectedDomain, setSelectedDomain] = useState<string>("real-estate-yield");
   const [selectedTemplate, setSelectedTemplate] = useState<string>("");
   const [customTemplate, setCustomTemplate] = useState<string>("");
   const [selectedModel, setSelectedModel] = useState<string>("openai/gpt-4o-mini");
@@ -62,7 +60,6 @@ export default function Playground() {
   // Hydrate from localStorage on mount (client-side only)
   useEffect(() => {
     // Load saved settings from localStorage
-    const savedDomain = localStorage.getItem('playground_domain');
     const savedTemplate = localStorage.getItem('playground_template');
     const savedModel = localStorage.getItem('playground_model');
     const savedUseTestSet = localStorage.getItem('playground_useTestSet');
@@ -72,7 +69,6 @@ export default function Playground() {
     const savedNarratives = localStorage.getItem('playground_narratives');
     const savedNarrativeModel = localStorage.getItem('playground_narrativeModel');
 
-    if (savedDomain) setSelectedDomain(savedDomain);
     if (savedTemplate) setSelectedTemplate(savedTemplate);
     if (savedModel) setSelectedModel(savedModel);
     if (savedUseTestSet !== null) setUseTestSet(savedUseTestSet !== 'false');
@@ -83,6 +79,17 @@ export default function Playground() {
     if (savedNarrativeModel) setNarrativeModel(savedNarrativeModel);
 
     setIsHydrated(true);
+
+    // Load templates
+    fetch("/api/templates")
+      .then((res) => res.json())
+      .then((data) => {
+        setTemplates(data);
+        if (data.length > 0 && !savedTemplate) {
+          setSelectedTemplate(data[0].id);
+          setCustomTemplate(data[0].template);
+        }
+      });
 
     // Load test sets
     fetch("/api/test-sets")
@@ -96,26 +103,6 @@ export default function Playground() {
       .catch((err) => console.error("Failed to load test sets:", err));
   }, []);
 
-  // Load domain-specific templates when domain changes
-  useEffect(() => {
-    if (!isHydrated) return;
-
-    const savedTemplate = localStorage.getItem('playground_template');
-    
-    fetch(`/api/templates?domain=${encodeURIComponent(selectedDomain)}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setTemplates(data);
-        // If saved template exists in new templates, keep it; otherwise select first
-        const savedExists = data.some((t: PromptTemplate) => t.id === savedTemplate);
-        if (data.length > 0 && !savedExists) {
-          setSelectedTemplate(data[0].id);
-          setCustomTemplate(data[0].template);
-        }
-      })
-      .catch((err) => console.error("Failed to load templates:", err));
-  }, [selectedDomain, isHydrated]);
-
   useEffect(() => {
     const template = templates.find((t) => t.id === selectedTemplate);
     if (template) {
@@ -124,12 +111,6 @@ export default function Playground() {
   }, [selectedTemplate, templates]);
 
   // Save settings to localStorage when they change (after hydration)
-  useEffect(() => {
-    if (isHydrated) {
-      localStorage.setItem('playground_domain', selectedDomain);
-    }
-  }, [selectedDomain, isHydrated]);
-
   useEffect(() => {
     if (isHydrated && selectedTemplate) {
       localStorage.setItem('playground_template', selectedTemplate);
@@ -185,7 +166,7 @@ export default function Playground() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          domainId: selectedDomain,
+          domainId: "real-estate-yield",
           promptTemplate: customTemplate,
           seed,
           useNarrativeDescription: useNarrativeDescriptions,
@@ -211,7 +192,7 @@ export default function Playground() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          domainId: selectedDomain,
+          domainId: "real-estate-yield",
           model: selectedModel,
           promptTemplate: customTemplate,
           scenario: result?.scenario,
@@ -249,7 +230,7 @@ export default function Playground() {
         requestBody.testSetName = selectedTestSet;
       } else {
         // Generate scenarios
-        requestBody.domainId = selectedDomain;
+        requestBody.domainId = "real-estate-yield";
         requestBody.scenarioCount = scenarioCount;
         requestBody.generateTwins = true;
         requestBody.seed = seed;
@@ -292,8 +273,6 @@ export default function Playground() {
     return "text-red-400";
   };
 
-  // Filter test sets by selected domain
-  const filteredTestSets = testSets.filter(ts => ts.domainId === selectedDomain);
   const selectedTestSetData = testSets.find(ts => ts.name === selectedTestSet);
   const effectiveScenarioCount = useTestSet && selectedTestSetData
     ? selectedTestSetData.scenarioCount
@@ -320,11 +299,6 @@ export default function Playground() {
               <CardDescription>Select model and prompt strategy</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div>
-                <label className="text-sm font-medium mb-2 block">Domain</label>
-                <DomainSelector value={selectedDomain} onValueChange={setSelectedDomain} />
-              </div>
-
               <div>
                 <label className="text-sm font-medium mb-2 block">Model</label>
                 <Select value={selectedModel} onValueChange={setSelectedModel}>
@@ -397,12 +371,12 @@ export default function Playground() {
                         <SelectValue placeholder="Choose a test set..." />
                       </SelectTrigger>
                       <SelectContent>
-                        {filteredTestSets.length === 0 ? (
+                        {testSets.length === 0 ? (
                           <div className="p-2 text-sm text-muted-foreground">
-                            No test sets available for this domain
+                            No test sets available
                           </div>
                         ) : (
-                          filteredTestSets.map((testSet) => (
+                          testSets.map((testSet) => (
                             <SelectItem key={testSet.name} value={testSet.name}>
                               <div className="flex flex-col">
                                 <span className="font-medium">{testSet.name}</span>
@@ -426,101 +400,97 @@ export default function Playground() {
 
               <Separator />
 
-              {/* Rollouts and Scenarios on same row */}
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm font-medium mb-2 block">
-                    Rollouts <span className="text-muted-foreground text-xs">(1-10)</span>
-                  </label>
-                  <Input
-                    type="number"
-                    min={1}
-                    max={10}
-                    value={rolloutsPerScenario}
-                    onChange={(e) => setRolloutsPerScenario(Math.max(1, Math.min(10, parseInt(e.target.value) || 1)))}
-                  />
-                </div>
-                {!useTestSet && (
-                  <div>
-                    <label className="text-sm font-medium mb-2 block">
-                      Scenarios
-                    </label>
-                    <Input
-                      type="number"
-                      min={1}
-                      max={50}
-                      value={scenarioCount}
-                      onChange={(e) => setScenarioCount(parseInt(e.target.value) || 5)}
-                    />
-                  </div>
-                )}
+              {/* Rollouts - always visible */}
+              <div>
+                <label className="text-sm font-medium mb-2 block">
+                  Rollouts per Scenario
+                  <span className="text-muted-foreground text-xs ml-1">(1-10)</span>
+                </label>
+                <Input
+                  type="number"
+                  min={1}
+                  max={10}
+                  value={rolloutsPerScenario}
+                  onChange={(e) => setRolloutsPerScenario(Math.max(1, Math.min(10, parseInt(e.target.value) || 1)))}
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Multiple rollouts enable variance estimation
+                </p>
               </div>
 
               {!useTestSet && (
                 <>
                   <Separator />
-                  {/* Collapsible Scenario Generation Options */}
-                  <details className="group">
-                    <summary className="cursor-pointer text-sm font-medium flex items-center gap-2">
-                      <svg className="w-4 h-4 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                      Scenario Generation Options
-                    </summary>
-                    <div className="mt-3 space-y-3 pl-6">
-                      <div>
-                        <label className="text-sm font-medium mb-2 block">Seed</label>
-                        <Input
-                          type="number"
-                          value={seed}
-                          onChange={(e) => setSeed(parseInt(e.target.value) || Date.now())}
-                        />
-                      </div>
+                  <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-medium mb-2 block">
+                    Scenarios
+                  </label>
+                  <Input
+                    type="number"
+                    min={1}
+                    max={50}
+                    value={scenarioCount}
+                    onChange={(e) => setScenarioCount(parseInt(e.target.value) || 5)}
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium mb-2 block">Seed</label>
+                  <Input
+                    type="number"
+                    value={seed}
+                    onChange={(e) => setSeed(parseInt(e.target.value) || Date.now())}
+                  />
+                </div>
+              </div>
 
-                      {/* Narrative Generation Toggle with Model on same row */}
-                      <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => setUseNarrativeDescriptions(!useNarrativeDescriptions)}
-                            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                              useNarrativeDescriptions ? "bg-purple-500" : "bg-muted"
-                            }`}
-                          >
-                            <span
-                              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                                useNarrativeDescriptions ? "translate-x-6" : "translate-x-1"
-                              }`}
-                            />
-                          </button>
-                          <label className="text-sm font-medium">LLM Narratives</label>
-                        </div>
-                        
-                        {useNarrativeDescriptions && (
-                          <div className="flex-1">
-                            <Select value={narrativeModel} onValueChange={setNarrativeModel}>
-                              <SelectTrigger className="h-8">
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent>
-                                {AVAILABLE_MODELS.filter(m => 
-                                  m.id.includes("gpt-4o-mini") || 
-                                  m.id.includes("gemini") || 
-                                  m.id.includes("claude")
-                                ).map((model) => (
-                                  <SelectItem key={model.id} value={model.id}>
-                                    <span className="font-medium">{model.name}</span>
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        )}
-                      </div>
-                      <p className="text-xs text-muted-foreground">
-                        Use AI to generate rich property prospectus descriptions
-                      </p>
-                    </div>
-                  </details>
+              {/* Narrative Generation Toggle (only when not using test set) */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <label className="text-sm font-medium">LLM-Generated Narratives</label>
+                    <p className="text-xs text-muted-foreground">
+                      Use AI to generate rich property prospectus descriptions
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setUseNarrativeDescriptions(!useNarrativeDescriptions)}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                      useNarrativeDescriptions ? "bg-purple-500" : "bg-muted"
+                    }`}
+                  >
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                        useNarrativeDescriptions ? "translate-x-6" : "translate-x-1"
+                      }`}
+                    />
+                  </button>
+                </div>
+                
+                {useNarrativeDescriptions && (
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">
+                      Narrative Model
+                    </label>
+                    <Select value={narrativeModel} onValueChange={setNarrativeModel}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {AVAILABLE_MODELS.filter(m => 
+                          m.id.includes("gpt-4o-mini") || 
+                          m.id.includes("gemini") || 
+                          m.id.includes("claude")
+                        ).map((model) => (
+                          <SelectItem key={model.id} value={model.id}>
+                            <span className="font-medium">{model.name}</span>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+              </div>
                 </>
               )}
 
