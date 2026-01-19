@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -22,8 +23,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { BenchmarkRun } from "@/domains/schema";
+import { formatCostCompact } from "@/lib/pricing";
+import { AVAILABLE_DOMAINS, getShortDomainName } from "@/components/domain-selector";
 
-type SortField = "date" | "hitRate" | "rmse" | "avgStdDev";
+type SortField = "date" | "hitRate" | "rmse" | "avgStdDev" | "avgConfidence" | "cost";
 type SortDirection = "asc" | "desc";
 
 // Default filter state
@@ -31,6 +34,7 @@ const DEFAULT_SORT_FIELD: SortField = "date";
 const DEFAULT_SORT_DIRECTION: SortDirection = "desc";
 
 export default function Dashboard() {
+  const router = useRouter();
   const [runs, setRuns] = useState<BenchmarkRun[]>([]);
   const [loading, setLoading] = useState(true);
   
@@ -42,6 +46,7 @@ export default function Dashboard() {
   const [modelFilters, setModelFilters] = useState<string[]>([]);
   const [strategyFilters, setStrategyFilters] = useState<string[]>([]);
   const [testSetFilter, setTestSetFilter] = useState<string>("all");
+  const [domainFilter, setDomainFilter] = useState<string>("all");
 
   useEffect(() => {
     fetch("/api/runs")
@@ -87,6 +92,9 @@ export default function Dashboard() {
         filtered = filtered.filter((r) => r.testSetName === testSetFilter);
       }
     }
+    if (domainFilter !== "all") {
+      filtered = filtered.filter((r) => r.domainId === domainFilter);
+    }
     
     // Apply sorting
     const sorted = [...filtered].sort((a, b) => {
@@ -111,13 +119,23 @@ export default function Dashboard() {
           const bStdDev = b.aggregateMetrics?.avgStdDeviation ?? Infinity;
           comparison = aStdDev - bStdDev;
           break;
+        case "avgConfidence":
+          const aConf = a.aggregateMetrics?.avgConfidence ?? -1;
+          const bConf = b.aggregateMetrics?.avgConfidence ?? -1;
+          comparison = aConf - bConf;
+          break;
+        case "cost":
+          const aCost = a.aggregateMetrics?.totalCost ?? -1;
+          const bCost = b.aggregateMetrics?.totalCost ?? -1;
+          comparison = aCost - bCost;
+          break;
       }
       
       return sortDirection === "asc" ? comparison : -comparison;
     });
     
     return sorted;
-  }, [runs, modelFilters, strategyFilters, testSetFilter, sortField, sortDirection]);
+  }, [runs, modelFilters, strategyFilters, testSetFilter, domainFilter, sortField, sortDirection]);
   
   // Toggle sort direction or change field
   const handleSort = (field: SortField) => {
@@ -125,8 +143,8 @@ export default function Dashboard() {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
       setSortField(field);
-      // Default directions: date desc, metrics desc (higher hit rate = better, lower rmse/stddev = better shown first)
-      setSortDirection(field === "date" || field === "hitRate" ? "desc" : "asc");
+      // Default directions: date desc, metrics where higher is better (hitRate, confidence) desc, lower is better (rmse, stddev, cost) asc
+      setSortDirection(field === "date" || field === "hitRate" || field === "avgConfidence" ? "desc" : "asc");
     }
   };
   
@@ -153,6 +171,7 @@ export default function Dashboard() {
     setModelFilters([]);
     setStrategyFilters([]);
     setTestSetFilter("all");
+    setDomainFilter("all");
   };
   
   // Reset to defaults (including sort)
@@ -163,7 +182,7 @@ export default function Dashboard() {
   };
   
   // Check if any filters are active
-  const hasActiveFilters = modelFilters.length > 0 || strategyFilters.length > 0 || testSetFilter !== "all";
+  const hasActiveFilters = modelFilters.length > 0 || strategyFilters.length > 0 || testSetFilter !== "all" || domainFilter !== "all";
   const hasNonDefaultState = hasActiveFilters || sortField !== DEFAULT_SORT_FIELD || sortDirection !== DEFAULT_SORT_DIRECTION;
   
   // Sort indicator component
@@ -324,6 +343,12 @@ export default function Dashboard() {
                   <FilterBadge 
                     label={testSetFilter === "none" ? "No Test Set" : testSetFilter}
                     onRemove={() => setTestSetFilter("all")}
+                  />
+                )}
+                {domainFilter !== "all" && (
+                  <FilterBadge 
+                    label={getShortDomainName(domainFilter)}
+                    onRemove={() => setDomainFilter("all")}
                   />
                 )}
               </div>
@@ -499,6 +524,43 @@ export default function Dashboard() {
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableHead>
+                  <TableHead className="p-0">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <button className="flex items-center gap-1 px-2 py-3 w-full h-full hover:bg-muted/50 text-left font-medium text-sm">
+                          Domain
+                          {domainFilter !== "all" && (
+                            <span className="ml-1 rounded-full bg-primary text-primary-foreground text-xs px-1.5 py-0.5">
+                              1
+                            </span>
+                          )}
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-auto opacity-50">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                          </svg>
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="start" className="w-56">
+                        <DropdownMenuLabel>Filter by Domain</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuCheckboxItem
+                          checked={domainFilter === "all"}
+                          onCheckedChange={() => setDomainFilter("all")}
+                        >
+                          All Domains
+                        </DropdownMenuCheckboxItem>
+                        <DropdownMenuSeparator />
+                        {AVAILABLE_DOMAINS.map((domain) => (
+                          <DropdownMenuCheckboxItem
+                            key={domain.id}
+                            checked={domainFilter === domain.id}
+                            onCheckedChange={() => setDomainFilter(domain.id)}
+                          >
+                            {domain.name}
+                          </DropdownMenuCheckboxItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableHead>
                   <TableHead>Scenarios</TableHead>
                   <TableHead>Rollouts</TableHead>
                   <TableHead 
@@ -513,18 +575,33 @@ export default function Dashboard() {
                   >
                     RMSE<SortIndicator field="rmse" />
                   </TableHead>
-                  <TableHead 
+                  <TableHead
                     className="cursor-pointer hover:bg-muted/50 select-none"
                     onClick={() => handleSort("avgStdDev")}
                   >
                     Avg σ<SortIndicator field="avgStdDev" />
                   </TableHead>
-                  <TableHead></TableHead>
+                  <TableHead
+                    className="cursor-pointer hover:bg-muted/50 select-none"
+                    onClick={() => handleSort("avgConfidence")}
+                  >
+                    Conf.<SortIndicator field="avgConfidence" />
+                  </TableHead>
+                  <TableHead
+                    className="cursor-pointer hover:bg-muted/50 select-none"
+                    onClick={() => handleSort("cost")}
+                  >
+                    Cost<SortIndicator field="cost" />
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredAndSortedRuns.map((run) => (
-                  <TableRow key={run.id}>
+                  <TableRow 
+                    key={run.id}
+                    className="cursor-pointer"
+                    onClick={() => router.push(`/runs/${run.id}`)}
+                  >
                     <TableCell className="font-mono text-sm">
                       <div className="flex items-center gap-2">
                         {run.status === "generating_narratives" && (
@@ -553,6 +630,11 @@ export default function Dashboard() {
                         <span className="text-muted-foreground">—</span>
                       )}
                     </TableCell>
+                    <TableCell className="text-sm">
+                      <Badge variant="secondary" className="text-xs">
+                        {getShortDomainName(run.domainId)}
+                      </Badge>
+                    </TableCell>
                     <TableCell className="font-mono">
                       {run.scenarios.length}
                     </TableCell>
@@ -578,12 +660,15 @@ export default function Dashboard() {
                         ? run.aggregateMetrics.avgStdDeviation.toFixed(3)
                         : "—"}
                     </TableCell>
-                    <TableCell>
-                      <Link href={`/runs/${run.id}`}>
-                        <Button variant="ghost" size="sm">
-                          View
-                        </Button>
-                      </Link>
+                    <TableCell className="font-mono">
+                      {run.aggregateMetrics?.avgConfidence !== undefined
+                        ? run.aggregateMetrics.avgConfidence
+                        : "—"}
+                    </TableCell>
+                    <TableCell className="font-mono">
+                      {run.aggregateMetrics?.totalCost !== undefined
+                        ? formatCostCompact(run.aggregateMetrics.totalCost)
+                        : "—"}
                     </TableCell>
                   </TableRow>
                 ))}
