@@ -7,10 +7,11 @@ import { loadTestSet, deleteTestSet } from "@/lib/storage";
  */
 export async function GET(
   request: Request,
-  { params }: { params: { name: string } }
+  { params }: { params: Promise<{ name: string }> }
 ) {
   try {
-    const testSet = await loadTestSet(params.name);
+    const { name } = await params;
+    const testSet = await loadTestSet(name);
 
     if (!testSet) {
       return NextResponse.json(
@@ -35,10 +36,11 @@ export async function GET(
  */
 export async function DELETE(
   request: Request,
-  { params }: { params: { name: string } }
+  { params }: { params: Promise<{ name: string }> }
 ) {
   try {
-    const success = await deleteTestSet(params.name);
+    const { name } = await params;
+    const success = await deleteTestSet(name);
 
     if (!success) {
       return NextResponse.json(
