@@ -171,7 +171,55 @@ function sanitizeJsonString(jsonStr: string): string {
 }
 
 /**
- * Parse JSON from LLM response, handling various formats
+ * Known field names that models might use for the numeric estimate.
+ * We normalize all of these to 'estimate' for consistency.
+ */
+const ESTIMATE_FIELD_NAMES = ['estimate', 'yield', 'growth_rate', 'value', 'prediction', 'rate'];
+
+/**
+ * Extract the numeric estimate from a parsed JSON object.
+ * Looks for various field names that models might use.
+ */
+function extractEstimateFromParsed(parsed: Record<string, unknown>): number | null {
+  for (const fieldName of ESTIMATE_FIELD_NAMES) {
+    const value = parsed[fieldName];
+    if (typeof value === 'number') {
+      return value;
+    }
+    if (typeof value === 'string') {
+      const num = parseFloat(value);
+      if (!isNaN(num)) {
+        return num;
+      }
+    }
+  }
+  return null;
+}
+
+/**
+ * Extract reasoning from a parsed JSON object.
+ * Looks for various field names that models might use.
+ */
+function extractReasoningFromParsed(parsed: Record<string, unknown>): string {
+  const reasoningFields = ['reasoning', 'explanation', 'rationale', 'analysis', 'justification'];
+  for (const fieldName of reasoningFields) {
+    const value = parsed[fieldName];
+    if (typeof value === 'string' && value.trim()) {
+      return value;
+    }
+  }
+  return 'No reasoning provided';
+}
+
+/**
+ * Parse JSON from LLM response, handling various formats.
+ * 
+ * This parser is designed to be robust against:
+ * 1. Different field names (yield, growth_rate, estimate, etc.)
+ * 2. Markdown code blocks around JSON
+ * 3. JSON embedded in other text
+ * 4. Control characters in strings
+ * 5. Double-encoded JSON strings
  */
 function parseJsonResponse(content: string): Prediction {
   // Try to extract JSON from the response
@@ -202,65 +250,70 @@ function parseJsonResponse(content: string): Prediction {
       parsed = JSON.parse(parsed);
     }
     
-    // Validate with Zod schema
+    // Extract the estimate value from any of the known field names
+    const estimate = extractEstimateFromParsed(parsed);
+    if (estimate !== null) {
+      const reasoning = extractReasoningFromParsed(parsed);
+      return { estimate, reasoning };
+    }
+
+    // If we couldn't find a known field, check if schema validates directly
     const result = PredictionSchema.safeParse(parsed);
     if (result.success) {
       return result.data;
     }
 
-    // If schema validation fails but we have the required fields, try to coerce
-    if (typeof parsed.yield === "number" || typeof parsed.yield === "string") {
-      return {
-        yield: typeof parsed.yield === "string" ? parseFloat(parsed.yield) : parsed.yield,
-        reasoning: parsed.reasoning ?? parsed.explanation ?? "No reasoning provided",
-      };
-    }
-
-    throw new Error(`Invalid prediction format: ${result.error.message}`);
+    throw new Error(`No numeric estimate found in JSON. Expected one of: ${ESTIMATE_FIELD_NAMES.join(', ')}`);
   } catch (e) {
     // If JSON parsing fails, try multiple fallback strategies
+    // These are ordered from most specific to least specific
     
-    // Strategy 1: Look for "yield": X.XX pattern (even if full JSON failed)
-    // This is the most reliable since it's explicitly the yield field
-    const yieldJsonMatch = content.match(/"yield"\s*:\s*(\d+\.?\d*)/);
-    if (yieldJsonMatch) {
-      return {
-        yield: parseFloat(yieldJsonMatch[1]),
-        reasoning: content,
-      };
+    // Strategy 1: Look for known JSON field patterns
+    // Try each known field name in order of preference
+    for (const fieldName of ESTIMATE_FIELD_NAMES) {
+      const fieldMatch = content.match(new RegExp(`"${fieldName}"\\s*:\\s*(-?\\d+\\.?\\d*)`, 'i'));
+      if (fieldMatch) {
+        return {
+          estimate: parseFloat(fieldMatch[1]),
+          reasoning: content,
+        };
+      }
     }
     
     // Strategy 2: Look for "Final: X.XX%" or "= Final: X.XX%" pattern
     // This matches the chain-of-thought calculation output format
-    const finalMatch = content.match(/(?:=\s*)?Final:\s*(\d+\.?\d*)\s*%/i);
+    const finalMatch = content.match(/(?:=\s*)?Final:\s*(-?\d+\.?\d*)\s*%?/i);
     if (finalMatch) {
       return {
-        yield: parseFloat(finalMatch[1]),
+        estimate: parseFloat(finalMatch[1]),
         reasoning: content,
       };
     }
     
-    // Strategy 3: Look for "yield of X.XX%" or "yield: X.XX%" in text
-    const yieldTextMatch = content.match(/yield(?:\s+of)?\s*:?\s*(\d+\.?\d*)\s*%/i);
-    if (yieldTextMatch) {
+    // Strategy 3: Look for "my estimate is X" or "I estimate X%" patterns
+    const estimateTextMatch = content.match(/(?:my\s+)?estimate\s+(?:is|of|:)\s*(-?\d+\.?\d*)\s*%?/i);
+    if (estimateTextMatch) {
       return {
-        yield: parseFloat(yieldTextMatch[1]),
+        estimate: parseFloat(estimateTextMatch[1]),
         reasoning: content,
       };
     }
     
-    // Strategy 4: Last resort - find the first percentage (original behavior)
-    // This is less reliable but better than failing completely
-    const yieldMatch = content.match(/(\d+\.?\d*)\s*%/);
-    if (yieldMatch) {
+    // Strategy 4: Look for the LAST number followed by % in the response
+    // This is better than first match because the final answer usually comes at the end
+    // Avoid matching ranges like "40-70%" by ensuring no hyphen before the number
+    const allPercentages = [...content.matchAll(/(?<![-\d])(-?\d+\.?\d*)\s*%/g)];
+    if (allPercentages.length > 0) {
+      const lastMatch = allPercentages[allPercentages.length - 1];
       return {
-        yield: parseFloat(yieldMatch[1]),
+        estimate: parseFloat(lastMatch[1]),
         reasoning: content,
       };
     }
 
     throw new Error(
-      `Failed to parse LLM response as JSON: ${e instanceof Error ? e.message : "Unknown error"}`
+      `Failed to parse LLM response: ${e instanceof Error ? e.message : "Unknown error"}. ` +
+      `Response should contain JSON with 'estimate' field, e.g., {"reasoning": "...", "estimate": 5.5}`
     );
   }
 }

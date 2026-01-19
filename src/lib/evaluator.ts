@@ -37,7 +37,7 @@ export function evaluateMultipleRollouts(
   // Convert LLMResults to RolloutResults, preserving token usage and calculating cost
   const rollouts: RolloutResult[] = results.map((r) => {
     const rollout: RolloutResult = {
-      prediction: r.prediction.yield,
+      prediction: r.prediction.estimate,
       reasoning: r.prediction.reasoning,
       latencyMs: r.latencyMs,
     };

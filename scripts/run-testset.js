@@ -40,6 +40,34 @@ if (!config.testSetName || !config.model || !config.promptTemplateId) {
   process.exit(1);
 }
 
+/**
+ * Load prompt template from file
+ * Tries domain-specific templates first, falls back to generic templates
+ */
+async function loadPromptTemplate(testSetName, templateId) {
+  // First, load the test set to get the domain ID
+  const testSetPath = path.join(__dirname, '..', 'data', 'test-sets', `${testSetName}.json`);
+  const testSetData = JSON.parse(await fs.readFile(testSetPath, 'utf-8'));
+  const domainId = testSetData.domainId;
+  
+  // Map domain ID to folder name
+  const domainFolderMap = {
+    'real-estate-yield': 'real-estate',
+    'financial-forecasting': 'financial',
+  };
+  const domainFolder = domainFolderMap[domainId] || domainId;
+  
+  // Try domain-specific template first
+  const domainTemplatePath = path.join(__dirname, '..', 'src', 'domains', domainFolder, 'prompts', `${templateId}.mustache`);
+  try {
+    return await fs.readFile(domainTemplatePath, 'utf-8');
+  } catch (e) {
+    // Fall back to generic template
+    const genericTemplatePath = path.join(__dirname, '..', 'src', 'prompts', 'templates', `${templateId}.mustache`);
+    return await fs.readFile(genericTemplatePath, 'utf-8');
+  }
+}
+
 async function runTestSet() {
   console.log('Running test set with configuration:');
   console.log(`  Test Set: ${config.testSetName}`);
@@ -51,11 +79,18 @@ async function runTestSet() {
   const apiUrl = 'http://localhost:3000/api/runs';
 
   try {
+    // Load the prompt template content
+    console.log('Loading prompt template...');
+    const promptTemplate = await loadPromptTemplate(config.testSetName, config.promptTemplateId);
+    
     console.log('Starting run...');
     const response = await fetch(apiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(config),
+      body: JSON.stringify({
+        ...config,
+        promptTemplate,
+      }),
     });
 
     if (!response.ok) {

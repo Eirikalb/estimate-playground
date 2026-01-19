@@ -1,0 +1,1382 @@
+{
+  "id": "d8528b34-1af2-4be6-9457-2c9b7c952b1c",
+  "timestamp": "2026-01-19T10:58:32.212Z",
+  "domainId": "financial-forecasting",
+  "model": "openai/gpt-4o",
+  "promptStrategy": "persona",
+  "promptTemplate": "You are a senior equity research analyst with 15+ years of experience in growth investing and company valuation.\r\n\r\n{{#facts.benchmarks}}\r\n{{{content}}}\r\n{{/facts.benchmarks}}\r\n\r\n{{#facts.retention_metrics}}\r\n{{{content}}}\r\n{{/facts.retention_metrics}}\r\n\r\n{{#facts.operational_factors}}\r\n{{{content}}}\r\n{{/facts.operational_factors}}\r\n\r\n{{#facts.market_factors}}\r\n{{{content}}}\r\n{{/facts.market_factors}}\r\n\r\n{{#facts.methodology}}\r\n{{{content}}}\r\n{{/facts.methodology}}\r\n\r\n---\r\n\r\n### Company to Evaluate\r\n\r\n{{scenario.contextDescription}}\r\n\r\n---\r\n\r\nBased on your expert analysis, estimate the appropriate annual revenue growth rate for this company.\r\n\r\nReturn your answer as JSON only, no markdown:\r\n{\"reasoning\": \"<your detailed reasoning>\", \"estimate\": <number>}\r\n",
+  "rolloutsPerScenario": 3,
+  "status": "completed",
+  "startedAt": "2026-01-19T10:58:32.212Z",
+  "testSetName": "financial-baseline-v1",
+  "testSetVersion": "1.0.0",
+  "useNarrativeDescriptions": true,
+  "narrativeModel": "openai/gpt-4o-mini",
+  "scenarios": [
+    {
+      "id": "04eb2f60-7a04-4a30-ba07-39614a62922b",
+      "anchor": "saas_scaleup_growth",
+      "appliedDeltas": [
+        "market_contraction",
+        "market_expansion",
+        "weak_nrr"
+      ],
+      "distractors": [
+        "The annual company retreat is held at a luxury resort.",
+        "The company was named one of the best places to work regionally."
+      ],
+      "contextDescription": "## Company Overview\n\n**DataFlow** is a B2B SaaS company headquartered in Austin, Texas, founded in 2018 by former McKinsey consultant turned operator Jennifer Rodriguez. The company provides a comprehensive data integration and analytics platform that enables mid-market and enterprise organizations to streamline their data operations and accelerate business intelligence initiatives.\n\n### Business Model & Metrics\n\nThe company operates a subscription-based model with usage-based pricing tiers. Current ARR is approximately $18M, with 89 enterprise customers including 8 Fortune 1000 accounts. The average contract value (ACV) is $202K for enterprise deals, with an 8-month sales cycle for net-new logos. However, the company reports Net Revenue Retention (NRR) of 87%, reflecting challenges with customer expansion and elevated churn rates as clients consolidate vendors amid tighter IT budgets.\n\n### Team & Funding\n\nThe leadership team includes CEO Jennifer Rodriguez (ex-McKinsey Principal), CTO Alex Thompson (ex-Palantir senior engineer), and CRO Michael Kim (ex-Tableau VP Sales). Total headcount is 98 employees across engineering (48%), sales & marketing (35%), and G&A (17%). The company has raised $42M to date across Seed, Series A, and Series B rounds, with Series B led by Accel Partners at a $195M post-money valuation in Q2 2023. DataFlow was recently named one of Austin's best places to work by the Austin Business Journal.\n\n### Market Position & Competition\n\nDataFlow competes in the $12B data integration software market, with primary competitors including Fivetran, Stitch Data, and Talend. The company differentiates through its no-code interface and pre-built connectors for 200+ enterprise applications, targeting data teams at mid-market companies lacking extensive technical resources.\n\n### Recent Developments\n\n- **Geographic Consolidation**: Closed European operations in Q4 2023, exiting the UK and German markets to focus resources on North American expansion and product development\n- **Market Expansion**: Actively expanding into the healthcare and financial services verticals, with dedicated industry solution packages launched in Q1 2024\n- Successfully launched real-time streaming capabilities, addressing a key competitive gap\n- Hired VP of Product from Snowflake to lead next-generation platform development\n- Annual company retreat held at Four Seasons Resort in Scottsdale, reinforcing strong company culture despite market headwinds\n\nThe company faces execution challenges around customer retention while simultaneously investing in new market segments, creating tension between short-term efficiency and long-term growth objectives.",
+      "groundTruth": {
+        "value": 32,
+        "tolerance": 3.2,
+        "calculation": "Base (SaaS Scale-up (Series B/C, $5M-$50M ARR)): 55%\nExiting markets or reducing geographic footprint: -15%\nActive geographic or market segment expansion: +12%\nNet Revenue Retention (NRR) below 90% (high churn): -20%\nFinal: 32.00%"
+      },
+      "twinId": "d75493f5-eaca-4906-8bf5-4d043851bb9d",
+      "twinDeltaChanged": "removed: market_expansion"
+    },
+    {
+      "id": "d75493f5-eaca-4906-8bf5-4d043851bb9d",
+      "anchor": "saas_scaleup_growth",
+      "appliedDeltas": [
+        "market_contraction",
+        "weak_nrr"
+      ],
+      "distractors": [
+        "The annual company retreat is held at a luxury resort.",
+        "The company was named one of the best places to work regionally."
+      ],
+      "contextDescription": "## Company Overview\n\n**CloudScale** is a B2B SaaS company headquartered in Boston, founded in 2018 by former McKinsey consultant turned operator Jennifer Rodriguez. The company provides a comprehensive cloud infrastructure management platform that helps mid-market and enterprise organizations optimize their multi-cloud environments and reduce operational overhead.\n\n### Business Model & Metrics\n\nThe company operates a subscription-based model with usage-based pricing tiers. Current ARR is approximately $19M, with 89 enterprise customers including 8 Fortune 1000 accounts. The average contract value (ACV) is $213K for enterprise deals, with a 9-month sales cycle for net-new logos. However, the company reports Net Revenue Retention (NRR) of 87%, reflecting elevated churn rates as customers consolidate vendors amid economic pressures and some displacement by hyperscaler-native tools.\n\n### Team & Funding\n\nThe leadership team includes CEO Jennifer Rodriguez (ex-McKinsey Principal), CTO Alex Thompson (ex-AWS engineering director), and CRO Michael Chang (ex-Datadog VP Sales). Total headcount is 156 employees across engineering (52%), sales & marketing (33%), and G&A (15%). The company has raised $47M to date across Seed, Series A, and Series B rounds, with Series B led by Accel Partners at a $195M post-money valuation in Q2 2023. CloudScale was recently named one of the best places to work in Massachusetts and hosts its annual company retreat at a luxury resort in Napa Valley.\n\n### Market Position & Competition\n\nCloudScale competes in the $12B cloud management software market, projected to grow 22% annually. Primary competitors include CloudHealth (VMware), Flexera, and emerging players like Vantage and Finout. The company differentiates through predictive cost optimization algorithms and unified governance across AWS, Azure, and GCP environments.\n\n### Recent Developments\n\n- **Geographic consolidation**: Exited APAC markets in Q4 2023, closing Sydney and Singapore offices to focus resources on North American expansion and improving unit economics\n- **Market focus refinement**: Reduced European footprint by 40%, transitioning from direct sales to partner-led distribution in Germany and France\n- Successfully launched automated compliance module, adding $2.1M ARR in first six months\n- Hired VP of Customer Success from PagerDuty to address retention challenges and improve onboarding processes\n- Completed SOC 2 Type II certification, unlocking several previously stalled enterprise deals\n\nThe strategic pivot toward geographic consolidation reflects management's focus on achieving sustainable growth metrics while preserving cash runway in the current funding environment.",
+      "groundTruth": {
+        "value": 20,
+        "tolerance": 2,
+        "calculation": "Base (SaaS Scale-up (Series B/C, $5M-$50M ARR)): 55%\nExiting markets or reducing geographic footprint: -15%\nNet Revenue Retention (NRR) below 90% (high churn): -20%\nFinal: 20.00%"
+      },
+      "twinId": "04eb2f60-7a04-4a30-ba07-39614a62922b",
+      "twinDeltaChanged": "removed: market_expansion"
+    },
+    {
+      "id": "688a33f2-38c2-48f6-a2cc-b8a842a006c1",
+      "anchor": "healthcare_scaleup",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "## Company Overview\n\n**VitalSign AI** is a healthcare technology company headquartered in Boston, founded in 2020 by former McKinsey consultant Sarah Rodriguez. The company develops AI-powered remote patient monitoring solutions for chronic disease management, with FDA clearance for cardiovascular and diabetes monitoring applications and CE marking for European markets.\n\n### Business Model & Metrics\n\nThe company operates a hybrid revenue model combining SaaS subscriptions for healthcare providers and per-patient monitoring fees. Current ARR stands at approximately $42M, serving 89 health systems and 340+ primary care practices across North America and Europe. The average contract value for health systems is $485K annually, while primary care practices typically contract at $35K ACV. Patient monitoring fees generate an additional $180 per patient per year. The platform currently monitors 78,000 active patients, with Net Revenue Retention of 134% driven by patient volume expansion and additional clinical modules.\n\n### Team & Funding\n\nLeadership includes CEO Sarah Rodriguez (ex-McKinsey healthcare practice), Chief Medical Officer Dr. James Liu (former Cleveland Clinic cardiologist), and CTO Maria Santos (ex-Philips Healthcare engineering director). The 198-person team comprises clinical affairs (25%), engineering & data science (40%), commercial (25%), and operations (10%). VitalSign AI has raised $95M across three funding rounds, with the Series B led by Andreessen Horowitz at a $420M post-money valuation in late 2023.\n\n### Market Position & Competition\n\nVitalSign AI operates in the $31B remote patient monitoring market, competing against established players like Philips HealthSuite, Teladoc's chronic care solutions, and emerging competitors including Current Health and Biofourmis. The company differentiates through proprietary algorithms that reduce false alerts by 67% compared to standard monitoring systems and seamless EHR integration with Epic, Cerner, and Allscripts.\n\n### Recent Developments\n\n- Received FDA breakthrough device designation for AI-powered heart failure prediction algorithm\n- Expanded reimbursement coverage with CMS approval for remote monitoring codes, now covering 85% of patient population\n- Launched integrated telehealth platform enabling direct patient-provider video consultations\n- Completed strategic partnership with CVS Health for retail clinic deployment across 200 locations\n- Successfully scaled clinical operations team to support 24/7 monitoring capabilities across multiple time zones\n- Initiated late-stage clinical trial for COPD monitoring application, with results expected Q2 2025\n\nThe company's growth trajectory reflects strong market demand for cost-effective chronic care management solutions, particularly as healthcare systems focus on value-based care models and population health outcomes.",
+      "groundTruth": {
+        "value": 35,
+        "tolerance": 3.5,
+        "calculation": "Base (Healthcare Scale-up (FDA cleared/CE marked, growing sales)): 35%\nFinal: 35.00%"
+      }
+    },
+    {
+      "id": "62c8ec21-d1f8-4b6d-b063-767cecf8b3e5",
+      "anchor": "healthcare_startup",
+      "appliedDeltas": [
+        "economic_headwind"
+      ],
+      "distractors": [],
+      "contextDescription": "## Company Overview\n\n**VitalSign AI** is a healthcare technology startup headquartered in Boston, founded in 2022 by former McKinsey healthcare consultant turned operator, Dr. Rachel Morrison, alongside CTO James Liu (ex-Epic Systems). The company develops an AI-powered remote patient monitoring platform that enables continuous vital sign tracking for chronic disease management through wearable integration and predictive analytics.\n\n### Business Model & Metrics\n\nVitalSign AI operates on a B2B2C SaaS model, partnering with health systems and specialty clinics to provide remote monitoring services. The company is currently pre-revenue but has secured $3.2M in pilot contracts with four major health systems including Massachusetts General Hospital and Cleveland Clinic. Average pilot program value is $800K over 18 months, with ongoing clinical validation studies tracking patient outcomes across 2,400 enrolled patients. The platform demonstrates early clinical traction with 23% reduction in hospital readmissions and 31% improvement in medication adherence rates.\n\n### Team & Funding\n\nThe leadership team includes CEO Dr. Rachel Morrison (former McKinsey Principal, healthcare practice), CTO James Liu (ex-Epic Systems senior architect), and Chief Medical Officer Dr. Amanda Foster (former Mayo Clinic cardiologist). Current headcount is 28 employees across engineering (50%), clinical affairs (25%), and business development (25%). The company has raised $12M across Seed and Series A rounds, with Series A led by Andreessen Horowitz at a $48M post-money valuation in Q2 2024. Additional funding includes $2.1M in NIH Small Business Innovation Research grants.\n\n### Market Position & Competition\n\nVitalSign AI operates in the $31B remote patient monitoring market, competing with established players like Philips Healthcare, BioTelemetry, and emerging startups including Current Health and Hospital at Home. The company differentiates through proprietary AI algorithms that predict health deterioration 48-72 hours before clinical manifestation, enabling proactive interventions.\n\n### Recent Developments\n\n- Completed FDA 510(k) clearance for cardiac arrhythmia detection algorithm in Q4 2023\n- Launched integration partnerships with Fitbit and Apple Health for expanded device compatibility\n- Despite promising clinical results, the healthcare industry is facing significant macroeconomic pressure from rising interest rates, reduced hospital margins, and delayed capital expenditure decisions, impacting pilot program conversion timelines\n- Initiated multi-site randomized controlled trial across six health systems to generate peer-reviewed clinical evidence\n- Recently hired VP of Regulatory Affairs from Medtronic to accelerate FDA pathway for additional clinical indications",
+      "groundTruth": {
+        "value": 62,
+        "tolerance": 6.2,
+        "calculation": "Base (Healthcare Tech Startup (digital health, early clinical traction)): 70%\nIndustry facing macroeconomic pressure: -8%\nFinal: 62.00%"
+      },
+      "twinId": "42b73efb-e83a-4d4f-b507-c24940917f29",
+      "twinDeltaChanged": "removed: economic_headwind"
+    },
+    {
+      "id": "42b73efb-e83a-4d4f-b507-c24940917f29",
+      "anchor": "healthcare_startup",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "## Company Overview\n\n**VitalSign AI** is a healthcare technology startup headquartered in Boston, founded in 2022 by former McKinsey healthcare consultant Dr. Elena Rodriguez and ex-Apple Health product manager James Chen. The company has developed an AI-powered remote patient monitoring platform that enables continuous vital sign tracking through smartphone cameras and wearable integrations, targeting chronic disease management.\n\n### Business Model & Metrics\n\nVitalSign AI operates a B2B2C model, partnering with health systems and payers to provide remote monitoring services to their patient populations. The company is currently pre-revenue but has secured $2.8M in pilot contracts with three major health systems including Mass General Brigham and Kaiser Permanente Northern California. Initial pilot programs focus on heart failure and COPD patients, with average contract values of $150 per patient per month. The platform has enrolled 1,847 patients across active pilots, demonstrating 23% reduction in 30-day readmission rates compared to standard care protocols.\n\n### Team & Funding\n\nThe leadership team includes CEO Dr. Rodriguez (ex-McKinsey Principal, Harvard Medical School MD), CTO Chen (ex-Apple Health, Stanford CS), and Chief Medical Officer Dr. Sarah Kim (former Mayo Clinic cardiologist). Current headcount is 28 employees with engineering representing 50% of the team, clinical affairs 25%, and business development 25%. The company has raised $12M across Seed and Series A rounds, with Series A led by Andreessen Horowitz Bio Fund at a $45M post-money valuation in Q2 2024. Previous investors include Bessemer Venture Partners and several angel investors from the digital health ecosystem.\n\n### Market Position & Competition\n\nVitalSign AI operates in the $31B remote patient monitoring market, competing with established players like Philips Healthcare, BioTelemetry (now Philips), and emerging startups including Current Health and Biofourmis. The company's differentiation lies in its camera-based vital sign detection technology, which eliminates the need for specialized hardware and reduces patient friction. Clinical validation studies conducted at Boston Medical Center have demonstrated 94% accuracy compared to traditional monitoring devices.\n\n### Recent Developments\n\n- Completed FDA 510(k) clearance process for heart rate and respiratory rate monitoring algorithms in Q3 2024\n- Expanded clinical team with hire of former Teladoc VP of Clinical Operations as Chief Operating Officer\n- Secured additional $1.2M in NIH SBIR Phase II funding for diabetes monitoring capabilities\n- Initiated discussions with two top-10 health insurers for value-based care pilot programs targeting Medicare Advantage populations\n- Published peer-reviewed clinical outcomes data in Journal of Medical Internet Research, demonstrating platform efficacy in real-world settings",
+      "groundTruth": {
+        "value": 70,
+        "tolerance": 7,
+        "calculation": "Base (Healthcare Tech Startup (digital health, early clinical traction)): 70%\nFinal: 70.00%"
+      },
+      "twinId": "62c8ec21-d1f8-4b6d-b063-767cecf8b3e5",
+      "twinDeltaChanged": "removed: economic_headwind"
+    },
+    {
+      "id": "c8861248-ac1f-4a6a-afb2-35456efb7524",
+      "anchor": "ecommerce_enterprise",
+      "appliedDeltas": [
+        "economic_headwind",
+        "market_contraction",
+        "sales_challenges"
+      ],
+      "distractors": [],
+      "contextDescription": "## Company Overview\n\n**ShopWave** is an e-commerce platform company headquartered in Austin, Texas, founded in 2015 by former Amazon product manager Lisa Rodriguez and serial entrepreneur Michael Chen, who previously achieved successful exits with two B2C marketplace companies. The company operates a comprehensive multi-channel commerce platform serving mid-market and enterprise retailers across North America and Europe.\n\n### Business Model & Metrics\n\nShopWave generates revenue through a combination of SaaS subscription fees, transaction-based commissions, and premium service offerings. The company currently reports annual recurring revenue of approximately $142M, serving over 2,800 active merchants including notable brands like Williams Sonoma, REI, and several regional retail chains. Average contract value for enterprise clients is $85K annually, with mid-market segments averaging $28K. The platform processes over $2.1B in gross merchandise value annually, with the company taking a 1.8% commission on transactions.\n\n### Team & Funding\n\nThe leadership team includes CEO Lisa Rodriguez, CTO James Park (ex-Shopify engineering director), and Chief Revenue Officer Amanda Walsh (formerly VP Sales at BigCommerce). Current headcount stands at 485 employees, though the company has experienced significant challenges with sales team stability, reporting 45% annual turnover in the sales organization and only 62% of account executives achieving quarterly quotas over the past 18 months. ShopWave has raised $185M across four funding rounds, with the Series C led by Sequoia Capital at a $1.2B valuation in late 2022.\n\n### Market Position & Competition\n\nShopWave competes in the crowded e-commerce platform market against established players including Shopify, Magento, and WooCommerce. The company has historically differentiated through advanced inventory management capabilities and seamless omnichannel integration. However, the broader e-commerce industry has faced significant macroeconomic headwinds, with reduced consumer spending and increased customer acquisition costs pressuring platform providers across the sector.\n\n### Recent Developments\n\n- Completed strategic withdrawal from Latin American markets in Q2 2024, shuttering operations in Brazil and Mexico to focus resources on core North American and European territories\n- Consolidated European operations from five offices to two, closing locations in Berlin, Barcelona, and Milan while maintaining presence in London and Amsterdam\n- Launched AI-powered personalization engine in Q4 2023, now deployed across 40% of enterprise accounts\n- Implemented new sales compensation structure and hired VP of Sales Operations from HubSpot to address quota attainment challenges\n- Successfully renewed 89% of enterprise contracts despite pricing pressures from economic uncertainty\n\nThe company continues to invest heavily in product development while navigating the challenging retail environment and internal operational adjustments.",
+      "groundTruth": {
+        "value": -20,
+        "tolerance": 2,
+        "calculation": "Base (E-commerce Enterprise ($100M+ revenue, market leader)): 15%\nIndustry facing macroeconomic pressure: -8%\nExiting markets or reducing geographic footprint: -15%\nHigh sales team turnover or quota attainment issues: -12%\nFinal: -20.00%"
+      },
+      "twinId": "a578cca5-b31b-4ebc-a2c2-d0312615c272",
+      "twinDeltaChanged": "removed: sales_challenges"
+    },
+    {
+      "id": "a578cca5-b31b-4ebc-a2c2-d0312615c272",
+      "anchor": "ecommerce_enterprise",
+      "appliedDeltas": [
+        "economic_headwind",
+        "market_contraction"
+      ],
+      "distractors": [],
+      "contextDescription": "## Company Overview\n\n**CartFlow** is an e-commerce enterprise platform headquartered in Austin, Texas, founded in 2017 by serial entrepreneur Marcus Rodriguez, who previously led two successful exits in the retail technology space. The company provides a comprehensive omnichannel commerce solution that enables mid-market and enterprise retailers to unify their online and offline operations across multiple touchpoints.\n\n### Business Model & Metrics\n\nCartFlow operates on a SaaS-plus-transaction model, combining platform subscription fees with payment processing revenue. The company currently generates approximately $145M in annual recurring revenue, serving 2,400 active merchants including notable brands like West Elm, Patagonia, and Warby Parker. Average contract value stands at $85K annually for enterprise clients, with transaction fees contributing an additional 40% of total revenue. The platform processes over $8B in gross merchandise value annually, with Net Revenue Retention of 112% driven primarily by increased transaction volumes from existing customers.\n\n### Team & Funding\n\nThe leadership team includes CEO Marcus Rodriguez, CTO Jennifer Kim (former Amazon engineering director), and Chief Revenue Officer David Walsh (ex-McKinsey consultant turned operator with previous VP Sales experience at Shopify). The company employs 485 people globally, with engineering representing 45% of headcount, sales and marketing 35%, and operations 20%. CartFlow has raised $180M across four funding rounds, with the most recent Series C led by Sequoia Capital in late 2023 at a $1.2B post-money valuation.\n\n### Market Position & Competition\n\nOperating in the competitive $24B e-commerce platform market, CartFlow competes directly with Shopify Plus, BigCommerce Enterprise, and Salesforce Commerce Cloud. The company differentiates through its unified inventory management system and advanced analytics capabilities that provide real-time insights across all sales channels.\n\n### Recent Developments\n\nThe company faces significant headwinds as the broader e-commerce industry experiences macroeconomic pressure, with many retailers reducing technology spending and delaying platform migrations. In response to these market conditions, CartFlow has made the strategic decision to exit several international markets, including Latin America and Southeast Asia, to focus resources on core North American and European operations. This geographic consolidation has resulted in a 15% reduction in total addressable market but improved operational efficiency.\n\nRecent initiatives include launching an AI-powered personalization engine in Q2 2024 and completing the acquisition of inventory management startup LogiFlow for $45M. The company also established a new partnership with Meta to enhance social commerce capabilities, though adoption has been slower than anticipated due to reduced marketing budgets among retail clients.",
+      "groundTruth": {
+        "value": -8,
+        "tolerance": 0.8,
+        "calculation": "Base (E-commerce Enterprise ($100M+ revenue, market leader)): 15%\nIndustry facing macroeconomic pressure: -8%\nExiting markets or reducing geographic footprint: -15%\nFinal: -8.00%"
+      },
+      "twinId": "c8861248-ac1f-4a6a-afb2-35456efb7524",
+      "twinDeltaChanged": "removed: sales_challenges"
+    },
+    {
+      "id": "b69a1525-8605-4bb9-abdb-6c301b7eb467",
+      "anchor": "fintech_scaleup",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "## Company Overview\n\n**PayStream** is a fintech scale-up headquartered in Austin, Texas, founded in 2020 by former McKinsey consultant turned operator Jessica Martinez. The company provides a B2B payments infrastructure platform that enables mid-market businesses to streamline accounts payable and receivable operations through automated reconciliation and embedded finance solutions.\n\n### Business Model & Metrics\n\nPayStream operates a transaction-based revenue model with SaaS subscription components for platform access. Current annual revenue run-rate is approximately $47M, serving 340 mid-market clients across manufacturing, healthcare, and professional services verticals. The average customer generates $138K in annual revenue through a combination of platform fees ($24K annual subscription) and transaction-based pricing (0.65% of payment volume). The company processes $7.2B in annual payment volume with an average customer onboarding timeline of 45 days. Monthly revenue retention stands at 98.5%, supported by high switching costs and deep ERP integrations.\n\n### Team & Funding\n\nThe executive team includes CEO Jessica Martinez (ex-McKinsey Partner), CTO Robert Kim (former Stripe infrastructure lead), and Chief Revenue Officer Amanda Foster (ex-Square enterprise sales director). Current headcount totals 187 employees distributed across engineering (48%), sales & customer success (35%), compliance & risk (10%), and corporate functions (7%). PayStream has secured $82M across three funding rounds, with the most recent Series C led by Accel Partners at a $450M post-money valuation in September 2023.\n\n### Market Position & Competition\n\nThe company operates within the $185B B2B payments market, competing against established players including Bill.com, AvidXchange, and traditional banking solutions. PayStream differentiates through its unified platform approach, combining payment processing with cash flow forecasting and working capital optimization tools. The company maintains strategic partnerships with NetSuite, SAP, and QuickBooks, enabling native integrations that drive customer stickiness.\n\n### Recent Developments\n\n- Obtained Money Transmitter Licenses in 47 states, enabling direct payment processing capabilities\n- Launched embedded lending product in partnership with Silicon Valley Bank, providing customers access to $500M credit facility\n- Completed acquisition of Dallas-based invoice factoring startup for $12M to enhance working capital solutions\n- Expanded international capabilities with launch of cross-border payments to 23 countries\n- Recently hired former American Express VP of Risk as Chief Risk Officer to support regulatory scaling initiatives\n- Implemented advanced fraud detection algorithms, reducing payment fraud losses by 73% year-over-year\n\nThe company has demonstrated strong unit economics with improving contribution margins as transaction volumes scale across its established customer base.",
+      "groundTruth": {
+        "value": 50,
+        "tolerance": 5,
+        "calculation": "Base (Fintech Scale-up (licensed, $20M-$100M revenue)): 50%\nFinal: 50.00%"
+      }
+    },
+    {
+      "id": "42878cbb-43b4-4ce1-b200-578116d3a56d",
+      "anchor": "healthcare_startup",
+      "appliedDeltas": [
+        "market_contraction",
+        "sales_challenges"
+      ],
+      "distractors": [],
+      "contextDescription": "## Company Overview\n\n**VitalSign AI** is a healthcare technology startup headquartered in Boston, founded in 2021 by former McKinsey healthcare consultant Dr. Elena Rodriguez and ex-Philips Healthcare engineering director James Liu. The company develops an AI-powered remote patient monitoring platform that enables continuous vital sign tracking through wearable devices and smartphone cameras, targeting chronic disease management in post-acute care settings.\n\n### Business Model & Metrics\n\nVitalSign AI operates on a B2B2C subscription model, partnering with health systems and post-acute care providers. The company is currently pre-revenue but has secured $2.8M in pilot contracts across 12 health systems, including Massachusetts General Hospital and Cleveland Clinic. Average pilot engagement is $85K over 18 months, with clinical validation studies showing 23% reduction in 30-day readmissions for heart failure patients. The platform monitors approximately 1,400 patients across active pilot programs, with plans to initiate commercial pricing at $180 per patient per month.\n\n### Team & Funding\n\nThe leadership team includes CEO Dr. Rodriguez (ex-McKinsey Partner, healthcare practice), CTO Liu (15 years medical device experience), and Chief Medical Officer Dr. Sarah Kim (former Johns Hopkins cardiologist). Current headcount is 28 employees, with engineering representing 50% of the team, clinical operations 25%, and business development 25%. The company has raised $8.5M across Seed and Series A rounds, with Series A led by Andreessen Horowitz at a $42M post-money valuation in late 2023. Additional funding includes $1.2M in NIH SBIR grants.\n\n### Market Position & Competition\n\nVitalSign AI operates in the $31B remote patient monitoring market, competing with established players like Philips Healthcare, BioTelemetry, and emerging startups such as Current Health. The company differentiates through proprietary computer vision algorithms that enable contactless vital sign measurement and FDA breakthrough device designation received in Q2 2024.\n\n### Recent Developments\n\n- Completed successful 200-patient clinical trial demonstrating clinical efficacy in heart failure monitoring\n- Initiated FDA 510(k) submission process for core monitoring algorithms\n- Expanded clinical team with three nurse practitioners to support pilot program scaling\n- However, the company recently exited its West Coast market expansion after struggling to establish partnerships with California health systems, refocusing resources on Northeast and Midwest regions\n- Experiencing significant challenges with sales team stability, with VP of Sales departing after eight months and 40% turnover in business development roles, attributed to lengthy pilot-to-commercial conversion cycles and complex health system procurement processes\n\nThe company is currently preparing for Series B fundraising to support commercial launch following anticipated FDA clearance in Q2 2025.",
+      "groundTruth": {
+        "value": 43,
+        "tolerance": 4.3,
+        "calculation": "Base (Healthcare Tech Startup (digital health, early clinical traction)): 70%\nExiting markets or reducing geographic footprint: -15%\nHigh sales team turnover or quota attainment issues: -12%\nFinal: 43.00%"
+      },
+      "twinId": "fc4b03fb-1bf1-40fc-9cf2-947097fcf578",
+      "twinDeltaChanged": "market_contraction → strong_sales_team"
+    },
+    {
+      "id": "fc4b03fb-1bf1-40fc-9cf2-947097fcf578",
+      "anchor": "healthcare_startup",
+      "appliedDeltas": [
+        "sales_challenges",
+        "strong_sales_team"
+      ],
+      "distractors": [],
+      "contextDescription": "## Company Overview\n\n**VitalSign AI** is a healthcare technology startup headquartered in Boston, founded in 2021 by former Epic Systems product manager Dr. Jennifer Liu and ex-McKinsey healthcare consultant Michael Chen. The company develops an AI-powered remote patient monitoring platform that enables continuous vital sign tracking through smartphone cameras and wearable device integration.\n\n### Business Model & Metrics\n\nVitalSign AI operates a B2B2C model, partnering with health systems and specialty clinics to deploy its monitoring solution for chronic disease management. The company currently generates $3.2M in annual recurring revenue across 18 health system partnerships, including pilot programs with Mass General Brigham and Cleveland Clinic. Average contract value is $180K annually, with implementation timelines ranging 6-9 months due to clinical validation requirements. The platform monitors approximately 8,500 patients across cardiovascular, diabetes, and COPD care pathways.\n\n### Team & Funding\n\nThe leadership team includes CEO Dr. Jennifer Liu (former Epic product lead, practicing cardiologist), CTO Michael Chen (ex-McKinsey, prior healthtech startup experience), and Chief Medical Officer Dr. Robert Martinez (former Johns Hopkins department head). Total headcount has grown to 47 employees, with engineering representing 40% of staff, clinical operations 25%, sales 20%, and administrative functions 15%. The company has raised $18M across seed and Series A rounds, with the $12M Series A led by Andreessen Horowitz in Q2 2024, alongside participation from GV and several physician angel investors.\n\n### Market Position & Competition\n\nVitalSign AI operates within the $31B remote patient monitoring market, competing against established players like Philips Healthcare, Medtronic, and emerging digital health companies including Current Health and BiofourmisX. The company differentiates through its camera-based vital sign detection technology, which eliminates the need for specialized hardware beyond standard smartphones.\n\n### Recent Developments\n\n- Completed FDA 510(k) clearance for cardiovascular monitoring algorithms in Q4 2023\n- Published clinical validation study in *Journal of Medical Internet Research* showing 94% accuracy versus hospital-grade monitors\n- Secured partnership with regional ACO covering 45,000 covered lives\n- Doubled sales team headcount from 4 to 9 representatives in the past six months to accelerate health system outreach\n- However, the company has experienced significant sales team turnover, with three of the original four sales hires departing in Q1 2024, creating challenges in quota attainment and requiring extensive re-training of new personnel\n- Initiated pilot program with CMS Innovation Center for Medicare Advantage population health management",
+      "groundTruth": {
+        "value": 68,
+        "tolerance": 6.800000000000001,
+        "calculation": "Base (Healthcare Tech Startup (digital health, early clinical traction)): 70%\nHigh sales team turnover or quota attainment issues: -12%\nRecently scaled sales team (2x+ headcount growth): +10%\nFinal: 68.00%"
+      },
+      "twinId": "42878cbb-43b4-4ce1-b200-578116d3a56d",
+      "twinDeltaChanged": "market_contraction → strong_sales_team"
+    },
+    {
+      "id": "2b7242ac-92ca-469f-af2b-30abd678541b",
+      "anchor": "healthcare_startup",
+      "appliedDeltas": [
+        "sales_challenges"
+      ],
+      "distractors": [],
+      "contextDescription": "## Company Overview\n\n**VitalSign AI** is a healthcare technology startup headquartered in Boston, founded in 2021 by former McKinsey healthcare consultant Dr. Rachel Martinez and ex-Apple Health product manager James Chen. The company develops an AI-powered remote patient monitoring platform that enables healthcare providers to predict and prevent adverse events in chronic disease patients.\n\n### Business Model & Metrics\n\nThe company operates a B2B SaaS model serving health systems, specialty clinics, and accountable care organizations. VitalSign AI is currently pre-revenue but has completed successful pilot programs with 8 health systems including Massachusetts General Hospital and Cleveland Clinic. The platform monitors over 2,400 patients across pilot sites, with clinical validation studies showing 23% reduction in hospital readmissions for heart failure patients. The company targets an average contract value (ACV) of $180K for health system deployments, with 18-month implementation cycles due to clinical workflow integration requirements.\n\n### Team & Funding\n\nThe leadership team includes CEO Dr. Rachel Martinez (ex-McKinsey healthcare practice), CTO James Chen (ex-Apple Health senior product manager), and Chief Medical Officer Dr. Sarah Kim (former Johns Hopkins cardiologist). Current headcount is 28 employees across clinical affairs (25%), engineering (40%), and business development (35%). The company has raised $12M across Seed and Series A rounds, with Series A led by Andreessen Horowitz at a $45M post-money valuation in Q2 2024. Additional funding includes $2.8M in NIH SBIR grants for clinical validation studies.\n\n### Market Position & Competition\n\nVitalSign AI operates in the $31B remote patient monitoring market, competing with established players like Philips Healthcare, Medtronic, and emerging startups such as Current Health and Biofourmis. The company differentiates through proprietary algorithms that integrate wearable device data with electronic health records to generate predictive risk scores.\n\n### Recent Developments\n\n- Completed FDA 510(k) clearance process for core monitoring algorithms in Q3 2024\n- Expanded clinical team with three nurse practitioners to support health system partnerships\n- Initiated randomized controlled trial with 500 patients across four health systems\n- However, the company has experienced significant challenges with sales team performance, including 60% turnover in the business development team over the past 12 months and difficulty meeting partnership pipeline targets, leading to delayed revenue projections and extended pilot conversion timelines\n\nThe company is currently seeking Series B funding to scale commercial operations and expand clinical evidence generation across additional therapeutic areas.",
+      "groundTruth": {
+        "value": 58,
+        "tolerance": 5.800000000000001,
+        "calculation": "Base (Healthcare Tech Startup (digital health, early clinical traction)): 70%\nHigh sales team turnover or quota attainment issues: -12%\nFinal: 58.00%"
+      },
+      "twinId": "74aed9d1-2495-445d-86b1-65f9ff0199e2",
+      "twinDeltaChanged": "removed: sales_challenges"
+    },
+    {
+      "id": "74aed9d1-2495-445d-86b1-65f9ff0199e2",
+      "anchor": "healthcare_startup",
+      "appliedDeltas": [],
+      "distractors": [],
+      "contextDescription": "## Company Overview\n\n**VitalSign AI** is a healthcare technology startup headquartered in Boston, founded in 2021 by former McKinsey healthcare consultant Dr. Rachel Martinez and ex-Google Health product manager James Liu. The company develops an AI-powered remote patient monitoring platform that enables continuous vital sign tracking through smartphone cameras and wearable device integration.\n\n### Business Model & Metrics\n\nThe company operates a B2B2C model, partnering with health systems and telehealth providers to deliver remote monitoring services. VitalSign AI is currently in pre-revenue phase with pilot programs across 8 health systems, including Mass General Brigham and Cleveland Clinic. The platform has monitored over 3,200 patients across cardiovascular and post-surgical care pathways. Average pilot contract value is $85K over 12 months, with health systems paying per-patient-per-month fees ranging from $45-$120 depending on monitoring intensity and clinical protocols.\n\n### Team & Funding\n\nThe leadership team includes CEO Dr. Rachel Martinez (ex-McKinsey healthcare practice), CTO James Liu (ex-Google Health engineering), and Chief Medical Officer Dr. Sarah Kim (former Mass General cardiologist). Current headcount is 28 employees across engineering (50%), clinical affairs (25%), and business development (25%). The company has raised $12M across Seed and Series A rounds, with Series A led by Andreessen Horowitz at a $45M post-money valuation in Q2 2024. Additional investors include Bessemer Venture Partners and several prominent physician angel investors.\n\n### Market Position & Competition\n\nVitalSign AI operates in the $31B remote patient monitoring market, driven by aging demographics and value-based care adoption. Primary competitors include Philips Healthcare, RPM companies like Current Health (acquired by Best Buy), and emerging AI-focused players such as Binah.ai. The company differentiates through its camera-based vital sign detection technology, which eliminates hardware distribution costs and patient compliance barriers associated with traditional wearable devices.\n\n### Recent Developments\n\n- Completed FDA 510(k) submission for heart rate and respiratory rate monitoring algorithms in Q4 2023\n- Secured $2.3M NIH SBIR Phase II grant to expand cardiovascular monitoring capabilities  \n- Published peer-reviewed clinical validation study in *Journal of Medical Internet Research* demonstrating 94% accuracy versus hospital-grade monitors\n- Initiated integration partnerships with Epic and Cerner to embed monitoring workflows into existing EHR systems\n- Expanded clinical team with hire of VP of Regulatory Affairs from Medtronic to accelerate FDA clearance pathway\n\nThe company expects FDA clearance by Q2 2025, which would enable broader commercial deployment beyond current pilot programs. VitalSign AI is positioning for Series B fundraising to support regulatory milestones and commercial scale-up across target health system partnerships.",
+      "groundTruth": {
+        "value": 70,
+        "tolerance": 7,
+        "calculation": "Base (Healthcare Tech Startup (digital health, early clinical traction)): 70%\nFinal: 70.00%"
+      },
+      "twinId": "2b7242ac-92ca-469f-af2b-30abd678541b",
+      "twinDeltaChanged": "removed: sales_challenges"
+    },
+    {
+      "id": "c529fccf-b5b2-41e5-850b-a013ebc7b5e6",
+      "anchor": "ecommerce_scaleup",
+      "appliedDeltas": [
+        "strong_nrr"
+      ],
+      "distractors": [
+        "The founding team met at a prestigious university."
+      ],
+      "contextDescription": "## Company Overview\n\n**CartFlow** is an e-commerce enablement platform headquartered in Austin, Texas, founded in 2018 by former Amazon product managers Jessica Martinez and Alex Chen. The company provides a comprehensive suite of tools for mid-market retailers to optimize their online sales operations, including inventory management, order fulfillment automation, and customer analytics.\n\n### Business Model & Metrics\n\nCartFlow operates on a SaaS subscription model with transaction-based revenue components. The platform currently generates $47M in annual recurring revenue, serving 340 mid-market retail customers across apparel, electronics, and home goods verticals. Average contract value stands at $138K annually, with typical implementations taking 6-8 weeks. The company demonstrates strong customer expansion dynamics, achieving Net Revenue Retention of 124% driven by increased transaction volumes and module adoption as merchants scale their operations.\n\n### Team & Funding\n\nThe founding team, who met while studying at Stanford University, includes CEO Jessica Martinez (ex-Amazon Senior Product Manager), CTO Alex Chen (former Amazon Web Services architect), and VP of Sales Rebecca Thompson (ex-Shopify enterprise sales director). The company employs 185 people, with engineering representing 45% of headcount, sales and marketing 35%, and operations 20%. CartFlow has raised $52M across three funding rounds, with the most recent Series B completed in September 2023 at a $420M post-money valuation, led by Accel Partners with participation from existing investors Index Ventures and Benchmark.\n\n### Market Position & Competition\n\nThe company operates within the $24B e-commerce software market, competing against established players like Shopify Plus, BigCommerce Enterprise, and Salesforce Commerce Cloud. CartFlow differentiates through its focus on mid-market retailers requiring sophisticated inventory and fulfillment capabilities without enterprise-level complexity. The platform's API-first architecture enables seamless integrations with existing ERP systems and third-party logistics providers.\n\n### Recent Developments\n\n- Launched AI-powered demand forecasting module in Q2 2024, now adopted by 65% of customer base\n- Completed acquisition of logistics optimization startup FlowSync for $8M in Q1\n- Expanded into Canadian market with Toronto office, representing 8% of new bookings\n- Introduced usage-based pricing tier for high-volume merchants processing over $50M annually\n- Recently hired former Stripe VP of Product as Chief Product Officer to accelerate platform development\n\nThe company continues to benefit from the ongoing shift toward direct-to-consumer retail models and the increasing complexity of omnichannel commerce operations.",
+      "groundTruth": {
+        "value": 60,
+        "tolerance": 6,
+        "calculation": "Base (E-commerce Scale-up (established, $10M-$100M revenue)): 45%\nNet Revenue Retention (NRR) above 120%: +15%\nFinal: 60.00%"
+      },
+      "twinId": "10e9bdce-8b31-47e6-a07b-726e9632a7bc",
+      "twinDeltaChanged": "removed: strong_nrr"
+    },
+    {
+      "id": "10e9bdce-8b31-47e6-a07b-726e9632a7bc",
+      "anchor": "ecommerce_scaleup",
+      "appliedDeltas": [],
+      "distractors": [
+        "The founding team met at a prestigious university."
+      ],
+      "contextDescription": "## Company Overview\n\n**CartFlow** is an e-commerce enablement platform headquartered in Austin, Texas, founded in 2018 by Stanford alumni who previously led product initiatives at Amazon and Shopify. The company provides a comprehensive suite of tools for mid-market retailers transitioning from traditional brick-and-mortar operations to omnichannel commerce.\n\n### Business Model & Metrics\n\nCartFlow operates on a SaaS-plus-take-rate model, combining monthly platform fees with transaction-based revenue from payment processing and fulfillment services. Current annual recurring revenue stands at approximately $47M, serving 2,340 active merchants across retail categories including home goods, apparel, and specialty food. Average revenue per user (ARPU) is $20,100 annually, with enterprise clients representing 35% of total revenue despite comprising only 8% of the customer base. The platform processes $890M in gross merchandise value annually, with take rates averaging 2.1% on transactions.\n\n### Team & Funding\n\nThe founding team includes CEO Jennifer Liu (former Amazon Prime product manager), CTO Alex Rodriguez (ex-Shopify engineering director), and COO Michael Chang (former McKinsey consultant with retail expertise). The trio met during their MBA program at Stanford Graduate School of Business. Current headcount is 287 employees, with engineering representing 45% of the workforce, sales and customer success 25%, operations 20%, and corporate functions 10%. CartFlow has raised $89M across four funding rounds, including a $45M Series C led by Accel Partners in September 2023 at a $420M post-money valuation.\n\n### Market Position & Competition\n\nThe company operates within the $24B e-commerce platform market, competing against established players like Shopify, BigCommerce, and WooCommerce, as well as emerging vertical-specific solutions. CartFlow differentiates through its focus on traditional retailers seeking digital transformation, offering specialized inventory management, POS integration, and multi-location fulfillment capabilities that legacy platforms struggle to address comprehensively.\n\n### Recent Developments\n\n- Completed acquisition of logistics startup FlexShip for $12M, adding same-day delivery capabilities in 15 metropolitan markets\n- Launched CartFlow Analytics Pro, an AI-powered business intelligence suite that has achieved 67% adoption among enterprise clients\n- Expanded into Canadian market through partnership with local payment processor, now representing 8% of new merchant acquisitions\n- Implemented dynamic pricing optimization feature, resulting in average 12% improvement in merchant gross margins\n- Recently signed partnership agreement with Square to integrate POS systems, targeting 50,000 potential merchants in their ecosystem\n\nThe platform's merchant retention rate remains strong at 94% annually, supported by sticky integrations and comprehensive onboarding programs that typically span 90 days for enterprise implementations.",
+      "groundTruth": {
+        "value": 45,
+        "tolerance": 4.5,
+        "calculation": "Base (E-commerce Scale-up (established, $10M-$100M revenue)): 45%\nFinal: 45.00%"
+      },
+      "twinId": "c529fccf-b5b2-41e5-850b-a013ebc7b5e6",
+      "twinDeltaChanged": "removed: strong_nrr"
+    },
+    {
+      "id": "13d0ccfd-822e-43c8-95b4-b411fc935ecc",
+      "anchor": "fintech_enterprise",
+      "appliedDeltas": [
+        "product_innovation",
+        "price_pressure",
+        "strong_nrr"
+      ],
+      "distractors": [],
+      "contextDescription": "## Company Overview\n\n**WealthOS** is a fintech enterprise headquartered in Boston, founded in 2016 by former McKinsey consultant turned operator Jennifer Rodriguez. The company provides a comprehensive wealth management platform that enables financial advisors and RIAs to deliver institutional-grade portfolio management and client reporting capabilities.\n\n### Business Model & Metrics\n\nThe company operates a subscription-based SaaS model with usage-based pricing tiers. Current ARR is approximately $118M, serving 847 financial advisory firms managing over $42B in client assets. The average contract value (ACV) is $139K for mid-market RIAs, with typical 6-8 month sales cycles for enterprise deals. WealthOS reports exceptional Net Revenue Retention (NRR) of 134%, driven by strong adoption of premium modules and organic asset growth within existing client firms.\n\n### Team & Funding\n\nThe leadership team includes CEO Jennifer Rodriguez (ex-McKinsey Principal), CTO Michael Chang (former engineering director at Fidelity), and Chief Revenue Officer Lisa Thompson (ex-Charles Schwab VP Business Development). Total headcount is 312 employees across engineering (45%), sales & marketing (35%), and operations (20%). The company has raised $87M across four funding rounds, with Series C led by Accel Partners at a $1.2B post-money valuation in Q2 2023.\n\n### Market Position & Competition\n\nWealthOS competes in the $6.8B wealth management technology market, with primary competitors including Orion Advisor Technology, Envestnet, and Black Diamond. The company differentiates through its modern API-first architecture, advanced portfolio analytics, and white-label client portal capabilities that enable advisors to deliver institutional-quality experiences.\n\n### Recent Developments\n\n- Major product launch scheduled for Q1 2025 featuring AI-powered portfolio optimization and risk management suite, representing the company's largest platform expansion to date\n- Successfully completed integration with leading custodians including Schwab, Fidelity, and Pershing, expanding total addressable market\n- Facing increased pricing pressure from established competitors who have reduced enterprise pricing by 15-20% over the past 18 months\n- Opened new engineering hub in Austin with 35 hires focused on machine learning and data infrastructure\n- Recently partnered with three major broker-dealers to offer WealthOS as preferred technology solution to their independent advisor networks\n- Completed acquisition of portfolio reporting startup DataViz Analytics for $23M to enhance client communication capabilities\n\nThe company is positioning for accelerated growth through its upcoming AI platform launch while navigating competitive market dynamics in the wealth management technology space.",
+      "groundTruth": {
+        "value": 37,
+        "tolerance": 3.7,
+        "calculation": "Base (Fintech Enterprise ($100M+ revenue, established market position)): 20%\nMajor product launch or platform expansion imminent: +8%\nPricing pressure from competition or market: -6%\nNet Revenue Retention (NRR) above 120%: +15%\nFinal: 37.00%"
+      },
+      "twinId": "4061f717-715f-495f-89b7-1e50a1aee78d",
+      "twinDeltaChanged": "removed: price_pressure"
+    },
+    {
+      "id": "4061f717-715f-495f-89b7-1e50a1aee78d",
+      "anchor": "fintech_enterprise",
+      "appliedDeltas": [
+        "product_innovation",
+        "strong_nrr"
+      ],
+      "distractors": [],
+      "contextDescription": "## Company Overview\n\n**PayStream** is a fintech enterprise platform headquartered in Austin, Texas, founded in 2018 by former McKinsey consultant turned operator Jessica Martinez. The company provides embedded payment infrastructure and treasury management solutions for B2B marketplaces and software platforms, enabling seamless money movement and working capital optimization.\n\n### Business Model & Metrics\n\nPayStream operates a transaction-based revenue model with SaaS subscription components for premium features. Current annual revenue run-rate is approximately $142M, serving 340+ platform clients including major marketplaces like construction equipment rental platforms, freight brokerages, and professional services networks. The average annual contract value (ACV) is $420K for enterprise clients, with typical implementation cycles of 6-8 months. The company reports exceptional Net Revenue Retention (NRR) of 134%, driven by expanding transaction volumes as client platforms scale and increasing adoption of value-added services like instant payouts and fraud protection.\n\n### Team & Funding\n\nThe leadership team includes CEO Jessica Martinez (ex-McKinsey Principal, former VP Strategy at Square), CTO Robert Kim (ex-Stripe infrastructure lead), and CFO Amanda Thompson (former finance director at Plaid). Total workforce is 285 employees across engineering (45%), sales & partnerships (25%), risk & compliance (20%), and corporate functions (10%). PayStream has raised $180M across four funding rounds, with Series C led by Sequoia Capital at a $1.8B post-money valuation in late 2023.\n\n### Market Position & Competition\n\nPayStream operates in the rapidly expanding embedded fintech market, estimated at $65B globally. Key competitors include Stripe Connect, Dwolla, and newer entrants like Modern Treasury. The company differentiates through vertical-specific payment workflows, comprehensive treasury APIs, and sophisticated risk management capabilities built for complex B2B transactions.\n\n### Recent Developments\n\n- Preparing to launch comprehensive lending platform in Q2 2025, offering working capital advances to marketplace sellers based on transaction history and cash flow patterns\n- Expanded international capabilities with EUR and GBP payment rails, now processing $2.1B in monthly payment volume\n- Completed acquisition of compliance automation startup for $45M to strengthen regulatory capabilities\n- Recently onboarded three major logistics platforms representing $180M in combined annual GMV\n- Successfully launched real-time settlement product, reducing standard payment timing from T+2 to instant for premium tier clients\n\nThe company's strong unit economics and expanding product suite position it well for continued market share capture as B2B platforms increasingly seek comprehensive financial infrastructure partners.",
+      "groundTruth": {
+        "value": 43,
+        "tolerance": 4.3,
+        "calculation": "Base (Fintech Enterprise ($100M+ revenue, established market position)): 20%\nMajor product launch or platform expansion imminent: +8%\nNet Revenue Retention (NRR) above 120%: +15%\nFinal: 43.00%"
+      },
+      "twinId": "13d0ccfd-822e-43c8-95b4-b411fc935ecc",
+      "twinDeltaChanged": "removed: price_pressure"
+    },
+    {
+      "id": "b0423256-36d5-4c15-8127-b548c0617137",
+      "anchor": "manufacturing_smb",
+      "appliedDeltas": [
+        "market_contraction",
+        "product_innovation",
+        "strong_nrr"
+      ],
+      "distractors": [
+        "The CFO previously worked at a Fortune 500 company."
+      ],
+      "contextDescription": "## Company Overview\n\n**MetalWorks Corp** is a precision manufacturing company headquartered in Austin, TX, founded in 2008 by former Boeing engineer Michael Rodriguez. The company specializes in custom machined components and assemblies for aerospace, defense, and medical device manufacturers, operating four facilities across Texas and Oklahoma.\n\n### Business Model & Metrics\n\nThe company operates on a build-to-specification model with multi-year supply agreements. Current annual revenue is approximately $32M, serving 78 customers including tier-1 aerospace suppliers and medical device OEMs. Average contract values range from $150K to $2.8M annually, with typical customer relationships spanning 8-12 years. The company reports Net Revenue Retention (NRR) of 134%, driven by expanding scope of work with existing customers and annual price escalations tied to specialized capabilities.\n\n### Team & Funding\n\nThe leadership team includes CEO Michael Rodriguez (ex-Boeing manufacturing engineer), COO Patricia Chen (ex-Lockheed Martin operations), and CFO James Mitchell (former VP Finance at Honeywell Aerospace). Total headcount is 187 employees across manufacturing (72%), quality assurance (18%), and administrative functions (10%). The company completed a growth equity round in 2022, raising $18M from Benchmark to fund equipment modernization and capacity expansion, representing the first external capital raised since inception.\n\n### Market Position & Competition\n\nMetalWorks competes in the $45B precision manufacturing market, serving highly regulated industries with stringent quality requirements. Primary competitors include larger contract manufacturers like Plexus and Sanmina, as well as regional specialty shops. The company differentiates through AS9100D and ISO 13485 certifications, proprietary fixture designs, and sub-micron tolerance capabilities on complex geometries.\n\n### Recent Developments\n\n- Completed strategic exit from commercial automotive markets to focus exclusively on higher-margin aerospace and medical segments, reducing geographic footprint from six facilities to four\n- Preparing to launch integrated assembly and testing platform in Q2 2025, representing expansion beyond traditional machining into full turnkey solutions\n- Recently acquired $12M in new CNC equipment including 5-axis machining centers to support next-generation aerospace programs\n- Implemented lean manufacturing initiatives resulting in 23% improvement in cycle times across core product lines\n- Successfully renewed master supply agreement with largest customer, extending relationship through 2029 with expanded statement of work\n\nThe company's strategic focus on high-value, regulated markets and upcoming platform expansion positions MetalWorks for continued growth despite the broader manufacturing sector's cyclical challenges.",
+      "groundTruth": {
+        "value": 16,
+        "tolerance": 1.6,
+        "calculation": "Base (Manufacturing SMB (traditional, $5M-$50M revenue)): 8%\nExiting markets or reducing geographic footprint: -15%\nMajor product launch or platform expansion imminent: +8%\nNet Revenue Retention (NRR) above 120%: +15%\nFinal: 16.00%"
+      },
+      "twinId": "e7969822-4826-48f2-99ee-ee37185eca63",
+      "twinDeltaChanged": "removed: product_innovation"
+    },
+    {
+      "id": "e7969822-4826-48f2-99ee-ee37185eca63",
+      "anchor": "manufacturing_smb",
+      "appliedDeltas": [
+        "market_contraction",
+        "strong_nrr"
+      ],
+      "distractors": [
+        "The CFO previously worked at a Fortune 500 company."
+      ],
+      "contextDescription": "## Company Overview\n\n**Precision Industries** is a specialized manufacturing company headquartered in Austin, TX, founded in 1998 by former Caterpillar engineering manager Robert Martinez. The company produces custom precision machined components for aerospace, defense, and industrial equipment manufacturers, with particular expertise in titanium and high-grade aluminum alloy fabrication.\n\n### Business Model & Metrics\n\nThe company operates on a contract manufacturing model with long-term supplier agreements averaging 3-5 years. Current annual revenue is approximately $32M, serving 47 active customers including major aerospace OEMs like Boeing suppliers and defense contractors. Average contract value is $680K annually, with typical lead times of 8-12 weeks for complex components. Despite the traditional manufacturing model, Precision Industries reports exceptional Net Revenue Retention (NRR) of 124%, driven by scope expansion within existing programs and value-added engineering services that increase content per part.\n\n### Team & Funding\n\nThe leadership team includes founder-CEO Robert Martinez, COO Jennifer Walsh (ex-General Electric manufacturing operations), and CFO Michael Chen (formerly VP Finance at Honeywell Aerospace). Total headcount is 187 employees across manufacturing operations (65%), quality assurance (15%), engineering (12%), and administrative functions (8%). The company has been primarily self-funded through operating cash flow, with a single growth capital round of $18M from Benchmark in 2022 to fund facility expansion and advanced CNC equipment.\n\n### Market Position & Competition\n\nPrecision Industries competes in the fragmented $45B precision machining market, serving niche applications requiring AS9100 aerospace certification and ITAR compliance. Key competitors include local and regional machine shops, though few possess the company's combination of metallurgical expertise and quality certifications. The company differentiates through 99.7% on-time delivery rates and proprietary heat treatment processes for titanium components.\n\n### Recent Developments\n\n- Successfully completed facility consolidation, exiting the Phoenix manufacturing location to focus operations in Austin, reducing geographic footprint by 35%\n- Discontinued serving the automotive market segment to concentrate resources on higher-margin aerospace and defense applications\n- Invested $4.2M in new 5-axis CNC machining centers to expand complex geometry capabilities\n- Implemented lean manufacturing initiatives that reduced waste by 18% and improved throughput\n- Secured multi-year supply agreement with Tier 1 aerospace supplier representing $8M in committed revenue over three years\n\nThe strategic market exit and geographic consolidation efforts have allowed management to optimize operational efficiency while maintaining strong customer expansion within core aerospace and defense verticals.",
+      "groundTruth": {
+        "value": 8,
+        "tolerance": 0.8,
+        "calculation": "Base (Manufacturing SMB (traditional, $5M-$50M revenue)): 8%\nExiting markets or reducing geographic footprint: -15%\nNet Revenue Retention (NRR) above 120%: +15%\nFinal: 8.00%"
+      },
+      "twinId": "b0423256-36d5-4c15-8127-b548c0617137",
+      "twinDeltaChanged": "removed: product_innovation"
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "04eb2f60-7a04-4a30-ba07-39614a62922b",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 25,
+          "reasoning": "DataFlow is a B2B SaaS company with an ARR of $18M, placing it in the Series B/C stage where typical growth rates are 40-70%. However, the company's NRR is 87%, which is below the concerning threshold of 90%, indicating significant revenue leakage and customer churn. This NRR suggests a negative impact on the baseline growth rate, likely reducing it by 20+ percentage points. The company has recently exited European markets, which could further reduce growth by 10-20% due to contraction signals. On the positive side, DataFlow is expanding into healthcare and financial services, which could add 5-12% to growth, and has launched real-time streaming capabilities, potentially closing competitive gaps and adding another 5-15%. Considering these factors, the baseline growth rate of 40-70% is adjusted downward due to the low NRR and market exit, but partially offset by new market expansions and product improvements. Overall, a conservative estimate would place the growth rate at the lower end of the adjusted range.",
+          "latencyMs": 5629,
+          "promptTokens": 1633,
+          "completionTokens": 233,
+          "totalTokens": 1866,
+          "cost": 0.0064125
+        },
+        {
+          "prediction": 25,
+          "reasoning": "DataFlow is a B2B SaaS company with an ARR of $18M, placing it in the Series B/C stage with typical growth expectations of 40-70%. However, the company's NRR is 87%, which is concerning and indicates revenue leakage, suggesting a -20+ percentage point impact on the baseline growth rate. This is a critical issue that requires immediate intervention, such as improving customer retention and reducing churn. The company is also undergoing geographic consolidation, having exited European markets, which could further negatively impact growth by -10-20%. On the positive side, DataFlow is expanding into healthcare and financial services, which could provide a +5-12% boost. Additionally, the recent launch of real-time streaming capabilities and hiring a VP of Product from Snowflake could contribute a +5-15% uplift if successful. Given these factors, the baseline growth rate of 40-70% is adjusted downward due to the negative impact of low NRR and geographic contraction, partially offset by product innovation and market expansion efforts. Therefore, a more conservative growth estimate is appropriate.",
+          "latencyMs": 4962,
+          "promptTokens": 1633,
+          "completionTokens": 230,
+          "totalTokens": 1863,
+          "cost": 0.006382499999999999
+        },
+        {
+          "prediction": 20,
+          "reasoning": "DataFlow is a B2B SaaS company with an ARR of $18M, placing it in the Series B/C stage where 40-70% annual growth is typical. However, several factors suggest adjustments to this baseline. The company's NRR of 87% is concerning, indicating revenue leakage and potential product-market fit issues, which typically subtracts 20+ percentage points from baseline growth. Operationally, DataFlow is experiencing sales cycle challenges with an 8-month cycle for new logos, and the recent geographic consolidation in Europe suggests a contraction signal, potentially reducing growth by 10-20%. On the positive side, the company is expanding into healthcare and financial services, which could add 5-12% to growth, and has addressed a competitive gap with real-time streaming capabilities, potentially adding 5-15%. Given these factors, the net effect is a significant downward adjustment from the baseline growth rate due to the critical NRR and geographic contraction, partially offset by new market expansions and product improvements. Therefore, a conservative growth estimate is appropriate.",
+          "latencyMs": 4947,
+          "promptTokens": 1633,
+          "completionTokens": 224,
+          "totalTokens": 1857,
+          "cost": 0.006322499999999999
+        }
+      ],
+      "meanPrediction": 23.333,
+      "stdDeviation": 2.357,
+      "minPrediction": 20,
+      "maxPrediction": 25,
+      "error": -8.667,
+      "absoluteError": 8.667,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-19T10:58:32.214Z",
+      "completedAt": "2026-01-19T10:58:37.845Z",
+      "difficulty": {
+        "score": 66,
+        "level": "hard",
+        "factors": {
+          "deltaComplexity": 36,
+          "distractorLoad": 20,
+          "interactionEffects": 10
+        }
+      },
+      "errorPattern": {
+        "pattern": "magnitude_error",
+        "severity": "moderate",
+        "details": "Correct direction from anchor, but magnitude off by 8.67"
+      }
+    },
+    {
+      "scenarioId": "d75493f5-eaca-4906-8bf5-4d043851bb9d",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 25,
+          "reasoning": "CloudScale is a B2B SaaS company with a current ARR of $19M, positioning it in the Series B/C stage for SaaS companies where typical growth is 40-70%. However, CloudScale's NRR is 87%, which is concerning and indicates revenue leakage, requiring a -20 percentage point adjustment from the baseline growth rate. Operational adjustments include the recent hiring of a VP of Customer Success, which could help address retention challenges, but the impact will take time to materialize. The company has also launched a new compliance module, adding $2.1M ARR, which is a positive operational driver. Market adjustments include the exit from APAC markets and reduction in European operations, which are contraction signals, potentially reducing growth by 10-20%. However, the focus on North American expansion and the new product launch could offset some of these losses. Given these factors, a conservative estimate would place CloudScale's growth at the lower end of the typical range, adjusted for the negative impact of low NRR and market contraction signals.",
+          "latencyMs": 5039,
+          "promptTokens": 1640,
+          "completionTokens": 231,
+          "totalTokens": 1871,
+          "cost": 0.006409999999999999
+        },
+        {
+          "prediction": 20,
+          "reasoning": "CloudScale is currently in the Series B/C stage with an ARR of $19M, which aligns with the 40-70% annual growth benchmark for SaaS companies at this stage. However, the company's NRR is 87%, which is critical and indicates a fundamental product-market fit or pricing issue, reducing the baseline growth rate by 20+ percentage points. Operationally, the company has recently launched a successful automated compliance module, which added $2.1M ARR, suggesting a positive impact on growth. The hiring of a VP of Customer Success indicates efforts to address churn issues, but the impact will take time to materialize. The geographic consolidation, including exiting APAC and reducing the European footprint, is a contraction signal that could reduce growth by 10-20%. The macroeconomic environment is not specified, but assuming a neutral impact, the overall adjustments suggest a significant reduction from the baseline growth rate. Considering these factors, a conservative estimate would be a growth rate at the lower end of the benchmark range.",
+          "latencyMs": 4860,
+          "promptTokens": 1640,
+          "completionTokens": 224,
+          "totalTokens": 1864,
+          "cost": 0.006339999999999999
+        },
+        {
+          "prediction": 20,
+          "reasoning": "CloudScale is currently in the Series B/C stage with an ARR of $19M, placing it in the 40-70% annual growth benchmark for SaaS companies. However, the company's NRR is 87%, which is critical and suggests a fundamental issue with product-market fit or pricing, leading to a potential deduction of 20+ percentage points from the baseline growth rate. The recent geographic consolidation and market focus refinement indicate a contraction signal, which typically reduces growth by 10-20%. Despite these challenges, the successful launch of the automated compliance module and SOC 2 Type II certification could provide a slight positive impact on growth. Additionally, the hiring of a VP of Customer Success may help address retention issues, though the impact will take time to materialize. Considering these factors, the estimated growth rate is adjusted downward from the baseline, accounting for the critical NRR and contraction signals.",
+          "latencyMs": 4375,
+          "promptTokens": 1640,
+          "completionTokens": 198,
+          "totalTokens": 1838,
+          "cost": 0.0060799999999999995
+        }
+      ],
+      "meanPrediction": 21.667,
+      "stdDeviation": 2.357,
+      "minPrediction": 20,
+      "maxPrediction": 25,
+      "error": 1.667,
+      "absoluteError": 1.667,
+      "withinTolerance": true,
+      "rolloutConsistency": 66.67,
+      "startedAt": "2026-01-19T10:58:32.214Z",
+      "completedAt": "2026-01-19T10:58:37.256Z",
+      "difficulty": {
+        "score": 49,
+        "level": "moderate",
+        "factors": {
+          "deltaComplexity": 24,
+          "distractorLoad": 20,
+          "interactionEffects": 5
+        }
+      },
+      "errorPattern": {
+        "pattern": "accurate",
+        "severity": "minor",
+        "details": "Prediction within acceptable tolerance"
+      }
+    },
+    {
+      "scenarioId": "688a33f2-38c2-48f6-a2cc-b8a842a006c1",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 50,
+          "reasoning": "VitalSign AI operates in the healthcare tech industry with FDA-cleared products, placing it in the 25-50% growth benchmark for companies with regulatory clearance. With an ARR of $42M, it is in the scale-up phase. The company has a world-class NRR of 134%, suggesting a strong expansion revenue and low churn, which could add 20-30% to the baseline growth rate. Operational growth drivers include successful product innovation with FDA breakthrough designation and expanded reimbursement coverage, likely adding 5-15% to growth. The strategic partnership with CVS Health and the launch of a telehealth platform are significant expansion signals, potentially contributing an additional 5-12% to growth. The macroeconomic context is generally favorable for healthcare tech, but no specific tailwinds or headwinds are mentioned. Considering these factors, a reasonable growth estimate would be around 45-55%, aligning with the upper end of the benchmark for FDA-cleared companies and factoring in the strong NRR and operational drivers.",
+          "latencyMs": 8320,
+          "promptTokens": 1634,
+          "completionTokens": 221,
+          "totalTokens": 1855,
+          "cost": 0.006295
+        },
+        {
+          "prediction": 55,
+          "reasoning": "VitalSign AI is a healthcare technology company with FDA clearance and CE marking, operating in the remote patient monitoring market. With an ARR of $42M, it falls into the 'Enterprise' category for healthcare tech companies, where a 25-50% growth rate is typical. The company has a world-class NRR of 134%, indicating strong expansion revenue and low churn, which can add 20-30% to the baseline growth rate. Operationally, the company is scaling its clinical operations and has launched new products, such as the telehealth platform, which could contribute an additional 5-12% growth. Market conditions are favorable, with CMS reimbursement expansion and a strategic partnership with CVS Health, potentially adding another 8-15% to growth. Considering these factors, the estimated growth rate is a combination of the baseline for enterprise healthcare tech companies, the NRR impact, and operational and market adjustments.",
+          "latencyMs": 7309,
+          "promptTokens": 1634,
+          "completionTokens": 203,
+          "totalTokens": 1837,
+          "cost": 0.006115000000000001
+        },
+        {
+          "prediction": 75,
+          "reasoning": "VitalSign AI is a healthcare technology company with an ARR of $42M, placing it in the Series B/C stage for SaaS companies. The typical growth benchmark for this stage is 40-70%. However, VitalSign AI's Net Revenue Retention (NRR) is 134%, which is considered world-class and suggests a strong expansion revenue that can add 20-30% to the baseline growth rate. This implies a potential growth rate of 60-100%. Operationally, the company has FDA clearance and CE marking, which supports a 25-50% growth benchmark for healthcare tech companies with regulatory approval. Recent developments such as the FDA breakthrough designation, expanded CMS reimbursement, and strategic partnerships with CVS Health further bolster growth prospects, potentially adding another 5-12% to the growth rate. Considering these factors, a reasonable estimate for VitalSign AI's annual revenue growth rate would be around 75%.",
+          "latencyMs": 4489,
+          "promptTokens": 1634,
+          "completionTokens": 206,
+          "totalTokens": 1840,
+          "cost": 0.006144999999999999
+        }
+      ],
+      "meanPrediction": 60,
+      "stdDeviation": 10.801,
+      "minPrediction": 50,
+      "maxPrediction": 75,
+      "error": 25,
+      "absoluteError": 25,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-19T10:58:32.214Z",
+      "completedAt": "2026-01-19T10:58:40.537Z",
+      "difficulty": {
+        "score": 0,
+        "level": "trivial",
+        "factors": {
+          "deltaComplexity": 0,
+          "distractorLoad": 0,
+          "interactionEffects": 0
+        }
+      },
+      "errorPattern": {
+        "pattern": "systematic_overestimate",
+        "severity": "severe",
+        "details": "Overestimated by 25.00 (71.4%)"
+      }
+    },
+    {
+      "scenarioId": "62c8ec21-d1f8-4b6d-b063-767cecf8b3e5",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 40,
+          "reasoning": "VitalSign AI is a healthcare technology startup with early clinical traction, having secured $3.2M in pilot contracts. As a pre-revenue company, it is in the early clinical traction stage of healthcare tech, where 50-90% growth is typical. The company has achieved FDA 510(k) clearance, which supports a growth rate of 25-50%. However, the macroeconomic environment poses challenges, with rising interest rates and reduced hospital margins potentially delaying pilot program conversions. This could introduce a contraction signal, reducing the growth rate by 5-10%. VitalSign AI's differentiation through AI algorithms and recent integration partnerships with Fitbit and Apple Health are positive operational drivers, potentially adding 5-12% to growth. Given these factors, a balanced estimate would be around the midpoint of the 25-50% range, adjusted for macroeconomic headwinds and operational strengths.",
+          "latencyMs": 4053,
+          "promptTokens": 1620,
+          "completionTokens": 197,
+          "totalTokens": 1817,
+          "cost": 0.006019999999999999
+        },
+        {
+          "prediction": 60,
+          "reasoning": "VitalSign AI is a healthcare technology startup with early clinical traction, having secured $3.2M in pilot contracts. As a pre-revenue company, it is in the 'early clinical traction' stage of healthcare tech, where 50-90% growth is typical. The company has completed FDA 510(k) clearance, which supports a growth rate on the higher end of this range. However, macroeconomic pressures such as rising interest rates and delayed capital expenditures in the healthcare sector could dampen growth prospects. These factors suggest a downward adjustment from the high end of the growth benchmark. The company's strong leadership team, strategic partnerships, and recent FDA clearance are positive indicators, but the macroeconomic context and pilot program conversion challenges necessitate a conservative approach. Therefore, a growth estimate of 60% is reasonable, balancing the company's potential with current market headwinds.",
+          "latencyMs": 3987,
+          "promptTokens": 1620,
+          "completionTokens": 192,
+          "totalTokens": 1812,
+          "cost": 0.00597
+        },
+        {
+          "prediction": 60,
+          "reasoning": "VitalSign AI is an early-stage healthcare tech company with pre-revenue status but has secured $3.2M in pilot contracts. The company has demonstrated early clinical traction, which is crucial for growth in the healthcare tech sector. Given its stage, the expected growth rate for early clinical traction healthcare tech companies is 50-90%. However, the company faces macroeconomic pressures, including rising interest rates and reduced hospital margins, which could delay pilot program conversions. These factors might reduce the growth rate by 5-15%. Additionally, the FDA clearance for their cardiac arrhythmia detection algorithm and partnerships with Fitbit and Apple Health are positive operational drivers, potentially adding 5-12% to the growth rate. Considering these factors, a reasonable estimate for VitalSign AI's annual revenue growth rate would be around 60%.",
+          "latencyMs": 3439,
+          "promptTokens": 1620,
+          "completionTokens": 184,
+          "totalTokens": 1804,
+          "cost": 0.005889999999999999
+        }
+      ],
+      "meanPrediction": 53.333,
+      "stdDeviation": 9.428,
+      "minPrediction": 40,
+      "maxPrediction": 60,
+      "error": -8.667,
+      "absoluteError": 8.667,
+      "withinTolerance": false,
+      "rolloutConsistency": 66.67,
+      "startedAt": "2026-01-19T10:58:40.759Z",
+      "completedAt": "2026-01-19T10:58:44.819Z",
+      "difficulty": {
+        "score": 12,
+        "level": "trivial",
+        "factors": {
+          "deltaComplexity": 12,
+          "distractorLoad": 0,
+          "interactionEffects": 0
+        }
+      },
+      "errorPattern": {
+        "pattern": "magnitude_error",
+        "severity": "minor",
+        "details": "Correct direction from anchor, but magnitude off by 8.67"
+      }
+    },
+    {
+      "scenarioId": "42b73efb-e83a-4d4f-b507-c24940917f29",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 85,
+          "reasoning": "VitalSign AI is a healthcare technology startup in the early clinical traction stage, which typically sees revenue growth between 50-90%. The company is pre-revenue but has secured $2.8M in pilot contracts, indicating a strong initial market interest. The completion of FDA 510(k) clearance for key monitoring algorithms and the expansion of the clinical team are positive operational drivers that could enhance growth prospects. Additionally, the company's differentiation through camera-based technology and the reduction in patient friction are competitive advantages. The recent NIH funding and discussions with top health insurers for pilot programs further support potential growth. However, being pre-revenue, the company will need to convert pilot contracts into recurring revenue streams to sustain growth. Considering these factors, an estimated growth rate at the higher end of the early clinical traction benchmark is appropriate, accounting for the strong operational and market positioning.",
+          "latencyMs": 3940,
+          "promptTokens": 1654,
+          "completionTokens": 190,
+          "totalTokens": 1844,
+          "cost": 0.006035
+        },
+        {
+          "prediction": 80,
+          "reasoning": "VitalSign AI is a healthcare technology startup in the early clinical traction stage, which typically sees revenue growth between 50-90%. The company has strong operational growth drivers, including recent FDA clearance, which could contribute an additional 25-50% growth. The successful completion of pilot programs with major health systems and the potential for scaling through partnerships with top insurers also suggest significant growth potential. However, as the company is pre-revenue, the initial growth will be from a small base, which can skew percentage growth rates higher. Given the competitive landscape and the company's differentiation with its camera-based technology, VitalSign AI is well-positioned for rapid growth. Considering these factors, an annual revenue growth rate estimate of 80% is appropriate.",
+          "latencyMs": 3226,
+          "promptTokens": 1654,
+          "completionTokens": 166,
+          "totalTokens": 1820,
+          "cost": 0.005795
+        },
+        {
+          "prediction": 80,
+          "reasoning": "VitalSign AI is a healthcare tech startup in the early clinical traction stage. According to the benchmarks, companies in this stage typically experience 50-90% growth. The company has secured $2.8M in pilot contracts and is pre-revenue, indicating it is still in the early stages of revenue generation. The FDA clearance and clinical validation provide strong operational growth drivers, likely placing them towards the higher end of the growth range. Additionally, the recent funding round led by Andreessen Horowitz and the strategic hires suggest strong market confidence and potential for rapid scaling. The company's differentiation in using camera-based technology could provide a competitive edge, although it faces competition from established players. Given these factors, a growth rate estimate of around 80% is reasonable, considering the high potential for expansion and the early stage of revenue generation.",
+          "latencyMs": 3828,
+          "promptTokens": 1654,
+          "completionTokens": 184,
+          "totalTokens": 1838,
+          "cost": 0.005974999999999999
+        }
+      ],
+      "meanPrediction": 81.667,
+      "stdDeviation": 2.357,
+      "minPrediction": 80,
+      "maxPrediction": 85,
+      "error": 11.667,
+      "absoluteError": 11.667,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-19T10:58:40.759Z",
+      "completedAt": "2026-01-19T10:58:44.708Z",
+      "difficulty": {
+        "score": 0,
+        "level": "trivial",
+        "factors": {
+          "deltaComplexity": 0,
+          "distractorLoad": 0,
+          "interactionEffects": 0
+        }
+      },
+      "errorPattern": {
+        "pattern": "systematic_overestimate",
+        "severity": "minor",
+        "details": "Overestimated by 11.67 (16.7%)"
+      }
+    },
+    {
+      "scenarioId": "c8861248-ac1f-4a6a-afb2-35456efb7524",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 8,
+          "reasoning": "ShopWave is an e-commerce platform company with $142M ARR, placing it in the enterprise stage where typical growth is 10-25%. However, several factors influence this baseline. The company is facing macroeconomic headwinds in the e-commerce sector, likely reducing consumer spending and increasing customer acquisition costs, which could negatively impact growth by 5-15%. Operationally, the company has a concerning sales team turnover of 45% and only 62% quota attainment, indicating potential product-market or go-to-market issues, which could reduce growth by 8-15%. On the positive side, ShopWave has launched an AI-powered personalization engine, potentially adding 5-12% to growth if successful. The strategic withdrawal from Latin America and consolidation in Europe may initially reduce growth by 10-20%, but focusing on core markets could stabilize operations. The successful renewal of 89% of enterprise contracts suggests a stable customer base, mitigating some revenue leakage concerns. Overall, considering these factors, a reasonable growth estimate would be towards the lower end of the enterprise benchmark, adjusted for operational and market conditions.",
+          "latencyMs": 4957,
+          "promptTokens": 1649,
+          "completionTokens": 240,
+          "totalTokens": 1889,
+          "cost": 0.0065225000000000005
+        },
+        {
+          "prediction": 5,
+          "reasoning": "ShopWave is an e-commerce platform with an ARR of $142M, placing it in the enterprise stage for e-commerce companies, where typical growth is 10-25%. However, several factors influence this baseline. The company's NRR is not explicitly stated, but a 89% renewal rate suggests an NRR below 100%, indicating revenue leakage and a potential reduction of 10-15 percentage points from the baseline. Sales team instability, with 45% turnover and only 62% quota attainment, suggests operational inefficiencies, potentially reducing growth by another 8-15%. On the positive side, the launch of an AI-powered personalization engine and a new sales compensation structure could drive future growth, but these impacts are not immediate. The strategic withdrawal from Latin America and consolidation in Europe are contraction signals, potentially reducing growth by 10-20%. The macroeconomic environment, with reduced consumer spending and increased acquisition costs, adds a further 5-15% headwind. Considering these factors, a conservative growth estimate would be at the lower end of the baseline range, adjusted for the negative impacts.",
+          "latencyMs": 6882,
+          "promptTokens": 1649,
+          "completionTokens": 240,
+          "totalTokens": 1889,
+          "cost": 0.0065225000000000005
+        },
+        {
+          "prediction": 8,
+          "reasoning": "ShopWave is an e-commerce platform company with an ARR of $142M, placing it in the enterprise category for e-commerce, where typical growth rates range from 10-25%. The company faces several challenges, including high sales team turnover (45%) and low quota attainment (62%), which suggests potential issues in sales execution and product-market fit. These factors could negatively impact growth by 8-15%. However, ShopWave has recently launched an AI-powered personalization engine, which could contribute a 5-15% growth boost if successful. The strategic withdrawal from Latin American markets and consolidation in Europe may result in a 10-20% contraction, but focusing on core markets could stabilize operations. The company's NRR is not explicitly stated, but the 89% renewal rate indicates a concerning NRR of around 90-100%, suggesting revenue leakage and a potential 10-15% negative impact on growth. Macroeconomic headwinds in the e-commerce sector, such as reduced consumer spending, could further reduce growth by 5-15%. Considering these factors, a reasonable estimate for ShopWave's annual revenue growth rate would be on the lower end of the typical range, adjusted for operational and market challenges.",
+          "latencyMs": 5654,
+          "promptTokens": 1649,
+          "completionTokens": 263,
+          "totalTokens": 1912,
+          "cost": 0.0067525
+        }
+      ],
+      "meanPrediction": 7,
+      "stdDeviation": 1.414,
+      "minPrediction": 5,
+      "maxPrediction": 8,
+      "error": 27,
+      "absoluteError": 27,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-19T10:58:40.759Z",
+      "completedAt": "2026-01-19T10:58:47.651Z",
+      "difficulty": {
+        "score": 46,
+        "level": "moderate",
+        "factors": {
+          "deltaComplexity": 36,
+          "distractorLoad": 0,
+          "interactionEffects": 10
+        }
+      },
+      "errorPattern": {
+        "pattern": "anchor_bias",
+        "severity": "severe",
+        "details": "Prediction (7.00) is closer to anchor value (15.00) than ground truth (-20.00)"
+      }
+    },
+    {
+      "scenarioId": "a578cca5-b31b-4ebc-a2c2-d0312615c272",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 15,
+          "reasoning": "CartFlow is an enterprise-level e-commerce platform with $145M ARR, placing it in the 'Enterprise' stage for e-commerce companies. The typical growth rate for this stage is 10-25%. CartFlow's NRR is 112%, which is considered excellent and suggests a healthy expansion and low churn, adding approximately 10-15 percentage points to the baseline growth rate. However, the company is facing macroeconomic pressures with retailers reducing technology spending, which could be a headwind of 5-15%. Additionally, CartFlow has exited several international markets, which reduces its total addressable market by 15%, potentially impacting growth by 10-20%. On the positive side, CartFlow has launched an AI-powered personalization engine and acquired LogiFlow, which could add 5-12% to growth. Considering these factors, the baseline growth rate of 10-25% is adjusted for operational and market conditions, leading to an estimated growth rate of around 12-18%.",
+          "latencyMs": 5758,
+          "promptTokens": 1633,
+          "completionTokens": 220,
+          "totalTokens": 1853,
+          "cost": 0.0062825
+        },
+        {
+          "prediction": 12,
+          "reasoning": "CartFlow is an e-commerce enterprise platform with a current ARR of $145M, placing it in the enterprise stage of growth. According to the benchmarks, a healthy e-commerce enterprise should expect 10-25% growth. CartFlow's NRR of 112% is excellent, suggesting a healthy expansion and low churn, which can add 10-15 percentage points to the baseline growth rate. However, the company is facing macroeconomic pressures and has exited several international markets, reducing its total addressable market by 15%, which could detract 10-20% from the growth rate. The AI-powered personalization engine and acquisition of LogiFlow could add 5-12% to growth due to product innovation and M&A integration. The partnership with Meta has not yet shown significant results, so it may not contribute positively in the short term. Considering these factors, the estimated annual revenue growth rate for CartFlow is adjusted to account for both positive operational drivers and negative market conditions.",
+          "latencyMs": 5581,
+          "promptTokens": 1633,
+          "completionTokens": 217,
+          "totalTokens": 1850,
+          "cost": 0.006252499999999999
+        },
+        {
+          "prediction": 12,
+          "reasoning": "CartFlow is an enterprise-level e-commerce platform with $145M ARR, placing it in the 10-25% growth benchmark for its industry. The company's NRR of 112% is excellent, suggesting a healthy expansion and low churn, which could add 10-15 percentage points to baseline growth. However, the strategic exit from international markets like Latin America and Southeast Asia results in a 15% reduction in TAM, likely reducing growth by 10-20%. The recent acquisition of LogiFlow and the launch of an AI-powered personalization engine could contribute positively, potentially adding 5-12% to growth. The macroeconomic headwinds in the e-commerce sector, with retailers cutting back on tech spending, could impose a 5-15% negative impact. Balancing these factors, the estimated annual revenue growth rate for CartFlow is approximately 10-15%.",
+          "latencyMs": 5356,
+          "promptTokens": 1633,
+          "completionTokens": 196,
+          "totalTokens": 1829,
+          "cost": 0.006042499999999999
+        }
+      ],
+      "meanPrediction": 13,
+      "stdDeviation": 1.414,
+      "minPrediction": 12,
+      "maxPrediction": 15,
+      "error": 21,
+      "absoluteError": 21,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-19T10:58:47.859Z",
+      "completedAt": "2026-01-19T10:58:53.624Z",
+      "difficulty": {
+        "score": 29,
+        "level": "easy",
+        "factors": {
+          "deltaComplexity": 24,
+          "distractorLoad": 0,
+          "interactionEffects": 5
+        }
+      },
+      "errorPattern": {
+        "pattern": "anchor_bias",
+        "severity": "severe",
+        "details": "Prediction (13.00) is closer to anchor value (15.00) than ground truth (-8.00)"
+      }
+    },
+    {
+      "scenarioId": "b69a1525-8605-4bb9-abdb-6c301b7eb467",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 55,
+          "reasoning": "PayStream is a fintech scale-up with a current annual revenue run-rate of $47M. Based on the provided benchmarks, fintech companies at this stage typically exhibit 40-60% growth. PayStream's monthly revenue retention of 98.5% translates to an annual NRR of approximately 122%, which is considered excellent and adds 10-15 percentage points to the baseline growth rate. The company has recently expanded its product offerings with an embedded lending product and international capabilities, which could add another 5-12% to growth. Additionally, the acquisition of an invoice factoring startup and strategic partnerships with major ERP providers enhance its competitive positioning and customer retention, potentially contributing another 5-10% to growth. Given these factors, a reasonable estimate for PayStream's annual revenue growth rate would be around 55%.",
+          "latencyMs": 4896,
+          "promptTokens": 1648,
+          "completionTokens": 185,
+          "totalTokens": 1833,
+          "cost": 0.00597
+        },
+        {
+          "prediction": 55,
+          "reasoning": "PayStream is a fintech scale-up with a current annual revenue run-rate of $47M, placing it in the 'Licensed scale-up' stage according to the fintech benchmarks, where 40-60% growth is typical. The company's monthly revenue retention is 98.5%, translating to an annual net revenue retention (NRR) of approximately 118.2%, which falls into the 'Excellent' category (110-130% NRR). This suggests a healthy expansion and low churn, adding 10-15 percentage points to the baseline growth rate. \n\nOperationally, PayStream has several growth drivers: \n1. Recent acquisition of an invoice factoring startup, which can enhance its working capital solutions, potentially adding 5-12% to growth. \n2. Expansion into international markets with cross-border payments, contributing an additional 8-15% to growth. \n3. Launch of an embedded lending product, which could add another 5-12% to growth. \n\nConsidering market conditions, PayStream operates in a large $185B B2B payments market, which is expanding. However, competition from established players like Bill.com and AvidXchange could exert some pricing pressure, potentially reducing growth by 4-8%. \n\nOverall, combining the baseline growth rate of 40-60% for a fintech scale-up with the positive operational adjustments and competitive dynamics, I estimate PayStream's annual revenue growth rate to be around 55%.",
+          "latencyMs": 7048,
+          "promptTokens": 1648,
+          "completionTokens": 322,
+          "totalTokens": 1970,
+          "cost": 0.007339999999999999
+        },
+        {
+          "prediction": 65,
+          "reasoning": "PayStream is a fintech scale-up with a current annual revenue run-rate of $47M, placing it in the 'Licensed scale-up' stage for fintech companies, where 40-60% growth is typical. The company has a strong monthly revenue retention rate of 98.5%, equivalent to an annual NRR of approximately 125.7%, which falls into the 'Excellent' category. This suggests a healthy expansion and low churn, potentially adding 10-15 percentage points to the baseline growth rate. Operationally, PayStream benefits from recent strategic initiatives such as obtaining Money Transmitter Licenses, launching an embedded lending product, and expanding cross-border payment capabilities, which are likely to contribute positively to growth. The acquisition of an invoice factoring startup and the implementation of advanced fraud detection algorithms further enhance its value proposition. Market conditions are generally favorable, with the B2B payments market being substantial and growing. Given these factors, a reasonable estimate for PayStream's annual revenue growth rate would be at the higher end of the typical range for its stage, adjusted upwards due to its excellent NRR and strategic initiatives.",
+          "latencyMs": 5698,
+          "promptTokens": 1648,
+          "completionTokens": 243,
+          "totalTokens": 1891,
+          "cost": 0.006549999999999999
+        }
+      ],
+      "meanPrediction": 58.333,
+      "stdDeviation": 4.714,
+      "minPrediction": 55,
+      "maxPrediction": 65,
+      "error": 8.333,
+      "absoluteError": 8.333,
+      "withinTolerance": false,
+      "rolloutConsistency": 66.67,
+      "startedAt": "2026-01-19T10:58:47.859Z",
+      "completedAt": "2026-01-19T10:58:54.916Z",
+      "difficulty": {
+        "score": 0,
+        "level": "trivial",
+        "factors": {
+          "deltaComplexity": 0,
+          "distractorLoad": 0,
+          "interactionEffects": 0
+        }
+      },
+      "errorPattern": {
+        "pattern": "systematic_overestimate",
+        "severity": "minor",
+        "details": "Overestimated by 8.33 (16.7%)"
+      }
+    },
+    {
+      "scenarioId": "42878cbb-43b4-4ce1-b200-578116d3a56d",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 50,
+          "reasoning": "VitalSign AI is a healthcare technology startup in the early clinical traction stage, which typically expects 50-90% growth. However, the company is currently pre-revenue and relies on pilot contracts, indicating it is still in the validation phase. The successful clinical trial and FDA breakthrough device designation are positive indicators, but the company faces challenges with sales team stability and market expansion, particularly with the recent exit from the West Coast market. These factors suggest potential operational inefficiencies and market penetration issues. The company's NRR is not applicable as it is pre-revenue. Market conditions are mixed; while the remote patient monitoring market is growing, competition is intense. Given these factors, a conservative estimate at the lower end of the early clinical traction growth benchmark is appropriate.",
+          "latencyMs": 4134,
+          "promptTokens": 1665,
+          "completionTokens": 170,
+          "totalTokens": 1835,
+          "cost": 0.0058625000000000005
+        },
+        {
+          "prediction": 55,
+          "reasoning": "VitalSign AI is a healthcare tech startup in the early clinical traction stage, which typically expects 50-90% growth. However, the company is pre-revenue and relies on pilot contracts, which complicates direct revenue growth estimation. The company has secured $2.8M in pilot contracts, indicating initial market interest and validation. The anticipated FDA clearance and commercial launch in 2025 could significantly impact growth, but current sales team instability and market exit from the West Coast are concerning. These factors suggest operational challenges that could hinder growth. Given the company's FDA breakthrough device designation and clinical validation, it has strong potential, but the sales team issues and market exit could reduce growth expectations. Therefore, a conservative estimate at the lower end of the early clinical traction benchmark is appropriate.",
+          "latencyMs": 4609,
+          "promptTokens": 1665,
+          "completionTokens": 174,
+          "totalTokens": 1839,
+          "cost": 0.005902500000000001
+        },
+        {
+          "prediction": 50,
+          "reasoning": "VitalSign AI is a healthcare technology startup in the early clinical traction stage, which typically expects 50-90% growth. However, the company is pre-revenue, with $2.8M in pilot contracts, indicating early traction but no commercial revenue yet. The successful clinical trial and FDA breakthrough device designation are positive indicators, potentially boosting future growth. However, challenges such as sales team instability and a recent market exit from the West Coast indicate operational hurdles. The company's focus on the Northeast and Midwest regions may limit immediate geographic expansion benefits. Given these factors, a conservative estimate at the lower end of the early clinical traction benchmark is appropriate, considering the company's current stage and operational challenges.",
+          "latencyMs": 3925,
+          "promptTokens": 1665,
+          "completionTokens": 156,
+          "totalTokens": 1821,
+          "cost": 0.0057225
+        }
+      ],
+      "meanPrediction": 51.667,
+      "stdDeviation": 2.357,
+      "minPrediction": 50,
+      "maxPrediction": 55,
+      "error": 8.667,
+      "absoluteError": 8.667,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-19T10:58:47.859Z",
+      "completedAt": "2026-01-19T10:58:52.478Z",
+      "difficulty": {
+        "score": 29,
+        "level": "easy",
+        "factors": {
+          "deltaComplexity": 24,
+          "distractorLoad": 0,
+          "interactionEffects": 5
+        }
+      },
+      "errorPattern": {
+        "pattern": "magnitude_error",
+        "severity": "moderate",
+        "details": "Correct direction from anchor, but magnitude off by 8.67"
+      }
+    },
+    {
+      "scenarioId": "fc4b03fb-1bf1-40fc-9cf2-947097fcf578",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 55,
+          "reasoning": "VitalSign AI is a healthcare technology startup with $3.2M ARR, placing it in the early clinical traction stage with a benchmark growth rate of 50-90%. The company has achieved FDA clearance and published a clinical validation study, which supports a higher growth rate within this range. However, the company faces challenges with sales team turnover and quota attainment, which could negatively impact growth. The recent doubling of the sales team suggests a potential uplift, but the impact may be delayed due to the need for re-training and the typical 6-9 month sales cycle. The company's NRR is not provided, but the expansion of partnerships and the pilot program with CMS indicate potential for strong retention and expansion. Considering these factors, a growth rate towards the lower end of the benchmark range is appropriate, accounting for operational challenges and the positive impact of recent FDA clearance and new partnerships.",
+          "latencyMs": 6054,
+          "promptTokens": 1643,
+          "completionTokens": 194,
+          "totalTokens": 1837,
+          "cost": 0.0060475
+        },
+        {
+          "prediction": 55,
+          "reasoning": "VitalSign AI is a healthcare tech startup with $3.2M ARR, placing it in the early clinical traction stage where 50-90% growth is typical. The company has achieved FDA clearance, which supports a growth rate in the higher range of this benchmark due to increased credibility and market access. The recent doubling of the sales team suggests potential for future growth, but the high turnover and retraining needs may delay immediate impact, reducing the effective uplift. The company's NRR is not provided, but the high customer retention implied by ongoing partnerships with major health systems suggests it is likely above 100%, supporting stable growth. The recent CMS pilot program and new partnerships indicate positive market expansion signals, potentially adding 5-12% to growth. However, competition from established players like Philips and Medtronic, along with the need for clinical validation, may temper rapid expansion. Considering these factors, a growth estimate towards the lower end of the typical range is prudent, accounting for operational challenges and competitive pressures.",
+          "latencyMs": 5987,
+          "promptTokens": 1643,
+          "completionTokens": 220,
+          "totalTokens": 1863,
+          "cost": 0.006307500000000001
+        },
+        {
+          "prediction": 50,
+          "reasoning": "VitalSign AI is a healthcare tech startup with early clinical traction, indicated by its $3.2M ARR and recent FDA clearance. The benchmark for early clinical traction in healthcare tech is 50-90% growth. Given the FDA clearance and a published clinical validation study, the company is well-positioned for growth. However, the significant sales team turnover and challenges in quota attainment suggest operational issues that could dampen growth. This could reduce the potential growth rate by 8-15%. The recent doubling of the sales team could lead to future growth, but there is typically a 6-18 month lag before seeing revenue impact, suggesting limited immediate benefit. The partnership with a regional ACO and pilot program with CMS Innovation Center are positive market signals, potentially adding 5-12% to growth. Considering these factors, a reasonable estimate for annual revenue growth is around 45-55%, slightly below the benchmark due to operational challenges.",
+          "latencyMs": 4581,
+          "promptTokens": 1643,
+          "completionTokens": 207,
+          "totalTokens": 1850,
+          "cost": 0.0061775
+        }
+      ],
+      "meanPrediction": 53.333,
+      "stdDeviation": 2.357,
+      "minPrediction": 50,
+      "maxPrediction": 55,
+      "error": -14.667,
+      "absoluteError": 14.667,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-19T10:58:55.127Z",
+      "completedAt": "2026-01-19T10:59:01.187Z",
+      "difficulty": {
+        "score": 29,
+        "level": "easy",
+        "factors": {
+          "deltaComplexity": 24,
+          "distractorLoad": 0,
+          "interactionEffects": 5
+        }
+      },
+      "errorPattern": {
+        "pattern": "magnitude_error",
+        "severity": "moderate",
+        "details": "Correct direction from anchor, but magnitude off by 14.67"
+      }
+    },
+    {
+      "scenarioId": "2b7242ac-92ca-469f-af2b-30abd678541b",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 55,
+          "reasoning": "VitalSign AI is a healthcare technology startup that is currently pre-revenue but has completed successful pilot programs. Given its stage, it would typically fall under the 'Early clinical traction' category for healthcare tech, where 50-90% growth is expected. However, the company faces significant operational challenges, including a high turnover rate in the sales team and delays in converting pilots to revenue-generating contracts. These issues suggest potential difficulties in achieving rapid growth. The recent FDA clearance is a positive development, likely boosting growth prospects by enhancing credibility and facilitating sales. However, the high sales team turnover and extended implementation cycles could significantly dampen growth potential. Considering these factors, a conservative estimate towards the lower end of the typical growth range for early clinical traction healthcare tech companies is appropriate.",
+          "latencyMs": 3776,
+          "promptTokens": 1622,
+          "completionTokens": 173,
+          "totalTokens": 1795,
+          "cost": 0.005784999999999999
+        },
+        {
+          "prediction": 50,
+          "reasoning": "VitalSign AI is a healthcare technology startup in the early clinical traction stage, which typically expects 50-90% growth. However, the company is currently pre-revenue, making it difficult to apply traditional revenue growth benchmarks directly. The company has completed FDA 510(k) clearance, which should support growth, but it faces significant operational challenges, particularly with sales team performance and high turnover, which could negatively impact growth. The company's strong clinical validation results and partnerships with major health systems are positive indicators, but the extended implementation cycles and delayed revenue projections due to sales issues are concerning. Given these factors, the company's growth potential is likely at the lower end of the typical range for its stage. Additionally, the competitive landscape with established players like Philips and Medtronic poses a challenge. Considering these factors, an estimated growth rate of 50% is reasonable, assuming successful resolution of sales team issues and effective execution of their commercialization strategy.",
+          "latencyMs": 4373,
+          "promptTokens": 1622,
+          "completionTokens": 205,
+          "totalTokens": 1827,
+          "cost": 0.006104999999999999
+        },
+        {
+          "prediction": 50,
+          "reasoning": "VitalSign AI is a healthcare technology startup in the early clinical traction stage, which typically sees 50-90% growth. However, the company is pre-revenue and has faced significant challenges with sales team performance, including high turnover and difficulty meeting partnership targets. This suggests operational inefficiencies that could negatively impact growth. The recent FDA clearance is a positive development, potentially boosting growth by 25-50% as it enhances credibility and market access. However, the extended pilot conversion timelines and delayed revenue projections indicate a slower ramp-up. The company's differentiation through proprietary algorithms and clinical validation results are strengths, but competition from established players like Philips and Medtronic poses a challenge. Given these factors, a conservative estimate at the lower end of the typical range for early clinical traction companies is appropriate.",
+          "latencyMs": 3414,
+          "promptTokens": 1622,
+          "completionTokens": 176,
+          "totalTokens": 1798,
+          "cost": 0.005814999999999999
+        }
+      ],
+      "meanPrediction": 51.667,
+      "stdDeviation": 2.357,
+      "minPrediction": 50,
+      "maxPrediction": 55,
+      "error": -6.333,
+      "absoluteError": 6.333,
+      "withinTolerance": false,
+      "rolloutConsistency": 33.33,
+      "startedAt": "2026-01-19T10:58:55.127Z",
+      "completedAt": "2026-01-19T10:58:59.507Z",
+      "difficulty": {
+        "score": 12,
+        "level": "trivial",
+        "factors": {
+          "deltaComplexity": 12,
+          "distractorLoad": 0,
+          "interactionEffects": 0
+        }
+      },
+      "errorPattern": {
+        "pattern": "magnitude_error",
+        "severity": "minor",
+        "details": "Correct direction from anchor, but magnitude off by 6.33"
+      }
+    },
+    {
+      "scenarioId": "74aed9d1-2495-445d-86b1-65f9ff0199e2",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 50,
+          "reasoning": "VitalSign AI is an early-stage healthcare technology company in the pre-revenue phase, currently conducting pilot programs with major health systems. Given its stage, the company would typically be expected to achieve revenue growth rates in the range of 50-90% as it transitions from early clinical traction to broader market adoption. However, since it is still in the pilot phase and awaiting FDA clearance, the growth rate will be contingent on achieving regulatory milestones and successful pilot conversions. The completion of the FDA 510(k) submission and the expected clearance by Q2 2025 are critical for enabling commercial deployment, which could significantly accelerate growth. The company's partnerships with major EHR systems like Epic and Cerner, along with a strong leadership team and recent funding, provide a solid foundation for scaling. Considering these factors, a conservative estimate would place the annual revenue growth rate at the lower end of the early clinical traction range, around 50%, until FDA clearance is achieved and commercial operations can expand.",
+          "latencyMs": 5489,
+          "promptTokens": 1670,
+          "completionTokens": 215,
+          "totalTokens": 1885,
+          "cost": 0.006325
+        },
+        {
+          "prediction": 80,
+          "reasoning": "VitalSign AI is a healthcare technology startup in the pre-revenue stage, with pilot programs in place but no commercial revenue yet. Given the benchmarks for healthcare tech companies with early clinical traction, a growth rate of 50-90% is expected. However, since the company is pre-revenue, we must consider the potential for rapid growth once FDA clearance is achieved and commercial operations begin. The company's differentiation through camera-based technology, strategic partnerships with major health systems, and integration with EHR systems suggest strong potential for rapid adoption post-clearance. The completion of FDA 510(k) submission and the expected clearance by Q2 2025 are critical milestones that will likely drive significant growth. Additionally, the company's backing by prominent investors like Andreessen Horowitz and Bessemer Venture Partners indicates strong financial support for scaling operations. Considering these factors, a growth rate at the higher end of the benchmark range is reasonable once revenue generation begins. Therefore, an estimated annual revenue growth rate of 80% is appropriate for VitalSign AI post-FDA clearance and initial commercialization.",
+          "latencyMs": 4848,
+          "promptTokens": 1670,
+          "completionTokens": 232,
+          "totalTokens": 1902,
+          "cost": 0.006495
+        },
+        {
+          "prediction": 60,
+          "reasoning": "VitalSign AI is a healthcare technology startup in the pre-revenue phase, currently running pilot programs with major health systems. As they are in the early clinical traction stage, the expected growth rate for such companies is typically 50-90%. However, since they are still awaiting FDA clearance, which is anticipated by Q2 2025, the full commercial deployment and revenue generation are contingent on this milestone. The company's differentiation through camera-based technology and strategic partnerships with EHR systems like Epic and Cerner are strong growth drivers. Additionally, the recent NIH grant and clinical validation publication enhance their credibility and market readiness. Considering these factors, along with the competitive landscape and the need for FDA approval, a conservative estimate towards the lower end of the growth benchmark is appropriate. Therefore, an annual revenue growth rate of 60% is estimated, reflecting the potential post-FDA clearance and initial commercial traction.",
+          "latencyMs": 4248,
+          "promptTokens": 1670,
+          "completionTokens": 197,
+          "totalTokens": 1867,
+          "cost": 0.006144999999999999
+        }
+      ],
+      "meanPrediction": 63.333,
+      "stdDeviation": 12.472,
+      "minPrediction": 50,
+      "maxPrediction": 80,
+      "error": -6.667,
+      "absoluteError": 6.667,
+      "withinTolerance": true,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-19T10:58:55.127Z",
+      "completedAt": "2026-01-19T10:59:00.623Z",
+      "difficulty": {
+        "score": 0,
+        "level": "trivial",
+        "factors": {
+          "deltaComplexity": 0,
+          "distractorLoad": 0,
+          "interactionEffects": 0
+        }
+      },
+      "errorPattern": {
+        "pattern": "accurate",
+        "severity": "minor",
+        "details": "Prediction within acceptable tolerance"
+      }
+    },
+    {
+      "scenarioId": "c529fccf-b5b2-41e5-850b-a013ebc7b5e6",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 65,
+          "reasoning": "CartFlow is positioned as a scale-up e-commerce SaaS company with $47M ARR, placing it in the Series B/C stage with typical growth expectations of 40-70%. The company demonstrates excellent NRR at 124%, which can add 10-15 percentage points to the baseline growth rate due to healthy expansion and low churn. Operationally, CartFlow has recently launched an AI-powered module and completed an acquisition, both of which can contribute positively to growth by 5-15% and 5-20%, respectively. The expansion into the Canadian market and the introduction of a usage-based pricing tier further support growth, potentially adding another 8-15% and 5-12%, respectively. The macroeconomic environment and competitive landscape are not specified as major headwinds or tailwinds, so we'll assume a neutral impact. Combining these factors, CartFlow's growth estimate is adjusted upwards from the baseline, considering strong operational drivers and market expansion activities.",
+          "latencyMs": 6386,
+          "promptTokens": 1616,
+          "completionTokens": 212,
+          "totalTokens": 1828,
+          "cost": 0.0061600000000000005
+        },
+        {
+          "prediction": 65,
+          "reasoning": "CartFlow is a scale-up e-commerce SaaS company with $47M ARR, placing it in the Series B/C stage with typical growth expectations of 40-70%. The company demonstrates a strong NRR of 124%, indicating excellent customer expansion dynamics, which can add 10-15 percentage points to the baseline growth rate. Operationally, CartFlow has recently launched an AI-powered demand forecasting module and completed an acquisition, both of which are positive growth drivers. The expansion into the Canadian market and the introduction of a usage-based pricing tier further support growth, potentially adding 8-15% and 5-12% respectively. The recent hiring of a former Stripe VP as Chief Product Officer suggests a focus on accelerating platform development, which could contribute an additional 5-15% if successful. Considering these factors, the estimated growth rate is adjusted upwards from the baseline, accounting for operational and market adjustments.",
+          "latencyMs": 5825,
+          "promptTokens": 1616,
+          "completionTokens": 202,
+          "totalTokens": 1818,
+          "cost": 0.00606
+        },
+        {
+          "prediction": 60,
+          "reasoning": "CartFlow is a scale-up e-commerce SaaS company with $47M ARR, placing it in the Series B/C stage with typical growth expectations of 40-70%. The company demonstrates strong customer expansion dynamics with a 124% NRR, which is excellent and suggests a healthy expansion and low churn, adding 10-15 percentage points to the baseline growth rate. Recent operational growth drivers include the launch of an AI-powered demand forecasting module and the acquisition of FlowSync, which could contribute an additional 5-12% to growth. The expansion into the Canadian market and the introduction of usage-based pricing tiers are positive market condition multipliers, potentially adding another 8-15% to growth. However, competition from established players like Shopify Plus and Salesforce Commerce Cloud could exert some pricing pressure, possibly reducing growth by 4-8%. Considering these factors, the estimated growth rate for CartFlow is approximately 60%.",
+          "latencyMs": 5212,
+          "promptTokens": 1616,
+          "completionTokens": 205,
+          "totalTokens": 1821,
+          "cost": 0.00609
+        }
+      ],
+      "meanPrediction": 63.333,
+      "stdDeviation": 2.357,
+      "minPrediction": 60,
+      "maxPrediction": 65,
+      "error": 3.333,
+      "absoluteError": 3.333,
+      "withinTolerance": true,
+      "rolloutConsistency": 100,
+      "startedAt": "2026-01-19T10:59:01.395Z",
+      "completedAt": "2026-01-19T10:59:07.787Z",
+      "difficulty": {
+        "score": 22,
+        "level": "easy",
+        "factors": {
+          "deltaComplexity": 12,
+          "distractorLoad": 10,
+          "interactionEffects": 0
+        }
+      },
+      "errorPattern": {
+        "pattern": "accurate",
+        "severity": "minor",
+        "details": "Prediction within acceptable tolerance"
+      }
+    },
+    {
+      "scenarioId": "10e9bdce-8b31-47e6-a07b-726e9632a7bc",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 45,
+          "reasoning": "CartFlow is currently at the Series B/C stage with an ARR of $47M, placing it in the 'Scale-up' category for e-commerce companies, where typical growth is 30-60%. The company's strong merchant retention rate of 94% suggests a healthy business model with low churn, supporting sustainable growth. The recent acquisition of FlexShip and the launch of CartFlow Analytics Pro are significant operational growth drivers, potentially adding 5-12% to the growth rate. The expansion into the Canadian market and the partnership with Square are positive market adjustments, likely contributing an additional 8-15% to growth. However, competitive pressures from established players like Shopify and BigCommerce could slightly dampen growth, potentially reducing it by 5-10%. Considering these factors, the estimated annual revenue growth rate for CartFlow is likely to be around 45%.",
+          "latencyMs": 5034,
+          "promptTokens": 1662,
+          "completionTokens": 192,
+          "totalTokens": 1854,
+          "cost": 0.006075
+        },
+        {
+          "prediction": 55,
+          "reasoning": "CartFlow is currently in the Series B/C stage with an ARR of $47M, placing it in the scale-up phase for e-commerce companies. The typical growth rate for e-commerce companies in this stage is 30-60%. CartFlow's strong merchant retention rate of 94% indicates a healthy business, and the recent acquisition of FlexShip and the launch of CartFlow Analytics Pro suggest operational growth drivers that could positively impact revenue. The expansion into the Canadian market and partnership with Square are also positive market adjustments, potentially adding 8-15% to the growth rate. However, the competitive landscape with established players like Shopify and BigCommerce could pose challenges, potentially reducing growth by 5-10%. Considering these factors, a reasonable estimate for CartFlow's annual revenue growth rate would be at the higher end of the typical range for their stage, adjusted for the operational and market factors.",
+          "latencyMs": 5824,
+          "promptTokens": 1662,
+          "completionTokens": 198,
+          "totalTokens": 1860,
+          "cost": 0.006135
+        },
+        {
+          "prediction": 65,
+          "reasoning": "CartFlow is currently at the Series B/C stage with $47M ARR, placing it in the 40-70% annual growth benchmark for SaaS companies. The company's strong merchant retention rate of 94% suggests a healthy customer base, though the NRR is not explicitly provided. Assuming an NRR in the 'Excellent' range (110-130%), we can add 10-15 percentage points to the baseline growth rate. Operational drivers include the acquisition of FlexShip, which should contribute to growth through enhanced logistics capabilities, and the launch of CartFlow Analytics Pro, which has seen high adoption among enterprise clients. These factors could add another 5-12% to growth. The expansion into Canada and the partnership with Square are positive market signals, potentially adding 8-15% to growth. However, competition from established players like Shopify and BigCommerce could exert pricing pressure, potentially reducing growth by 4-8%. Considering these factors, a reasonable growth estimate would be on the higher end of the benchmark range.",
+          "latencyMs": 6694,
+          "promptTokens": 1662,
+          "completionTokens": 225,
+          "totalTokens": 1887,
+          "cost": 0.006404999999999999
+        }
+      ],
+      "meanPrediction": 55,
+      "stdDeviation": 8.165,
+      "minPrediction": 45,
+      "maxPrediction": 65,
+      "error": 10,
+      "absoluteError": 10,
+      "withinTolerance": false,
+      "rolloutConsistency": 33.33,
+      "startedAt": "2026-01-19T10:59:01.395Z",
+      "completedAt": "2026-01-19T10:59:08.097Z",
+      "difficulty": {
+        "score": 10,
+        "level": "trivial",
+        "factors": {
+          "deltaComplexity": 0,
+          "distractorLoad": 10,
+          "interactionEffects": 0
+        }
+      },
+      "errorPattern": {
+        "pattern": "systematic_overestimate",
+        "severity": "moderate",
+        "details": "Overestimated by 10.00 (22.2%)"
+      }
+    },
+    {
+      "scenarioId": "13d0ccfd-822e-43c8-95b4-b411fc935ecc",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 45,
+          "reasoning": "WealthOS is a fintech enterprise with an ARR of $118M, placing it in the 'Established' category for fintech companies, where typical growth is 15-30%. The company reports an exceptional NRR of 134%, which is world-class and suggests that expansion revenue significantly exceeds churn. This NRR could add 20-30 percentage points to the baseline growth rate. Operationally, WealthOS is launching a major AI-powered platform expansion in Q1 2025, which could contribute an additional 5-15% to growth if successful. The recent acquisition of DataViz Analytics and integration with major custodians expand their market reach and TAM, potentially adding another 5-12% to growth. However, they face pricing pressure from competitors, which could reduce growth by 4-8%. Given these factors, the baseline growth rate of 15-30% could be adjusted upwards by the NRR and operational drivers, but slightly tempered by competitive pricing pressure. Therefore, an estimated growth rate of 40-50% seems appropriate.",
+          "latencyMs": 6888,
+          "promptTokens": 1629,
+          "completionTokens": 230,
+          "totalTokens": 1859,
+          "cost": 0.0063725
+        },
+        {
+          "prediction": 40,
+          "reasoning": "WealthOS is an established fintech company with an ARR of $118M, placing it in the 'Established' category for fintech companies, where typical growth rates are 15-30%. The company reports a world-class NRR of 134%, which can add 20-30 percentage points to the baseline growth rate due to significant expansion revenue exceeding churn. This suggests a strong compounding effect on growth. Operationally, the upcoming AI-powered platform launch in Q1 2025 could add 5-15% to growth if successful, and the recent acquisition of DataViz Analytics could contribute an additional 5-20% depending on integration success. However, pricing pressure from competitors reducing prices by 15-20% could negatively impact growth by 4-8%. The opening of a new engineering hub and partnerships with major broker-dealers are positive expansion signals, potentially adding 8-15% to growth. Considering these factors, WealthOS is well-positioned for accelerated growth, but competitive pricing pressure and market dynamics must be carefully managed.",
+          "latencyMs": 6612,
+          "promptTokens": 1629,
+          "completionTokens": 229,
+          "totalTokens": 1858,
+          "cost": 0.0063625
+        },
+        {
+          "prediction": 35,
+          "reasoning": "WealthOS is a fintech enterprise with an ARR of $118M, placing it in the 'Established' category for fintech companies, where typical growth is 15-30%. The company has an exceptional NRR of 134%, which is world-class and suggests a 20-30% uplift to the baseline growth rate due to strong expansion revenue. Operationally, WealthOS is expanding its sales capacity with a new engineering hub and has a major product launch planned, which could add 5-15% to growth if successful. However, it faces pricing pressure from competitors, which could reduce growth by 4-8%. Market conditions are generally favorable, with new partnerships and geographic expansion, adding another 8-15% to growth. Considering these factors, the baseline growth rate of 15-30% is adjusted upwards by the NRR impact and operational drivers, while slightly offset by competitive pricing pressures. Therefore, a reasonable growth estimate would be at the higher end of the range.",
+          "latencyMs": 6946,
+          "promptTokens": 1629,
+          "completionTokens": 218,
+          "totalTokens": 1847,
+          "cost": 0.006252499999999999
+        }
+      ],
+      "meanPrediction": 40,
+      "stdDeviation": 4.082,
+      "minPrediction": 35,
+      "maxPrediction": 45,
+      "error": 3,
+      "absoluteError": 3,
+      "withinTolerance": true,
+      "rolloutConsistency": 66.67,
+      "startedAt": "2026-01-19T10:59:01.395Z",
+      "completedAt": "2026-01-19T10:59:08.350Z",
+      "difficulty": {
+        "score": 46,
+        "level": "moderate",
+        "factors": {
+          "deltaComplexity": 36,
+          "distractorLoad": 0,
+          "interactionEffects": 10
+        }
+      },
+      "errorPattern": {
+        "pattern": "accurate",
+        "severity": "minor",
+        "details": "Prediction within acceptable tolerance"
+      }
+    },
+    {
+      "scenarioId": "4061f717-715f-495f-89b7-1e50a1aee78d",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 45,
+          "reasoning": "PayStream is an established fintech company with a current annual revenue run-rate of $142M, placing it in the 'Established' category for fintech companies, where the typical growth rate is 15-30%. The company reports an exceptional NRR of 134%, which is considered world-class and suggests that expansion revenue significantly exceeds churn. This NRR can add 20-30 percentage points to the baseline growth rate. Operational growth drivers include the recent acquisition of a compliance automation startup, which can enhance regulatory capabilities and potentially add 5-20% to growth depending on successful integration. The launch of a comprehensive lending platform and expansion of international capabilities with EUR and GBP payment rails are positive expansion signals, potentially contributing an additional 8-15% to growth. The macroeconomic context is not specified, but assuming a neutral impact, the combined effects of NRR, operational drivers, and expansion signals suggest a strong growth outlook. Therefore, an appropriate annual revenue growth rate estimate for PayStream would be around 40-50%, considering the baseline, NRR impact, and operational adjustments.",
+          "latencyMs": 7276,
+          "promptTokens": 1628,
+          "completionTokens": 236,
+          "totalTokens": 1864,
+          "cost": 0.006430000000000001
+        },
+        {
+          "prediction": 45,
+          "reasoning": "PayStream is a fintech enterprise with a current annual revenue run-rate of $142M, placing it in the 'Established' category for fintech companies, where the typical growth rate is 15-30%. However, PayStream's exceptional NRR of 134% indicates world-class retention and expansion, suggesting an additional 20-30% growth potential. The company is also benefiting from operational growth drivers such as a strong leadership team, recent acquisition to enhance regulatory capabilities, and the launch of a real-time settlement product. These factors collectively suggest a positive operational adjustment of around 15-25%. Market conditions are favorable, with the embedded fintech market expanding and PayStream's recent international expansion and onboarding of major clients, suggesting a further market adjustment of 10-20%. Considering these factors, a reasonable estimate for PayStream's annual revenue growth rate would be at the higher end of the fintech benchmark, adjusted upwards for its exceptional NRR and favorable market and operational conditions.",
+          "latencyMs": 5643,
+          "promptTokens": 1628,
+          "completionTokens": 213,
+          "totalTokens": 1841,
+          "cost": 0.006200000000000001
+        },
+        {
+          "prediction": 45,
+          "reasoning": "PayStream is a fintech enterprise with a current annual revenue run-rate of $142M. As per the benchmarks, established fintech companies typically grow at 15-30% annually. However, PayStream's exceptional NRR of 134% indicates world-class retention and expansion, which can add 20-30% to the baseline growth rate. Given the company's strong operational growth drivers, including the successful launch of new products like real-time settlement and the upcoming lending platform, we can expect additional growth from product innovation. The recent acquisition of a compliance automation startup and expansion of international capabilities further bolster growth prospects. Market conditions are favorable, with the embedded fintech market expanding rapidly. Considering these factors, a growth rate at the higher end of the benchmark range is justified.",
+          "latencyMs": 4590,
+          "promptTokens": 1628,
+          "completionTokens": 171,
+          "totalTokens": 1799,
+          "cost": 0.00578
+        }
+      ],
+      "meanPrediction": 45,
+      "stdDeviation": 0,
+      "minPrediction": 45,
+      "maxPrediction": 45,
+      "error": 2,
+      "absoluteError": 2,
+      "withinTolerance": true,
+      "rolloutConsistency": 100,
+      "startedAt": "2026-01-19T10:59:08.553Z",
+      "completedAt": "2026-01-19T10:59:15.833Z",
+      "difficulty": {
+        "score": 29,
+        "level": "easy",
+        "factors": {
+          "deltaComplexity": 24,
+          "distractorLoad": 0,
+          "interactionEffects": 5
+        }
+      },
+      "errorPattern": {
+        "pattern": "accurate",
+        "severity": "minor",
+        "details": "Prediction within acceptable tolerance"
+      }
+    },
+    {
+      "scenarioId": "b0423256-36d5-4c15-8127-b548c0617137",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 12,
+          "reasoning": "MetalWorks Corp is an enterprise-level manufacturing company with $32M in annual revenue. The benchmark growth rate for manufacturing enterprises is 2-8%. However, MetalWorks has a world-class NRR of 134%, which suggests a strong expansion of revenue from existing customers. This NRR can add 20-30% to the baseline growth rate. The company has also recently exited the commercial automotive market, which could initially reduce growth by 10-20%, but this is offset by their strategic focus on higher-margin aerospace and medical segments. Additionally, the acquisition of new CNC equipment and lean manufacturing initiatives are likely to improve operational efficiency and capacity, potentially adding 5-15% to growth. The upcoming launch of an integrated assembly and testing platform in 2025 suggests future growth potential, but its impact will be more significant in subsequent years. Considering these factors, a reasonable growth estimate would be at the higher end of the benchmark, adjusted for the NRR and operational improvements.",
+          "latencyMs": 5722,
+          "promptTokens": 1618,
+          "completionTokens": 216,
+          "totalTokens": 1834,
+          "cost": 0.0062050000000000004
+        },
+        {
+          "prediction": 25,
+          "reasoning": "MetalWorks Corp is a precision manufacturing company with a current annual revenue of $32M, placing it in the Manufacturing SMB category. The typical growth benchmark for Manufacturing SMBs is 3-12%. However, MetalWorks has a world-class NRR of 134%, which suggests a very strong ability to expand revenue from existing customers, adding 20-30 percentage points to the baseline growth. The company is also focusing on high-margin aerospace and medical segments, which could provide additional growth potential. Recent strategic moves, such as exiting the commercial automotive market and investing in new CNC equipment, indicate a focus on higher-value opportunities. The planned launch of an integrated assembly and testing platform in 2025 suggests a strategic expansion into turnkey solutions, potentially adding 5-12% to growth. Additionally, the renewal of a master supply agreement with its largest customer through 2029 provides revenue stability and potential for expanded work. Considering these factors, the estimated growth rate should be on the higher end of the benchmark range, adjusted for the strong NRR and strategic initiatives.",
+          "latencyMs": 5422,
+          "promptTokens": 1618,
+          "completionTokens": 231,
+          "totalTokens": 1849,
+          "cost": 0.0063549999999999995
+        },
+        {
+          "prediction": 18,
+          "reasoning": "MetalWorks Corp is a precision manufacturing enterprise with a current annual revenue of $32M, placing it in the 'Manufacturing Enterprise' category with a typical growth benchmark of 2-8%. However, several factors suggest a higher growth rate is achievable. The company's NRR is 134%, indicating world-class retention and expansion capabilities, which can add 20-30 percentage points to the baseline growth rate. Operationally, they are implementing lean manufacturing initiatives and have invested in new CNC equipment, which could enhance efficiency and capacity, potentially adding another 5-15% to growth. The strategic exit from the commercial automotive market and focus on high-margin aerospace and medical segments, along with the upcoming launch of an integrated assembly and testing platform, suggest a positive market adjustment of 5-12%. Despite these positive factors, the broader manufacturing sector faces cyclical challenges, which could impose a slight headwind of 5-10%. Considering these adjustments, a reasonable estimate for MetalWorks Corp's annual revenue growth rate would be around 15-20%.",
+          "latencyMs": 6264,
+          "promptTokens": 1618,
+          "completionTokens": 230,
+          "totalTokens": 1848,
+          "cost": 0.006345
+        }
+      ],
+      "meanPrediction": 18.333,
+      "stdDeviation": 5.312,
+      "minPrediction": 12,
+      "maxPrediction": 25,
+      "error": 2.333,
+      "absoluteError": 2.333,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-19T10:59:08.553Z",
+      "completedAt": "2026-01-19T10:59:14.822Z",
+      "difficulty": {
+        "score": 56,
+        "level": "hard",
+        "factors": {
+          "deltaComplexity": 36,
+          "distractorLoad": 10,
+          "interactionEffects": 10
+        }
+      },
+      "errorPattern": {
+        "pattern": "magnitude_error",
+        "severity": "minor",
+        "details": "Correct direction from anchor, but magnitude off by 2.33"
+      }
+    },
+    {
+      "scenarioId": "e7969822-4826-48f2-99ee-ee37185eca63",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 15,
+          "reasoning": "Precision Industries is a manufacturing enterprise with a current annual revenue of $32M, placing it in the manufacturing enterprise category where typical growth is 2-8%. However, several factors suggest a higher growth rate is achievable. The company reports an exceptional NRR of 124%, indicating strong customer retention and expansion, which can add 10-15 percentage points to the baseline growth rate. Operational improvements such as lean manufacturing initiatives and investment in advanced CNC equipment are likely to enhance efficiency and capacity, potentially contributing an additional 5-10% growth. The strategic focus on high-margin aerospace and defense markets, combined with the recent $8M supply agreement, further supports growth prospects. Market adjustments include the positive impact of exiting the automotive segment and consolidating operations, which should optimize resources and reduce costs. Considering these factors, a reasonable growth estimate would be at the higher end of the typical range for manufacturing enterprises, adjusted upwards for the strong NRR and operational improvements.",
+          "latencyMs": 5933,
+          "promptTokens": 1615,
+          "completionTokens": 211,
+          "totalTokens": 1826,
+          "cost": 0.006147499999999999
+        },
+        {
+          "prediction": 18,
+          "reasoning": "Precision Industries is a manufacturing enterprise with a current annual revenue of $32M, placing it in the 'Manufacturing Enterprise' category where typical growth is 2-8%. However, the company reports an exceptional NRR of 124%, which is considered 'Excellent' and suggests a healthy expansion and low churn. This NRR can add 10-15 percentage points to the baseline growth rate. Operational improvements include lean manufacturing initiatives and new CNC equipment, which could contribute an additional 5-15% growth. The recent strategic focus on high-margin aerospace and defense applications, along with a new $8M supply agreement, further supports growth prospects. Market conditions in aerospace and defense appear stable, with no significant contraction signals. Therefore, considering the baseline growth for manufacturing enterprises, the NRR impact, operational improvements, and strategic focus, a reasonable estimate for annual revenue growth is around 15-20%.",
+          "latencyMs": 5356,
+          "promptTokens": 1615,
+          "completionTokens": 201,
+          "totalTokens": 1816,
+          "cost": 0.006047499999999999
+        },
+        {
+          "prediction": 18,
+          "reasoning": "Precision Industries is a specialized manufacturing company with a current annual revenue of $32M, placing it in the Manufacturing SMB category. The typical growth benchmark for this category is 3-12%. However, Precision Industries reports an exceptional NRR of 124%, which is considered excellent and indicates healthy expansion and low churn. This NRR can add 10-15 percentage points to the baseline growth rate. The company has also made strategic operational adjustments, such as facility consolidation and exiting lower-margin markets, which could positively impact growth. Additionally, the investment in new CNC machining centers and lean manufacturing initiatives suggests potential for increased efficiency and capacity, possibly contributing an additional 5-10% to growth. However, the recent market exit and geographic consolidation could have a slight negative impact, estimated at -10% to growth. Considering these factors, the estimated growth rate for Precision Industries is around 15-20%, which is above the typical benchmark for its category due to its high NRR and operational improvements.",
+          "latencyMs": 6478,
+          "promptTokens": 1615,
+          "completionTokens": 210,
+          "totalTokens": 1825,
+          "cost": 0.0061375
+        }
+      ],
+      "meanPrediction": 17,
+      "stdDeviation": 1.414,
+      "minPrediction": 15,
+      "maxPrediction": 18,
+      "error": 9,
+      "absoluteError": 9,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-19T10:59:08.553Z",
+      "completedAt": "2026-01-19T10:59:15.036Z",
+      "difficulty": {
+        "score": 39,
+        "level": "moderate",
+        "factors": {
+          "deltaComplexity": 24,
+          "distractorLoad": 10,
+          "interactionEffects": 5
+        }
+      },
+      "errorPattern": {
+        "pattern": "distractor_influence",
+        "severity": "severe",
+        "details": "Large error in scenario with 1 distractor(s) - possible distractor influence"
+      }
+    }
+  ],
+  "completedAt": "2026-01-19T10:59:15.836Z",
+  "aggregateMetrics": {
+    "hitRate": 27.78,
+    "meanError": 4.889,
+    "rmse": 12.335,
+    "avgLatencyMs": 5329,
+    "directionalAccuracy": 100,
+    "avgStdDeviation": 4.206,
+    "avgConsistency": 29.63,
+    "totalPromptTokens": 88437,
+    "totalCompletionTokens": 11358,
+    "totalTokens": 99795,
+    "totalCost": 0.3347,
+    "avgDifficulty": 26,
+    "difficultyDistribution": {
+      "trivial": 7,
+      "easy": 5,
+      "moderate": 4,
+      "hard": 2,
+      "expert": 0
+    },
+    "errorPatternSummary": {
+      "systematicBias": "overestimate",
+      "biasStrength": 49,
+      "anchorBiasRate": 11,
+      "deltaBlindnessRate": 0,
+      "distractorInfluenceRate": 6,
+      "errorByDifficulty": {
+        "trivial": 10.952,
+        "easy": 9.933,
+        "moderate": 10.167,
+        "hard": 5.5
+      }
+    }
+  }
+}

@@ -426,97 +426,101 @@ export default function Playground() {
 
               <Separator />
 
-              {/* Rollouts - always visible */}
-              <div>
-                <label className="text-sm font-medium mb-2 block">
-                  Rollouts per Scenario
-                  <span className="text-muted-foreground text-xs ml-1">(1-10)</span>
-                </label>
-                <Input
-                  type="number"
-                  min={1}
-                  max={10}
-                  value={rolloutsPerScenario}
-                  onChange={(e) => setRolloutsPerScenario(Math.max(1, Math.min(10, parseInt(e.target.value) || 1)))}
-                />
-                <p className="text-xs text-muted-foreground mt-1">
-                  Multiple rollouts enable variance estimation
-                </p>
+              {/* Rollouts and Scenarios on same row */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-medium mb-2 block">
+                    Rollouts <span className="text-muted-foreground text-xs">(1-10)</span>
+                  </label>
+                  <Input
+                    type="number"
+                    min={1}
+                    max={10}
+                    value={rolloutsPerScenario}
+                    onChange={(e) => setRolloutsPerScenario(Math.max(1, Math.min(10, parseInt(e.target.value) || 1)))}
+                  />
+                </div>
+                {!useTestSet && (
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">
+                      Scenarios
+                    </label>
+                    <Input
+                      type="number"
+                      min={1}
+                      max={50}
+                      value={scenarioCount}
+                      onChange={(e) => setScenarioCount(parseInt(e.target.value) || 5)}
+                    />
+                  </div>
+                )}
               </div>
 
               {!useTestSet && (
                 <>
                   <Separator />
-                  <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm font-medium mb-2 block">
-                    Scenarios
-                  </label>
-                  <Input
-                    type="number"
-                    min={1}
-                    max={50}
-                    value={scenarioCount}
-                    onChange={(e) => setScenarioCount(parseInt(e.target.value) || 5)}
-                  />
-                </div>
-                <div>
-                  <label className="text-sm font-medium mb-2 block">Seed</label>
-                  <Input
-                    type="number"
-                    value={seed}
-                    onChange={(e) => setSeed(parseInt(e.target.value) || Date.now())}
-                  />
-                </div>
-              </div>
+                  {/* Collapsible Scenario Generation Options */}
+                  <details className="group">
+                    <summary className="cursor-pointer text-sm font-medium flex items-center gap-2">
+                      <svg className="w-4 h-4 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                      Scenario Generation Options
+                    </summary>
+                    <div className="mt-3 space-y-3 pl-6">
+                      <div>
+                        <label className="text-sm font-medium mb-2 block">Seed</label>
+                        <Input
+                          type="number"
+                          value={seed}
+                          onChange={(e) => setSeed(parseInt(e.target.value) || Date.now())}
+                        />
+                      </div>
 
-              {/* Narrative Generation Toggle (only when not using test set) */}
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <label className="text-sm font-medium">LLM-Generated Narratives</label>
-                    <p className="text-xs text-muted-foreground">
-                      Use AI to generate rich property prospectus descriptions
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => setUseNarrativeDescriptions(!useNarrativeDescriptions)}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                      useNarrativeDescriptions ? "bg-purple-500" : "bg-muted"
-                    }`}
-                  >
-                    <span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        useNarrativeDescriptions ? "translate-x-6" : "translate-x-1"
-                      }`}
-                    />
-                  </button>
-                </div>
-                
-                {useNarrativeDescriptions && (
-                  <div>
-                    <label className="text-sm font-medium mb-2 block">
-                      Narrative Model
-                    </label>
-                    <Select value={narrativeModel} onValueChange={setNarrativeModel}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {AVAILABLE_MODELS.filter(m => 
-                          m.id.includes("gpt-4o-mini") || 
-                          m.id.includes("gemini") || 
-                          m.id.includes("claude")
-                        ).map((model) => (
-                          <SelectItem key={model.id} value={model.id}>
-                            <span className="font-medium">{model.name}</span>
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                )}
-              </div>
+                      {/* Narrative Generation Toggle with Model on same row */}
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => setUseNarrativeDescriptions(!useNarrativeDescriptions)}
+                            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                              useNarrativeDescriptions ? "bg-purple-500" : "bg-muted"
+                            }`}
+                          >
+                            <span
+                              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                                useNarrativeDescriptions ? "translate-x-6" : "translate-x-1"
+                              }`}
+                            />
+                          </button>
+                          <label className="text-sm font-medium">LLM Narratives</label>
+                        </div>
+                        
+                        {useNarrativeDescriptions && (
+                          <div className="flex-1">
+                            <Select value={narrativeModel} onValueChange={setNarrativeModel}>
+                              <SelectTrigger className="h-8">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {AVAILABLE_MODELS.filter(m => 
+                                  m.id.includes("gpt-4o-mini") || 
+                                  m.id.includes("gemini") || 
+                                  m.id.includes("claude")
+                                ).map((model) => (
+                                  <SelectItem key={model.id} value={model.id}>
+                                    <span className="font-medium">{model.name}</span>
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        Use AI to generate rich property prospectus descriptions
+                      </p>
+                    </div>
+                  </details>
                 </>
               )}
 

@@ -86,9 +86,10 @@ export type GroundTruth = z.infer<typeof GroundTruthSchema>;
 
 // Prediction Schema
 // What the LLM returns
+// Canonical field is 'estimate' - all prompts should use this field name
 
 export const PredictionSchema = z.object({
-  yield: z.number(),
+  estimate: z.number(),
   reasoning: z.string(),
 });
 

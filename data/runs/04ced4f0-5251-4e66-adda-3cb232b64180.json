@@ -1,0 +1,201 @@
+{
+  "id": "04ced4f0-5251-4e66-adda-3cb232b64180",
+  "timestamp": "2026-01-19T10:57:05.517Z",
+  "domainId": "financial-forecasting",
+  "model": "google/gemini-3-flash-preview",
+  "promptStrategy": "persona",
+  "promptTemplate": "You are a senior equity research analyst with 15+ years of experience in growth investing and company valuation.\r\n\r\n{{#facts.benchmarks}}\r\n{{{content}}}\r\n{{/facts.benchmarks}}\r\n\r\n{{#facts.retention_metrics}}\r\n{{{content}}}\r\n{{/facts.retention_metrics}}\r\n\r\n{{#facts.operational_factors}}\r\n{{{content}}}\r\n{{/facts.operational_factors}}\r\n\r\n{{#facts.market_factors}}\r\n{{{content}}}\r\n{{/facts.market_factors}}\r\n\r\n{{#facts.methodology}}\r\n{{{content}}}\r\n{{/facts.methodology}}\r\n\r\n---\r\n\r\n### Company to Evaluate\r\n\r\n{{scenario.contextDescription}}\r\n\r\n---\r\n\r\nBased on your expert analysis, estimate the appropriate annual revenue growth rate for this company.\r\n\r\nReturn your answer as JSON only, no markdown:\r\n{\"reasoning\": \"<your detailed reasoning>\", \"estimate\": <number>}\r\n",
+  "rolloutsPerScenario": 3,
+  "status": "completed",
+  "startedAt": "2026-01-19T10:57:05.517Z",
+  "useNarrativeDescriptions": true,
+  "narrativeModel": "anthropic/claude-sonnet-4.5",
+  "narrativesGenerated": 2,
+  "narrativesTotal": 2,
+  "scenarios": [
+    {
+      "id": "8ef60667-94cd-455e-aad7-40dfb6b98541",
+      "anchor": "saas_scaleup_growth",
+      "appliedDeltas": [
+        "economic_tailwind",
+        "strong_nrr",
+        "product_innovation"
+      ],
+      "distractors": [],
+      "contextDescription": "## Company Overview\n\n**Vertex Cloud** is a B2B SaaS company headquartered in Austin, Texas, founded in 2018 by Michael Torres, a serial entrepreneur with two successful exits in the infrastructure software space (previously founded a DevOps monitoring tool acquired by Splunk in 2016). The company provides a cloud cost optimization and FinOps platform that helps enterprises manage and reduce multi-cloud spending across AWS, Azure, and Google Cloud environments.\n\n### Business Model & Metrics\n\nThe company operates a hybrid pricing model combining platform subscription fees with performance-based savings incentives. Current ARR stands at approximately $19M, with 89 enterprise customers including notable names like Spotify, Airbnb, and several Fortune 500 financial services institutions. The average contract value (ACV) is $185K for enterprise deals, with expansion ACVs reaching $340K as customers adopt additional modules. The company reports exceptional Net Revenue Retention (NRR) of 142%, driven by aggressive module expansion and consumption-based pricing that scales with customer cloud spend. The macro environment has been particularly favorable, as enterprises face mounting pressure to optimize cloud expenditures amid tightening IT budgets and economic uncertainty—creating significant tailwinds for the FinOps category.\n\n### Team & Funding\n\nThe leadership team includes CEO Michael Torres, CTO Jennifer Liu (ex-AWS principal engineer), and recently appointed CRO Amanda Foster (ex-Snowflake VP Enterprise Sales, hired Q4 2023). Total headcount is 118 employees distributed across engineering (48%), sales & marketing (35%), customer success (12%), and G&A (5%). The company has raised $47M to date across Seed ($3M), Series A ($14M led by Accel Partners), and Series B ($30M led by Sequoia Capital at a $215M post-money valuation in Q2 2024).\n\n### Market Position & Competition\n\nVertex Cloud operates in the rapidly expanding $4.2B FinOps and cloud cost management market, benefiting from the structural shift toward multi-cloud architectures and increasing C-suite scrutiny of cloud ROI. Primary competitors include CloudHealth (acquired by VMware), Cloudability, and Apptio Cloudability. The company differentiates through real-time anomaly detection, automated remediation workflows, and superior multi-cloud coverage.\n\n### Recent Developments\n\n- Preparing to launch comprehensive Kubernetes cost management module in Q1 2025, representing the company's first major platform expansion beyond VM-based infrastructure and expected to address a $800M adjacent market segment\n- Expanded into EMEA with Munich office opening, now representing 18% of new bookings\n- Secured strategic partnership with Snowflake for integrated data warehouse cost optimization\n- Implemented AI-powered recommendations engine, increasing customer-realized savings by 23% on average",
+      "groundTruth": {
+        "value": 84,
+        "tolerance": 8.4,
+        "calculation": "Base (SaaS Scale-up (Series B/C, $5M-$50M ARR)): 55%\nIndustry benefiting from macroeconomic trends: +6%\nNet Revenue Retention (NRR) above 120%: +15%\nMajor product launch or platform expansion imminent: +8%\nFinal: 84.00%"
+      },
+      "twinId": "322c5c1c-6e91-4db3-9897-a44199ca8961",
+      "twinDeltaChanged": "strong_nrr → strong_sales_team"
+    },
+    {
+      "id": "322c5c1c-6e91-4db3-9897-a44199ca8961",
+      "anchor": "saas_scaleup_growth",
+      "appliedDeltas": [
+        "economic_tailwind",
+        "product_innovation",
+        "strong_sales_team"
+      ],
+      "distractors": [],
+      "contextDescription": "## Company Overview\n\n**Vertex Cloud** is a B2B SaaS company headquartered in Austin, Texas, founded in 2018 by Jamie Rodriguez, a former McKinsey consultant who transitioned into operations after leading digital transformation engagements for Fortune 100 clients. The company provides a cloud-based infrastructure optimization platform that helps enterprises reduce cloud spend and improve resource allocation across multi-cloud environments.\n\n### Business Model & Metrics\n\nThe company operates a subscription-based model with consumption-aligned pricing tied to cloud spend managed. Current ARR stands at approximately $19M, with 89 enterprise customers including notable names like Adobe, Fidelity, and HP. The average contract value (ACV) is $185K for enterprise deals, with an 8-10 month sales cycle for new logos. The company reports Net Revenue Retention (NRR) of 132%, driven by strong expansion as customers consolidate additional cloud workloads onto the platform. Gross margins exceed 82%, typical for infrastructure SaaS at this stage.\n\n### Team & Funding\n\nThe leadership team includes CEO Jamie Rodriguez, CTO Priya Sharma (ex-AWS principal engineer), and newly appointed CRO Michael Chen (ex-Snowflake regional VP). Total headcount has grown rapidly to 168 employees, with the sales organization specifically doubling from 22 to 47 quota-carrying reps over the past nine months to capitalize on market opportunity. Engineering represents 48% of headcount, sales & marketing 38%, and G&A 14%. The company has raised $52M across Seed ($3M), Series A ($15M), and Series B ($34M), with the most recent round led by Accel Partners at a $215M post-money valuation in Q2 2024.\n\n### Market Position & Competition\n\nVertex Cloud competes in the $12B cloud cost management and FinOps market, experiencing accelerated adoption as enterprises face increasing pressure to optimize cloud infrastructure spending amid tightening IT budgets and economic uncertainty. Primary competitors include CloudHealth (VMware), Cloudability (Apptio), and venture-backed Vantage. The company differentiates through predictive cost modeling and automated remediation capabilities that go beyond traditional reporting tools.\n\n### Recent Developments\n\n- Preparing to launch Vertex Intelligence Platform in Q1 2025, a major product expansion incorporating generative AI-powered recommendations and autonomous cost optimization\n- Expanded into EMEA with first sales hires in London and Munich (currently 8% of ARR)\n- Successfully closed three seven-figure enterprise deals in financial services vertical\n- Achieved SOC 2 Type II certification, removing key procurement barrier for regulated industries\n- Maintained CAC payback period under 16 months despite aggressive sales hiring",
+      "groundTruth": {
+        "value": 79,
+        "tolerance": 7.9,
+        "calculation": "Base (SaaS Scale-up (Series B/C, $5M-$50M ARR)): 55%\nIndustry benefiting from macroeconomic trends: +6%\nMajor product launch or platform expansion imminent: +8%\nRecently scaled sales team (2x+ headcount growth): +10%\nFinal: 79.00%"
+      },
+      "twinId": "8ef60667-94cd-455e-aad7-40dfb6b98541",
+      "twinDeltaChanged": "strong_nrr → strong_sales_team"
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "8ef60667-94cd-455e-aad7-40dfb6b98541",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 85,
+          "reasoning": "Vertex Cloud is a high-performing Series B SaaS company in the 'Scale-up' stage ($19M ARR). The base growth rate for this stage is 40-70%. However, several 'World-class' indicators necessitate a significant upward adjustment. First, the NRR of 142% is exceptional, adding roughly 20-30 percentage points to the baseline as expansion revenue alone drives massive compounding. Second, the macro environment (tightening IT budgets) acts as a specific industry tailwind for FinOps tools, providing a +10-20% boost. Third, operational drivers are highly favorable: the hire of a Snowflake-vetted CRO suggests a scaling sales motion, and the Q1 2025 Kubernetes module launch opens a significant adjacent market ($800M). The Snowflake partnership and EMEA expansion (18% of bookings) further de-risk the growth trajectory. While the company is scaling, its metrics align more closely with early-stage hyper-growth profiles than standard $20M ARR enterprises. A growth rate of 85% reflects the combination of elite NRR, aggressive product expansion, and a counter-cyclical value proposition.",
+          "latencyMs": 3457,
+          "promptTokens": 1846,
+          "completionTokens": 260,
+          "totalTokens": 2106,
+          "cost": 0.0002886
+        },
+        {
+          "prediction": 88,
+          "reasoning": "Vertex Cloud is currently in the 'Series B/C Scale-up' stage ($19M ARR), which sets a baseline growth expectation of 40-70%. However, several high-alpha factors drive this estimate significantly higher. First, an NRR of 142% is world-class, adding a +20-30% premium to the baseline as expansion revenue alone provides massive momentum. Second, the hiring of a CRO from Snowflake suggests a transition to a high-velocity enterprise sales motion, likely improving quota attainment and scaling capacity. Third, the macro environment (IT budget tightening) acts as a tailwind for cost-optimization tools, contrary to most SaaS sectors. Fourth, the Q1 2025 Kubernetes module launch and EMEA expansion provide clear catalysts for new logo acquisition and upsell. While the Series B stage typically sees some deceleration, Vertex's combination of usage-based pricing tailwinds, strategic partnerships (Snowflake), and a high-performing leadership team positions it at the top decile of its peer group. The estimate accounts for the lag in new sales hiring but assumes the 142% NRR floor remains robust.",
+          "latencyMs": 3161,
+          "promptTokens": 1847,
+          "completionTokens": 258,
+          "totalTokens": 2105,
+          "cost": 0.0002879
+        },
+        {
+          "prediction": 88,
+          "reasoning": "Vertex Cloud is a high-performing Series B SaaS company in the 'Scale-up' stage ($19M ARR). The base growth rate for this stage is 40-70%. However, several 'World-class' indicators necessitate a significant upward adjustment. First, the NRR of 142% is exceptional, adding roughly 20-30 percentage points to the baseline as expansion revenue alone drives massive compounding. Second, the macro environment (tightening IT budgets) acts as a specific industry tailwind (+10-20%) for cost-optimization tools. Third, operational drivers are highly favorable: the hire of a Snowflake-caliber CRO suggests a sophisticated sales motion, and the Q1 2025 Kubernetes module launch addresses a large adjacent market (+5-12%). While the Series B stage typically sees some deceleration, the combination of consumption-based pricing, high ACV expansion, and successful EMEA entry (18% of bookings) suggests the company is currently outperforming its peer group. A growth rate of 88% reflects a 'best-in-class' trajectory that accounts for the 142% NRR floor plus strong new logo acquisition fueled by recent Series B capital.",
+          "latencyMs": 4277,
+          "promptTokens": 1846,
+          "completionTokens": 265,
+          "totalTokens": 2111,
+          "cost": 0.0002906
+        }
+      ],
+      "meanPrediction": 87,
+      "stdDeviation": 1.414,
+      "minPrediction": 85,
+      "maxPrediction": 88,
+      "error": 3,
+      "absoluteError": 3,
+      "withinTolerance": true,
+      "rolloutConsistency": 100,
+      "startedAt": "2026-01-19T10:57:21.051Z",
+      "completedAt": "2026-01-19T10:57:25.334Z",
+      "difficulty": {
+        "score": 46,
+        "level": "moderate",
+        "factors": {
+          "deltaComplexity": 36,
+          "distractorLoad": 0,
+          "interactionEffects": 10
+        }
+      },
+      "errorPattern": {
+        "pattern": "accurate",
+        "severity": "minor",
+        "details": "Prediction within acceptable tolerance"
+      }
+    },
+    {
+      "scenarioId": "322c5c1c-6e91-4db3-9897-a44199ca8961",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 88,
+          "reasoning": "Vertex Cloud is currently in the 'Series B/C Scale-up' stage ($19M ARR), which sets a baseline growth rate of 40-70%. However, several high-conviction alpha drivers suggest they will significantly outperform this range. First, their NRR of 132% is 'World-class,' adding a +20-30% premium to the baseline and indicating that even without new logos, the business compounds aggressively. Second, the sales capacity has doubled (22 to 47 reps) over the last 9 months; while there is a lag, the 16-month CAC payback and the hiring of a Snowflake veteran as CRO suggest a high-efficiency sales motion poised for a +10-15% uplift. Third, the macro environment (tightening IT budgets) acts as a tailwind for FinOps tools, and their expansion into EMEA (+8-15%) and the upcoming GenAI platform launch (+5-15%) provide additional catalysts. Offsetting these slightly is the long 8-10 month sales cycle and the competitive landscape. Given the combination of elite NRR, massive sales expansion, and a timely product-market fit in a 'boom' industry (cloud optimization), a growth rate near the top of the adjusted range is warranted.",
+          "latencyMs": 3192,
+          "promptTokens": 1816,
+          "completionTokens": 290,
+          "totalTokens": 2106,
+          "cost": 0.00029759999999999997
+        },
+        {
+          "prediction": 88,
+          "reasoning": "Vertex Cloud is currently in the 'Series B/C Scale-up' stage ($19M ARR), which sets a baseline growth rate of 40-70%. However, several high-conviction alpha drivers suggest they will significantly outperform this range. 1) NRR is 'World-class' at 132%, adding a +20-30% premium to the baseline as expansion revenue alone provides a massive headwind-resistant floor. 2) The sales capacity has doubled (22 to 47 reps) over the last 9 months; while there is a lag, the 16-month CAC payback and high ACV suggest a productive ramp that will begin hitting the top line in the next 2-3 quarters. 3) The market context is a 'tailwind' environment, as cloud cost optimization (FinOps) becomes a priority during economic uncertainty. 4) Strategic catalysts including the Q1 2025 AI platform launch, EMEA expansion (currently only 8% of ARR), and SOC 2 certification (unlocking regulated verticals) provide clear paths for accelerated new logo acquisition. Offsetting these slightly is the long 8-10 month sales cycle. Given the Rule of 40 profile and aggressive scaling, a growth rate near the top of the hyper-growth tier is warranted.",
+          "latencyMs": 3553,
+          "promptTokens": 1816,
+          "completionTokens": 296,
+          "totalTokens": 2112,
+          "cost": 0.00030000000000000003
+        },
+        {
+          "prediction": 88,
+          "reasoning": "Vertex Cloud is currently in the 'Series B/C ($5M-$50M ARR)' SaaS stage, which establishes a baseline growth rate of 40-70%. However, several high-conviction alpha drivers suggest an upside adjustment. First, the NRR of 132% is 'World-class,' adding approximately 20-30 percentage points to the baseline as expansion revenue alone provides a massive floor. Second, the sales capacity has doubled (22 to 47 reps) over the last 9 months; while there is a lag, the 16-month CAC payback and the hiring of a Snowflake veteran as CRO indicate a high-functioning sales motion likely to yield a +10-15% uplift. Third, the product roadmap (Vertex Intelligence Platform) and geographic expansion into EMEA provide significant market multipliers (+15-20%). The consumption-aligned pricing model in a 'FinOps' tailwind environment (where companies seek to cut costs during macro uncertainty) further insulates growth. Offsetting these is the long 8-10 month sales cycle and the inherent execution risk of doubling a sales team. Given the $19M ARR scale and the 132% NRR, a growth rate significantly above the standard Series B benchmark is warranted, placing the company in the 'hyper-growth' category for its stage.",
+          "latencyMs": 3891,
+          "promptTokens": 1815,
+          "completionTokens": 296,
+          "totalTokens": 2111,
+          "cost": 0.0002999
+        }
+      ],
+      "meanPrediction": 88,
+      "stdDeviation": 0,
+      "minPrediction": 88,
+      "maxPrediction": 88,
+      "error": 9,
+      "absoluteError": 9,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-19T10:57:21.051Z",
+      "completedAt": "2026-01-19T10:57:24.950Z",
+      "difficulty": {
+        "score": 46,
+        "level": "moderate",
+        "factors": {
+          "deltaComplexity": 36,
+          "distractorLoad": 0,
+          "interactionEffects": 10
+        }
+      },
+      "errorPattern": {
+        "pattern": "magnitude_error",
+        "severity": "minor",
+        "details": "Correct direction from anchor, but magnitude off by 9.00"
+      }
+    }
+  ],
+  "completedAt": "2026-01-19T10:57:25.341Z",
+  "aggregateMetrics": {
+    "hitRate": 50,
+    "meanError": 6,
+    "rmse": 6.708,
+    "avgLatencyMs": 3589,
+    "directionalAccuracy": 0,
+    "avgStdDeviation": 0.707,
+    "avgConsistency": 50,
+    "totalPromptTokens": 10986,
+    "totalCompletionTokens": 1665,
+    "totalTokens": 12651,
+    "totalCost": 0.0018,
+    "avgDifficulty": 46,
+    "difficultyDistribution": {
+      "trivial": 0,
+      "easy": 0,
+      "moderate": 2,
+      "hard": 0,
+      "expert": 0
+    },
+    "errorPatternSummary": {
+      "systematicBias": "overestimate",
+      "biasStrength": 100,
+      "anchorBiasRate": 0,
+      "deltaBlindnessRate": 0,
+      "distractorInfluenceRate": 0,
+      "errorByDifficulty": {
+        "moderate": 6
+      }
+    }
+  }
+}
