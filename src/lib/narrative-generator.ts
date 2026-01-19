@@ -1,17 +1,30 @@
 /**
- * LLM-Based Narrative Property Description Generator
+ * LLM-Based Narrative Description Generator
  * 
- * Uses an LLM to generate rich, natural language property prospectuses that embed
- * the key yield factors (anchor + deltas) within realistic property descriptions.
+ * Uses an LLM to generate rich, natural language descriptions that embed
+ * the key factors (anchor + deltas) within realistic domain-specific narratives.
+ * 
+ * Supports multiple domains:
+ * - Real Estate: Property prospectuses
+ * - Financial Forecasting: Company analysis reports
  */
 
 import type { DomainConfig } from "@/domains/schema";
 import { generateText, type OpenRouterConfig } from "@/lib/openrouter";
 import {
   locationProfiles,
-  getAnchorCategory,
+  getAnchorCategory as getRealEstateCategory,
   getStreetsForAnchor,
 } from "@/domains/real-estate-profiles";
+import {
+  companyProfiles,
+  companyNameComponents,
+  leadershipProfiles,
+  productDescriptors,
+  marketPositionDescriptors,
+  getAnchorCategory as getFinancialCategory,
+  getNameSuffixForAnchor,
+} from "@/domains/financial-forecasting-profiles";
 
 // Default model for narrative generation (fast and cheap)
 const DEFAULT_NARRATIVE_MODEL = "openai/gpt-4o-mini";
@@ -29,9 +42,28 @@ export interface GeneratedNarrative {
 }
 
 /**
- * Build the prompt for the LLM to generate a property narrative
+ * Build a narrative prompt based on the domain type
  */
 function buildNarrativePrompt(
+  domain: DomainConfig,
+  anchorKey: string,
+  appliedDeltaKeys: string[],
+  distractors: string[],
+  seed: number
+): string {
+  // Route to domain-specific prompt builder
+  if (domain.id === "financial-forecasting") {
+    return buildFinancialForecastingPrompt(domain, anchorKey, appliedDeltaKeys, distractors, seed);
+  }
+  
+  // Default to real estate prompt
+  return buildRealEstatePrompt(domain, anchorKey, appliedDeltaKeys, distractors, seed);
+}
+
+/**
+ * Build prompt for financial forecasting domain (company analysis)
+ */
+function buildFinancialForecastingPrompt(
   domain: DomainConfig,
   anchorKey: string,
   appliedDeltaKeys: string[],
@@ -43,7 +75,119 @@ function buildNarrativePrompt(
     throw new Error(`Unknown anchor: ${anchorKey}`);
   }
 
-  const category = getAnchorCategory(anchorKey);
+  const profile = companyProfiles[anchorKey] || companyProfiles.saas_scaleup_growth;
+  const category = getFinancialCategory(anchorKey);
+  const nameSuffixes = getNameSuffixForAnchor(anchorKey);
+  
+  // Get delta descriptions with impact direction
+  const deltaDetails = appliedDeltaKeys.map(key => {
+    const delta = domain.deltas[key];
+    return delta ? { 
+      key, 
+      description: delta.description, 
+      impact: delta.value > 0 ? "increases growth rate" : "decreases growth rate" 
+    } : null;
+  }).filter(Boolean);
+
+  // Build company context
+  const companyContext = `
+Company type: ${anchor.description}
+Industry focus: ${profile.industries.join(", ")}
+Business model: ${profile.businessModels.join(", ")}
+Customer types: ${profile.customerTypes.join(", ")}
+Company characteristics: ${profile.characteristics.join(", ")}
+Funding stage: ${profile.fundingStages.join(" or ")}
+Team size: ${profile.teamSizeRanges.join(" or ")}
+Name prefix options: ${companyNameComponents.prefixes.slice(0, 8).join(", ")}
+Name suffix options: ${nameSuffixes.join(", ")}
+HQ location options: ${companyNameComponents.locations.slice(0, 6).join(", ")}
+`.trim();
+
+  // Build the key factors section
+  let keyFactorsSection = "";
+  if (deltaDetails.length > 0) {
+    keyFactorsSection = `
+KEY FACTORS TO EMBED (these MUST be clearly mentioned in the analysis as they affect the company's growth rate):
+${deltaDetails.map((d, i) => `${i + 1}. ${d!.description} (${d!.impact})`).join("\n")}
+`.trim();
+  }
+
+  // Build distractors section
+  let distractorsSection = "";
+  if (distractors.length > 0) {
+    distractorsSection = `
+ADDITIONAL DETAILS TO INCLUDE (these are supplementary background details, include them naturally but they should NOT affect growth estimation):
+${distractors.map(d => `- ${d}`).join("\n")}
+`.trim();
+  }
+
+  const prompt = `You are a financial analyst writing a company analysis report for a growth company. Generate a detailed, realistic company description that reads like a professional investor research note.
+
+COMPANY CONTEXT:
+${companyContext}
+
+${keyFactorsSection}
+
+${distractorsSection}
+
+EXAMPLE FORMAT (follow this style closely):
+
+"""
+## Company Overview
+
+**Nova Systems** is a B2B SaaS company headquartered in San Francisco, providing enterprise collaboration software to mid-market and Fortune 500 companies. Founded in 2019 by former executives from Slack and Atlassian, the company has grown to approximately 180 employees across offices in San Francisco, New York, and London.
+
+## Business Model & Metrics
+
+The company operates a subscription-based model with annual and multi-year enterprise contracts. Current ARR is approximately $28M, up from $18M in the prior year. The customer base includes 850+ paying accounts, with an average contract value (ACV) of approximately $33,000. The sales motion combines inbound marketing with a 40-person enterprise sales team, targeting IT and operations leaders at companies with 500-5,000 employees.
+
+## Growth Dynamics
+
+Recent performance has been characterized by strong new logo acquisition, with quarterly net new ARR averaging $3.2M. The company recently completed a Series B raise of $45M to accelerate go-to-market expansion, with plans to double the sales team over the next 12 months. International expansion into EMEA is underway, with early traction in UK and German markets.
+
+The product team recently shipped a major platform upgrade enabling workflow automation, which has driven significant upsell opportunities within the existing customer base. Engineering velocity remains strong with bi-weekly release cycles. However, the sales team has experienced elevated turnover (35% annually), and several key account executives departed in Q3, which may create headwinds for quota attainment in the coming quarters.
+
+Net revenue retention stands at 108%, reflecting moderate expansion but also some downgrades among SMB customers facing budget pressures. The company's primary competitor recently raised $200M and is increasing pricing pressure in the mid-market segment.
+
+## Leadership & Culture
+
+The executive team combines deep product expertise with enterprise sales experience. The CEO (ex-Slack) focuses on product strategy while the CRO (ex-Salesforce) leads commercial operations. The company emphasizes a remote-first culture and was recently recognized as a top workplace in the Bay Area.
+"""
+
+INSTRUCTIONS:
+1. Generate a UNIQUE fictional company name using provided prefixes and suffixes
+2. Create realistic business metrics (ARR/revenue, customer count, ACV, team size)
+3. Include specific funding stage and approximate company age
+4. CRITICALLY IMPORTANT: All KEY FACTORS must be clearly embedded in the narrative - these directly affect growth rate
+5. Make the analysis read like an authentic investor research note or due diligence report
+6. Use professional financial and business terminology
+7. Generate between 400-600 words
+8. Do NOT include any explicit growth rate estimates or percentage forecasts
+9. Vary the company characteristics significantly between generations
+10. Include both positive and negative factors as specified in the KEY FACTORS
+
+Use random seed ${seed} for variation in your choices.
+
+Generate the company analysis now:`;
+
+  return prompt;
+}
+
+/**
+ * Build prompt for real estate domain (property prospectus)
+ */
+function buildRealEstatePrompt(
+  domain: DomainConfig,
+  anchorKey: string,
+  appliedDeltaKeys: string[],
+  distractors: string[],
+  seed: number
+): string {
+  const anchor = domain.anchors[anchorKey];
+  if (!anchor) {
+    throw new Error(`Unknown anchor: ${anchorKey}`);
+  }
+
   const profile = locationProfiles[anchorKey] || locationProfiles.office_other;
   const streets = getStreetsForAnchor(anchorKey);
   
@@ -208,19 +352,25 @@ export function generateFallbackDescription(
   }
 
   const parts: string[] = [];
+  
+  // Domain-specific headers
+  const isFinancial = domain.id === "financial-forecasting";
+  const headerTitle = isFinancial ? "## Company Overview" : "## Property Information";
+  const headerSubtitle = isFinancial ? "*Overview of company profile*" : "*Overview of property details*";
+  const typeLabel = isFinancial ? "Company Type" : "Property Type";
+  const factorsLabel = isFinancial ? "**Growth Factors:**" : "**Key Characteristics:**";
 
-  // Start with the property type/location
-  parts.push(`## Property Information\n`);
-  parts.push(`*Overview of property details*\n`);
-  parts.push(`Property Type: ${anchor.description}\n`);
+  parts.push(`${headerTitle}\n`);
+  parts.push(`${headerSubtitle}\n`);
+  parts.push(`${typeLabel}: ${anchor.description}\n`);
 
-  // Add each applied delta as a property characteristic
+  // Add each applied delta as a characteristic/factor
   if (appliedDeltaKeys.length > 0) {
     const characteristics = appliedDeltaKeys
       .map(key => domain.deltas[key]?.description)
       .filter(Boolean);
     
-    parts.push(`\n**Key Characteristics:**`);
+    parts.push(`\n${factorsLabel}`);
     for (const char of characteristics) {
       parts.push(`- ${char}`);
     }

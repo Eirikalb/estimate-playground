@@ -1,0 +1,150 @@
+{
+  "id": "financial-forecasting",
+  "name": "Company Revenue Growth Rate Estimation",
+  "description": "Estimating annual revenue growth rates for companies based on company size, industry, market conditions, and operational factors.",
+  "outputUnit": "%",
+  "anchors": {
+    "saas_startup_growth": {
+      "value": 85,
+      "description": "SaaS Startup (Seed/Series A, <$5M ARR)"
+    },
+    "saas_scaleup_growth": {
+      "value": 55,
+      "description": "SaaS Scale-up (Series B/C, $5M-$50M ARR)"
+    },
+    "saas_enterprise_growth": {
+      "value": 25,
+      "description": "SaaS Enterprise ($50M+ ARR, mature)"
+    },
+    "ecommerce_startup": {
+      "value": 120,
+      "description": "E-commerce Startup (early stage, high growth potential)"
+    },
+    "ecommerce_scaleup": {
+      "value": 45,
+      "description": "E-commerce Scale-up (established, $10M-$100M revenue)"
+    },
+    "ecommerce_enterprise": {
+      "value": 15,
+      "description": "E-commerce Enterprise ($100M+ revenue, market leader)"
+    },
+    "fintech_startup": {
+      "value": 100,
+      "description": "Fintech Startup (pre-Series B, regulatory approval in progress)"
+    },
+    "fintech_scaleup": {
+      "value": 50,
+      "description": "Fintech Scale-up (licensed, $20M-$100M revenue)"
+    },
+    "fintech_enterprise": {
+      "value": 20,
+      "description": "Fintech Enterprise ($100M+ revenue, established market position)"
+    },
+    "manufacturing_smb": {
+      "value": 8,
+      "description": "Manufacturing SMB (traditional, $5M-$50M revenue)"
+    },
+    "manufacturing_enterprise": {
+      "value": 4,
+      "description": "Manufacturing Enterprise ($100M+ revenue, industrial)"
+    },
+    "retail_smb": {
+      "value": 12,
+      "description": "Retail SMB (physical stores, regional presence)"
+    },
+    "retail_enterprise": {
+      "value": 5,
+      "description": "Retail Enterprise (national chain, mature market)"
+    },
+    "healthcare_startup": {
+      "value": 70,
+      "description": "Healthcare Tech Startup (digital health, early clinical traction)"
+    },
+    "healthcare_scaleup": {
+      "value": 35,
+      "description": "Healthcare Scale-up (FDA cleared/CE marked, growing sales)"
+    },
+    "consulting_smb": {
+      "value": 18,
+      "description": "Professional Services SMB (consulting, $2M-$20M revenue)"
+    },
+    "consulting_enterprise": {
+      "value": 8,
+      "description": "Professional Services Enterprise (Big 4 level, stable growth)"
+    }
+  },
+  "deltas": {
+    "strong_nrr": {
+      "type": "additive",
+      "value": 15,
+      "description": "Net Revenue Retention (NRR) above 120%"
+    },
+    "weak_nrr": {
+      "type": "additive",
+      "value": -20,
+      "description": "Net Revenue Retention (NRR) below 90% (high churn)"
+    },
+    "market_expansion": {
+      "type": "additive",
+      "value": 12,
+      "description": "Active geographic or market segment expansion"
+    },
+    "market_contraction": {
+      "type": "additive",
+      "value": -15,
+      "description": "Exiting markets or reducing geographic footprint"
+    },
+    "strong_sales_team": {
+      "type": "additive",
+      "value": 10,
+      "description": "Recently scaled sales team (2x+ headcount growth)"
+    },
+    "sales_challenges": {
+      "type": "additive",
+      "value": -12,
+      "description": "High sales team turnover or quota attainment issues"
+    },
+    "product_innovation": {
+      "type": "additive",
+      "value": 8,
+      "description": "Major product launch or platform expansion imminent"
+    },
+    "product_stagnation": {
+      "type": "additive",
+      "value": -10,
+      "description": "Product roadmap delays or competitive feature gap"
+    },
+    "economic_tailwind": {
+      "type": "additive",
+      "value": 6,
+      "description": "Industry benefiting from macroeconomic trends"
+    },
+    "economic_headwind": {
+      "type": "additive",
+      "value": -8,
+      "description": "Industry facing macroeconomic pressure"
+    },
+    "price_increase": {
+      "type": "additive",
+      "value": 5,
+      "description": "Successful price increase (5-15% ARPU growth)"
+    },
+    "price_pressure": {
+      "type": "additive",
+      "value": -6,
+      "description": "Pricing pressure from competition or market"
+    }
+  },
+  "distractors": [
+    "The company recently moved to a new headquarters with modern amenities.",
+    "The CEO was featured in a prominent industry publication last quarter.",
+    "The company has a popular employee wellness program.",
+    "The founding team met at a prestigious university.",
+    "The company sponsors a local sports team.",
+    "The office has an award-winning interior design.",
+    "The company was named one of the best places to work regionally.",
+    "The CFO previously worked at a Fortune 500 company.",
+    "The company has a strong social media presence.",
+    "The annual company retreat is held at a luxury resort."
+  ]
+}

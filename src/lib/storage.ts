@@ -93,11 +93,23 @@ export async function deleteBenchmarkRun(id: string): Promise<boolean> {
 // ============ Domain Configs ============
 
 /**
+ * Map domain IDs to their config file names
+ * Some domain IDs differ from their file names for historical reasons
+ */
+function getDomainFileName(id: string): string {
+  const mapping: Record<string, string> = {
+    "real-estate-yield": "real-estate",
+  };
+  return mapping[id] || id;
+}
+
+/**
  * Load a domain config by ID
  */
 export async function loadDomainConfig(id: string): Promise<DomainConfig | null> {
   try {
-    const filePath = path.join(DOMAINS_DIR, `${id.replace("real-estate-yield", "real-estate")}.json`);
+    const fileName = getDomainFileName(id);
+    const filePath = path.join(DOMAINS_DIR, `${fileName}.json`);
     const content = await fs.readFile(filePath, "utf-8");
     return JSON.parse(content) as DomainConfig;
   } catch {
@@ -110,7 +122,8 @@ export async function loadDomainConfig(id: string): Promise<DomainConfig | null>
  */
 export async function loadExpertFacts(domainId: string): Promise<ExpertFacts | null> {
   try {
-    const filePath = path.join(DOMAINS_DIR, `${domainId.replace("real-estate-yield", "real-estate")}.facts.json`);
+    const fileName = getDomainFileName(domainId);
+    const filePath = path.join(DOMAINS_DIR, `${fileName}.facts.json`);
     const content = await fs.readFile(filePath, "utf-8");
     return JSON.parse(content) as ExpertFacts;
   } catch {

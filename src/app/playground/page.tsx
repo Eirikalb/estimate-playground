@@ -18,6 +18,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import type { PromptTemplate, Scenario, ScenarioResult, RolloutResult, TestSet } from "@/domains/schema";
 import { AVAILABLE_MODELS } from "@/lib/openrouter";
+import { DomainSelector, AVAILABLE_DOMAINS } from "@/components/domain-selector";
 
 interface PlaygroundRollout {
   prediction: number;
@@ -39,6 +40,7 @@ export default function Playground() {
   const [testSets, setTestSets] = useState<Array<Omit<TestSet, 'scenarios'>>>([]);
 
   // State with defaults (will be hydrated from localStorage after mount)
+  const [selectedDomain, setSelectedDomain] = useState<string>("real-estate-yield");
   const [selectedTemplate, setSelectedTemplate] = useState<string>("");
   const [customTemplate, setCustomTemplate] = useState<string>("");
   const [selectedModel, setSelectedModel] = useState<string>("openai/gpt-4o-mini");
@@ -60,6 +62,7 @@ export default function Playground() {
   // Hydrate from localStorage on mount (client-side only)
   useEffect(() => {
     // Load saved settings from localStorage
+    const savedDomain = localStorage.getItem('playground_domain');
     const savedTemplate = localStorage.getItem('playground_template');
     const savedModel = localStorage.getItem('playground_model');
     const savedUseTestSet = localStorage.getItem('playground_useTestSet');
@@ -69,6 +72,7 @@ export default function Playground() {
     const savedNarratives = localStorage.getItem('playground_narratives');
     const savedNarrativeModel = localStorage.getItem('playground_narrativeModel');
 
+    if (savedDomain) setSelectedDomain(savedDomain);
     if (savedTemplate) setSelectedTemplate(savedTemplate);
     if (savedModel) setSelectedModel(savedModel);
     if (savedUseTestSet !== null) setUseTestSet(savedUseTestSet !== 'false');
@@ -111,6 +115,12 @@ export default function Playground() {
   }, [selectedTemplate, templates]);
 
   // Save settings to localStorage when they change (after hydration)
+  useEffect(() => {
+    if (isHydrated) {
+      localStorage.setItem('playground_domain', selectedDomain);
+    }
+  }, [selectedDomain, isHydrated]);
+
   useEffect(() => {
     if (isHydrated && selectedTemplate) {
       localStorage.setItem('playground_template', selectedTemplate);
@@ -166,7 +176,7 @@ export default function Playground() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          domainId: "real-estate-yield",
+          domainId: selectedDomain,
           promptTemplate: customTemplate,
           seed,
           useNarrativeDescription: useNarrativeDescriptions,
@@ -192,7 +202,7 @@ export default function Playground() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          domainId: "real-estate-yield",
+          domainId: selectedDomain,
           model: selectedModel,
           promptTemplate: customTemplate,
           scenario: result?.scenario,
@@ -230,7 +240,7 @@ export default function Playground() {
         requestBody.testSetName = selectedTestSet;
       } else {
         // Generate scenarios
-        requestBody.domainId = "real-estate-yield";
+        requestBody.domainId = selectedDomain;
         requestBody.scenarioCount = scenarioCount;
         requestBody.generateTwins = true;
         requestBody.seed = seed;
@@ -273,6 +283,8 @@ export default function Playground() {
     return "text-red-400";
   };
 
+  // Filter test sets by selected domain
+  const filteredTestSets = testSets.filter(ts => ts.domainId === selectedDomain);
   const selectedTestSetData = testSets.find(ts => ts.name === selectedTestSet);
   const effectiveScenarioCount = useTestSet && selectedTestSetData
     ? selectedTestSetData.scenarioCount
@@ -299,6 +311,11 @@ export default function Playground() {
               <CardDescription>Select model and prompt strategy</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
+              <div>
+                <label className="text-sm font-medium mb-2 block">Domain</label>
+                <DomainSelector value={selectedDomain} onValueChange={setSelectedDomain} />
+              </div>
+
               <div>
                 <label className="text-sm font-medium mb-2 block">Model</label>
                 <Select value={selectedModel} onValueChange={setSelectedModel}>
@@ -371,12 +388,12 @@ export default function Playground() {
                         <SelectValue placeholder="Choose a test set..." />
                       </SelectTrigger>
                       <SelectContent>
-                        {testSets.length === 0 ? (
+                        {filteredTestSets.length === 0 ? (
                           <div className="p-2 text-sm text-muted-foreground">
-                            No test sets available
+                            No test sets available for this domain
                           </div>
                         ) : (
-                          testSets.map((testSet) => (
+                          filteredTestSets.map((testSet) => (
                             <SelectItem key={testSet.name} value={testSet.name}>
                               <div className="flex flex-col">
                                 <span className="font-medium">{testSet.name}</span>
