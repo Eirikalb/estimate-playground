@@ -29,6 +29,9 @@ export interface LLMResult {
   rawResponse: string;
   latencyMs: number;
   tokensUsed?: number;
+  // Detailed token breakdown for cost calculation
+  promptTokens?: number;
+  completionTokens?: number;
   model: string;
 }
 
@@ -104,6 +107,8 @@ export async function callOpenRouter(
     rawResponse: rawContent,
     latencyMs,
     tokensUsed: data.usage?.total_tokens,
+    promptTokens: data.usage?.prompt_tokens,
+    completionTokens: data.usage?.completion_tokens,
     model: config.model,
   };
 }
