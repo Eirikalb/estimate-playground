@@ -1,26 +1,51 @@
-You are estimating annual revenue growth rates for companies.
+You are estimating annual revenue growth rates for companies using a formula-based approach.
 
-Here are three example analyses:
+{{#facts.growth_formula}}
+{{{content}}}
+{{/facts.growth_formula}}
+
+Here are example calculations using the formula:
 
 **Example 1:**
-Company: Series B SaaS company with $18M ARR, 125% NRR, recently doubled sales team, operating in enterprise collaboration space.
-Analysis: SaaS Scale-up baseline (55% growth). Strong NRR above 120% is a major positive (+15%). Recently scaled sales team suggests growth investment (+10%). Position at higher end.
-Result: {"reasoning": "Series B SaaS with excellent retention metrics and aggressive sales investment signals continued high growth trajectory", "growth_rate": 70}
+Company: Series B SaaS company with $18M ARR, 125% NRR, recently doubled sales team.
+Calculation:
+- Base (SaaS Scale-up): 55%
+- NRR 125% (120-129% range): +10%
+- Sales team doubled: +10%
+- Final: 55 + 10 + 10 = 75%
+Result: {"reasoning": "SaaS Scale-up base (55%) + NRR adjustment (+10%) + Sales team doubled (+10%) = 75%", "estimate": 75}
 
 **Example 2:**
-Company: Manufacturing SMB with $25M revenue, stable customer base, no major expansion plans, benefiting from nearshoring trends.
-Analysis: Manufacturing SMB baseline (8% growth). Stable customer base is neutral. Macroeconomic tailwind from nearshoring (+6%). Slight upward adjustment.
-Result: {"reasoning": "Traditional manufacturing benefiting from industry tailwinds but no aggressive growth initiatives", "growth_rate": 14}
+Company: E-commerce enterprise with $142M revenue, exiting Latin America, 45% sales quota attainment, macro pressure.
+Calculation:
+- Base (E-commerce Enterprise): 15%
+- Market contraction: -15%
+- Macro headwind: -8%
+- Sales challenges (<50% quota): -12%
+- Final: 15 - 15 - 8 - 12 = -20%
+Result: {"reasoning": "E-commerce Enterprise base (15%) + Market contraction (-15%) + Macro headwind (-8%) + Sales challenges (-12%) = -20%", "estimate": -20}
 
 **Example 3:**
-Company: Fintech startup with $3M revenue, recently obtained banking license, facing increased regulatory compliance costs and competitor pricing pressure.
-Analysis: Fintech Startup baseline (100% growth). License is milestone but compliance costs and pricing pressure are negatives. Moderate downward adjustment.
-Result: {"reasoning": "Early fintech with regulatory approval but facing cost headwinds and competitive pressure", "growth_rate": 85}
+Company: Manufacturing SMB with $32M revenue, 134% NRR, exiting automotive, launching assembly platform.
+Calculation:
+- Base (Manufacturing SMB): 8%
+- NRR >=130%: +15%
+- Market contraction: -15%
+- Product launch: +8%
+- Final: 8 + 15 - 15 + 8 = 16%
+Result: {"reasoning": "Manufacturing SMB base (8%) + World-class NRR (+15%) + Market contraction (-15%) + Product launch (+8%) = 16%", "estimate": 16}
 
 ---
 
-Now evaluate this company:
+Now evaluate this company using the same formula:
 
 {{scenario.contextDescription}}
 
-Return JSON only: {"reasoning": "<your analysis following the same pattern>", "growth_rate": <number>}
+Apply the formula step by step:
+1. Identify company type and base rate
+2. Apply NRR adjustment
+3. Apply market adjustments
+4. Apply operational adjustments
+5. Sum to get final growth rate
+
+Return JSON only: {"reasoning": "<your step-by-step calculation>", "estimate": <number>}

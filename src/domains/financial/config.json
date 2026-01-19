@@ -151,5 +151,119 @@
     "The CFO previously worked at a Fortune 500 company.",
     "The company has a strong social media presence.",
     "The annual company retreat is held at a luxury resort."
-  ]
+  ],
+  "formulaCoefficients": {
+    "nrr": {
+      "worldClass": { "threshold": 130, "adjustment": 15 },
+      "excellent": { "threshold": 120, "adjustment": 10 },
+      "good": { "threshold": 110, "adjustment": 5 },
+      "concerning": { "threshold": 100, "adjustment": -10 },
+      "critical": { "threshold": 90, "adjustment": -20 }
+    },
+    "marketExpansion": 12,
+    "marketContraction": -15,
+    "salesTeamDoubled": 10,
+    "salesChallenges": -12,
+    "quotaAttainmentThreshold": 50,
+    "macroHeadwind": -8,
+    "macroTailwind": 6,
+    "productLaunch": 8,
+    "pricePressure": -6
+  },
+  "anchorMetricRanges": {
+    "saas_startup_growth": {
+      "arr": { "min": 0.5, "max": 5 },
+      "nrr": { "min": 90, "max": 150 },
+      "customerCount": { "min": 10, "max": 100 },
+      "acv": { "min": 5, "max": 100 },
+      "salesCycleMonths": { "min": 1, "max": 6 }
+    },
+    "saas_scaleup_growth": {
+      "arr": { "min": 5, "max": 50 },
+      "nrr": { "min": 85, "max": 140 },
+      "customerCount": { "min": 50, "max": 500 },
+      "acv": { "min": 20, "max": 500 },
+      "salesCycleMonths": { "min": 3, "max": 12 },
+      "quotaAttainment": { "min": 30, "max": 95 }
+    },
+    "saas_enterprise_growth": {
+      "arr": { "min": 50, "max": 500 },
+      "nrr": { "min": 100, "max": 130 },
+      "customerCount": { "min": 200, "max": 2000 },
+      "acv": { "min": 100, "max": 2000 },
+      "salesCycleMonths": { "min": 6, "max": 18 },
+      "quotaAttainment": { "min": 50, "max": 90 }
+    },
+    "ecommerce_startup": {
+      "revenue": { "min": 1, "max": 10 },
+      "nrr": { "min": 80, "max": 120 },
+      "customerCount": { "min": 1000, "max": 50000 }
+    },
+    "ecommerce_scaleup": {
+      "revenue": { "min": 10, "max": 100 },
+      "nrr": { "min": 85, "max": 125 },
+      "customerCount": { "min": 50000, "max": 500000 }
+    },
+    "ecommerce_enterprise": {
+      "revenue": { "min": 100, "max": 1000 },
+      "nrr": { "min": 90, "max": 115 },
+      "customerCount": { "min": 500000, "max": 10000000 }
+    },
+    "fintech_startup": {
+      "arr": { "min": 0, "max": 5 },
+      "nrr": { "min": 95, "max": 140 },
+      "customerCount": { "min": 100, "max": 10000 }
+    },
+    "fintech_scaleup": {
+      "arr": { "min": 20, "max": 100 },
+      "nrr": { "min": 100, "max": 135 },
+      "customerCount": { "min": 10000, "max": 500000 },
+      "acv": { "min": 0.5, "max": 10 }
+    },
+    "fintech_enterprise": {
+      "arr": { "min": 100, "max": 500 },
+      "nrr": { "min": 105, "max": 130 },
+      "customerCount": { "min": 100000, "max": 5000000 }
+    },
+    "healthcare_startup": {
+      "arr": { "min": 0, "max": 5 },
+      "nrr": { "min": 100, "max": 150 },
+      "customerCount": { "min": 5, "max": 50 },
+      "acv": { "min": 50, "max": 500 }
+    },
+    "healthcare_scaleup": {
+      "arr": { "min": 5, "max": 100 },
+      "nrr": { "min": 110, "max": 145 },
+      "customerCount": { "min": 50, "max": 500 },
+      "acv": { "min": 100, "max": 1000 }
+    },
+    "manufacturing_smb": {
+      "revenue": { "min": 5, "max": 50 },
+      "nrr": { "min": 95, "max": 130 },
+      "customerCount": { "min": 20, "max": 200 }
+    },
+    "manufacturing_enterprise": {
+      "revenue": { "min": 100, "max": 1000 },
+      "nrr": { "min": 98, "max": 120 },
+      "customerCount": { "min": 50, "max": 500 }
+    },
+    "retail_smb": {
+      "revenue": { "min": 2, "max": 50 },
+      "customerCount": { "min": 5000, "max": 100000 }
+    },
+    "retail_enterprise": {
+      "revenue": { "min": 100, "max": 5000 },
+      "customerCount": { "min": 100000, "max": 10000000 }
+    },
+    "consulting_smb": {
+      "revenue": { "min": 2, "max": 20 },
+      "customerCount": { "min": 10, "max": 100 },
+      "acv": { "min": 50, "max": 500 }
+    },
+    "consulting_enterprise": {
+      "revenue": { "min": 50, "max": 500 },
+      "customerCount": { "min": 100, "max": 1000 },
+      "acv": { "min": 200, "max": 5000 }
+    }
+  }
 }

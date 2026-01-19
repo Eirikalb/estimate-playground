@@ -17,6 +17,68 @@ export const AnchorSchema = z.object({
 // Tolerance mode for ground truth evaluation
 export const ToleranceModeSchema = z.enum(["fixed", "percentage"]);
 
+// Metric Range Schema for anchor-specific metric generation
+export const MetricRangeSchema = z.object({
+  min: z.number(),
+  max: z.number(),
+});
+
+// Anchor Metric Ranges Schema
+// Defines realistic ranges for each metric per anchor type
+export const AnchorMetricRangesSchema = z.object({
+  arr: MetricRangeSchema.optional(),
+  revenue: MetricRangeSchema.optional(),
+  nrr: MetricRangeSchema.optional(),
+  grossRetention: MetricRangeSchema.optional(),
+  customerCount: MetricRangeSchema.optional(),
+  acv: MetricRangeSchema.optional(),
+  salesCycleMonths: MetricRangeSchema.optional(),
+  quotaAttainment: MetricRangeSchema.optional(),
+  industryGrowth: MetricRangeSchema.optional(),
+});
+
+export type MetricRange = z.infer<typeof MetricRangeSchema>;
+export type AnchorMetricRanges = z.infer<typeof AnchorMetricRangesSchema>;
+
+// Extended Anchor Schema with metric ranges
+export const ExtendedAnchorSchema = AnchorSchema.extend({
+  metricRanges: AnchorMetricRangesSchema.optional(),
+});
+
+export type ExtendedAnchor = z.infer<typeof ExtendedAnchorSchema>;
+
+// Formula Coefficient Schema
+// Defines the coefficients for the growth rate formula
+export const FormulaCoefficientsSchema = z.object({
+  // NRR thresholds and adjustments
+  nrr: z.object({
+    worldClass: z.object({ threshold: z.number(), adjustment: z.number() }), // >= 130%: +15%
+    excellent: z.object({ threshold: z.number(), adjustment: z.number() }), // >= 120%: +10%
+    good: z.object({ threshold: z.number(), adjustment: z.number() }), // >= 110%: +5%
+    concerning: z.object({ threshold: z.number(), adjustment: z.number() }), // < 100%: -10%
+    critical: z.object({ threshold: z.number(), adjustment: z.number() }), // < 90%: -20%
+  }).optional(),
+
+  // Market adjustments
+  marketExpansion: z.number().optional(), // +12%
+  marketContraction: z.number().optional(), // -15%
+
+  // Sales adjustments
+  salesTeamDoubled: z.number().optional(), // +10%
+  salesChallenges: z.number().optional(), // -12%
+  quotaAttainmentThreshold: z.number().optional(), // Below this triggers salesChallenges
+
+  // Macro adjustments
+  macroHeadwind: z.number().optional(), // -8%
+  macroTailwind: z.number().optional(), // +6%
+
+  // Product adjustments
+  productLaunch: z.number().optional(), // +8%
+  pricePressure: z.number().optional(), // -6%
+});
+
+export type FormulaCoefficients = z.infer<typeof FormulaCoefficientsSchema>;
+
 export const DomainConfigSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -36,6 +98,10 @@ export const DomainConfigSchema = z.object({
   anchors: z.record(z.string(), AnchorSchema),
   deltas: z.record(z.string(), DeltaSchema),
   distractors: z.array(z.string()),
+
+  // Formula-based calculation (optional, for new architecture)
+  formulaCoefficients: FormulaCoefficientsSchema.optional(),
+  anchorMetricRanges: z.record(z.string(), AnchorMetricRangesSchema).optional(),
 });
 
 export type DomainConfig = z.infer<typeof DomainConfigSchema>;
@@ -59,6 +125,43 @@ export const ExpertFactsSchema = z.object({
 export type ExpertFact = z.infer<typeof ExpertFactSchema>;
 export type ExpertFacts = z.infer<typeof ExpertFactsSchema>;
 
+// Scenario Metrics Schema
+// Explicit numeric fields for formula-based ground truth calculation
+// These metrics are generated from anchor-specific ranges and used in the growth formula
+
+export const ScenarioMetricsSchema = z.object({
+  // Revenue metrics
+  arr: z.number().optional(), // Annual Recurring Revenue in $M
+  revenue: z.number().optional(), // Total revenue in $M (for non-SaaS)
+  revenueGrowthYoY: z.number().optional(), // Historical YoY growth %
+
+  // Retention metrics
+  nrr: z.number().optional(), // Net Revenue Retention %
+  grossRetention: z.number().optional(), // Gross retention %
+
+  // Sales metrics
+  customerCount: z.number().optional(),
+  acv: z.number().optional(), // Average Contract Value in $K
+  salesCycleMonths: z.number().optional(),
+  quotaAttainment: z.number().optional(), // % of reps hitting quota
+  salesTeamGrowth: z.number().optional(), // YoY headcount change %
+
+  // Market metrics
+  marketExpansion: z.boolean().optional(), // Entering new markets
+  marketContraction: z.boolean().optional(), // Exiting markets
+  competitivePressure: z.enum(["low", "medium", "high"]).optional(),
+
+  // Macro metrics
+  industryGrowth: z.number().optional(), // Industry CAGR %
+  macroEnvironment: z.enum(["tailwind", "neutral", "headwind"]).optional(),
+
+  // Product metrics
+  productLaunchImminent: z.boolean().optional(), // Major launch coming
+  pricePressure: z.boolean().optional(), // Facing pricing pressure
+});
+
+export type ScenarioMetrics = z.infer<typeof ScenarioMetricsSchema>;
+
 // Scenario Schema
 // A generated test case with ground truth
 
@@ -74,6 +177,9 @@ export const ScenarioSchema = z.object({
   appliedDeltas: z.array(z.string()), // Which adjustments are active
   distractors: z.array(z.string()), // Irrelevant info injected
   contextDescription: z.string(), // Natural language for LLM
+
+  // Explicit metrics for formula-based calculation (optional for backward compatibility)
+  metrics: ScenarioMetricsSchema.optional(),
 
   groundTruth: GroundTruthSchema,
 
@@ -176,6 +282,9 @@ export const ScenarioResultSchema = z.object({
   // Difficulty and error pattern analysis
   difficulty: DifficultyScoreSchema.optional(),
   errorPattern: ErrorPatternSchema.optional(),
+
+  // The fully hydrated prompt sent to the LLM
+  renderedPrompt: z.string().optional(),
 });
 
 export type ScenarioResult = z.infer<typeof ScenarioResultSchema>;

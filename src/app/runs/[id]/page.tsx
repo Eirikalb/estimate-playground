@@ -864,6 +864,19 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
                 </div>
                 )}
 
+                {/* Collapsible Rendered Prompt */}
+                {selectedScenario.result.renderedPrompt && (
+                  <details className="group">
+                    <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-2">
+                      <span className="transition-transform group-open:rotate-90">▶</span>
+                      Prompt Sent to Model
+                    </summary>
+                    <pre className="mt-2 bg-muted/30 p-3 rounded text-xs whitespace-pre-wrap font-mono max-h-[300px] overflow-auto border">
+                      {selectedScenario.result.renderedPrompt}
+                    </pre>
+                  </details>
+                )}
+
                 <Separator />
 
                 {/* 4. Property Context and Ground Truth Calculation */}

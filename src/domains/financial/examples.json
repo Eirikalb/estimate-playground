@@ -2,43 +2,43 @@
   "domainId": "financial-forecasting",
   "examples": [
     {
-      "description": "Series B SaaS company with $18M ARR, 125% NRR, recently doubled sales team, operating in enterprise collaboration space with strong product-market fit.",
-      "analysis": "SaaS Scale-up baseline (55% growth). Strong NRR above 120% is a major positive. Recently scaled sales team suggests growth investment. Position at higher end of range with upward adjustments.",
+      "description": "Series B SaaS company with $18M ARR, 125% NRR, recently doubled sales team, operating in enterprise collaboration space.",
+      "analysis": "Step 1: Base rate for SaaS Scale-up ($5M-$50M ARR) = 55%\nStep 2: NRR 125% (120-129% range) = +10%\nStep 3: No market expansion/contraction mentioned = +0%\nStep 4: Sales team doubled = +10%\nCalculation: 55 + 10 + 0 + 10 = 75%",
       "result": {
-        "reasoning": "Series B SaaS with excellent retention metrics and aggressive sales investment signals continued high growth trajectory",
-        "estimate": 70
+        "reasoning": "SaaS Scale-up base (55%) + NRR 120-129% adjustment (+10%) + Sales team doubled (+10%) = 75%",
+        "estimate": 75
       }
     },
     {
-      "description": "Fintech startup with $3M revenue, recently obtained banking license, facing increased regulatory compliance costs and competitor pricing pressure.",
-      "analysis": "Fintech Startup baseline (100% growth). Regulatory license is a milestone but compliance costs increase. Pricing pressure is a negative. Moderate downward adjustment.",
+      "description": "Healthcare tech startup with $2M in pilot revenue, FDA 510(k) clearance pending, industry facing macroeconomic pressure from reduced hospital budgets.",
+      "analysis": "Step 1: Base rate for Healthcare Startup = 70%\nStep 2: No NRR data for pre-revenue = +0%\nStep 3: Macro headwind mentioned = -8%\nStep 4: No operational adjustments = +0%\nCalculation: 70 + 0 - 8 + 0 = 62%",
       "result": {
-        "reasoning": "Early fintech with regulatory approval but facing cost headwinds and competitive pressure on pricing",
-        "estimate": 85
+        "reasoning": "Healthcare Startup base (70%) + Macro headwind (-8%) = 62%",
+        "estimate": 62
       }
     },
     {
-      "description": "Manufacturing SMB with $25M revenue, stable customer base, no major expansion plans, benefiting from nearshoring trends in the industry.",
-      "analysis": "Manufacturing SMB baseline (8% growth). Stable customer base is neutral. Macroeconomic tailwind from nearshoring. Slight upward adjustment.",
+      "description": "E-commerce enterprise with $142M revenue, exiting Latin American markets, 45% sales quota attainment, industry facing consumer spending pressure.",
+      "analysis": "Step 1: Base rate for E-commerce Enterprise ($100M+) = 15%\nStep 2: No NRR data = +0%\nStep 3: Market contraction (exiting LATAM) = -15%, Macro headwind = -8%\nStep 4: Sales challenges (<50% quota) = -12%\nCalculation: 15 + 0 - 15 - 8 - 12 = -20%",
       "result": {
-        "reasoning": "Traditional manufacturing benefiting from industry tailwinds but no aggressive growth initiatives",
-        "estimate": 14
+        "reasoning": "E-commerce Enterprise base (15%) + Market contraction (-15%) + Macro headwind (-8%) + Sales challenges (-12%) = -20%",
+        "estimate": -20
       }
     },
     {
-      "description": "E-commerce startup with $8M GMV, 85% NRR indicating churn issues, but launching major new product line and expanding into European markets.",
-      "analysis": "E-commerce Startup baseline (120% growth). Weak NRR is significant negative. Product expansion and geographic expansion are positives. Net moderate downward adjustment due to churn concerns.",
+      "description": "Fintech scale-up with $47M revenue, 98.5% monthly retention, licensed in 47 states, no significant headwinds or tailwinds mentioned.",
+      "analysis": "Step 1: Base rate for Fintech Scale-up ($20M-$100M) = 50%\nStep 2: Monthly retention 98.5% suggests annual NRR around 100-110% = +0% (neutral)\nStep 3: No market expansion/contraction = +0%\nStep 4: No operational adjustments = +0%\nCalculation: 50 + 0 + 0 + 0 = 50%",
       "result": {
-        "reasoning": "High-growth e-commerce with concerning retention offset partially by expansion initiatives",
-        "estimate": 105
+        "reasoning": "Fintech Scale-up base (50%) with no adjustments = 50%",
+        "estimate": 50
       }
     },
     {
-      "description": "Professional services firm with $12M revenue, strong reputation in niche market, experiencing high consultant turnover and delayed project deliveries.",
-      "analysis": "Consulting SMB baseline (18% growth). High turnover is a significant operational challenge. Delays affect client satisfaction and repeat business. Downward adjustment.",
+      "description": "Manufacturing SMB with $32M revenue, 134% NRR from expanding scope with existing customers, exiting automotive to focus on aerospace, launching integrated assembly platform.",
+      "analysis": "Step 1: Base rate for Manufacturing SMB ($5M-$50M) = 8%\nStep 2: NRR 134% (>=130%) = +15%\nStep 3: Market contraction (exiting automotive) = -15%\nStep 4: Product launch imminent = +8%\nCalculation: 8 + 15 - 15 + 8 = 16%",
       "result": {
-        "reasoning": "Consulting firm with talent retention issues impacting delivery and growth capacity",
-        "estimate": 8
+        "reasoning": "Manufacturing SMB base (8%) + World-class NRR (+15%) + Market contraction (-15%) + Product launch (+8%) = 16%",
+        "estimate": 16
       }
     }
   ]

@@ -1,8 +1,20 @@
 You are analyzing a company to estimate its annual revenue growth rate.
 
-{{#facts.benchmarks}}
+{{#facts.growth_formula}}
 {{{content}}}
-{{/facts.benchmarks}}
+{{/facts.growth_formula}}
+
+{{#facts.worked_examples}}
+{{{content}}}
+{{/facts.worked_examples}}
+
+{{#facts.distractor_guidance}}
+{{{content}}}
+{{/facts.distractor_guidance}}
+
+{{#facts.pre_revenue_guidance}}
+{{{content}}}
+{{/facts.pre_revenue_guidance}}
 
 ---
 
@@ -14,29 +26,30 @@ You are analyzing a company to estimate its annual revenue growth rate.
 
 ### Instructions
 
-Work through this analysis step by step:
+Work through this analysis step by step using the formula above:
 
-**Step 1: Identify the Benchmark**
-- What stage and industry is this company?
-- What is the benchmark growth rate range for this type of company?
+**Step 1: Identify Base Rate**
+- What type of company is this? (SaaS Startup/Scale-up/Enterprise, Healthcare, Fintech, etc.)
+- What is the base growth rate for this company type?
 
-**Step 2: Position Within Range**
-- Is this a high or low performer within its cohort?
-- Where should it sit within the benchmark range?
+**Step 2: Calculate NRR Adjustment**
+- What is the company's NRR (Net Revenue Retention)?
+- Apply the appropriate adjustment: +15% (>=130%), +10% (120-129%), +5% (110-119%), +0% (100-109%), -10% (90-99%), -20% (<90%)
 
-**Step 3: Apply Adjustments**
-Consider each factor and whether it pushes growth UP or DOWN:
-- Net Revenue Retention (NRR) / customer retention
-- Sales capacity and efficiency
-- Market expansion or contraction
-- Product innovation velocity
-- Macro-economic conditions
-- Pricing dynamics
+**Step 3: Calculate Market Adjustments**
+- Is the company expanding into new markets? (+12%)
+- Is the company exiting/consolidating markets? (-15%)
+- Is there macro headwind? (-8%)
+- Is there macro tailwind? (+6%)
 
-**Step 4: Calculate Final Growth Rate**
-- Start with your positioned benchmark
-- Add/subtract adjustments
-- State your final growth rate estimate
+**Step 4: Calculate Operational Adjustments**
+- Has the sales team doubled? (+10%)
+- Are there sales challenges (high turnover, low quota attainment)? (-12%)
+- Is a major product launch imminent? (+8%)
+- Is there price pressure from competition? (-6%)
+
+**Step 5: Sum All Components**
+Final Growth Rate = Base + NRR Adjustment + Market Adjustments + Operational Adjustments
 
 Return your answer as JSON only, no markdown:
-{"reasoning": "<your step-by-step reasoning>", "estimate": <number>}
+{"reasoning": "<your step-by-step calculation>", "estimate": <number>}

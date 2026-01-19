@@ -5,7 +5,7 @@
  * in the estimation playground.
  */
 
-import type { DomainConfig, ExpertFacts, PromptTemplate } from "./schema";
+import type { DomainConfig, ExpertFacts, PromptTemplate, ScenarioMetrics } from "./schema";
 
 /**
  * Few-shot example for domain-specific prompts
@@ -34,6 +34,8 @@ export interface NarrativePromptContext {
   distractors: string[];
   /** Random seed for reproducible generation */
   seed: number;
+  /** Explicit metrics for constrained narrative generation (optional) */
+  metrics?: ScenarioMetrics;
 }
 
 /**

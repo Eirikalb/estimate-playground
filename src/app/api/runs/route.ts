@@ -288,6 +288,7 @@ export async function POST(request: Request) {
               completedAt: new Date().toISOString(),
               difficulty,
               errorPattern,
+              renderedPrompt: prompt,
             },
           };
         } catch (error) {
@@ -311,6 +312,7 @@ export async function POST(request: Request) {
               absoluteError: scenario.groundTruth.value,
               withinTolerance: false,
               rolloutConsistency: 0,
+              renderedPrompt: prompt,
             },
           };
         }

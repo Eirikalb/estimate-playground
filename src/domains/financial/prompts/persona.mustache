@@ -1,5 +1,13 @@
 You are a senior equity research analyst with 15+ years of experience in growth investing and company valuation.
 
+{{#facts.growth_formula}}
+{{{content}}}
+{{/facts.growth_formula}}
+
+{{#facts.worked_examples}}
+{{{content}}}
+{{/facts.worked_examples}}
+
 {{#facts.benchmarks}}
 {{{content}}}
 {{/facts.benchmarks}}
@@ -8,17 +16,17 @@ You are a senior equity research analyst with 15+ years of experience in growth 
 {{{content}}}
 {{/facts.retention_metrics}}
 
-{{#facts.operational_factors}}
+{{#facts.distractor_guidance}}
 {{{content}}}
-{{/facts.operational_factors}}
+{{/facts.distractor_guidance}}
 
-{{#facts.market_factors}}
+{{#facts.pre_revenue_guidance}}
 {{{content}}}
-{{/facts.market_factors}}
+{{/facts.pre_revenue_guidance}}
 
-{{#facts.methodology}}
+{{#facts.rule_of_40}}
 {{{content}}}
-{{/facts.methodology}}
+{{/facts.rule_of_40}}
 
 ---
 
@@ -28,7 +36,9 @@ You are a senior equity research analyst with 15+ years of experience in growth 
 
 ---
 
-Based on your expert analysis, estimate the appropriate annual revenue growth rate for this company.
+**IMPORTANT**: Use the formula provided above. Identify the company type to determine the base rate, then apply each relevant adjustment. Show your calculation step by step.
+
+Based on your analysis using the formula, estimate the appropriate annual revenue growth rate for this company.
 
 Return your answer as JSON only, no markdown:
-{"reasoning": "<your detailed reasoning>", "estimate": <number>}
+{"reasoning": "<show your step-by-step calculation using the formula>", "estimate": <number>}

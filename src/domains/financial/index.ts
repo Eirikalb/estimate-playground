@@ -10,7 +10,24 @@ import {
   buildNarrativePrompt as buildPrompt,
   generateFallbackDescription as fallbackDescription,
   generateBriefSummary as briefSummary,
+  buildConstrainedNarrativePrompt,
+  validateNarrativeMetrics,
+  generateConstrainedFallbackDescription,
 } from "./narrative";
+
+// Export formula functions for external use
+export {
+  calculateGrowthRate,
+  generateMetricsForAnchor,
+  applyDeltasToMetrics,
+  formatMetricsForPrompt,
+  DEFAULT_FORMULA_COEFFICIENTS,
+  ANCHOR_BASE_RATES,
+  ANCHOR_METRIC_RANGES,
+} from "./formula";
+
+// Export narrative validation
+export { validateNarrativeMetrics, buildConstrainedNarrativePrompt, generateConstrainedFallbackDescription };
 
 // Import config and facts
 import configData from "./config.json";
