@@ -3,6 +3,11 @@
   "name": "Company Revenue Growth Rate Estimation",
   "description": "Estimating annual revenue growth rates for companies based on company size, industry, market conditions, and operational factors.",
   "outputUnit": "%",
+  "outputLabel": "Growth Rate",
+  "entityLabel": "Company",
+  "scenarioLabel": "Company Profile",
+  "toleranceMode": "percentage",
+  "toleranceValue": 10,
   "anchors": {
     "saas_startup_growth": {
       "value": 85,

@@ -1,0 +1,42 @@
+You are analyzing a company to estimate its annual revenue growth rate.
+
+{{#facts.benchmarks}}
+{{{content}}}
+{{/facts.benchmarks}}
+
+---
+
+### Company Profile
+
+{{scenario.contextDescription}}
+
+---
+
+### Instructions
+
+Work through this analysis step by step:
+
+**Step 1: Identify the Benchmark**
+- What stage and industry is this company?
+- What is the benchmark growth rate range for this type of company?
+
+**Step 2: Position Within Range**
+- Is this a high or low performer within its cohort?
+- Where should it sit within the benchmark range?
+
+**Step 3: Apply Adjustments**
+Consider each factor and whether it pushes growth UP or DOWN:
+- Net Revenue Retention (NRR) / customer retention
+- Sales capacity and efficiency
+- Market expansion or contraction
+- Product innovation velocity
+- Macro-economic conditions
+- Pricing dynamics
+
+**Step 4: Calculate Final Growth Rate**
+- Start with your positioned benchmark
+- Add/subtract adjustments
+- State your final growth rate estimate
+
+Return your answer as JSON only, no markdown:
+{"reasoning": "<your step-by-step reasoning>", "growth_rate": <number>}

@@ -8,7 +8,7 @@ import {
   loadTestSet,
 } from "@/lib/storage";
 import { generateScenarios } from "@/lib/generator";
-import { generateNarrativeDescription, generateFallbackDescription } from "@/lib/narrative-generator";
+import { generateNarrativeDescription, generateFallbackDescriptionSync } from "@/lib/narrative-generator";
 import { renderPrompt } from "@/prompts/engine";
 import { callOpenRouterMultiple, type OpenRouterConfig } from "@/lib/openrouter";
 import {
@@ -195,7 +195,7 @@ export async function POST(request: Request) {
             console.error(`Failed to generate narrative for scenario ${i}:`, error);
             return {
               index: i,
-              description: generateFallbackDescription(
+              description: generateFallbackDescriptionSync(
                 domainConfig,
                 scenario.anchor,
                 scenario.appliedDeltas,

@@ -4,9 +4,10 @@ import { listPromptTemplates, loadPromptTemplate, savePromptTemplate } from "@/l
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const name = searchParams.get("name");
+  const domainId = searchParams.get("domain") || undefined;
 
   if (name) {
-    const template = await loadPromptTemplate(name);
+    const template = await loadPromptTemplate(name, domainId);
 
     if (!template) {
       return NextResponse.json({ error: "Template not found" }, { status: 404 });
@@ -15,7 +16,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ name, template });
   }
 
-  const templates = await listPromptTemplates();
+  const templates = await listPromptTemplates(domainId);
   return NextResponse.json(templates);
 }
 

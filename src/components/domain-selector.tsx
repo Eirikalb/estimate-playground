@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -8,51 +9,98 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export interface DomainInfo {
+interface Domain {
   id: string;
   name: string;
 }
 
-// Available domains - this should match what's in src/domains/
-export const AVAILABLE_DOMAINS: DomainInfo[] = [
-  { id: "real-estate-yield", name: "Real Estate Yield" },
-  { id: "financial-forecasting", name: "Financial Forecasting" },
-];
-
 interface DomainSelectorProps {
   value: string;
-  onValueChange: (value: string) => void;
+  onValueChange: (domainId: string) => void;
+  disabled?: boolean;
   className?: string;
 }
 
-export function DomainSelector({ value, onValueChange, className }: DomainSelectorProps) {
+/**
+ * Static list of available domains for synchronous access
+ * This is updated when domains are fetched from the API
+ */
+export const AVAILABLE_DOMAINS: Domain[] = [
+  { id: "real-estate-yield", name: "Norwegian Commercial Real Estate Yield" },
+  { id: "financial-forecasting", name: "Company Revenue Growth Rate Estimation" },
+];
+
+/**
+ * Get a short display name for a domain ID
+ */
+export function getShortDomainName(domainId: string): string {
+  const shortNames: Record<string, string> = {
+    "real-estate-yield": "Real Estate",
+    "financial-forecasting": "Financial",
+  };
+  return shortNames[domainId] || domainId;
+}
+
+/**
+ * Get the full domain name for a domain ID
+ */
+export function getDomainName(domainId: string): string {
+  const domain = AVAILABLE_DOMAINS.find((d) => d.id === domainId);
+  return domain?.name || domainId;
+}
+
+export function DomainSelector({
+  value,
+  onValueChange,
+  disabled = false,
+  className,
+}: DomainSelectorProps) {
+  const [domains, setDomains] = useState<Domain[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/domains")
+      .then((res) => res.json())
+      .then((data) => {
+        setDomains(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to load domains:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <Select disabled>
+        <SelectTrigger className={className}>
+          <SelectValue placeholder="Loading domains..." />
+        </SelectTrigger>
+      </Select>
+    );
+  }
+
   return (
-    <Select value={value} onValueChange={onValueChange}>
+    <Select value={value} onValueChange={onValueChange} disabled={disabled}>
       <SelectTrigger className={className}>
         <SelectValue placeholder="Select domain..." />
       </SelectTrigger>
       <SelectContent>
-        {AVAILABLE_DOMAINS.map((domain) => (
-          <SelectItem key={domain.id} value={domain.id}>
-            <span className="font-medium">{domain.name}</span>
-          </SelectItem>
-        ))}
+        {domains.length === 0 ? (
+          <div className="p-2 text-sm text-muted-foreground">
+            No domains available
+          </div>
+        ) : (
+          domains.map((domain) => (
+            <SelectItem key={domain.id} value={domain.id}>
+              {domain.name}
+            </SelectItem>
+          ))
+        )}
       </SelectContent>
     </Select>
   );
 }
 
-// Helper to get domain name by ID
-export function getDomainName(id: string): string {
-  const domain = AVAILABLE_DOMAINS.find(d => d.id === id);
-  return domain?.name || id;
-}
-
-// Helper to get short domain name for display
-export function getShortDomainName(id: string): string {
-  const mapping: Record<string, string> = {
-    "real-estate-yield": "Real Estate",
-    "financial-forecasting": "Finance",
-  };
-  return mapping[id] || id;
-}
+export default DomainSelector;

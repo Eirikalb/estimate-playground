@@ -1,22 +1,19 @@
 import { NextResponse } from "next/server";
-import { listDomains, loadDomainConfig, loadExpertFacts } from "@/lib/storage";
+import { listDomains } from "@/lib/storage";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const id = searchParams.get("id");
-
-  if (id) {
-    const config = await loadDomainConfig(id);
-    const facts = await loadExpertFacts(id);
-
-    if (!config) {
-      return NextResponse.json({ error: "Domain not found" }, { status: 404 });
-    }
-
-    return NextResponse.json({ config, facts });
+/**
+ * GET /api/domains
+ * List all available domains with metadata
+ */
+export async function GET() {
+  try {
+    const domains = await listDomains();
+    return NextResponse.json(domains);
+  } catch (error) {
+    console.error("Error listing domains:", error);
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : "Unknown error" },
+      { status: 500 }
+    );
   }
-
-  const domains = await listDomains();
-  return NextResponse.json(domains);
 }
-

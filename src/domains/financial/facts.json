@@ -1,0 +1,29 @@
+{
+  "domainId": "financial-forecasting",
+  "facts": [
+    {
+      "name": "benchmarks",
+      "content": "### Revenue Growth Benchmarks by Company Stage\n\n**SaaS Companies:**\n- Seed/Series A (<$5M ARR): 70-100%+ annual growth expected\n- Series B/C ($5M-$50M ARR): 40-70% annual growth typical\n- Enterprise ($50M+ ARR): 20-35% annual growth for healthy companies\n\n**E-commerce:**\n- Early stage (startup): 80-150%+ growth common\n- Scale-up ($10M-$100M): 30-60% growth\n- Enterprise ($100M+): 10-25% growth\n\n**Fintech:**\n- Pre-Series B: 80-120%+ growth with regulatory milestones\n- Licensed scale-up: 40-60% growth\n- Established ($100M+): 15-30% growth\n\n**Traditional Industries:**\n- Manufacturing SMB: 3-12% growth\n- Manufacturing Enterprise: 2-8% growth\n- Retail SMB: 5-15% growth\n- Retail Enterprise: 3-10% growth\n\n**Healthcare Tech:**\n- Early clinical traction: 50-90% growth\n- FDA/CE cleared: 25-50% growth\n\n**Professional Services:**\n- SMB consultancies: 12-25% growth\n- Large firms: 5-12% growth"
+    },
+    {
+      "name": "retention_metrics",
+      "content": "### Net Revenue Retention (NRR) Impact\n\nNRR is the strongest predictor of sustainable growth for subscription businesses:\n\n**World-class (>130% NRR):**\n- Expansion revenue significantly exceeds churn\n- Companies can grow 20-30% even with minimal new customer acquisition\n- Example: Snowflake, Twilio historically\n\n**Excellent (110-130% NRR):**\n- Healthy expansion, low churn\n- Growth compounding effect active\n- +10-15 percentage points to baseline growth rate\n\n**Good (100-110% NRR):**\n- Stable but growth requires constant new customer acquisition\n- Baseline growth expectations apply\n\n**Concerning (90-100% NRR):**\n- Revenue leakage occurring\n- Must run hard to stay in place\n- -10-15 percentage points from baseline\n\n**Critical (<90% NRR):**\n- Fundamental product-market fit or pricing issue\n- -20+ percentage points from baseline\n- Requires immediate intervention"
+    },
+    {
+      "name": "market_factors",
+      "content": "### Market Condition Multipliers\n\n**Expansion Signals:**\n- Geographic expansion: +8-15% to growth rate\n- New product lines: +5-12% to growth rate\n- Channel diversification: +3-8% to growth rate\n- M&A integration: +5-20% depending on deal size\n\n**Contraction Signals:**\n- Market exit: -10-20% to growth rate\n- Competitor disruption: -5-15% to growth rate\n- Regulatory headwinds: -5-10% to growth rate\n- Key customer concentration loss: -10-25% to growth rate\n\n**Macroeconomic Context:**\n- Bull market / low rates: +3-8% tailwind\n- Recession / high rates: -5-15% headwind\n- Industry-specific boom: +10-20% tailwind\n- Industry-specific bust: -15-30% headwind"
+    },
+    {
+      "name": "operational_factors",
+      "content": "### Operational Growth Drivers\n\n**Sales Capacity:**\n- Scaling sales team 2x+: Expect 6-18 month lag before revenue impact, +8-15% eventual uplift\n- High quota attainment (>80%): Sales motion working, +5-10% sustainable\n- Low quota attainment (<50%): Product-market or go-to-market issues, -8-15%\n\n**Product Innovation:**\n- Major platform release: +5-15% growth if successful\n- Feature parity gaps: -5-10% as competitors win deals\n- Platform lock-in achieved: +5-10% from reduced churn\n\n**Pricing Power:**\n- Successful price increase (5-15% ARPU): +3-8% to growth\n- Pricing pressure from competition: -4-8% to growth\n- Usage-based pricing tailwind: +5-12% in expansion environments"
+    },
+    {
+      "name": "methodology",
+      "content": "### Growth Estimation Methodology\n\n**Step 1: Identify Base Growth Rate**\nSelect benchmark based on:\n- Company stage (startup/scaleup/enterprise)\n- Industry vertical (SaaS/fintech/retail/etc.)\n- Current revenue scale\n\n**Step 2: Apply Operational Adjustments**\nMost important for SaaS/subscription:\n- NRR impact (most critical)\n- Sales efficiency metrics\n- Product roadmap execution\nTypically ±15-25% from baseline\n\n**Step 3: Apply Market Adjustments**\n- Geographic/segment expansion or contraction\n- Competitive dynamics\n- Macro-economic factors\nTypically ±10-20% from baseline\n\n**Step 4: Sanity Check**\n- Is the growth rate sustainable given burn rate?\n- Does it align with Rule of 40 expectations?\n- Are there ceiling effects (market size limits)?\n- Is management guidance consistent?"
+    },
+    {
+      "name": "rule_of_40",
+      "content": "### Rule of 40 Context\n\nThe Rule of 40 states that a healthy SaaS company's growth rate + profit margin should exceed 40%.\n\n**Examples:**\n- Growth Rate 80%, Margin -40%: Score = 40 (acceptable for early stage)\n- Growth Rate 30%, Margin 15%: Score = 45 (healthy scale-up)\n- Growth Rate 10%, Margin 25%: Score = 35 (slightly below, mature company)\n\n**Implications for Growth Estimates:**\n- Companies below Rule of 40 may face valuation pressure\n- Pressure often leads to growth investment cuts\n- Or margin improvement at expense of growth\n\n**Typical Trade-offs by Stage:**\n- Seed/A: 80%+ growth, deep negative margins acceptable\n- B/C: 50%+ growth, path to breakeven expected\n- D+/Growth: 30%+ growth, near-breakeven or profitable\n- Public: 20%+ growth, positive margins expected"
+    }
+  ]
+}

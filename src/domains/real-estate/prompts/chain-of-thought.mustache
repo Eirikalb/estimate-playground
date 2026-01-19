@@ -1,0 +1,41 @@
+You are analyzing a commercial real estate property to determine its market yield.
+
+{{#facts.benchmarks}}
+{{{content}}}
+{{/facts.benchmarks}}
+
+---
+
+### Property Details
+
+{{scenario.contextDescription}}
+
+---
+
+### Instructions
+
+Work through this analysis step by step:
+
+**Step 1: Identify the Benchmark**
+- What location/segment does this property belong to?
+- What is the benchmark yield range for that segment?
+
+**Step 2: Position Within Range**
+- Is this a prime or secondary asset?
+- Where should it sit within the benchmark range?
+
+**Step 3: Apply Adjustments**
+Consider each factor and whether it pushes yield UP (more risk) or DOWN (less risk):
+- Tenant quality and creditworthiness
+- Lease length and WAULT
+- Building age and condition
+- Any special factors
+
+**Step 4: Calculate Final Yield**
+- Start with your positioned benchmark
+- Add/subtract adjustments
+- State your final yield estimate
+
+Return your answer as JSON only, no markdown:
+{"reasoning": "<your step-by-step reasoning>", "yield": <number>}
+

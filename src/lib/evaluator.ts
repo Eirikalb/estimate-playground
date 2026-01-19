@@ -8,7 +8,7 @@ import type {
   ErrorPattern,
 } from "@/domains/schema";
 import type { LLMResult } from "./openrouter";
-import { getTwinPairs } from "./generator";
+import { getTwinPairs } from "./scenario-utils";
 import { calculateCost } from "./pricing";
 
 /**

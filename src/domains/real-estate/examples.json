@@ -1,0 +1,45 @@
+{
+  "domainId": "real-estate-yield",
+  "examples": [
+    {
+      "description": "Office building in Oslo CBD, built 2018, government tenant (Ministry of Finance), 12 years remaining on lease, BREEAM Excellent.",
+      "analysis": "Prime CBD location (4.50-5.25% range). Government tenant and long lease = very low risk. Modern building with certification. Position at low end of range, slight compression for quality.",
+      "result": {
+        "reasoning": "Prime CBD, government tenant, long lease, modern certified building - bond-like characteristics justify lowest yields",
+        "estimate": 4.50
+      }
+    },
+    {
+      "description": "Office building in Oslo Lysaker, built 2005, single tenant (mid-sized IT company), 4 years remaining on lease.",
+      "analysis": "Lysaker range is 5.50-7.00%. Single corporate tenant with medium lease. Building is 20 years old. Position mid-range, slight expansion for tenant and building factors.",
+      "result": {
+        "reasoning": "Lysaker mid-range positioning, single tenant adds concentration risk, older building needs consideration, medium lease term",
+        "estimate": 6.50
+      }
+    },
+    {
+      "description": "Logistics warehouse outside Bergen, built 1995, three tenants (logistics companies), average 6 years remaining.",
+      "analysis": "Logistics Normal range 6.50-9.50%. Diversified tenants good. Old building is concern. Medium lease. Secondary location.",
+      "result": {
+        "reasoning": "Secondary logistics location, older building requiring capex, partially offset by diversified tenant base and reasonable lease terms",
+        "estimate": 7.75
+      }
+    },
+    {
+      "description": "Prime retail unit on Karl Johans gate, Oslo, built 1920 but fully refurbished 2022, H&M as anchor tenant, 8 years remaining on lease.",
+      "analysis": "Retail Prime range 5.25-6.00%. Prime location on main shopping street. Strong anchor tenant. Recently refurbished despite old building. Position at lower end of range.",
+      "result": {
+        "reasoning": "Prime high-street retail location with strong international tenant, recent refurbishment mitigates building age concerns",
+        "estimate": 5.40
+      }
+    },
+    {
+      "description": "Office building in Trondheim city centre, built 2012, multi-tenant with mix of professional services firms, average 5 years WAULT, energy label B.",
+      "analysis": "Trondheim range 5.50-8.00%. Diversified tenant base is positive. Reasonable building age and energy standard. Medium lease terms. Position mid-range.",
+      "result": {
+        "reasoning": "Regional city office with diversified tenants, modern-ish building with decent energy performance, lease terms at market norm",
+        "estimate": 6.75
+      }
+    }
+  ]
+}

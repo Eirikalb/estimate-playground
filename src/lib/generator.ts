@@ -1,8 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
 import type { DomainConfig, Scenario } from "@/domains/schema";
+import { calculateTolerance } from "@/domains/types";
 import {
   generateNarrativeDescription,
-  generateFallbackDescription,
+  generateFallbackDescriptionSync,
   type NarrativeGeneratorConfig,
 } from "@/lib/narrative-generator";
 
@@ -82,6 +83,14 @@ export function calculateGroundTruth(
 }
 
 /**
+ * Calculate tolerance for a scenario based on domain config
+ * Uses the domain's tolerance configuration (fixed or percentage-based)
+ */
+function getToleranceForValue(domain: DomainConfig, value: number): number {
+  return calculateTolerance(domain, value);
+}
+
+/**
  * Generate a simple structured description (fallback/preview mode)
  */
 function generateSimpleDescription(
@@ -93,8 +102,12 @@ function generateSimpleDescription(
   const anchor = domain.anchors[anchorKey];
   const parts: string[] = [];
 
-  // Start with the property type/location
-  parts.push(`Property Type: ${anchor.description}`);
+  // Get entity label from domain config with default
+  const entityLabel =
+    "entityLabel" in domain ? (domain as any).entityLabel : "Subject";
+
+  // Start with the entity type
+  parts.push(`${entityLabel} Type: ${anchor.description}`);
 
   // Add each applied delta as a property characteristic
   const characteristics: string[] = [];
@@ -171,6 +184,7 @@ export function generateScenarios(
 
     // Create scenario with simple description
     const scenarioId = uuidv4();
+    const tolerance = getToleranceForValue(domain, value);
     const scenario: Scenario = {
       id: scenarioId,
       anchor: anchorKey,
@@ -184,7 +198,7 @@ export function generateScenarios(
       ),
       groundTruth: {
         value,
-        tolerance: 0.35, // +/- 0.35% is acceptable
+        tolerance, // Dynamic tolerance based on domain config
         calculation,
       },
     };
@@ -222,6 +236,7 @@ export function generateScenarios(
       // Calculate twin ground truth
       const twinTruth = calculateGroundTruth(domain, anchorKey, twinDeltaKeys);
       const twinId = uuidv4();
+      const twinTolerance = getToleranceForValue(domain, twinTruth.value);
 
       const twin: Scenario = {
         id: twinId,
@@ -236,7 +251,7 @@ export function generateScenarios(
         ),
         groundTruth: {
           value: twinTruth.value,
-          tolerance: 0.35,
+          tolerance: twinTolerance, // Dynamic tolerance based on domain config
           calculation: twinTruth.calculation,
         },
         twinId: scenarioId,
@@ -327,6 +342,7 @@ export async function generateScenariosWithNarrative(
 
     // Calculate ground truth
     const { value, calculation } = calculateGroundTruth(domain, anchorKey, appliedDeltaKeys);
+    const tolerance = getToleranceForValue(domain, value);
 
     const scenarioId = uuidv4();
     const skeleton: ScenarioSkeleton = {
@@ -334,7 +350,7 @@ export async function generateScenariosWithNarrative(
       anchorKey,
       appliedDeltaKeys,
       distractors,
-      groundTruth: { value, tolerance: 0.35, calculation },
+      groundTruth: { value, tolerance, calculation },
       narrativeSeed: Math.floor(random() * 1000000),
     };
 
@@ -359,13 +375,14 @@ export async function generateScenariosWithNarrative(
 
       const twinTruth = calculateGroundTruth(domain, anchorKey, twinDeltaKeys);
       const twinId = uuidv4();
+      const twinTolerance = getToleranceForValue(domain, twinTruth.value);
 
       const twinSkeleton: ScenarioSkeleton = {
         id: twinId,
         anchorKey,
         appliedDeltaKeys: twinDeltaKeys,
         distractors,
-        groundTruth: { value: twinTruth.value, tolerance: 0.35, calculation: twinTruth.calculation },
+        groundTruth: { value: twinTruth.value, tolerance: twinTolerance, calculation: twinTruth.calculation },
         twinId: scenarioId,
         twinDeltaChanged,
         narrativeSeed: Math.floor(random() * 1000000),
@@ -408,8 +425,8 @@ export async function generateScenariosWithNarrative(
         contextDescription = narrative.description;
       } catch (error) {
         console.error(`Failed to generate narrative for scenario ${skeleton.id}:`, error);
-        // Fallback to template-based description
-        contextDescription = generateFallbackDescription(
+        // Fallback to template-based description (using sync version)
+        contextDescription = generateFallbackDescriptionSync(
           domain,
           skeleton.anchorKey,
           skeleton.appliedDeltaKeys,
@@ -483,25 +500,5 @@ export async function upgradeScenarioNarrative(
   }
 }
 
-/**
- * Get twin pairs from a list of scenarios
- */
-export function getTwinPairs(
-  scenarios: Scenario[]
-): Array<{ original: Scenario; twin: Scenario }> {
-  const pairs: Array<{ original: Scenario; twin: Scenario }> = [];
-  const seen = new Set<string>();
-
-  for (const scenario of scenarios) {
-    if (scenario.twinId && !seen.has(scenario.id) && !seen.has(scenario.twinId)) {
-      const twin = scenarios.find((s) => s.id === scenario.twinId);
-      if (twin) {
-        pairs.push({ original: scenario, twin });
-        seen.add(scenario.id);
-        seen.add(scenario.twinId);
-      }
-    }
-  }
-
-  return pairs;
-}
+// Re-export getTwinPairs from scenario-utils for backward compatibility
+export { getTwinPairs } from "./scenario-utils";

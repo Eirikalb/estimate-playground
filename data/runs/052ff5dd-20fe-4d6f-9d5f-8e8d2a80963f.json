@@ -1,0 +1,740 @@
+{
+  "id": "052ff5dd-20fe-4d6f-9d5f-8e8d2a80963f",
+  "timestamp": "2026-01-19T10:32:53.370Z",
+  "domainId": "financial-forecasting",
+  "model": "google/gemini-3-flash-preview",
+  "promptStrategy": "chain-of-thought-enhanced",
+  "promptTemplate": "You are a senior Norwegian commercial real estate analyst estimating market yields.\n\n{{#facts.benchmarks}}\n{{{content}}}\n{{/facts.benchmarks}}\n\n---\n\n### Property to Analyze\n\n{{scenario.contextDescription}}\n\n---\n\n### Your Task\n\nFollow this structured methodology to estimate the market yield:\n\n**Step 1: Identify Base Benchmark**\n- Which property segment does this belong to? (e.g., \"Office Oslo Centre\", \"Logistics Prime\")\n- What is the benchmark yield range?\n- Choose your starting point within that range (typically the midpoint unless clearly prime/secondary)\n\n**Step 2: Identify All Adjustment Factors**\nList each factor that affects yield and its direction:\n- Tenant quality (AAA/government = DOWN, SME single tenant = UP)\n- Lease length (>10yr WAULT = DOWN, <3yr = UP)\n- Building condition (modern/certified = DOWN, old/needs capex = UP)\n- Location quality (exceptional micro-location = DOWN, poor access = UP)\n- Vacancy risk (>20% vacancy = UP)\n- Diversification (3+ tenants = DOWN)\n\n**Step 3: Calculate with Explicit Arithmetic**\nShow your calculation step by step:\n\nBase: [X.XX]%\n± [Factor 1]: [+/-0.XX]%\n± [Factor 2]: [+/-0.XX]%\n± [Factor 3]: [+/-0.XX]%\n= Final: [X.XX]%\n\n**Step 4: Validation Check**\n- Is the final yield reasonable for this property type?\n- Are all material risk factors accounted for?\n- Does the direction of adjustments make sense?\n\n**Step 5: Return Result**\nReturn ONLY valid JSON (no markdown, no code blocks):\n{\"reasoning\": \"<your analysis with explicit calculation from Step 3>\", \"yield\": <number>}\n\nCRITICAL: Your reasoning MUST include the explicit arithmetic calculation from Step 3. Output reasoning BEFORE yield.",
+  "rolloutsPerScenario": 3,
+  "status": "completed",
+  "startedAt": "2026-01-19T10:32:53.370Z",
+  "useNarrativeDescriptions": true,
+  "narrativeModel": "openai/gpt-4o-mini",
+  "narrativesGenerated": 9,
+  "narrativesTotal": 9,
+  "scenarios": [
+    {
+      "id": "ca8bf344-b0d6-4578-bcdd-efa7c3cf30db",
+      "anchor": "fintech_scaleup",
+      "appliedDeltas": [
+        "strong_sales_team",
+        "economic_headwind",
+        "price_pressure"
+      ],
+      "distractors": [
+        "The CFO previously worked at a Fortune 500 company.",
+        "The company was named one of the best places to work regionally."
+      ],
+      "contextDescription": "## Company Overview\n\n**WealthOS** is a B2B fintech scale-up headquartered in New York, founded in 2020 by a former product manager at a major tech company. The company offers an end-to-end wealth management platform that integrates investment advisory, portfolio management, and client engagement tools tailored for independent financial advisors and wealth management firms.\n\n### Business Model & Metrics\n\nWealthOS operates on a subscription-based model with a focus on user acquisition and retention. The company currently boasts an Annual Recurring Revenue (ARR) of approximately $50M, servicing over 400 clients, including 25 registered investment advisors (RIAs). The average contract value (ACV) stands at $125K, with a typical sales cycle of six months. WealthOS reports a Net Revenue Retention (NRR) of 115%, fueled by strong customer satisfaction and upselling of premium features.\n\n### Team & Funding\n\nThe company’s leadership team includes CEO Emily Tran (ex-Product Manager at Wealthfront), CTO Raj Patel (previously led engineering at a leading investment platform), and CFO Lisa Chen (previously at a Fortune 500 financial institution). The total headcount has reached 120 employees, divided across engineering (50%), sales & marketing (35%), and G&A (15%). To date, WealthOS has raised a total of $75M in funding across Seed, Series A, and Series B rounds, with the Series B round led by Andreessen Horowitz at a post-money valuation of $350M in Q2 2024.\n\n### Market Position & Competition\n\nWealthOS operates within the $4B digital wealth management sector, which is expected to expand as financial advisors increasingly adopt technology solutions. Key competitors include Betterment for Advisors, eMoney Advisor, and Riskalyze. WealthOS's competitive advantage lies in its user-friendly interface, comprehensive feature set, and robust integrations with third-party financial data providers.\n\n### Recent Developments\n\n- Recently scaled its sales team, doubling headcount to accelerate market penetration amidst increasing demand for digital wealth solutions.\n- Launched an AI-enhanced portfolio optimization tool in Q1, offering clients advanced analytics and personalized investment strategies.\n- Expanded partnerships with institutional players, enhancing credibility and broadening distribution channels.\n- The company has faced industry-wide macroeconomic pressure, including rising interest rates and regulatory scrutiny, impacting client acquisition and retention efforts.\n- Pricing pressure has increased due to competitive offerings; however, WealthOS successfully implemented a 7% price adjustment for existing customers with minimal impact on churn, demonstrating strong customer loyalty.\n- Recognized as one of the best places to work regionally, benefiting from a positive employer brand that aids recruitment efforts in a competitive labor market.\n\nThrough strategic initiatives and a commitment to innovation, WealthOS is well-positioned to navigate current market challenges while capitalizing on growth opportunities within the fintech landscape.",
+      "groundTruth": {
+        "value": 46,
+        "tolerance": 4.6000000000000005,
+        "calculation": "Base (Fintech Scale-up (licensed, $20M-$100M revenue)): 50%\nRecently scaled sales team (2x+ headcount growth): +10%\nIndustry facing macroeconomic pressure: -8%\nPricing pressure from competition or market: -6%\nFinal: 46.00%"
+      },
+      "twinId": "a2735fb1-5107-4851-97be-92dab08f50fd",
+      "twinDeltaChanged": "strong_sales_team → strong_nrr"
+    },
+    {
+      "id": "a2735fb1-5107-4851-97be-92dab08f50fd",
+      "anchor": "fintech_scaleup",
+      "appliedDeltas": [
+        "economic_headwind",
+        "price_pressure",
+        "strong_nrr"
+      ],
+      "distractors": [
+        "The CFO previously worked at a Fortune 500 company.",
+        "The company was named one of the best places to work regionally."
+      ],
+      "contextDescription": "## Company Overview\n\n**FinanceFlow** is a rapidly growing fintech scale-up headquartered in Austin, TX, founded in 2020 by a serial entrepreneur with prior successful exits in the financial services sector. The company specializes in providing a cloud-based platform for personal financial management (PFM) solutions, empowering users to achieve better financial literacy and management through data-driven insights and personalized recommendations.\n\n### Business Model & Metrics\n\nFinanceFlow operates on a subscription-based model, generating an Annual Recurring Revenue (ARR) of approximately $45M, with a diverse customer base of over 200,000 active users, including partnerships with several regional banks and credit unions. The Average Contract Value (ACV) for enterprise clients is approximately $150K. The company boasts a Net Revenue Retention (NRR) rate exceeding 120%, driven by strong engagement metrics and continuous product enhancements that foster upselling opportunities.\n\n### Team & Funding\n\nThe leadership team features CEO Jamie Torres (a serial entrepreneur with two successful exits), CFO Alex Morgan (formerly of a Fortune 500 financial services firm), and Chief Technology Officer Emily White (previously an engineering lead at a major tech company). The company currently employs 110 team members, distributed across product development (50%), sales & marketing (30%), and operations (20%). FinanceFlow has raised $85M to date through Seed, Series A, and Series B funding rounds, with the latest Series B round led by Sequoia Capital, achieving a post-money valuation of $350M in Q2 2024.\n\n### Market Position & Competition\n\nCompeting in the U.S. PFM market, projected to be worth $3B and growing, FinanceFlow distinguishes itself with robust analytics capabilities and a strong user interface. Key competitors include Mint, Personal Capital, and YNAB, but FinanceFlow's unique value proposition lies in its ability to harness AI for personalized financial advice and integration with banking systems that enhance user experience and engagement.\n\n### Recent Developments\n\n- Launched a mobile app update in Q1 2024, enhancing user experience and increasing app engagement metrics.\n- Expanded strategic partnerships with two regional banks, boosting customer acquisition efforts and enhancing brand presence.\n- Successfully executed a price adjustment, increasing subscription fees by 10% across select tiers while maintaining NRR above 120% due to minimal churn.\n- Recognized as one of the best places to work in Austin, TX, enhancing its employer brand and aiding in talent acquisition amidst industry-wide hiring challenges.\n\n### Industry Context\n\nDespite its strong performance, FinanceFlow operates within an industry currently facing macroeconomic pressures, including rising interest rates and heightened regulatory scrutiny impacting consumer lending practices. Moreover, the company is contending with pricing pressure as competitors seek to capture market share with aggressive pricing strategies. However, FinanceFlow's proven unit economics and the ability to maintain a high NRR are key indicators of its resilience and potential for sustained growth. \n\nBy leveraging its strong institutional partnerships and multi-channel distribution strategy, FinanceFlow is well-positioned to navigate these challenges while continuing its trajectory toward profitability.",
+      "groundTruth": {
+        "value": 51,
+        "tolerance": 5.1000000000000005,
+        "calculation": "Base (Fintech Scale-up (licensed, $20M-$100M revenue)): 50%\nIndustry facing macroeconomic pressure: -8%\nPricing pressure from competition or market: -6%\nNet Revenue Retention (NRR) above 120%: +15%\nFinal: 51.00%"
+      },
+      "twinId": "ca8bf344-b0d6-4578-bcdd-efa7c3cf30db",
+      "twinDeltaChanged": "strong_sales_team → strong_nrr"
+    },
+    {
+      "id": "7b7f6d0c-b83e-40af-9070-be122b02f8d6",
+      "anchor": "retail_smb",
+      "appliedDeltas": [],
+      "distractors": [
+        "The CFO previously worked at a Fortune 500 company.",
+        "The founding team met at a prestigious university."
+      ],
+      "contextDescription": "## Company Overview\n\n**ShopLocal** is a retail SMB headquartered in Austin, TX, founded in 2018 by a team of serial entrepreneurs who previously met at Stanford University. The company operates a chain of community-centered grocery stores focusing on local and sustainable products, catering to the growing consumer demand for fresh, organic, and regionally sourced food.\n\n### Business Model & Metrics\n\nShopLocal employs a brick-and-mortar retail model with an emphasis on in-store experiences and community engagement. The company has achieved a stable revenue stream, currently generating an annual revenue run rate (ARR) of approximately $15M. With 35 store locations across Texas, ShopLocal serves over 250,000 customers annually. The average transaction value (ATV) is $45, while the company maintains a strong customer loyalty program that contributes to a repeat customer base of around 70%. Although the company is in the growth stage, it has reported a Net Revenue Retention (NRR) of 105%, indicating healthy customer engagement and upsell opportunities.\n\n### Team & Funding\n\nThe leadership team is led by CEO Jessica Smith, a serial entrepreneur with two successful exits in the consumer goods space. The CFO, Mark Thompson, has a rich background as a finance executive at a Fortune 500 company, bringing extensive financial expertise and operational efficiency to the team. The headcount stands at approximately 120 employees, divided among retail operations (60%), marketing (20%), and logistics (20%). To date, ShopLocal has raised $35M in funding through Seed and Series A rounds, with the latest funding round led by Accel Partners at a post-money valuation of $100M in Q4 2023.\n\n### Market Position & Competition\n\nShopLocal operates within the $700B grocery retail market, characterized by increasing competition from both traditional supermarkets and specialized organic grocers. Its primary competitors include Whole Foods Market and Trader Joe’s, as well as local organic food co-ops. ShopLocal differentiates itself through its commitment to local sourcing, which resonates well with environmentally conscious consumers and strengthens community ties.\n\n### Recent Developments\n\n- Launched a new mobile app in Q1 2024 that allows customers to order online and schedule in-store pickups, enhancing customer convenience and engagement.\n- Introduced a \"Farmers’ Day\" monthly event, inviting local producers to showcase their products, fostering community relationships and driving foot traffic to the stores.\n- Expanded its product line to include a range of eco-friendly household goods, responding to consumer demand for sustainable living options.\n- Successfully implemented a pilot program for reducing food waste through discounting perishable items nearing expiration, resulting in improved inventory turnover rates while contributing to sustainability goals.\n\nIn summary, ShopLocal is positioned for growth within the retail sector, leveraging its local sourcing model and strong community engagement to build a loyal customer base. With a seasoned leadership team and strategic initiatives in place, the company is well-poised to capitalize on evolving consumer trends toward sustainability and localism in grocery shopping.",
+      "groundTruth": {
+        "value": 12,
+        "tolerance": 1.2000000000000002,
+        "calculation": "Base (Retail SMB (physical stores, regional presence)): 12%\nFinal: 12.00%"
+      }
+    },
+    {
+      "id": "d86c6ccd-588e-4040-b093-aeba4789615f",
+      "anchor": "saas_enterprise_growth",
+      "appliedDeltas": [
+        "market_expansion",
+        "product_stagnation",
+        "strong_sales_team"
+      ],
+      "distractors": [
+        "The CEO was featured in a prominent industry publication last quarter."
+      ],
+      "contextDescription": "## Company Overview\n\n**CloudScale** is a B2B SaaS company headquartered in Austin, TX, founded in 2018 by a serial entrepreneur with two successful exits in the tech industry. The company specializes in providing an advanced cloud resource optimization platform that helps enterprises manage their cloud infrastructure costs while enhancing performance and scalability.\n\n### Business Model & Metrics\n\nCloudScale operates on a subscription-based model, utilizing a land-and-expand strategy focused on enterprise clients. The company currently boasts an ARR of approximately $78M, supported by a diverse client base of 250 enterprise customers, including 20 Fortune 500 accounts. The average contract value (ACV) stands at $312K, with sales cycles averaging six months for new accounts. CloudScale reports a Net Revenue Retention (NRR) of 122%, reflecting its strong upsell capabilities and robust client engagement, driven by its data-driven insights platform.\n\n### Team & Funding\n\nThe executive team is led by CEO Lucas Meyer, an ex-McKinsey consultant turned operator, who was featured in a prominent industry publication last quarter for his thought leadership on cloud efficiency. The leadership team includes CTO Emily Grant (ex-Amazon Web Services engineering director) and CRO Samuel Lee (ex-Stripe VP Sales). The company has a total headcount of 220 employees, with 50% in engineering, 30% in sales & marketing, and the remainder in general and administrative roles. To date, CloudScale has raised $95M across multiple funding rounds, with the latest Series C led by Sequoia Capital, establishing a post-money valuation of $450M in Q3 2024.\n\n### Market Position & Competition\n\nCloudScale operates in the cloud optimization market, which is projected to reach $12B, with an annual growth rate driven by increasing cloud adoption and complexity. Key competitors include CloudHealth, Spot.io, and CloudCheckr. CloudScale differentiates itself through its predictive analytics capabilities and a user-friendly interface that enhances customer experience and operational efficiency.\n\n### Recent Developments\n\n- **Active Geographic Expansion**: CloudScale has recently expanded its sales footprint into the European market, establishing a regional office in Dublin that now accounts for 10% of total revenue. This expansion is part of a broader strategy to tap into the growing demand for cloud optimization solutions across the continent.\n  \n- **Sales Team Scaling**: The company has significantly scaled its sales team, doubling its headcount in the past six months to enhance its market penetration efforts. This strategic initiative aims to capitalize on the increasing number of enterprises migrating to multi-cloud environments, enhancing the company’s capacity to acquire new customers.\n\n- **Product Roadmap Delays**: Despite its strong market position, CloudScale is experiencing delays in its product roadmap due to resource allocation challenges. The development of its next-generation AI engine, aimed at providing deeper predictive insights, has fallen behind schedule, potentially impacting its competitive edge in the near term.\n\n- **Strategic Partnerships**: CloudScale has forged strategic partnerships with major cloud service providers to enhance its integration capabilities, allowing for seamless interactions with existing cloud ecosystems and positioning itself as a preferred vendor among enterprise clients.\n\nThese developments highlight CloudScale’s commitment to maintaining its leadership in the cloud optimization space while navigating the challenges of a rapidly evolving market. The combination of strategic geographic expansion, an aggressive hiring strategy, and the need to address product development timelines will play a critical role in shaping the company's growth trajectory.",
+      "groundTruth": {
+        "value": 37,
+        "tolerance": 3.7,
+        "calculation": "Base (SaaS Enterprise ($50M+ ARR, mature)): 25%\nActive geographic or market segment expansion: +12%\nProduct roadmap delays or competitive feature gap: -10%\nRecently scaled sales team (2x+ headcount growth): +10%\nFinal: 37.00%"
+      },
+      "twinId": "25e5ec0b-3323-44a3-a929-4aa92e06635c",
+      "twinDeltaChanged": "removed: market_expansion"
+    },
+    {
+      "id": "25e5ec0b-3323-44a3-a929-4aa92e06635c",
+      "anchor": "saas_enterprise_growth",
+      "appliedDeltas": [
+        "product_stagnation",
+        "strong_sales_team"
+      ],
+      "distractors": [
+        "The CEO was featured in a prominent industry publication last quarter."
+      ],
+      "contextDescription": "## Company Overview\n\n**Synergy Systems** is a B2B SaaS company based in Austin, Texas, founded in 2018 by a serial entrepreneur with two successful exits in the technology sector. The company specializes in providing an integrated cloud-based platform designed to streamline project management and collaboration for mid-sized enterprises.\n\n### Business Model & Metrics\n\nSynergy Systems operates on a subscription-based revenue model, focusing on a diversified suite of tools that facilitate communication, task management, and resource allocation. The current Annual Recurring Revenue (ARR) stands at approximately $75M, supported by a robust customer base of over 750 clients, including 30 of the top 1000 U.S. companies. The average contract value (ACV) is $100K, with an average sales cycle of 6 months for new customer acquisition. The company boasts a Net Revenue Retention (NRR) of 115%, largely attributed to upselling additional features and services to existing customers.\n\n### Team & Funding\n\nThe leadership team is spearheaded by CEO Mark Simmons, a former product manager at a leading tech firm, accompanied by CTO Jenna Liu, who has a rich background in engineering from Microsoft, and CMO Tom Reed, an experienced go-to-market strategist from Slack. Synergy Systems employs a total of 210 staff members, with 60% dedicated to engineering, 25% to sales and marketing, and the remaining 15% in general and administrative roles. To date, the company has secured $90M in funding across multiple rounds, with the most recent Series D round led by Sequoia Capital, valuing the company at $400M as of Q2 2024.\n\n### Market Position & Competition\n\nOperating within the $20B project management software market, which is on an upward trajectory, Synergy Systems stands out as a key player, competing against established names such as Asana, Trello, and Monday.com. The company differentiates itself through an all-in-one platform that reduces the need for multiple point solutions, enhancing user experience and integration capabilities.\n\n### Recent Developments\n\n- Launched a new AI-driven analytics feature in Q1, aimed at providing actionable insights into project performance.\n- Recently doubled its sales team headcount to accelerate customer acquisition, responding to growing demand and expanding its market reach.\n- Successfully integrated with major cloud service providers to enhance product interoperability and attract new segments.\n- Faced some delays in its product roadmap, specifically regarding the rollout of a highly anticipated automation feature, leading to a temporary competitive feature gap that could impact the growth trajectory.\n- The CEO was featured in a prominent industry publication last quarter, highlighting Synergy’s innovative approach to project management and increasing visibility among potential customers and investors.\n\n### Strategic Considerations\n\nSynergy Systems is well-positioned for future growth, fueled by a strong brand recognition and a loyal customer base. However, the potential impact of product roadmap delays on competitive standing poses a risk that management is actively addressing. The recent scaling of the sales team is a strategic move aimed at capitalizing on market opportunities, setting the stage for a robust expansion phase. As Synergy Systems continues to innovate and optimize its product offerings, it remains a compelling investment consideration for growth-oriented investors.",
+      "groundTruth": {
+        "value": 25,
+        "tolerance": 2.5,
+        "calculation": "Base (SaaS Enterprise ($50M+ ARR, mature)): 25%\nProduct roadmap delays or competitive feature gap: -10%\nRecently scaled sales team (2x+ headcount growth): +10%\nFinal: 25.00%"
+      },
+      "twinId": "d86c6ccd-588e-4040-b093-aeba4789615f",
+      "twinDeltaChanged": "removed: market_expansion"
+    },
+    {
+      "id": "65b50e4c-4575-4723-8f22-eb457596dbf6",
+      "anchor": "manufacturing_enterprise",
+      "appliedDeltas": [
+        "sales_challenges",
+        "price_pressure"
+      ],
+      "distractors": [
+        "The company recently moved to a new headquarters with modern amenities."
+      ],
+      "contextDescription": "## Company Overview\n\n**Forge Manufacturing** is an established manufacturing enterprise headquartered in Austin, TX, founded in 2012 by a serial entrepreneur with two successful exits in the industrial sector. The company specializes in precision metal fabrication, providing high-quality components to a diverse range of industries, including automotive, aerospace, and construction.\n\n### Business Model & Metrics\n\nForge Manufacturing operates on a contract-based model, with a focus on long-term partnerships with its clients. The company currently reports annual revenue of approximately $120M, serving over 300 customers, including several leading OEMs. The average contract value (ACV) is around $400K, with contracts typically spanning 1-3 years. The company has maintained a stable Net Revenue Retention (NRR) of 105%, supported by a strong track record of customer satisfaction and timely delivery.\n\n### Team & Funding\n\nThe leadership team is comprised of CEO Robert Lane (former operations director at a major automotive manufacturer), COO Jessica Tran (ex-McKinsey consultant turned operator), and CFO Samuel Lee (previously a finance manager at a leading aerospace firm). Forge Manufacturing employs approximately 250 people, with a distribution of 60% in production, 25% in sales and marketing, and 15% in G&A. To date, the company has raised $45M through Series A and Series B funding rounds, with the latest round led by Accel Partners at a post-money valuation of $350M in late 2023.\n\n### Market Position & Competition\n\nOperating in the $35B precision metal fabrication market, Forge Manufacturing is well-positioned among key competitors such as MetalWorks Corp and Precision Industries. The market is characterized by pricing pressure, as competitors are increasingly offering lower-cost alternatives, challenging Forge's pricing strategy. However, the company differentiates itself through its commitment to quality, innovation, and a strong emphasis on customer relationships.\n\n### Recent Developments\n\nRecently, Forge Manufacturing moved to a new headquarters that features modern amenities and improved operational efficiency, enhancing employee productivity and morale. The company has also undertaken strategic initiatives to mitigate high sales team turnover, which has presented challenges in meeting quota attainment. In response, Forge has implemented enhanced training programs and incentivization structures to improve retention rates and performance metrics of the sales team.\n\nIn addition, the company has been proactive in addressing pricing pressures from competition by focusing on value-added services and custom solutions that cater to specific client needs. This approach has allowed Forge to maintain client loyalty and minimize churn, despite the competitive landscape.\n\n- Launched a new line of eco-friendly products aimed at gaining market share in sustainability-conscious industries.\n- Expanded production capabilities by investing in advanced manufacturing technologies, allowing for increased efficiency and cost-effectiveness.\n- Recently appointed a new VP of Sales with a proven track record in the industry to revitalize the sales strategy and enhance team performance.\n\nIn summary, while Forge Manufacturing faces challenges from high sales team turnover and intense pricing pressure, its established market position, strong leadership team, and commitment to innovation position it well for continued growth and resilience in a competitive environment.",
+      "groundTruth": {
+        "value": -14,
+        "tolerance": 1.4000000000000001,
+        "calculation": "Base (Manufacturing Enterprise ($100M+ revenue, industrial)): 4%\nHigh sales team turnover or quota attainment issues: -12%\nPricing pressure from competition or market: -6%\nFinal: -14.00%"
+      },
+      "twinId": "eee2dcfb-4cec-4737-87cf-a9eca1c0d232",
+      "twinDeltaChanged": "price_pressure → economic_headwind"
+    },
+    {
+      "id": "eee2dcfb-4cec-4737-87cf-a9eca1c0d232",
+      "anchor": "manufacturing_enterprise",
+      "appliedDeltas": [
+        "sales_challenges",
+        "economic_headwind"
+      ],
+      "distractors": [
+        "The company recently moved to a new headquarters with modern amenities."
+      ],
+      "contextDescription": "## Company Overview\n\n**Forge Manufacturing** is an industrial manufacturing enterprise headquartered in Austin, TX, founded in 2015 by a serial entrepreneur with two successful exits in technology-driven sectors. The company specializes in precision metal fabrication and assembly solutions, catering primarily to the aerospace and automotive industries.\n\n### Business Model & Metrics\n\nForge Manufacturing operates on a direct sales model, supplemented by strategic partnerships with key OEMs (Original Equipment Manufacturers). The company’s annual revenue is approximately $120M, with a diverse customer base of over 200 clients, including major players such as Boeing and Tesla. The average contract value (ACV) stands at $600K, reflecting the bespoke nature of their offerings, which often involve complex engineering requirements. The company reports a Net Revenue Retention (NRR) of 115%, driven by robust demand for their high-quality products and ongoing service contracts.\n\n### Team & Funding\n\nThe leadership team includes CEO Amanda Liu (former product manager at a major tech company), COO James Thompson (ex-McKinsey consultant turned operator), and CFO Rebecca Chen (with a background in finance from a leading investment bank). Currently, Forge Manufacturing employs 320 individuals, with 40% in manufacturing roles, 25% in sales and marketing, and the remainder in engineering and administration. To date, the company has raised $75M across Seed and Series A funding, with the Series A led by Accel Partners at a post-money valuation of $300M in Q2 2023.\n\n### Market Position & Competition\n\nOperating within the $150B industrial manufacturing sector, Forge Manufacturing is well-positioned amidst a backdrop of increasing demand for high-precision components, driven by advancements in technology and automation. However, the industry currently faces macroeconomic pressures, including supply chain disruptions, fluctuating raw material costs, and labor shortages, which have impacted production timelines and cost management. Primary competitors include established firms such as Precision Castparts and General Electric's manufacturing division. Forge differentiates itself through its focus on innovation and customer-centric solutions, offering rapid prototyping and agile production capabilities.\n\n### Recent Developments\n\n- Recently moved to a new headquarters equipped with state-of-the-art manufacturing technology and employee amenities to bolster productivity and attract top talent.\n- Launched a new line of eco-friendly products that align with industry sustainability trends, gaining positive market reception.\n- Implemented an employee retention program in response to high sales team turnover, which has been a challenge affecting quota attainment and overall sales performance.\n- Expanded R&D capabilities, investing in advanced manufacturing technologies such as AI-driven automation and IoT integration, enhancing operational efficiency and product quality.\n\nDespite the challenges posed by high sales team turnover and macroeconomic pressures, Forge Manufacturing is strategically positioned to leverage its established market presence and innovative product offerings to sustain growth and capitalize on future opportunities in the industrial sector.",
+      "groundTruth": {
+        "value": -16,
+        "tolerance": 1.6,
+        "calculation": "Base (Manufacturing Enterprise ($100M+ revenue, industrial)): 4%\nHigh sales team turnover or quota attainment issues: -12%\nIndustry facing macroeconomic pressure: -8%\nFinal: -16.00%"
+      },
+      "twinId": "65b50e4c-4575-4723-8f22-eb457596dbf6",
+      "twinDeltaChanged": "price_pressure → economic_headwind"
+    },
+    {
+      "id": "1cae7756-3377-492b-9ba1-601960ca6b24",
+      "anchor": "manufacturing_enterprise",
+      "appliedDeltas": [
+        "strong_sales_team",
+        "price_increase"
+      ],
+      "distractors": [
+        "The founding team met at a prestigious university.",
+        "The company has a strong social media presence."
+      ],
+      "contextDescription": "## Company Overview\n\n**Forge Manufacturing** is a growth-stage manufacturing enterprise based in Austin, TX, founded in 2016 by a team of serial entrepreneurs with a proven track record of successful exits. The company specializes in precision metal fabrication for the aerospace and automotive sectors, offering a range of custom solutions that prioritize speed and quality.\n\n### Business Model & Metrics\n\nForge Manufacturing employs a business model centered around long-term contracts and project-based engagements. The company has achieved approximately $120M in annual revenue, supported by a robust client base of over 300 customers, including several prominent players in the aerospace industry. The average contract value (ACV) stands at $400K, with a typical project lifespan of 12 months. The company reports a Net Revenue Retention (NRR) of 115%, driven by effective client relationship management and a growing portfolio of value-added services.\n\n### Team & Funding\n\nThe leadership team is composed of CEO Angela Ramirez (a serial entrepreneur with two successful exits), COO Mark Thompson (ex-McKinsey consultant turned operator), and CTO James Li (previously the head of engineering at a major aerospace firm). The company currently employs 200 people, with 50% dedicated to manufacturing operations, 30% in sales and marketing, and the remainder in G&A. To date, Forge Manufacturing has raised $45M across Seed, Series A, and Series B funding rounds, with the latest Series B round led by Sequoia Capital at a post-money valuation of $250M in Q3 2023.\n\n### Market Position & Competition\n\nForge Manufacturing operates within the $60B industrial manufacturing market, which is projected to witness steady growth as industries increasingly adopt advanced manufacturing techniques. Key competitors include established players such as MetalWorks Corp and Assembly Pro. Forge distinguishes itself through its commitment to high-quality materials, rapid turnaround times, and exceptional customer service, positioning itself as a preferred partner for complex projects.\n\n### Recent Developments\n\n- The company has recently scaled its sales team, achieving over 2x headcount growth to enhance market penetration and client outreach.\n- In a strategic move to improve profitability, Forge successfully implemented a price increase of 10% across its service offerings, resulting in a notable uptick in average revenue per user (ARPU).\n- The company has strengthened its social media presence, engaging with a growing audience of industry professionals and potential customers, effectively positioning itself as a thought leader in the manufacturing space.\n- Forge has also introduced a new line of eco-friendly products, aligning with industry trends toward sustainability and appealing to environmentally conscious buyers.\n\nBy leveraging its expanded sales team and successful pricing strategy, Forge Manufacturing is poised for sustained growth as it continues to capture market share and enhance its service offerings in an evolving industrial landscape.",
+      "groundTruth": {
+        "value": 19,
+        "tolerance": 1.9000000000000001,
+        "calculation": "Base (Manufacturing Enterprise ($100M+ revenue, industrial)): 4%\nRecently scaled sales team (2x+ headcount growth): +10%\nSuccessful price increase (5-15% ARPU growth): +5%\nFinal: 19.00%"
+      },
+      "twinId": "8fa21c9d-3b37-4685-acb5-d9cdd274026d",
+      "twinDeltaChanged": "strong_sales_team → product_stagnation"
+    },
+    {
+      "id": "8fa21c9d-3b37-4685-acb5-d9cdd274026d",
+      "anchor": "manufacturing_enterprise",
+      "appliedDeltas": [
+        "price_increase",
+        "product_stagnation"
+      ],
+      "distractors": [
+        "The founding team met at a prestigious university.",
+        "The company has a strong social media presence."
+      ],
+      "contextDescription": "## Company Overview\n\n**Forge Manufacturing** is a growth-stage manufacturing enterprise headquartered in Austin, Texas, founded in 2018 by a team of serial entrepreneurs who met at Stanford University. The company specializes in advanced metal fabrication solutions tailored for the aerospace and automotive industries, providing precision components to leading manufacturers.\n\n### Business Model & Metrics\n\nForge Manufacturing operates on a project-based revenue model, characterized by long-term contracts with a diverse client base. Current annual revenue stands at approximately $120M, with a robust portfolio of over 200 active clients, including several Fortune 500 companies. The average contract value (ACV) is around $600K, with a typical project duration of 6-12 months. The company has achieved a Net Revenue Retention (NRR) of 115%, largely driven by successful upselling of new product lines and enhanced service offerings.\n\n### Team & Funding\n\nThe leadership team is anchored by CEO John Mitchell, a veteran entrepreneur with two previous successful exits in the manufacturing sector. CTO Lisa Tran (ex-operations manager at a leading aerospace firm) and CFO Michael Chen (former McKinsey consultant) round out the executive team. The current headcount is approximately 300 employees, with engineering and production staff representing 65% of the workforce, while sales and marketing account for 25% and G&A for the remaining 10%. To date, Forge Manufacturing has raised $80M across Series A and Series B funding rounds, with the latest round led by Sequoia Capital at a $400M post-money valuation in Q2 2024.\n\n### Market Position & Competition\n\nOperating within the $50B advanced manufacturing market, Forge Manufacturing is positioned advantageously due to its specialized offerings and strong client relationships. Competitors include established players such as Precision Castparts and Howmet Aerospace, but Forge differentiates itself through a commitment to innovative production techniques and superior customer service.\n\n### Recent Developments\n\n- Successfully implemented a 10% price increase across the existing client base, resulting in a marked improvement in average revenue per user (ARPU) without significant churn.\n- Despite recent delays in the product roadmap due to supply chain disruptions, the company remains focused on launching two new modular fabrication systems in the upcoming quarter. \n- Expanded its social media presence, raising brand awareness and showcasing client success stories, which has led to a noticeable uptick in inbound sales inquiries.\n- Recently signed a strategic partnership with a leading automotive manufacturer to co-develop next-generation lightweight components, further solidifying its market position.\n\nIn conclusion, while Forge Manufacturing has demonstrated solid performance metrics and a strong market position, it must address the ongoing product roadmap delays and competitive feature gaps to sustain its growth momentum. The successful price increase, paired with strong client retention efforts, provides a favorable outlook for the company's financial trajectory.",
+      "groundTruth": {
+        "value": -1,
+        "tolerance": 0.1,
+        "calculation": "Base (Manufacturing Enterprise ($100M+ revenue, industrial)): 4%\nSuccessful price increase (5-15% ARPU growth): +5%\nProduct roadmap delays or competitive feature gap: -10%\nFinal: -1.00%"
+      },
+      "twinId": "1cae7756-3377-492b-9ba1-601960ca6b24",
+      "twinDeltaChanged": "strong_sales_team → product_stagnation"
+    }
+  ],
+  "results": [
+    {
+      "scenarioId": "ca8bf344-b0d6-4578-bcdd-efa7c3cf30db",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5.8,
+          "reasoning": "The property is classified as 'Office Oslo - Secondary/Growth Hub' given WealthOS's profile as a scale-up, typically occupying modern but non-CBD fringe space. Base benchmark for Prime Oslo Office is 4.25%-4.50%, while secondary/fringe hubs sit at 5.25%-5.75%. Starting midpoint: 5.50%. Adjustments: 1. Tenant Quality: WealthOS is a 'Licensed scale-up' with $50M ARR (Enterprise tier) and strong NRR (115%), but as a VC-backed Series B entity, it carries higher default risk than a conglomerate (-0.10% for growth/retention, +0.25% for venture-risk = +0.15% net). 2. Lease Length: Assuming a standard 5-7 year scale-up lease (+0.10% vs 10yr prime). 3. Market Position: Strong competitive moat and AI-integration reduces vacancy risk (-0.15%). 4. Macro Pressure: Rising rates and fintech scrutiny (+0.20%). Calculation: Base 5.50% + 0.15% (Tenant Risk) + 0.10% (WAULT) - 0.15% (Tech Moat) + 0.20% (Macro/Rates) = 5.80%.",
+          "latencyMs": 3037,
+          "promptTokens": 1327,
+          "completionTokens": 315,
+          "totalTokens": 1642,
+          "cost": 0.0002587
+        },
+        {
+          "prediction": 6.2,
+          "reasoning": "The property is classified as 'Office Oslo - Secondary/Growth Hub' given WealthOS's profile as a scale-up. Base yield for this segment is 5.25%-6.25%, with a midpoint of 5.75%. Adjustments: 1. Tenant Quality (+0.25%): While WealthOS is a 'Licensed scale-up' with $50M ARR (meeting the 40-60% growth benchmark for its stage) and backed by Tier-1 VC (a16z), it remains a loss-making VC-backed entity compared to a 'solid' corporate, increasing credit risk. 2. Lease Length (+0.15%): Assuming a standard 5-7 year lease for a scale-up, this is shorter than the 10yr+ prime benchmark. 3. Building Condition (-0.10%): As a 'Best Place to Work' with high-tech requirements, the fit-out is assumed modern/high-spec. 4. Macro/Sector Risk (+0.15%): Fintech faces headwinds from interest rates and regulatory scrutiny mentioned in the profile. Calculation: Base: 5.75% + Tenant Quality: 0.25% + Lease Length: 0.15% - Building Condition: 0.10% + Sector Risk: 0.15% = Final: 6.20%.",
+          "latencyMs": 3008,
+          "promptTokens": 1327,
+          "completionTokens": 315,
+          "totalTokens": 1642,
+          "cost": 0.0002587
+        },
+        {
+          "prediction": 6,
+          "reasoning": "The property is classified as 'Office Oslo - Secondary/Growth Hub' given the tenant's profile as a high-growth fintech scale-up. Base benchmark for this segment is 5.25% - 6.25%, with a midpoint of 5.75%. WealthOS is a 'Licensed scale-up' with $50M ARR, placing it at the Enterprise threshold for Fintech. While its 115% NRR and Series B backing from Andreessen Horowitz are strong, it remains a VC-backed entity rather than a 'Prime' AAA tenant, warranting a risk premium. The recent 7% price hike success indicates 'sticky' revenue, but macroeconomic pressures on fintech valuations add risk. Calculation: Base: 5.75% + Tenant Risk (VC-backed scale-up vs. Corporate): +0.40% - Strong NRR/Funding Quality: -0.15% + Industry Macro Pressure: +0.10% - Modern Tech-Fitout/Employer Brand: -0.10% = Final: 6.00%.",
+          "latencyMs": 2558,
+          "promptTokens": 1327,
+          "completionTokens": 244,
+          "totalTokens": 1571,
+          "cost": 0.00023030000000000001
+        }
+      ],
+      "meanPrediction": 6,
+      "stdDeviation": 0.163,
+      "minPrediction": 5.8,
+      "maxPrediction": 6.2,
+      "error": -40,
+      "absoluteError": 40,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-19T10:33:15.581Z",
+      "completedAt": "2026-01-19T10:33:18.625Z",
+      "difficulty": {
+        "score": 66,
+        "level": "hard",
+        "factors": {
+          "deltaComplexity": 36,
+          "distractorLoad": 20,
+          "interactionEffects": 10
+        }
+      },
+      "errorPattern": {
+        "pattern": "distractor_influence",
+        "severity": "severe",
+        "details": "Large error in scenario with 2 distractor(s) - possible distractor influence"
+      }
+    },
+    {
+      "scenarioId": "a2735fb1-5107-4851-97be-92dab08f50fd",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 6.325,
+          "reasoning": "Step 1: Identify Base Benchmark. The property is an office asset in Austin, TX, occupied by a high-growth fintech scale-up. Given Austin's status as a Tier 1 tech hub, the benchmark for Prime Office (Class A) is 5.75% - 6.50%. Starting point: 6.125% (midpoint). Step 2: Adjustment Factors. Tenant Quality: FinanceFlow is a 'Licensed scale-up' with $45M ARR, 120% NRR, and Sequoia backing, but lacks an investment-grade credit rating (+0.25%). Lease Length: Assuming a standard tech lease of 5-7 years, which is neutral (0.00%). Building Condition: Modern tech-focused office in Austin (-0.15%). Location: Austin is a high-growth 'Silicon Hills' market (-0.10%). Vacancy Risk: Single-tenant concentration risk (+0.20%). Step 3: Calculation. Base: 6.125% + Tenant Quality: 0.25% - Building Condition: 0.15% - Location Quality: 0.10% + Single-tenant Risk: 0.20% = Final: 6.325%. Step 4: Validation. A 6.33% yield is consistent with a high-growth, VC-backed tech tenant in a prime US sunbelt market, balancing strong growth metrics against the lack of a corporate sovereign-grade balance sheet.",
+          "latencyMs": 3399,
+          "promptTokens": 1375,
+          "completionTokens": 340,
+          "totalTokens": 1715,
+          "cost": 0.00027350000000000003
+        },
+        {
+          "prediction": 6.95,
+          "reasoning": "Step 1: Identify Base Benchmark. The property is an office asset in Austin, TX (a high-growth tech hub comparable to prime regional hubs). Given the tenant is a Series B fintech scale-up, this falls under 'Office - Secondary/Value-Add' due to tenant credit risk despite the prime location. Benchmark yield for Austin creative office/tech space is 6.00% - 7.50%. Starting point: 6.75% (midpoint). Step 2: Adjustment Factors. 1) Tenant Quality: FinanceFlow is a venture-backed scale-up ($45M ARR, Series B). While strong (NRR 120%), they are not investment grade (+0.50%). 2) Management/Growth: Sequoia backing and serial entrepreneur leadership reduce default risk (-0.25%). 3) Industry Context: Fintech faces regulatory and macro headwinds (+0.15%). 4) Location: Austin is a 'Best Place to Work' hub with high liquidity (-0.20%). Step 3: Calculation. Base: 6.75% + Tenant Credit Risk: 0.50% - Institutional Backing: 0.25% + Industry Macro Risk: 0.15% - Location Premium: 0.20% = Final: 6.95%. Step 4: Validation. A 6.95% yield is appropriate for a single-tenant tech scale-up where the primary risk is the 'burn rate' vs 'profitability' transition typical of Series B companies.",
+          "latencyMs": 4514,
+          "promptTokens": 1374,
+          "completionTokens": 345,
+          "totalTokens": 1719,
+          "cost": 0.00027539999999999997
+        },
+        {
+          "prediction": 7.2,
+          "reasoning": "Step 1: Identify Base Benchmark. The property is an office asset in Austin, TX (a high-growth tech hub). Given FinanceFlow's scale and profile, this is categorized as 'Office - Secondary/Growth Hub'. The benchmark yield range for Austin office space in the current high-interest environment is 6.50% - 7.50%. Starting midpoint: 7.00%. Step 2: Adjustment Factors. Tenant Quality: FinanceFlow is a Series B fintech with $45M ARR and Sequoia backing, but remains pre-profitability (+0.25% risk premium). Lease Length: Assuming a standard tech lease of 5 years (Neutral 0.00%). Building Condition: Austin tech offices are typically modern/Class A (-0.15%). Location: Austin is a premier 'Silicon Hills' location (-0.10%). Vacancy Risk: High NRR of 120% suggests stable occupancy, but single-tenant concentration increases risk (+0.20%). Step 3: Calculation. Base: 7.00% + Tenant Risk: 0.25% - Building Quality: 0.15% - Location Quality: 0.10% + Single Tenant Concentration: 0.20% = Final: 7.20%. Step 4: Validation. A 7.20% yield is consistent with current US regional office markets where interest rates have pushed yields upward, balanced by the high growth trajectory of the fintech tenant.",
+          "latencyMs": 3467,
+          "promptTokens": 1375,
+          "completionTokens": 330,
+          "totalTokens": 1705,
+          "cost": 0.0002695
+        }
+      ],
+      "meanPrediction": 6.825,
+      "stdDeviation": 0.368,
+      "minPrediction": 6.325,
+      "maxPrediction": 7.2,
+      "error": -44.175,
+      "absoluteError": 44.175,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-19T10:33:15.582Z",
+      "completedAt": "2026-01-19T10:33:20.101Z",
+      "difficulty": {
+        "score": 66,
+        "level": "hard",
+        "factors": {
+          "deltaComplexity": 36,
+          "distractorLoad": 20,
+          "interactionEffects": 10
+        }
+      },
+      "errorPattern": {
+        "pattern": "distractor_influence",
+        "severity": "severe",
+        "details": "Large error in scenario with 2 distractor(s) - possible distractor influence"
+      }
+    },
+    {
+      "scenarioId": "7b7f6d0c-b83e-40af-9070-be122b02f8d6",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 6.8,
+          "reasoning": "Step 1: Base Benchmark - Property belongs to the 'Retail Regional/Secondary' segment (Texas-based SMB grocery). Prime Oslo retail yields are ~4.25-4.50%, but for a regional US-based SMB retail chain, the benchmark yield range is 6.50%-7.50%. Starting point: 7.00%. Step 2: Adjustment Factors - Tenant Quality: ShopLocal is a VC-backed SMB with $15M ARR, higher risk than a national credit tenant (+0.25%). Lease/WAULT: Not specified, but typical retail is 5-10 years (Neutral). Building Condition: Modern/Newer concept (-0.10%). Location: High-growth Texas market (-0.15%). Growth Profile: Strong 105% NRR and 'Retail SMB' growth benchmarks of 5-15% suggest high viability (-0.20%). Step 3: Calculation - Base: 7.00% + Tenant Risk (SMB): 0.25% - Modern Concept/Condition: 0.10% - Location Quality (TX Growth): 0.15% - Strong Growth/Retention: 0.20% = Final: 6.80%. Step 4: Validation - A 6.80% yield is appropriate for a well-funded, high-growth grocery scale-up that lacks a 'AAA' credit rating but offers strong operational upside.",
+          "latencyMs": 3471,
+          "promptTokens": 1361,
+          "completionTokens": 325,
+          "totalTokens": 1686,
+          "cost": 0.0002661
+        },
+        {
+          "prediction": 7.15,
+          "reasoning": "Step 1: Base Benchmark - The property belongs to the 'Retail Regional/Suburban' segment. Given the Texas-based profile and the company's scale, the benchmark yield range for high-quality regional retail is 6.25% - 7.50%. I am starting at a midpoint of 6.85%. Step 2: Adjustment Factors - Tenant Quality: ShopLocal is a Retail SMB with $15M ARR and $35M funding, which is higher risk than a national credit tenant (+0.40%). Lease Length: Assuming a standard 5-7 year retail lease for a scale-up, which is neutral (0.00%). Building Condition: Modern grocery fit-outs and recent tech integration suggest well-maintained assets (-0.15%). Location: High-growth Texas markets with strong foot traffic (-0.20%). Diversification: Single-tenant risk for this specific entity (+0.25%). Step 3: Calculation - Base: 6.85% + Tenant Risk (SMB): 0.40% - Modern Condition/Tech: 0.15% - Strong Texas Micro-location: 0.20% + Single-tenant Concentration: 0.25% = Final: 7.15%. Step 4: Validation - A 7.15% yield is appropriate for a VC-backed retail scale-up that lacks an investment-grade credit rating but shows strong NRR (105%) and growth potential.",
+          "latencyMs": 15387,
+          "promptTokens": 1361,
+          "completionTokens": 333,
+          "totalTokens": 1694,
+          "cost": 0.0002693
+        },
+        {
+          "prediction": 6,
+          "reasoning": "Step 1: Base Benchmark - This property falls under 'Retail - Regional/Secondary City' (Austin, TX equivalent to a strong Norwegian regional hub like Stavanger or Bergen). Benchmark yield range for high-quality retail is 5.50% - 6.50%. Starting midpoint: 6.00%. Step 2: Adjustment Factors - Tenant Quality: ShopLocal is a VC-backed Retail SMB with $15M ARR and 105% NRR. While promising, they are not a 'Blue Chip' tenant like NorgesGruppen, adding risk (+0.25%). Lease/WAULT: As a growth-stage company, they likely have standard 5-10 year terms, but the high store count (35) suggests a diversified footprint, though we analyze a single asset here (Neutral). Building Condition: Modern retail with tech integration (mobile app/pickup) suggests low CAPEX (-0.10%). Location: Strong community engagement in a growing market (Austin/Texas) suggests high demand (-0.15%). Step 3: Calculation - Base: 6.00% + Tenant Risk (VC-backed SMB): 0.25% - Location/Growth Premium: 0.15% - Modern Tech/Condition: 0.10% = Final: 6.00%. Step 4: Validation - A 6.00% yield is consistent with a strong regional retail asset with a non-investment grade but well-funded growth tenant.",
+          "latencyMs": 3487,
+          "promptTokens": 1361,
+          "completionTokens": 332,
+          "totalTokens": 1693,
+          "cost": 0.0002689
+        }
+      ],
+      "meanPrediction": 6.65,
+      "stdDeviation": 0.481,
+      "minPrediction": 6,
+      "maxPrediction": 7.15,
+      "error": -5.35,
+      "absoluteError": 5.35,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-19T10:33:15.582Z",
+      "completedAt": "2026-01-19T10:33:30.975Z",
+      "difficulty": {
+        "score": 20,
+        "level": "easy",
+        "factors": {
+          "deltaComplexity": 0,
+          "distractorLoad": 20,
+          "interactionEffects": 0
+        }
+      },
+      "errorPattern": {
+        "pattern": "distractor_influence",
+        "severity": "severe",
+        "details": "Large error in scenario with 2 distractor(s) - possible distractor influence"
+      }
+    },
+    {
+      "scenarioId": "d86c6ccd-588e-4040-b093-aeba4789615f",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5,
+          "reasoning": "Step 1: Identify Base Benchmark - The property is classified as 'Office Oslo Centre' (Prime/Secondary fringe) given the tenant's Dublin expansion and Austin HQ profile, implying a high-quality tech-hub office. Benchmark yield range: 4.25% - 5.25%. Starting midpoint: 4.75%. Step 2: Identify Adjustment Factors - Tenant Quality: CloudScale is an Enterprise SaaS ($78M ARR) with Sequoia backing and 122% NRR, but remains a VC-backed entity rather than a credit-rated corporate (Adjustment: +0.25%). Lease Length: Assuming a standard 5-7 year tech lease (Adjustment: +0.10%). Building Condition: Modern tech-ready space assumed (Adjustment: -0.10%). Location: Prime tech cluster (Adjustment: -0.15%). Growth/Risk: Strong NRR and 20-35% growth category, but roadmap delays and high burn from doubling sales staff increase risk (Adjustment: +0.15%). Step 3: Calculate with Explicit Arithmetic - Base: 4.75% + Tenant Risk: 0.25% + Lease Term: 0.10% - Building Quality: 0.10% - Location Premium: 0.15% + Execution Risk: 0.15% = Final: 5.00%. Step 4: Validation - A 5.00% yield is appropriate for a high-growth, well-funded SaaS tenant that lacks a sovereign/AAA credit rating but shows strong enterprise stickiness.",
+          "latencyMs": 3553,
+          "promptTokens": 1449,
+          "completionTokens": 354,
+          "totalTokens": 1803,
+          "cost": 0.00028649999999999997
+        },
+        {
+          "prediction": 5.35,
+          "reasoning": "Step 1: Base Benchmark. CloudScale is an Enterprise SaaS company ($78M ARR) which places it in the 'Office Prime/Secondary' segment. Given its high-growth profile and Sequoia backing, I am using 'Office Oslo/Regional Hub - Secondary Prime' as the benchmark, with a range of 4.75% - 5.50%. Starting point: 5.15%. Step 2: Adjustment Factors. Tenant Quality: CloudScale is a 'Scale-up Enterprise' with $78M ARR and 122% NRR, but it is not yet profitable and faces product roadmap delays (+0.15% risk premium). Lease Length: Assuming a standard 5-7 year tech lease, which is neutral to slightly positive (+0.05% vs 10yr prime). Building Condition: Modern tech-focused HQ (-0.10%). Location: Austin/Dublin expansion suggests high-quality hub locations (-0.10%). Vacancy Risk: Single-tenant concentration risk (+0.20%). Step 3: Calculation. Base: 5.15% + Tenant Risk: 0.15% + Lease Term: 0.05% - Building Quality: 0.10% - Location Quality: 0.10% + Concentration Risk: 0.20% = Final: 5.35%. Step 4: Validation. A 5.35% yield reflects a strong, VC-backed enterprise tenant that is not yet 'Blue Chip' but has high NRR and top-tier backing.",
+          "latencyMs": 4619,
+          "promptTokens": 1448,
+          "completionTokens": 350,
+          "totalTokens": 1798,
+          "cost": 0.00028480000000000004
+        },
+        {
+          "prediction": 5.4,
+          "reasoning": "Step 1: Identify Base Benchmark. The property is classified as 'Office - Secondary/Growth Hub' given the tenant is a US-based tech firm in a scaling phase. For a high-quality office asset in a tech-centric submarket, the benchmark yield range is 4.75% - 5.75%. I will use the midpoint of 5.25% as the starting point. Step 2: Identify Adjustment Factors. Tenant Quality: CloudScale is an Enterprise SaaS ($78M ARR) with Sequoia backing and 122% NRR, but it is not yet profitable and faces product roadmap delays (+0.15% risk premium). Lease Length: Assuming a standard 5-7 year tech lease, this is neutral (0.00%). Building Condition: Modern tech-spec office (-0.10%). Location: Austin, TX is a prime tech hub (-0.15%). Vacancy Risk: Single-tenant concentration risk (+0.25%). Step 3: Calculate with Explicit Arithmetic. Base: 5.25% + Tenant Risk (SaaS Scale-up): 0.15% - Building Quality: 0.10% - Location (Austin Prime): 0.15% + Single Tenant Risk: 0.25% = Final: 5.40%. Step 4: Validation. A 5.40% yield is consistent with B2B SaaS tenants who have strong NRR and top-tier VC backing but lack the credit rating of a Fortune 500 legacy firm.",
+          "latencyMs": 3188,
+          "promptTokens": 1449,
+          "completionTokens": 345,
+          "totalTokens": 1794,
+          "cost": 0.0002829
+        }
+      ],
+      "meanPrediction": 5.25,
+      "stdDeviation": 0.178,
+      "minPrediction": 5,
+      "maxPrediction": 5.4,
+      "error": -31.75,
+      "absoluteError": 31.75,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-19T10:33:31.190Z",
+      "completedAt": "2026-01-19T10:33:35.813Z",
+      "difficulty": {
+        "score": 56,
+        "level": "hard",
+        "factors": {
+          "deltaComplexity": 36,
+          "distractorLoad": 10,
+          "interactionEffects": 10
+        }
+      },
+      "errorPattern": {
+        "pattern": "distractor_influence",
+        "severity": "severe",
+        "details": "Large error in scenario with 1 distractor(s) - possible distractor influence"
+      }
+    },
+    {
+      "scenarioId": "25e5ec0b-3323-44a3-a929-4aa92e06635c",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 4.75,
+          "reasoning": "Step 1: Identify Base Benchmark. Synergy Systems is an Enterprise-level SaaS company ($75M ARR) occupying high-quality office space. Given its profile and funding (Sequoia), this aligns with 'Prime Office' benchmarks. In the current Norwegian/Global high-interest rate environment, Prime Office yields for strong tech hubs sit between 4.50% and 5.25%. I will use a midpoint of 4.85% as the base. Step 2: Adjustment Factors. 1. Tenant Quality: Synergy is a 'Scale-up Enterprise' with $75M ARR and 20-35% expected growth, backed by Tier-1 VC (Sequoia). This is strong but not AAA/Government credit (-0.10%). 2. Lease Length: Assuming a standard 5-7 year tech lease (Neutral 0.00%). 3. Industry Risk: SaaS has high NRR (115%) but the project management space is crowded and they have roadmap delays (+0.15%). 4. Location: Austin is a Tier-1 tech hub, comparable to Oslo CBD in a Norwegian context (-0.10%). 5. Capex/Modernity: Recent AI-driven features and headcount growth suggest a modern, high-spec fit-out (-0.05%). Step 3: Calculation. Base: 4.85% - Tenant Quality: 0.10% + Industry Risk: 0.15% - Location Quality: 0.10% - Building Modernity: 0.05% = Final: 4.75%. Step 4: Validation. A 4.75% yield reflects a 'Prime Minus' asset where the tenant is high-growth and well-funded but lacks the multi-decade stability of a sovereign entity.",
+          "latencyMs": 4442,
+          "promptTokens": 1400,
+          "completionTokens": 403,
+          "totalTokens": 1803,
+          "cost": 0.00030120000000000006
+        },
+        {
+          "prediction": 5.85,
+          "reasoning": "The property is classified as 'Office - Prime/Secondary' in a tech-hub context (Austin). Given the tenant's profile as an Enterprise SaaS company ($75M ARR), they fall into the 20-35% growth bracket, indicating a stable but high-growth 'Scale-up' risk profile. Base Benchmark for Prime Office in a high-growth tech market is approximately 5.50%. Adjustments: 1. Tenant Quality: Synergy Systems is well-funded (Sequoia) but not yet profitable/public, adding +0.25% risk premium compared to AAA. 2. Growth/Stability: Strong NRR of 115% and Enterprise status reduces risk by -0.15%. 3. Sector Risk: SaaS is resilient but the project management space is crowded, adding +0.10%. 4. Execution Risk: Product roadmap delays and recent doubling of sales headcount (burn rate increase) adds +0.15%. Calculation: Base 5.50% + 0.25% (Tenant) - 0.15% (NRR/Retention) + 0.10% (Competition) + 0.15% (Execution/Burn) = 5.85%.",
+          "latencyMs": 2901,
+          "promptTokens": 1401,
+          "completionTokens": 281,
+          "totalTokens": 1682,
+          "cost": 0.0002525
+        },
+        {
+          "prediction": 6.1,
+          "reasoning": "Step 1: Identify Base Benchmark. Synergy Systems is an Enterprise-level SaaS company ($75M ARR) occupying high-quality office space. Given its profile, this aligns with 'Prime Office' benchmarks in a Tier-1 tech hub (e.g., Austin). Current Prime Office yields in such markets range from 5.50% to 6.50%. I will start at the midpoint of 6.00%.\n\nStep 2: Identify Adjustment Factors. \n- Tenant Quality: Synergy is a 'Scale-up' Enterprise SaaS with 20-35% growth, backed by Sequoia. This is strong but not 'AAA' credit. (Adjustment: -0.10% for strong VC backing/NRR of 115%).\n- Sector Risk: SaaS is high-growth but volatile; roadmap delays mentioned add slight risk. (Adjustment: +0.15%).\n- Market Position: Strong competition from Asana/Monday.com. (Adjustment: +0.05%).\n- Operational Scale: $75M ARR and 210 staff suggest a stable, mid-sized footprint. (Adjustment: 0.00%).\n\nStep 3: Calculate with Explicit Arithmetic.\nBase: 6.00%\n- Tenant Quality (Sequoia/NRR): -0.10%\n+ Roadmap/Execution Risk: +0.15%\n+ Competitive Pressure: +0.05%\n= Final: 6.10%\n\nStep 4: Validation Check. A 6.10% yield is consistent with a high-growth, well-funded tech tenant in a non-gateway but prime US office market, accounting for the lack of investment-grade credit rating offset by strong growth metrics.",
+          "latencyMs": 6061,
+          "promptTokens": 1400,
+          "completionTokens": 399,
+          "totalTokens": 1799,
+          "cost": 0.0002996
+        }
+      ],
+      "meanPrediction": 5.567,
+      "stdDeviation": 0.586,
+      "minPrediction": 4.75,
+      "maxPrediction": 6.1,
+      "error": -19.433,
+      "absoluteError": 19.433,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-19T10:33:31.190Z",
+      "completedAt": "2026-01-19T10:33:37.255Z",
+      "difficulty": {
+        "score": 39,
+        "level": "moderate",
+        "factors": {
+          "deltaComplexity": 24,
+          "distractorLoad": 10,
+          "interactionEffects": 5
+        }
+      },
+      "errorPattern": {
+        "pattern": "distractor_influence",
+        "severity": "severe",
+        "details": "Large error in scenario with 1 distractor(s) - possible distractor influence"
+      }
+    },
+    {
+      "scenarioId": "65b50e4c-4575-4723-8f22-eb457596dbf6",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 6.025,
+          "reasoning": "Step 1: Identify Base Benchmark. This property is a modern industrial/manufacturing facility for an established enterprise. Segment: Prime Industrial/Logistics (Austin, TX equivalent). Benchmark yield range: 5.75% - 6.50%. Starting point: 6.125% (Midpoint). Step 2: Adjustment Factors. 1) Tenant Quality: Forge is an 'Enterprise' manufacturer ($120M revenue) with blue-chip OEM clients and Tier-1 VC backing (Accel), but faces pricing pressure and sales turnover. Adjustment: -0.15% (Stronger than SME, weaker than AAA). 2) Lease Length: Contract-based model with 1-3 year ACV suggests a shorter-than-prime WAULT for the business, though the HQ lease is likely longer. Adjustment: +0.25% (Risk of shorter lease profile). 3) Building Condition: New HQ, modern amenities, advanced tech. Adjustment: -0.20%. 4) Location: Austin, TX is a high-growth, prime industrial hub. Adjustment: -0.15%. 5) Vacancy/Diversification: Single-tenant risk. Adjustment: +0.15%. Step 3: Calculation. Base: 6.125% - Tenant Quality: 0.15% + Lease Length: 0.25% - Building Condition: 0.20% - Location: 0.15% + Single Tenant Risk: 0.15% = Final: 6.025%. Step 4: Validation. A ~6.03% yield is appropriate for a VC-backed, high-growth manufacturing HQ in a Tier-1 US market like Austin, balancing strong funding against industry-specific pricing pressures.",
+          "latencyMs": 4111,
+          "promptTokens": 1373,
+          "completionTokens": 396,
+          "totalTokens": 1769,
+          "cost": 0.0002957
+        },
+        {
+          "prediction": 6,
+          "reasoning": "The property is classified as a modern industrial/manufacturing facility for an established enterprise. Based on the current Norwegian and international market for high-quality industrial assets, the Base Benchmark for 'Prime Industrial/Logistics' is approximately 5.25% - 6.25%. I am starting at a midpoint of 5.75%. Adjustment factors are as follows: 1. Tenant Quality: Forge Manufacturing is an 'Enterprise' level manufacturing firm ($120M revenue) with strong backing (Accel Partners), but faces competitive pricing pressure and sales turnover, warranting a slight premium (+0.15%). 2. Lease Length/WAULT: The company operates on 1-3 year customer contracts, suggesting a shorter-term operational horizon than a 10-year triple-net lease, increasing risk (+0.25%). 3. Building Condition: The property is a new headquarters with modern amenities and advanced tech, which reduces CAPEX risk (-0.20%). 4. Location: Austin, TX is a high-growth tech/industrial hub, providing strong residual value (-0.15%). 5. Diversification: Single-tenant occupancy increases concentration risk (+0.20%). Calculation: Base: 5.75% + Tenant Quality: 0.15% + Lease Risk: 0.25% - Building Condition: 0.20% - Location Quality: 0.15% + Single Tenant Risk: 0.20% = Final: 6.00%.",
+          "latencyMs": 3140,
+          "promptTokens": 1374,
+          "completionTokens": 335,
+          "totalTokens": 1709,
+          "cost": 0.0002714
+        },
+        {
+          "prediction": 6,
+          "reasoning": "Step 1: Identify Base Benchmark. This property is a modern industrial/manufacturing facility for an established enterprise. Based on current Norwegian/International benchmarks for high-quality industrial assets in secondary hubs (Austin equivalent), the Prime Industrial/Logistics yield range is 5.50% - 6.50%. Starting point: 6.00% (Midpoint). Step 2: Adjustment Factors. 1) Tenant Quality: Forge is an 'Enterprise' manufacturer ($120M revenue) with strong VC backing (Accel), but faces pricing pressure and sales turnover. Adjustment: -0.10% (Stronger than SME, weaker than AAA). 2) Lease Length: Contracts are 1-3 years, suggesting a short WAULT for the business, though the HQ lease is likely longer. Adjustment: +0.25% (Lease term risk). 3) Building Condition: New HQ, modern amenities, advanced tech. Adjustment: -0.20% (Low Capex). 4) Location: Austin is a high-growth tech/industrial hub. Adjustment: -0.15% (Strong micro-location). 5) Diversification: Single-tenant risk. Adjustment: +0.20%. Step 3: Calculation. Base: 6.00% - 0.10% (Tenant) + 0.25% (Lease Risk) - 0.20% (Condition) - 0.15% (Location) + 0.20% (Single Tenant) = 6.00%. Step 4: Validation. A 6.00% yield is highly realistic for a modern, single-tenant industrial HQ for a well-funded but non-investment grade manufacturing firm in a Tier 1 growth market.",
+          "latencyMs": 15375,
+          "promptTokens": 1374,
+          "completionTokens": 392,
+          "totalTokens": 1766,
+          "cost": 0.0002942
+        }
+      ],
+      "meanPrediction": 6.008,
+      "stdDeviation": 0.012,
+      "minPrediction": 6,
+      "maxPrediction": 6.025,
+      "error": 20.008,
+      "absoluteError": 20.008,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-19T10:33:31.190Z",
+      "completedAt": "2026-01-19T10:33:46.570Z",
+      "difficulty": {
+        "score": 39,
+        "level": "moderate",
+        "factors": {
+          "deltaComplexity": 24,
+          "distractorLoad": 10,
+          "interactionEffects": 5
+        }
+      },
+      "errorPattern": {
+        "pattern": "anchor_bias",
+        "severity": "severe",
+        "details": "Prediction (6.01) is closer to anchor value (4.00) than ground truth (-14.00)"
+      }
+    },
+    {
+      "scenarioId": "eee2dcfb-4cec-4737-87cf-a9eca1c0d232",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5.6,
+          "reasoning": "Step 1: Identify Base Benchmark. The property is a modern industrial/manufacturing facility for an enterprise-level tenant. Based on current Norwegian market conditions (comparable to Austin's industrial profile), the benchmark for Prime Industrial/Logistics is 5.25% - 5.75%. Starting point: 5.50%. Step 2: Identify Adjustment Factors. Tenant Quality: Forge is an 'Enterprise' manufacturer ($120M revenue) with blue-chip clients (Boeing/Tesla), but as a VC-backed Series A firm with high sales turnover and macro headwinds, they carry more risk than a traditional AAA credit (Adjustment: +0.25%). Lease Length/WAULT: New HQ move implies a long-term commitment, likely 10+ years (Adjustment: -0.20%). Building Condition: State-of-the-art, new construction with ESG/eco-friendly focus (Adjustment: -0.15%). Location: Prime industrial hub with high-tech manufacturing focus (Adjustment: -0.10%). Diversification: Single-tenant risk (Adjustment: +0.30%). Step 3: Calculate with Explicit Arithmetic. Base: 5.50% + Tenant Risk: 0.25% - Lease Length: 0.20% - Building Quality: 0.15% - Location: 0.10% + Single Tenant Risk: 0.30% = Final: 5.60%. Step 4: Validation. A 5.60% yield is highly realistic for a modern, single-tenant industrial asset with a strong but non-investment grade growth-stage tenant.",
+          "latencyMs": 3376,
+          "promptTokens": 1324,
+          "completionTokens": 366,
+          "totalTokens": 1690,
+          "cost": 0.00027880000000000005
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "Step 1: Identify Base Benchmark. The property is a modern industrial/manufacturing facility for an enterprise-level tenant. Segment: Prime Industrial/Logistics (Austin, TX equivalent adjusted for Norwegian methodology). Benchmark yield range: 5.25% - 6.25%. Starting point (Midpoint): 5.75%.\n\nStep 2: Identify Adjustment Factors. 1) Tenant Quality: Enterprise level ($120M revenue) with Tier-1 clients (Boeing/Tesla) but venture-backed (Series A) and facing high sales turnover/macro pressures (+0.15% risk premium). 2) Lease Length: New HQ implies long-term commitment, likely 10+ years (-0.25%). 3) Building Condition: State-of-the-art, new construction, ESG-compliant (-0.20%). 4) Location: Strategic for aerospace/auto (Austin hub), high demand (-0.10%). 5) Vacancy Risk: Single-tenant concentration risk (+0.25%). 6) Diversification: Single tenant (+0.15%).\n\nStep 3: Calculate with Explicit Arithmetic.\nBase: 5.75%\n+ Tenant Risk (VC-backed/Turnover): +0.15%\n- Lease Length (New HQ/Long WAULT): -0.25%\n- Building Condition (Modern/Eco-friendly): -0.20%\n- Location Quality (Prime Industrial Hub): -0.10%\n+ Single Tenant Concentration: +0.25%\n+ Lack of Diversification: +0.15%\n= Final: 5.75%\n\nStep 4: Validation Check. A 5.75% yield is highly realistic for a modern, single-tenant industrial asset with a strong but non-investment grade (VC-funded) tenant in a prime growth market. The operational risks (sales turnover) are offset by the high-quality physical asset and strategic industry positioning.",
+          "latencyMs": 3816,
+          "promptTokens": 1324,
+          "completionTokens": 449,
+          "totalTokens": 1773,
+          "cost": 0.00031200000000000005
+        },
+        {
+          "prediction": 5.7,
+          "reasoning": "Step 1: Identify Base Benchmark - The property is a modern industrial/manufacturing facility for an enterprise-level tenant. Given the Austin, TX context but applying Norwegian commercial standards for a 'Prime Industrial/Logistics' asset, the benchmark yield range is 5.25% - 6.25%. I will start at the midpoint of 5.75%.\n\nStep 2: Identify Adjustment Factors - Tenant Quality: Forge Manufacturing is a 'Manufacturing Enterprise' ($120M revenue) with blue-chip clients (Boeing, Tesla), but as a VC-backed Series A company, it lacks an investment-grade credit rating (+0.25%). Lease Length: The recent move to a state-of-the-art HQ implies a long-term commitment, likely a 10-15 year lease (-0.30%). Building Condition: Modern, state-of-the-art facility with R&D and ESG features (-0.20%). Location: Austin is a high-growth tech/industrial hub (-0.15%). Vacancy Risk: Single-tenant exposure increases risk (+0.20%). Diversification: Single tenant (+0.15%).\n\nStep 3: Calculate with Explicit Arithmetic - \nBase: 5.75%\n+ Tenant Credit Risk (Non-IG): +0.25%\n- Long WAULT/Commitment: -0.30%\n- Modern/ESG Building: -0.20%\n- Prime Austin Location: -0.15%\n+ Single Tenant Concentration: +0.35%\n= Final: 5.70%\n\nStep 4: Validation - A 5.70% yield is appropriate for a high-growth, well-funded industrial enterprise in a Tier-1 growth market, balancing the 'startup' nature of the funding with the 'enterprise' scale of the revenue ($120M).",
+          "latencyMs": 5549,
+          "promptTokens": 1323,
+          "completionTokens": 429,
+          "totalTokens": 1752,
+          "cost": 0.0003039
+        }
+      ],
+      "meanPrediction": 5.683,
+      "stdDeviation": 0.062,
+      "minPrediction": 5.6,
+      "maxPrediction": 5.75,
+      "error": 21.683,
+      "absoluteError": 21.683,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-19T10:33:46.820Z",
+      "completedAt": "2026-01-19T10:33:52.376Z",
+      "difficulty": {
+        "score": 39,
+        "level": "moderate",
+        "factors": {
+          "deltaComplexity": 24,
+          "distractorLoad": 10,
+          "interactionEffects": 5
+        }
+      },
+      "errorPattern": {
+        "pattern": "anchor_bias",
+        "severity": "severe",
+        "details": "Prediction (5.68) is closer to anchor value (4.00) than ground truth (-16.00)"
+      }
+    },
+    {
+      "scenarioId": "1cae7756-3377-492b-9ba1-601960ca6b24",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 5.55,
+          "reasoning": "Step 1: Identify Base Benchmark. This property belongs to the 'Industrial/Light Manufacturing' segment. In the current market, prime industrial yields for well-located assets range from 5.50% to 6.50%. Given the specialized nature of precision metal fabrication, I will use a midpoint of 6.00% as the starting benchmark. Step 2: Identify Adjustment Factors. Tenant Quality: Forge Manufacturing is a 'Manufacturing Enterprise' ($120M revenue) with strong backing (Sequoia) and 115% NRR, which is superior to typical SMB manufacturing (Down -0.25%). Lease Length: Assuming a standard long-term industrial lease for a specialized facility (Down -0.15%). Building Condition: Precision manufacturing requires high-spec modern facilities (Down -0.10%). Location: Austin, TX is a high-growth tech/industrial hub (Down -0.20%). Diversification: Single-tenant risk (Up +0.25%). Step 3: Calculate with Explicit Arithmetic. Base: 6.00% - Tenant Quality: 0.25% - Lease Length: 0.15% - Building Condition: 0.10% - Location Quality: 0.20% + Single Tenant Risk: 0.25% = Final: 5.55%. Step 4: Validation Check. A 5.55% yield is appropriate for a high-growth, VC-backed enterprise in a Tier-1 growth market like Austin, reflecting a premium over generic industrial assets but a discount compared to investment-grade logistics.",
+          "latencyMs": 3360,
+          "promptTokens": 1310,
+          "completionTokens": 356,
+          "totalTokens": 1666,
+          "cost": 0.00027340000000000003
+        },
+        {
+          "prediction": 5.8,
+          "reasoning": "Step 1: Identify Base Benchmark. The property is a specialized manufacturing facility for a growth-stage enterprise. This falls under 'Industrial/Light Manufacturing - Secondary Market' (Austin, TX, while a tech hub, is secondary to core logistics hubs for industrial yields). Benchmark yield range for modern industrial: 5.75% - 6.75%. Starting point (Midpoint): 6.25%.\n\nStep 2: Identify Adjustment Factors. 1. Tenant Quality: Forge is a 'Manufacturing Enterprise' ($120M revenue) with strong backing (Sequoia) and 115% NRR, but as a VC-backed growth company rather than an investment-grade credit, it carries higher risk than a legacy conglomerate (-0.10% for growth/funding, +0.25% for lack of IG credit = +0.15% net). 2. Lease/Revenue Growth: The company is hitting 2-8% growth benchmarks for enterprises but showing 'notable upticks' and 115% NRR, suggesting high tenant retention and stability (-0.20%). 3. Sector Risk: Aerospace/Automotive contracts are long-term and high-moat (-0.15%). 4. Location: Austin is a high-growth market with strong industrial demand (-0.25%).\n\nStep 3: Calculate with Explicit Arithmetic. Base: 6.25% + Tenant Credit Risk: 0.15% - Retention/Growth Profile: 0.20% - Sector Moat: 0.15% - Location Premium: 0.25% = Final: 5.80%.\n\nStep 4: Validation. A 5.80% yield is consistent with a well-funded, high-growth manufacturing tenant in a Tier 1.5/2 US growth market like Austin.",
+          "latencyMs": 15248,
+          "promptTokens": 1310,
+          "completionTokens": 420,
+          "totalTokens": 1730,
+          "cost": 0.000299
+        },
+        {
+          "prediction": 5.4,
+          "reasoning": "Step 1: Identify Base Benchmark. The property is an industrial/manufacturing facility for a growth-stage enterprise. Given the $120M revenue and high-spec aerospace/automotive focus, it aligns with 'Industrial/Light Manufacturing - Secondary City' (Austin, TX vs. Prime Oslo/Global hubs). Benchmark yield range for modern industrial: 5.50% - 6.50%. Starting midpoint: 6.00%.\n\nStep 2: Identify Adjustment Factors. Tenant Quality: Forge is a 'Manufacturing Enterprise' ($100M+ revenue) with Sequoia backing and 115% NRR, but as a VC-backed growth company rather than an investment-grade conglomerate, it carries slightly higher risk than AAA (-0.10%). Lease Length: Assuming a standard industrial lease for a scale-up, likely 7-10 years (Neutral 0.00%). Building Condition: High-precision metal fabrication requires modern, specialized facilities with low capex needs (-0.25%). Location: Austin is a high-growth tech/industrial hub, reducing exit risk (-0.15%). Sector Growth: The company's 10% price increase and expansion into eco-friendly lines suggest strong covenant strength (-0.10%).\n\nStep 3: Calculate with Explicit Arithmetic.\nBase: 6.00%\n- Tenant Quality (Strong growth-stage): -0.10%\n+ Lease/WAULT (Standard): +0.00%\n- Building Condition (Modern/Specialized): -0.25%\n- Location (Austin Growth Hub): -0.15%\n- Sector/Covenant Strength: -0.10%\n= Final: 5.40%\n\nStep 4: Validation. A 5.40% yield is appropriate for a high-growth, well-funded manufacturing tenant in a Tier 1 tech/industrial market like Austin, sitting just below the prime industrial midpoint due to the quality of the VC backing and the specialized nature of the asset.",
+          "latencyMs": 15331,
+          "promptTokens": 1310,
+          "completionTokens": 455,
+          "totalTokens": 1765,
+          "cost": 0.000313
+        }
+      ],
+      "meanPrediction": 5.583,
+      "stdDeviation": 0.165,
+      "minPrediction": 5.4,
+      "maxPrediction": 5.8,
+      "error": -13.417,
+      "absoluteError": 13.417,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-19T10:33:46.820Z",
+      "completedAt": "2026-01-19T10:34:02.158Z",
+      "difficulty": {
+        "score": 49,
+        "level": "moderate",
+        "factors": {
+          "deltaComplexity": 24,
+          "distractorLoad": 20,
+          "interactionEffects": 5
+        }
+      },
+      "errorPattern": {
+        "pattern": "anchor_bias",
+        "severity": "severe",
+        "details": "Prediction (5.58) is closer to anchor value (4.00) than ground truth (19.00)"
+      }
+    },
+    {
+      "scenarioId": "8fa21c9d-3b37-4685-acb5-d9cdd274026d",
+      "status": "completed",
+      "rollouts": [
+        {
+          "prediction": 6.25,
+          "reasoning": "The property is classified as Modern Industrial/Light Manufacturing. Given the company's profile as a 'Manufacturing Enterprise' with $120M ARR, it falls into the 2-8% growth benchmark, indicating a stable, mature tenant. Base Benchmark: Prime Industrial/Light Manufacturing (Austin/Regional Hub equivalent) is 5.75% - 6.75%. Starting Point: 6.25% (Midpoint). Adjustments: 1. Tenant Quality: -0.25% (Strong backing by Sequoia, $120M revenue, and Fortune 500 client base). 2. Lease/WAULT: +0.15% (Project-based model and recent Series B status suggest higher long-term covenant risk than a legacy conglomerate). 3. Market Position: -0.10% (Strategic partnership with leading automotive manufacturer and high 115% NRR). 4. Operational Risk: +0.20% (Supply chain disruptions and product roadmap delays mentioned in recent developments). Calculation: Base 6.25% - 0.25% (Tenant Quality) + 0.15% (Lease Risk) - 0.10% (Market Position) + 0.20% (Operational Risk) = 6.25%.",
+          "latencyMs": 2978,
+          "promptTokens": 1320,
+          "completionTokens": 295,
+          "totalTokens": 1615,
+          "cost": 0.00025
+        },
+        {
+          "prediction": 5.75,
+          "reasoning": "The property is classified as Modern Industrial/Light Manufacturing. Given the tenant's profile as a high-growth 'Manufacturing Enterprise' with $120M ARR, they fall into the 2-8% growth benchmark, indicating stability but higher risk than a traditional AAA credit. Base Benchmark (Prime Industrial/Logistics): 5.25%. Adjustments: 1. Tenant Quality: +0.25% (Strong VC backing and $120M revenue, but project-based revenue and recent supply chain delays add risk compared to a global conglomerate). 2. Lease Length: -0.15% (Assumed long-term commitment given the specialized nature of 'advanced metal fabrication' equipment installation). 3. Building Condition: -0.10% (Specialized aerospace/automotive production requires modern, high-spec facilities). 4. Location: +0.10% (Austin is a strong growth hub, but manufacturing sites carry higher exit risk than pure logistics). 5. Diversification: +0.40% (Single-tenant risk is significant for a $400M valuation startup). Calculation: Base 5.25% + 0.25% (Tenant) - 0.15% (WAULT) - 0.10% (Condition) + 0.10% (Location) + 0.40% (Single Tenant) = 5.75%.",
+          "latencyMs": 2954,
+          "promptTokens": 1320,
+          "completionTokens": 319,
+          "totalTokens": 1639,
+          "cost": 0.0002596
+        },
+        {
+          "prediction": 5.85,
+          "reasoning": "Step 1: Base Benchmark - This property is classified as 'Industrial/Light Manufacturing - Prime/Growth'. Given the company's profile as a $120M revenue enterprise in the advanced manufacturing sector, the benchmark yield for high-quality industrial assets in a strong tech/manufacturing hub like Austin is 5.50% - 6.50%. Starting point: 6.00%. Step 2: Adjustment Factors - Tenant Quality: Forge Manufacturing is a 'Manufacturing Enterprise' with $120M ARR, placing it in the 2-8% growth bracket. However, its NRR of 115% and Sequoia backing suggest higher stability than a typical SMB, but lower than a AAA credit rating (-0.10%). Lease Length/WAULT: The prompt implies a single-tenant growth-stage setup; without a specified 10+ year lease, we assume standard market WAULT (Neutral 0.00%). Building Condition: Advanced metal fabrication requires high-spec, modern facilities with significant tenant improvements (-0.20%). Location: Austin is a Tier-1 growth market for aerospace/auto (+0.00% as it's already in the base). Risk: Product roadmap delays and project-based revenue (vs. SaaS recurring) increase cash flow volatility (+0.15%). Step 3: Calculation - Base: 6.00% - Tenant Quality (Scale/Backing): -0.10% - Building Condition (Modern/Specialized): -0.20% + Operational Risk (Roadmap/Project-based): +0.15% = Final: 5.85%. Step 4: Validation - A 5.85% yield is consistent with a high-growth, venture-backed industrial tenant in a prime US tech hub, reflecting a premium over traditional manufacturing but a discount compared to investment-grade logistics.",
+          "latencyMs": 5351,
+          "promptTokens": 1319,
+          "completionTokens": 411,
+          "totalTokens": 1730,
+          "cost": 0.0002963
+        }
+      ],
+      "meanPrediction": 5.95,
+      "stdDeviation": 0.216,
+      "minPrediction": 5.75,
+      "maxPrediction": 6.25,
+      "error": 6.95,
+      "absoluteError": 6.95,
+      "withinTolerance": false,
+      "rolloutConsistency": 0,
+      "startedAt": "2026-01-19T10:33:46.820Z",
+      "completedAt": "2026-01-19T10:33:52.179Z",
+      "difficulty": {
+        "score": 49,
+        "level": "moderate",
+        "factors": {
+          "deltaComplexity": 24,
+          "distractorLoad": 20,
+          "interactionEffects": 5
+        }
+      },
+      "errorPattern": {
+        "pattern": "anchor_bias",
+        "severity": "severe",
+        "details": "Prediction (5.95) is closer to anchor value (4.00) than ground truth (-1.00)"
+      }
+    }
+  ],
+  "completedAt": "2026-01-19T10:34:02.162Z",
+  "aggregateMetrics": {
+    "hitRate": 0,
+    "meanError": -11.72,
+    "rmse": 25.958,
+    "avgLatencyMs": 5470,
+    "directionalAccuracy": 50,
+    "avgStdDeviation": 0.248,
+    "avgConsistency": 0,
+    "totalPromptTokens": 36716,
+    "totalCompletionTokens": 9634,
+    "totalTokens": 46350,
+    "totalCost": 0.0075,
+    "avgDifficulty": 47,
+    "difficultyDistribution": {
+      "trivial": 0,
+      "easy": 1,
+      "moderate": 5,
+      "hard": 3,
+      "expert": 0
+    },
+    "errorPatternSummary": {
+      "systematicBias": "underestimate",
+      "biasStrength": 52,
+      "anchorBiasRate": 44,
+      "deltaBlindnessRate": 0,
+      "distractorInfluenceRate": 56,
+      "errorByDifficulty": {
+        "easy": 5.35,
+        "moderate": 16.298,
+        "hard": 38.642
+      }
+    }
+  }
+}

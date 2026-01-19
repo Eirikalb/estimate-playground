@@ -7,6 +7,13 @@ import type {
   PromptTemplate,
   TestSet,
 } from "@/domains/schema";
+import {
+  getDomain,
+  getDomainConfig as getRegistryDomainConfig,
+  getDomainFacts as getRegistryDomainFacts,
+  listDomains as listRegistryDomains,
+  ensureDomainsInitialized,
+} from "@/domains";
 
 // Paths
 const DATA_DIR = path.join(process.cwd(), "data");
@@ -105,8 +112,21 @@ function getDomainFileName(id: string): string {
 
 /**
  * Load a domain config by ID
+ * First tries the domain registry (plugins), then falls back to file-based loading
  */
 export async function loadDomainConfig(id: string): Promise<DomainConfig | null> {
+  // Try registry first (after ensuring domains are initialized)
+  try {
+    await ensureDomainsInitialized();
+    const registryConfig = getRegistryDomainConfig(id);
+    if (registryConfig) {
+      return registryConfig;
+    }
+  } catch {
+    // Registry not available, fall through to file-based
+  }
+
+  // Fallback to file-based loading
   try {
     const fileName = getDomainFileName(id);
     const filePath = path.join(DOMAINS_DIR, `${fileName}.json`);
@@ -119,8 +139,21 @@ export async function loadDomainConfig(id: string): Promise<DomainConfig | null>
 
 /**
  * Load expert facts for a domain
+ * First tries the domain registry (plugins), then falls back to file-based loading
  */
 export async function loadExpertFacts(domainId: string): Promise<ExpertFacts | null> {
+  // Try registry first
+  try {
+    await ensureDomainsInitialized();
+    const registryFacts = getRegistryDomainFacts(domainId);
+    if (registryFacts) {
+      return registryFacts;
+    }
+  } catch {
+    // Registry not available, fall through to file-based
+  }
+
+  // Fallback to file-based loading
   try {
     const fileName = getDomainFileName(domainId);
     const filePath = path.join(DOMAINS_DIR, `${fileName}.facts.json`);
@@ -132,38 +165,92 @@ export async function loadExpertFacts(domainId: string): Promise<ExpertFacts | n
 }
 
 /**
+ * Get a domain plugin by ID (from registry only)
+ */
+export async function getDomainPlugin(id: string) {
+  await ensureDomainsInitialized();
+  return getDomain(id);
+}
+
+/**
  * List all available domains
+ * Combines registry domains with file-based domains (registry takes precedence)
  */
 export async function listDomains(): Promise<Array<{ id: string; name: string }>> {
+  const domainMap = new Map<string, { id: string; name: string }>();
+
+  // First, try to get domains from registry
+  try {
+    await ensureDomainsInitialized();
+    const registryDomains = listRegistryDomains();
+    for (const domain of registryDomains) {
+      domainMap.set(domain.id, { id: domain.id, name: domain.name });
+    }
+  } catch {
+    // Registry not available
+  }
+
+  // Then, scan file-based domains (don't override registry)
   try {
     const files = await fs.readdir(DOMAINS_DIR);
     const configFiles = files.filter(
       (f) => f.endsWith(".json") && !f.includes(".facts.")
     );
-    
-    const domains: Array<{ id: string; name: string }> = [];
+
     for (const file of configFiles) {
       try {
         const content = await fs.readFile(path.join(DOMAINS_DIR, file), "utf-8");
         const config = JSON.parse(content) as DomainConfig;
-        domains.push({ id: config.id, name: config.name });
+        // Only add if not already in registry
+        if (!domainMap.has(config.id)) {
+          domainMap.set(config.id, { id: config.id, name: config.name });
+        }
       } catch {
         // Skip invalid files
       }
     }
-    
-    return domains;
   } catch {
-    return [];
+    // Directory scan failed
   }
+
+  return Array.from(domainMap.values()).sort((a, b) => a.name.localeCompare(b.name));
 }
 
 // ============ Prompt Templates ============
 
 /**
- * Load a prompt template by name
+ * Get the templates directory for a domain
  */
-export async function loadPromptTemplate(name: string): Promise<string | null> {
+function getDomainTemplatesDir(domainId: string): string {
+  // Map domain IDs to folder names
+  const folderMap: Record<string, string> = {
+    "real-estate-yield": "real-estate",
+    "financial-forecasting": "financial",
+  };
+  const folder = folderMap[domainId] || domainId;
+  return path.join(DOMAINS_DIR, folder, "prompts");
+}
+
+/**
+ * Load a prompt template by name, optionally for a specific domain
+ * Domain-specific templates take precedence over global templates
+ */
+export async function loadPromptTemplate(
+  name: string,
+  domainId?: string
+): Promise<string | null> {
+  // Try domain-specific template first
+  if (domainId) {
+    try {
+      const domainTemplatesDir = getDomainTemplatesDir(domainId);
+      const domainFilePath = path.join(domainTemplatesDir, `${name}.mustache`);
+      return await fs.readFile(domainFilePath, "utf-8");
+    } catch {
+      // Fall through to global template
+    }
+  }
+
+  // Fall back to global template
   try {
     const filePath = path.join(TEMPLATES_DIR, `${name}.mustache`);
     return await fs.readFile(filePath, "utf-8");
@@ -173,18 +260,51 @@ export async function loadPromptTemplate(name: string): Promise<string | null> {
 }
 
 /**
- * List all available prompt templates
+ * List all available prompt templates for a domain
+ * Returns domain-specific templates if available, otherwise global templates
  */
-export async function listPromptTemplates(): Promise<PromptTemplate[]> {
+export async function listPromptTemplates(domainId?: string): Promise<PromptTemplate[]> {
+  const templates: PromptTemplate[] = [];
+
+  // Try domain-specific templates first
+  if (domainId) {
+    try {
+      const domainTemplatesDir = getDomainTemplatesDir(domainId);
+      const files = await fs.readdir(domainTemplatesDir);
+      const templateFiles = files.filter((f) => f.endsWith(".mustache"));
+
+      for (const file of templateFiles) {
+        const name = file.replace(".mustache", "");
+        const content = await fs.readFile(
+          path.join(domainTemplatesDir, file),
+          "utf-8"
+        );
+
+        templates.push({
+          id: name,
+          name: formatTemplateName(name),
+          description: getTemplateDescription(name, domainId),
+          template: content,
+        });
+      }
+
+      if (templates.length > 0) {
+        return templates;
+      }
+    } catch {
+      // Fall through to global templates
+    }
+  }
+
+  // Fall back to global templates
   try {
     const files = await fs.readdir(TEMPLATES_DIR);
     const templateFiles = files.filter((f) => f.endsWith(".mustache"));
-    
-    const templates: PromptTemplate[] = [];
+
     for (const file of templateFiles) {
       const name = file.replace(".mustache", "");
       const content = await fs.readFile(path.join(TEMPLATES_DIR, file), "utf-8");
-      
+
       templates.push({
         id: name,
         name: formatTemplateName(name),
@@ -192,7 +312,7 @@ export async function listPromptTemplates(): Promise<PromptTemplate[]> {
         template: content,
       });
     }
-    
+
     return templates;
   } catch {
     return [];
@@ -219,10 +339,27 @@ function formatTemplateName(name: string): string {
     .join(" ");
 }
 
-function getTemplateDescription(name: string): string {
+function getTemplateDescription(name: string, domainId?: string): string {
+  // Domain-specific descriptions
+  if (domainId === "financial-forecasting") {
+    const financialDescriptions: Record<string, string> = {
+      persona: "Senior equity research analyst with growth metrics expertise",
+      "chain-of-thought": "Step-by-step growth rate analysis",
+      "chain-of-thought-enhanced": "Enhanced methodology with explicit arithmetic",
+      "few-shot": "Learning from company growth examples",
+      minimal: "Minimal context, baseline test",
+      "benchmark-only": "Only growth benchmarks, no additional guidance",
+    };
+    if (financialDescriptions[name]) {
+      return financialDescriptions[name];
+    }
+  }
+
+  // Default (real-estate or generic) descriptions
   const descriptions: Record<string, string> = {
     persona: "Full expert persona with all facts and methodology",
     "chain-of-thought": "Structured step-by-step reasoning approach",
+    "chain-of-thought-enhanced": "Enhanced methodology with explicit calculations",
     "few-shot": "Learning from examples approach",
     minimal: "Bare minimum context, baseline test",
     "benchmark-only": "Only benchmark ranges, no additional guidance",

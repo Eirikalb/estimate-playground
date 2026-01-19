@@ -18,7 +18,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import type { PromptTemplate, Scenario, ScenarioResult, RolloutResult, TestSet } from "@/domains/schema";
 import { AVAILABLE_MODELS } from "@/lib/openrouter";
-import { DomainSelector, AVAILABLE_DOMAINS } from "@/components/domain-selector";
+import { DomainSelector } from "@/components/domain-selector";
 
 interface PlaygroundRollout {
   prediction: number;
@@ -84,17 +84,6 @@ export default function Playground() {
 
     setIsHydrated(true);
 
-    // Load templates
-    fetch("/api/templates")
-      .then((res) => res.json())
-      .then((data) => {
-        setTemplates(data);
-        if (data.length > 0 && !savedTemplate) {
-          setSelectedTemplate(data[0].id);
-          setCustomTemplate(data[0].template);
-        }
-      });
-
     // Load test sets
     fetch("/api/test-sets")
       .then((res) => res.json())
@@ -106,6 +95,26 @@ export default function Playground() {
       })
       .catch((err) => console.error("Failed to load test sets:", err));
   }, []);
+
+  // Load domain-specific templates when domain changes
+  useEffect(() => {
+    if (!isHydrated) return;
+
+    const savedTemplate = localStorage.getItem('playground_template');
+    
+    fetch(`/api/templates?domain=${encodeURIComponent(selectedDomain)}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setTemplates(data);
+        // If saved template exists in new templates, keep it; otherwise select first
+        const savedExists = data.some((t: PromptTemplate) => t.id === savedTemplate);
+        if (data.length > 0 && !savedExists) {
+          setSelectedTemplate(data[0].id);
+          setCustomTemplate(data[0].template);
+        }
+      })
+      .catch((err) => console.error("Failed to load templates:", err));
+  }, [selectedDomain, isHydrated]);
 
   useEffect(() => {
     const template = templates.find((t) => t.id === selectedTemplate);

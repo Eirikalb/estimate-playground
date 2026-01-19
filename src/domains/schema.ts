@@ -14,11 +14,23 @@ export const AnchorSchema = z.object({
   description: z.string(),
 });
 
+// Tolerance mode for ground truth evaluation
+export const ToleranceModeSchema = z.enum(["fixed", "percentage"]);
+
 export const DomainConfigSchema = z.object({
   id: z.string(),
   name: z.string(),
   description: z.string(),
   outputUnit: z.string(), // e.g., "%", "hours", "x multiple"
+
+  // UI Labels (with defaults for backward compatibility)
+  outputLabel: z.string().default("Estimate"), // e.g., "Yield", "Growth Rate"
+  entityLabel: z.string().default("Subject"), // e.g., "Property", "Company"
+  scenarioLabel: z.string().default("Scenario Details"), // e.g., "Property Details", "Company Profile"
+
+  // Tolerance configuration
+  toleranceMode: ToleranceModeSchema.default("fixed"), // "fixed" = absolute, "percentage" = relative
+  toleranceValue: z.number().default(0.35), // Fixed: ±0.35, Percentage: ±10%
 
   // Hidden rules for ground truth calculation
   anchors: z.record(z.string(), AnchorSchema),
@@ -29,6 +41,7 @@ export const DomainConfigSchema = z.object({
 export type DomainConfig = z.infer<typeof DomainConfigSchema>;
 export type Delta = z.infer<typeof DeltaSchema>;
 export type Anchor = z.infer<typeof AnchorSchema>;
+export type ToleranceMode = z.infer<typeof ToleranceModeSchema>;
 
 // Expert Facts Schema
 // Freeform knowledge chunks that can be injected into prompts
@@ -90,24 +103,61 @@ export const RolloutResultSchema = z.object({
   latencyMs: z.number(),
   startedAt: z.string().optional(),
   completedAt: z.string().optional(),
+  // Token usage and cost tracking
+  promptTokens: z.number().optional(),
+  completionTokens: z.number().optional(),
+  totalTokens: z.number().optional(),
+  cost: z.number().optional(), // Cost in USD
 });
 
 export type RolloutResult = z.infer<typeof RolloutResultSchema>;
+
+// Difficulty Score Schema
+// Measures how challenging a scenario is based on its composition
+export const DifficultyScoreSchema = z.object({
+  score: z.number(), // 0-100, higher = more difficult
+  level: z.enum(["trivial", "easy", "moderate", "hard", "expert"]),
+  factors: z.object({
+    deltaComplexity: z.number(), // 0-100, based on number and type of deltas
+    distractorLoad: z.number(), // 0-100, distractors add cognitive noise
+    interactionEffects: z.number(), // 0-100, multiplicative deltas compound
+  }),
+});
+
+export type DifficultyScore = z.infer<typeof DifficultyScoreSchema>;
+
+// Error Pattern Schema
+// Categorizes the type of error made by the model
+export const ErrorPatternSchema = z.object({
+  pattern: z.enum([
+    "accurate", // Within tolerance
+    "systematic_overestimate", // Consistently too high
+    "systematic_underestimate", // Consistently too low
+    "anchor_bias", // Prediction too close to anchor value
+    "delta_blindness", // Failed to account for deltas
+    "distractor_influence", // Distractors inappropriately affected prediction
+    "magnitude_error", // Right direction, wrong magnitude
+  ]),
+  severity: z.enum(["minor", "moderate", "severe"]),
+  details: z.string().optional(), // Explanation of the detected pattern
+});
+
+export type ErrorPattern = z.infer<typeof ErrorPatternSchema>;
 
 // Scenario Result Schema
 // After running a scenario through an LLM (supports multiple rollouts)
 
 export const ScenarioResultSchema = z.object({
   scenarioId: z.string(),
-  
+
   // Timing and status
   status: z.enum(["pending", "running", "completed", "failed"]).default("pending"),
   startedAt: z.string().optional(),
   completedAt: z.string().optional(),
-  
+
   // Multiple rollouts for variance estimation
   rollouts: z.array(RolloutResultSchema),
-  
+
   // Aggregate stats across rollouts
   meanPrediction: z.number(),
   stdDeviation: z.number(),
@@ -118,9 +168,13 @@ export const ScenarioResultSchema = z.object({
   error: z.number(), // meanPrediction - groundTruth
   absoluteError: z.number(),
   withinTolerance: z.boolean(),
-  
+
   // Consistency metrics
   rolloutConsistency: z.number(), // % of rollouts within tolerance
+
+  // Difficulty and error pattern analysis
+  difficulty: DifficultyScoreSchema.optional(),
+  errorPattern: ErrorPatternSchema.optional(),
 });
 
 export type ScenarioResult = z.infer<typeof ScenarioResultSchema>;
@@ -162,10 +216,38 @@ export const BenchmarkRunSchema = z.object({
     rmse: z.number(),
     directionalAccuracy: z.number().optional(), // For twin tests
     avgLatencyMs: z.number(),
-    totalCost: z.number().optional(),
+    // Token usage and cost aggregation
+    totalPromptTokens: z.number().optional(),
+    totalCompletionTokens: z.number().optional(),
+    totalTokens: z.number().optional(),
+    totalCost: z.number().optional(), // Total cost in USD
     // Variance metrics (when rollouts > 1)
     avgStdDeviation: z.number().optional(), // Average std deviation across scenarios
     avgConsistency: z.number().optional(), // Average rollout consistency
+    // Difficulty metrics
+    avgDifficulty: z.number().optional(), // Average difficulty score (0-100)
+    difficultyDistribution: z.object({
+      trivial: z.number(),
+      easy: z.number(),
+      moderate: z.number(),
+      hard: z.number(),
+      expert: z.number(),
+    }).optional(),
+    // Error pattern analysis
+    errorPatternSummary: z.object({
+      systematicBias: z.enum(["overestimate", "underestimate", "neutral"]).optional(),
+      biasStrength: z.number().optional(), // 0-100, how strong the bias is
+      anchorBiasRate: z.number().optional(), // % of scenarios with anchor bias
+      deltaBlindnessRate: z.number().optional(), // % of scenarios with delta blindness
+      distractorInfluenceRate: z.number().optional(), // % affected by distractors
+      errorByDifficulty: z.object({
+        trivial: z.number().optional(),
+        easy: z.number().optional(),
+        moderate: z.number().optional(),
+        hard: z.number().optional(),
+        expert: z.number().optional(),
+      }).optional(),
+    }).optional(),
   }).optional(), // Optional while run is in progress
 });
 

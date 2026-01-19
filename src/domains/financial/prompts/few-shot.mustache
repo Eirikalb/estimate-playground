@@ -1,0 +1,26 @@
+You are estimating annual revenue growth rates for companies.
+
+Here are three example analyses:
+
+**Example 1:**
+Company: Series B SaaS company with $18M ARR, 125% NRR, recently doubled sales team, operating in enterprise collaboration space.
+Analysis: SaaS Scale-up baseline (55% growth). Strong NRR above 120% is a major positive (+15%). Recently scaled sales team suggests growth investment (+10%). Position at higher end.
+Result: {"reasoning": "Series B SaaS with excellent retention metrics and aggressive sales investment signals continued high growth trajectory", "growth_rate": 70}
+
+**Example 2:**
+Company: Manufacturing SMB with $25M revenue, stable customer base, no major expansion plans, benefiting from nearshoring trends.
+Analysis: Manufacturing SMB baseline (8% growth). Stable customer base is neutral. Macroeconomic tailwind from nearshoring (+6%). Slight upward adjustment.
+Result: {"reasoning": "Traditional manufacturing benefiting from industry tailwinds but no aggressive growth initiatives", "growth_rate": 14}
+
+**Example 3:**
+Company: Fintech startup with $3M revenue, recently obtained banking license, facing increased regulatory compliance costs and competitor pricing pressure.
+Analysis: Fintech Startup baseline (100% growth). License is milestone but compliance costs and pricing pressure are negatives. Moderate downward adjustment.
+Result: {"reasoning": "Early fintech with regulatory approval but facing cost headwinds and competitive pressure", "growth_rate": 85}
+
+---
+
+Now evaluate this company:
+
+{{scenario.contextDescription}}
+
+Return JSON only: {"reasoning": "<your analysis following the same pattern>", "growth_rate": <number>}

@@ -1,0 +1,51 @@
+You are a senior equity research analyst estimating annual revenue growth rates.
+
+{{#facts.benchmarks}}
+{{{content}}}
+{{/facts.benchmarks}}
+
+---
+
+### Company to Analyze
+
+{{scenario.contextDescription}}
+
+---
+
+### Your Task
+
+Follow this structured methodology to estimate the annual revenue growth rate:
+
+**Step 1: Identify Base Benchmark**
+- What company stage and industry is this? (e.g., "SaaS Scale-up", "Fintech Startup")
+- What is the benchmark growth rate range?
+- Choose your starting point within that range (typically the midpoint unless clearly high/low performer)
+
+**Step 2: Identify All Adjustment Factors**
+List each factor that affects growth and its direction:
+- NRR/Retention (>120% = UP, <90% = DOWN)
+- Sales capacity (scaling team = UP, turnover/issues = DOWN)
+- Market expansion (new markets = UP, exits = DOWN)
+- Product innovation (launches = UP, delays/gaps = DOWN)
+- Macro conditions (tailwinds = UP, headwinds = DOWN)
+- Pricing dynamics (increases = UP, pressure = DOWN)
+
+**Step 3: Calculate with Explicit Arithmetic**
+Show your calculation step by step:
+
+Base: [XX]%
+± [Factor 1]: [+/-X]%
+± [Factor 2]: [+/-X]%
+± [Factor 3]: [+/-X]%
+= Final: [XX]%
+
+**Step 4: Validation Check**
+- Is the growth rate reasonable for this company type?
+- Are all material factors accounted for?
+- Does it pass a "smell test" for the industry?
+
+**Step 5: Return Result**
+Return ONLY valid JSON (no markdown, no code blocks):
+{"reasoning": "<your analysis with explicit calculation from Step 3>", "growth_rate": <number>}
+
+CRITICAL: Your reasoning MUST include the explicit arithmetic calculation from Step 3. Output reasoning BEFORE growth_rate.

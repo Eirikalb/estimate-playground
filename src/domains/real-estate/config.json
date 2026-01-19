@@ -3,6 +3,11 @@
   "name": "Norwegian Commercial Real Estate Yield",
   "description": "Estimating market yields for commercial properties in Norway based on location, tenant quality, lease terms, and building standard.",
   "outputUnit": "%",
+  "outputLabel": "Yield",
+  "entityLabel": "Property",
+  "scenarioLabel": "Property Details",
+  "toleranceMode": "fixed",
+  "toleranceValue": 0.35,
   "anchors": {
     "office_oslo_cbd": {
       "value": 4.875,
@@ -147,4 +152,3 @@
     "Local politicians have expressed support for the area's development."
   ]
 }
-

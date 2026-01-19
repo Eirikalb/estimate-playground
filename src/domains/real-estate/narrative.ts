@@ -1,0 +1,188 @@
+/**
+ * Real Estate Domain - Narrative Generation
+ *
+ * Generates rich, natural language property prospectuses for Norwegian
+ * commercial real estate scenarios.
+ */
+
+import type { DomainConfig } from "../schema";
+import type { NarrativePromptContext } from "../types";
+import {
+  locationProfiles,
+  getAnchorCategory,
+  getStreetsForAnchor,
+} from "./profiles";
+
+/**
+ * Build the LLM prompt for generating a property prospectus narrative
+ */
+export function buildNarrativePrompt(
+  config: DomainConfig,
+  context: NarrativePromptContext
+): string {
+  const { anchorKey, appliedDeltaKeys, distractors, seed } = context;
+
+  const anchor = config.anchors[anchorKey];
+  if (!anchor) {
+    throw new Error(`Unknown anchor: ${anchorKey}`);
+  }
+
+  const category = getAnchorCategory(anchorKey);
+  const profile = locationProfiles[anchorKey] || locationProfiles.office_other;
+  const streets = getStreetsForAnchor(anchorKey);
+
+  // Get delta descriptions
+  const deltaDetails = appliedDeltaKeys
+    .map((key) => {
+      const delta = config.deltas[key];
+      return delta
+        ? {
+            key,
+            description: delta.description,
+            impact: delta.value > 0 ? "increases yield" : "decreases yield",
+          }
+        : null;
+    })
+    .filter(Boolean);
+
+  // Build location context
+  const locationContext = `
+Location type: ${anchor.description}
+Possible districts: ${profile.districts.join(", ")}
+Nearby landmarks: ${profile.landmarks.join(", ")}
+Transport options: ${profile.transport.join("; ")}
+Area characteristics: ${profile.characteristics.join(", ")}
+Possible street names: ${streets.slice(0, 5).join(", ")}
+`.trim();
+
+  // Build the key factors section
+  let keyFactorsSection = "";
+  if (deltaDetails.length > 0) {
+    keyFactorsSection = `
+KEY FACTORS TO EMBED (these MUST be clearly mentioned in the description as they affect the property's yield):
+${deltaDetails.map((d, i) => `${i + 1}. ${d!.description}`).join("\n")}
+`.trim();
+  }
+
+  // Build distractors section
+  let distractorsSection = "";
+  if (distractors.length > 0) {
+    distractorsSection = `
+ADDITIONAL DETAILS TO INCLUDE (these are supplementary details, include them naturally):
+${distractors.map((d) => `- ${d}`).join("\n")}
+`.trim();
+  }
+
+  const prompt = `You are an expert commercial real estate analyst writing a property sales prospectus for a Norwegian commercial property.
+
+Generate a detailed, realistic property description following the exact style and format shown in the example below. The description should read like a professional sales document from a real estate advisor.
+
+PROPERTY CONTEXT:
+${locationContext}
+
+${keyFactorsSection}
+
+${distractorsSection}
+
+EXAMPLE FORMAT (follow this style closely):
+
+"""
+## Property Information
+
+*Overview of property details, ownership, and certifications*
+
+The property is located at Cort Adelers gate 16 in the Vika district of central Oslo, in the borough of Frogner, between Solli plass and Aker Brygge. According to the sales presentation, the building lies approximately 200 metres from both Solli plass and Nationaltheatret station, placing it within a dense, mixed-use inner-city fabric dominated by offices, retail, hospitality and cultural institutions. The immediate surroundings include embassies and other diplomatic functions in Cort Adelers gate, as well as proximity to the Nationaltheatret transport hub, Oslo City Hall and the Nasjonalmuseet, which together characterise the area as an established central business location with significant public and institutional presence. Public transport accessibility is strong with frequent tram and bus services from Solli plass and Observatoriegata, and all metro lines, regional rail and airport express services available from Nationaltheatret station. Road access is via the local street grid in Vika, with predominantly urban streetscape and closed perimeter blocks. The cadastral designation is gnr. 209, bnr. 13 in Oslo municipality, with an owned plot of 690 m², and the property is listed on the municipal "gul liste" for buildings of conservation interest.
+
+The building is a corner office property originally constructed in 1955 and described as a funkisgård, an example of post-war functionalist architecture characterised by simple lines, large window surfaces and a functional layout. It comprises nine floors including basement, with a gross building area of approximately 4 006 m² BTA according to the sales presentation, while the structured data indicates a gross area of 3 768 m² and built-up area of 460,6 m², reflecting typical office floorplates around 470 m². The structure features concrete floor slabs and solid materials, and the plot is sloping so that the nominal first floor effectively corresponds to a raised second floor. Documented technical upgrades in recent years include installation of two new lifts in 2012, new external solar shading in 2016, upgraded entrance and staircase in 2017, new SD system for the ventilation unit in 2018, façade painting in 2019, and refurbishment of the first and seventh floors in 2019, the third, fourth and sixth floors in 2021, and the eighth floor in 2024. The building has an energy rating E (light green) and an estimated TEK classification linked to the 1924 building legislation (LBV 1924), while information on façade materials, interior material standards beyond being described as bright premises with large window surfaces, and detailed technical condition of building systems other than the noted upgrades is information not available in the context.
+
+The property is regulated in the municipal master plan with main purpose "bebyggelse og anlegg (fremtidig)" and is used predominantly as an office building with supplementary restaurant and storage areas. The tenancy structure described in the presentation and structured data is dominated by office users within wholesale, professional services and other knowledge-intensive activities, with one restaurant unit at the lower level and additional storage in basement and mezzanine levels. Aggregated office areas per floor range from approximately 255 m² to 500 m², and the presentation notes both fully let floors and vacant office areas with a seller lease guarantee, indicating a combination of income-producing and currently vacant space, while precise current vacancy by percentage is information not available in the context. Property-level sustainability initiatives beyond the energy label E and general compliance with historical technical regulations are information not available in the context, and no additional environmental certifications such as BREEAM or LEED are reported in the provided material.
+"""
+
+INSTRUCTIONS:
+1. Generate a UNIQUE property with a fictional but realistic address using one of the provided street names
+2. Create realistic building specifications (year built, floors, size in m² BTA, construction type)
+3. Include realistic cadastral references (gnr./bnr.) and plot sizes
+4. Describe transport connections and nearby landmarks from the provided context
+5. Include technical upgrade history with specific years
+6. CRITICALLY IMPORTANT: All KEY FACTORS must be clearly embedded in the narrative - these are the factors that affect the property's market yield
+7. Make the description read like an authentic Norwegian commercial real estate prospectus
+8. Use professional real estate terminology and phrasing
+9. Generate between 400-600 words
+10. Do NOT include any yield estimates or percentage values
+11. Vary the property characteristics significantly - don't always use similar years, sizes, or features
+
+Use random seed ${seed} for variation in your choices.
+
+Generate the property description now:`;
+
+  return prompt;
+}
+
+/**
+ * Generate a fallback description when LLM narrative generation fails or is disabled.
+ * Returns a structured, deterministic description.
+ */
+export function generateFallbackDescription(
+  config: DomainConfig,
+  anchorKey: string,
+  appliedDeltaKeys: string[],
+  distractors: string[]
+): string {
+  const anchor = config.anchors[anchorKey];
+  if (!anchor) {
+    throw new Error(`Unknown anchor: ${anchorKey}`);
+  }
+
+  const parts: string[] = [];
+
+  // Start with the property type/location
+  parts.push(`## Property Information\n`);
+  parts.push(`*Overview of property details*\n`);
+  parts.push(`Property Type: ${anchor.description}\n`);
+
+  // Add each applied delta as a property characteristic
+  if (appliedDeltaKeys.length > 0) {
+    const characteristics = appliedDeltaKeys
+      .map((key) => config.deltas[key]?.description)
+      .filter(Boolean);
+
+    parts.push(`\n**Key Characteristics:**`);
+    for (const char of characteristics) {
+      parts.push(`- ${char}`);
+    }
+  }
+
+  // Add distractors as additional context
+  if (distractors.length > 0) {
+    parts.push(`\n**Additional Context:**`);
+    for (const d of distractors) {
+      parts.push(`- ${d}`);
+    }
+  }
+
+  return parts.join("\n");
+}
+
+/**
+ * Generate a brief summary for quick reference (non-LLM, deterministic)
+ */
+export function generateBriefSummary(
+  config: DomainConfig,
+  anchorKey: string,
+  appliedDeltaKeys: string[]
+): string {
+  const anchor = config.anchors[anchorKey];
+  if (!anchor) return "";
+
+  const deltaDescriptions = appliedDeltaKeys
+    .map((key) => config.deltas[key]?.description)
+    .filter(Boolean);
+
+  let summary = `${anchor.description}`;
+
+  if (deltaDescriptions.length > 0) {
+    summary += ` with ${deltaDescriptions.join(", ").toLowerCase()}`;
+  }
+
+  return summary;
+}

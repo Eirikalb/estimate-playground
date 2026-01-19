@@ -1,0 +1,45 @@
+{
+  "domainId": "financial-forecasting",
+  "examples": [
+    {
+      "description": "Series B SaaS company with $18M ARR, 125% NRR, recently doubled sales team, operating in enterprise collaboration space with strong product-market fit.",
+      "analysis": "SaaS Scale-up baseline (55% growth). Strong NRR above 120% is a major positive. Recently scaled sales team suggests growth investment. Position at higher end of range with upward adjustments.",
+      "result": {
+        "reasoning": "Series B SaaS with excellent retention metrics and aggressive sales investment signals continued high growth trajectory",
+        "estimate": 70
+      }
+    },
+    {
+      "description": "Fintech startup with $3M revenue, recently obtained banking license, facing increased regulatory compliance costs and competitor pricing pressure.",
+      "analysis": "Fintech Startup baseline (100% growth). Regulatory license is a milestone but compliance costs increase. Pricing pressure is a negative. Moderate downward adjustment.",
+      "result": {
+        "reasoning": "Early fintech with regulatory approval but facing cost headwinds and competitive pressure on pricing",
+        "estimate": 85
+      }
+    },
+    {
+      "description": "Manufacturing SMB with $25M revenue, stable customer base, no major expansion plans, benefiting from nearshoring trends in the industry.",
+      "analysis": "Manufacturing SMB baseline (8% growth). Stable customer base is neutral. Macroeconomic tailwind from nearshoring. Slight upward adjustment.",
+      "result": {
+        "reasoning": "Traditional manufacturing benefiting from industry tailwinds but no aggressive growth initiatives",
+        "estimate": 14
+      }
+    },
+    {
+      "description": "E-commerce startup with $8M GMV, 85% NRR indicating churn issues, but launching major new product line and expanding into European markets.",
+      "analysis": "E-commerce Startup baseline (120% growth). Weak NRR is significant negative. Product expansion and geographic expansion are positives. Net moderate downward adjustment due to churn concerns.",
+      "result": {
+        "reasoning": "High-growth e-commerce with concerning retention offset partially by expansion initiatives",
+        "estimate": 105
+      }
+    },
+    {
+      "description": "Professional services firm with $12M revenue, strong reputation in niche market, experiencing high consultant turnover and delayed project deliveries.",
+      "analysis": "Consulting SMB baseline (18% growth). High turnover is a significant operational challenge. Delays affect client satisfaction and repeat business. Downward adjustment.",
+      "result": {
+        "reasoning": "Consulting firm with talent retention issues impacting delivery and growth capacity",
+        "estimate": 8
+      }
+    }
+  ]
+}

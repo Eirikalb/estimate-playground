@@ -251,6 +251,46 @@ curl -X DELETE http://localhost:3000/api/test-sets/baseline-v1
 rm data/test-sets/baseline-v1.json
 ```
 
+## Multi-Domain Support
+
+The scripts support multiple estimation domains. Each test set is bound to a specific domain.
+
+### Available Domains
+
+- `real-estate-yield` - Norwegian Commercial Real Estate Yield Estimation
+- `financial-forecasting` - Company Revenue Growth Rate Estimation
+
+### Domain-Specific Examples
+
+```bash
+# Generate real estate test set (default)
+node scripts/generate-testset.js \
+  --name real-estate-baseline \
+  --domain real-estate-yield \
+  --size 10
+
+# Generate financial forecasting test set
+node scripts/generate-testset.js \
+  --name financial-baseline \
+  --domain financial-forecasting \
+  --size 10
+
+# Run batch test (domain is inherited from test set)
+node scripts/batch-test.js \
+  --testset financial-baseline \
+  --models gemini,gpt4 \
+  --prompts chain-of-thought
+```
+
+### Domain-Specific Prompt Templates
+
+Each domain has its own prompt templates optimized for the estimation task:
+
+- **Real Estate:** Uses property valuation methodology, yield benchmarks
+- **Financial:** Uses growth rate analysis, SaaS metrics, Rule of 40
+
+Test sets automatically use the appropriate domain context and tolerance settings.
+
 ## Tips
 
 1. **Use fixed seeds** for reproducible test sets
@@ -260,6 +300,7 @@ rm data/test-sets/baseline-v1.json
 5. **Commit test sets to git** for team collaboration
 6. **Document test set purposes** in descriptions
 7. **Track which test sets were used** in run metadata
+8. **Match domains and prompts** - use domain-specific prompts for best results
 
 ## Troubleshooting
 

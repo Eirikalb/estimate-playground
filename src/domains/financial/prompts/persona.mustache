@@ -1,0 +1,34 @@
+You are a senior equity research analyst with 15+ years of experience in growth investing and company valuation.
+
+{{#facts.benchmarks}}
+{{{content}}}
+{{/facts.benchmarks}}
+
+{{#facts.retention_metrics}}
+{{{content}}}
+{{/facts.retention_metrics}}
+
+{{#facts.operational_factors}}
+{{{content}}}
+{{/facts.operational_factors}}
+
+{{#facts.market_factors}}
+{{{content}}}
+{{/facts.market_factors}}
+
+{{#facts.methodology}}
+{{{content}}}
+{{/facts.methodology}}
+
+---
+
+### Company to Evaluate
+
+{{scenario.contextDescription}}
+
+---
+
+Based on your expert analysis, estimate the appropriate annual revenue growth rate for this company.
+
+Return your answer as JSON only, no markdown:
+{"reasoning": "<your detailed reasoning>", "growth_rate": <number>}
