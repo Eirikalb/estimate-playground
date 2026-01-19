@@ -27,6 +27,12 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
   AreaChart,
   Area,
   XAxis,
@@ -39,7 +45,9 @@ import {
   ComposedChart,
   Line,
 } from "recharts";
-import type { BenchmarkRun, Scenario, ScenarioResult } from "@/domains/schema";
+import type { BenchmarkRun, Scenario, ScenarioResult, DomainConfig } from "@/domains/schema";
+import { calculateScenarioDifficulty } from "@/lib/evaluator";
+import { formatCostCompact } from "@/lib/pricing";
 
 // Helper to format duration
 function formatDuration(startedAt?: string, completedAt?: string): string {
@@ -92,6 +100,7 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
   const resolvedParams = use(params);
   const router = useRouter();
   const [run, setRun] = useState<BenchmarkRun | null>(null);
+  const [domainConfig, setDomainConfig] = useState<DomainConfig | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedScenario, setSelectedScenario] = useState<{
     scenario: Scenario;
@@ -101,11 +110,22 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
   const fetchRun = useCallback(() => {
     fetch(`/api/runs/${resolvedParams.id}`)
       .then((res) => res.json())
-      .then((data) => {
+      .then(async (data) => {
         if (data.error) {
           router.push("/");
         } else {
           setRun(data);
+          // Fetch domain config for difficulty calculations
+          if (data.domainId && !domainConfig) {
+            try {
+              const domainsRes = await fetch("/api/domains");
+              const domains = await domainsRes.json();
+              const config = domains.find((d: DomainConfig) => d.id === data.domainId);
+              if (config) setDomainConfig(config);
+            } catch (e) {
+              console.error("Failed to load domain config:", e);
+            }
+          }
           // Update selected scenario if it exists
           if (selectedScenario) {
             const updatedResult = data.results.find(
@@ -125,7 +145,7 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
         setLoading(false);
         router.push("/");
       });
-  }, [resolvedParams.id, router, selectedScenario]);
+  }, [resolvedParams.id, router, selectedScenario, domainConfig]);
 
   // Initial fetch
   useEffect(() => {
@@ -228,6 +248,18 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
     return "text-red-400";
   };
 
+  const getConfidenceColor = (score: number) => {
+    if (score >= 80) return "text-emerald-400";
+    if (score >= 60) return "text-amber-400";
+    return "text-red-400";
+  };
+
+  const getDifficultyColor = (score: number) => {
+    if (score < 30) return "text-emerald-400";
+    if (score < 60) return "text-amber-400";
+    return "text-red-400";
+  };
+
   // Check if this run has multiple rollouts
   const hasMultipleRollouts = run.rolloutsPerScenario > 1 || 
     run.results.some(r => r.rollouts && r.rollouts.length > 1);
@@ -326,9 +358,65 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
             )}
           </div>
         </div>
-        <Button variant="destructive" size="sm" className="h-7" onClick={handleDelete}>
-          Delete
-        </Button>
+        <div className="flex items-center gap-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className="h-7">
+                Export ↓
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem
+                onClick={() => {
+                  window.location.href = `/api/runs/${resolvedParams.id}/export?format=csv`;
+                }}
+              >
+                Export Summary CSV
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  window.location.href = `/api/runs/${resolvedParams.id}/export?format=csv&detailed=true`;
+                }}
+              >
+                Export Detailed CSV (All Rollouts)
+              </DropdownMenuItem>
+              <DropdownMenuItem disabled className="text-muted-foreground">
+                Export PDF Report (Coming Soon)
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        <div className="flex gap-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className="h-7">
+                Export ↓
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem
+                onClick={() => {
+                  window.location.href = `/api/runs/${resolvedParams.id}/export?format=csv`;
+                }}
+              >
+                Export Summary CSV
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  window.location.href = `/api/runs/${resolvedParams.id}/export?format=csv&detailed=true`;
+                }}
+              >
+                Export Detailed CSV (All Rollouts)
+              </DropdownMenuItem>
+              <DropdownMenuItem disabled className="text-muted-foreground">
+                Export PDF Report (Coming Soon)
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <Button variant="destructive" size="sm" className="h-7" onClick={handleDelete}>
+            Delete
+          </Button>
+        </div>
+        </div>
       </div>
 
       {/* Progress Bar for Running Runs */}
@@ -363,7 +451,7 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
 
       {/* Metrics Summary - Compact Version */}
       {run.aggregateMetrics ? (
-        <div className={`grid gap-2 mb-4 ${hasMultipleRollouts ? "grid-cols-7" : "grid-cols-5"}`}>
+        <div className={`grid gap-2 mb-4 ${hasMultipleRollouts ? "grid-cols-9" : "grid-cols-6"}`}>
           <div className="bg-card border rounded-lg px-3 py-2">
             <div className="text-xs text-muted-foreground">Hit Rate</div>
             <div className={`text-lg font-mono font-bold ${getHitRateColor(run.aggregateMetrics.hitRate)}`}>
@@ -397,6 +485,14 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
               {run.aggregateMetrics.avgLatencyMs}ms
             </div>
           </div>
+          <div className="bg-card border rounded-lg px-3 py-2">
+            <div className="text-xs text-muted-foreground">Cost</div>
+            <div className="text-lg font-mono font-bold">
+              {run.aggregateMetrics.totalCost !== undefined
+                ? formatCostCompact(run.aggregateMetrics.totalCost)
+                : "—"}
+            </div>
+          </div>
           {hasMultipleRollouts && (
             <>
               <div className="bg-card border rounded-lg px-3 py-2">
@@ -409,6 +505,12 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
                 <div className="text-xs text-muted-foreground">Consistency</div>
                 <div className="text-lg font-mono font-bold">
                   {run.aggregateMetrics.avgConsistency?.toFixed(0) || "—"}%
+                </div>
+              </div>
+              <div className="bg-card border rounded-lg px-3 py-2">
+                <div className="text-xs text-muted-foreground">Confidence</div>
+                <div className={`text-lg font-mono font-bold ${getConfidenceColor(run.aggregateMetrics.avgConfidence || 0)}`}>
+                  {run.aggregateMetrics.avgConfidence ?? "—"}
                 </div>
               </div>
             </>
@@ -436,10 +538,12 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
                     <TableHead className="w-[30px]"></TableHead>
                     <TableHead className="w-[140px]">Anchor</TableHead>
                     <TableHead>Deltas</TableHead>
+                    <TableHead className="w-[50px]">Diff.</TableHead>
                     <TableHead className="w-[70px]">Truth</TableHead>
                     <TableHead className="w-[70px]">{hasMultipleRollouts ? "Mean" : "Pred"}</TableHead>
                     {hasMultipleRollouts && <TableHead className="w-[60px]">σ</TableHead>}
                     <TableHead className="w-[70px]">Error</TableHead>
+                    {hasMultipleRollouts && <TableHead className="w-[50px]">Conf.</TableHead>}
                     <TableHead className="w-[40px]"></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -485,6 +589,9 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
                             )}
                           </div>
                         </TableCell>
+                        <TableCell className={`font-mono text-xs ${getDifficultyColor(calculateScenarioDifficulty(scenario, domainConfig ?? undefined).score)}`}>
+                          {calculateScenarioDifficulty(scenario, domainConfig ?? undefined).score}
+                        </TableCell>
                         <TableCell className="font-mono text-xs">
                           {scenario.groundTruth.value.toFixed(2)}%
                         </TableCell>
@@ -499,6 +606,11 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
                         <TableCell className={`font-mono text-xs ${!isPending && !isRunning ? getErrorColor(result.error) : ""}`}>
                           {isPending || isRunning ? "—" : `${result.error > 0 ? "+" : ""}${result.error.toFixed(3)}`}
                         </TableCell>
+                        {hasMultipleRollouts && (
+                          <TableCell className={`font-mono text-xs ${!isPending && !isRunning && result.confidence ? getConfidenceColor(result.confidence.score) : ""}`}>
+                            {isPending || isRunning ? "—" : (result.confidence?.score ?? "—")}
+                          </TableCell>
+                        )}
                         <TableCell>
                           {isPending && <span className="text-muted-foreground">—</span>}
                           {isRunning && <span className="text-amber-400 animate-pulse">⋯</span>}
@@ -680,7 +792,7 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
 
                 {/* 2. Stats Numbers - only show when completed */}
                 {selectedScenario.result.status === "completed" && (
-                  <div className="grid grid-cols-5 gap-2">
+                  <div className={`grid gap-2 ${hasMultipleRollouts && selectedScenario.result.rollouts.length > 1 ? "grid-cols-6" : "grid-cols-5"}`}>
                     <div className="bg-emerald-500/10 border border-emerald-500/20 p-2 rounded text-center">
                       <div className="text-[10px] text-emerald-400">Target</div>
                       <div className="font-mono text-sm font-bold text-emerald-400">
@@ -694,8 +806,8 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
                       </div>
                     </div>
                     <div className={`p-2 rounded text-center ${
-                      selectedScenario.result.withinTolerance 
-                        ? "bg-emerald-500/10 border border-emerald-500/20" 
+                      selectedScenario.result.withinTolerance
+                        ? "bg-emerald-500/10 border border-emerald-500/20"
                         : "bg-red-500/10 border border-red-500/20"
                     }`}>
                       <div className="text-[10px] text-muted-foreground">Error</div>
@@ -715,6 +827,20 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
                           <div className="text-[10px] text-muted-foreground">In Tol.</div>
                           <div className="font-mono text-sm font-bold">
                             {selectedScenario.result.rolloutConsistency.toFixed(0)}%
+                          </div>
+                        </div>
+                        <div className={`p-2 rounded text-center ${
+                          selectedScenario.result.confidence
+                            ? selectedScenario.result.confidence.level === "high"
+                              ? "bg-emerald-500/10 border border-emerald-500/20"
+                              : selectedScenario.result.confidence.level === "medium"
+                              ? "bg-amber-500/10 border border-amber-500/20"
+                              : "bg-red-500/10 border border-red-500/20"
+                            : "bg-muted/50"
+                        }`}>
+                          <div className="text-[10px] text-muted-foreground">Confidence</div>
+                          <div className={`font-mono text-sm font-bold ${selectedScenario.result.confidence ? getConfidenceColor(selectedScenario.result.confidence.score) : ""}`}>
+                            {selectedScenario.result.confidence?.score ?? "—"}
                           </div>
                         </div>
                       </>
