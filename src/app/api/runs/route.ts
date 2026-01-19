@@ -11,7 +11,15 @@ import { generateScenarios } from "@/lib/generator";
 import { generateNarrativeDescription, generateFallbackDescription } from "@/lib/narrative-generator";
 import { renderPrompt } from "@/prompts/engine";
 import { callOpenRouterMultiple, type OpenRouterConfig } from "@/lib/openrouter";
-import { evaluateMultipleRollouts, calculateAggregateMetrics } from "@/lib/evaluator";
+import {
+  evaluateMultipleRollouts,
+  calculateAggregateMetrics,
+  calculateConfidenceScore,
+  calculateScenarioDifficulty,
+  detectErrorPattern,
+  analyzeErrorPatterns,
+  calculateDifficultyMetrics,
+} from "@/lib/evaluator";
 import type { BenchmarkRun, ScenarioResult } from "@/domains/schema";
 
 export async function GET() {
@@ -268,6 +276,11 @@ export async function POST(request: Request) {
           const llmResults = await callOpenRouterMultiple(prompt, config, rollouts);
           const result = evaluateMultipleRollouts(scenario, llmResults);
           
+          // Calculate additional metrics
+          const confidence = calculateConfidenceScore(scenario, result);
+          const difficulty = calculateScenarioDifficulty(scenario, domainConfig);
+          const errorPattern = detectErrorPattern(scenario, result, domainConfig);
+          
           return {
             index: i,
             result: {
@@ -275,6 +288,9 @@ export async function POST(request: Request) {
               status: "completed" as const,
               startedAt: scenarioStartedAt,
               completedAt: new Date().toISOString(),
+              confidence,
+              difficulty,
+              errorPattern,
             },
           };
         } catch (error) {
@@ -321,11 +337,24 @@ export async function POST(request: Request) {
 
     // Calculate aggregate metrics and mark run as completed
     const completedResults = run.results.filter(r => r.status === "completed" || r.status === "failed");
-    const aggregateMetrics = calculateAggregateMetrics(run.scenarios, completedResults);
+    const baseMetrics = calculateAggregateMetrics(run.scenarios, completedResults);
+    
+    // Calculate difficulty and error pattern summaries
+    const difficultyMetrics = calculateDifficultyMetrics(run.scenarios, domainConfig);
+    const errorPatternSummary = analyzeErrorPatterns(run.scenarios, completedResults, domainConfig);
 
     run.status = "completed";
     run.completedAt = new Date().toISOString();
-    run.aggregateMetrics = aggregateMetrics;
+    
+    // Merge all metrics - baseMetrics is guaranteed to have required fields
+    if (baseMetrics) {
+      run.aggregateMetrics = {
+        ...baseMetrics,
+        avgDifficulty: difficultyMetrics.avgDifficulty,
+        difficultyDistribution: difficultyMetrics.distribution,
+        errorPatternSummary,
+      };
+    }
 
     await saveBenchmarkRun(run);
 

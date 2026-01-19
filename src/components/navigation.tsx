@@ -16,6 +16,7 @@ const navItems = [
   { href: "/", label: "Dashboard" },
   { href: "/playground", label: "Playground" },
   { href: "/compare", label: "Compare" },
+  { href: "/analysis", label: "Analysis" },
 ];
 
 export function Navigation() {
