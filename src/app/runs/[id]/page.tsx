@@ -390,7 +390,6 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
             Delete
           </Button>
         </div>
-        </div>
       </div>
 
       {/* Progress Bar for Running Runs */}
