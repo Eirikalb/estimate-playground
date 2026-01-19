@@ -118,10 +118,11 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
           // Fetch domain config for difficulty calculations
           if (data.domainId && !domainConfig) {
             try {
-              const domainsRes = await fetch("/api/domains");
-              const domains = await domainsRes.json();
-              const config = domains.find((d: DomainConfig) => d.id === data.domainId);
-              if (config) setDomainConfig(config);
+              const domainRes = await fetch(`/api/domains?id=${encodeURIComponent(data.domainId)}`);
+              if (domainRes.ok) {
+                const { config } = await domainRes.json();
+                if (config) setDomainConfig(config);
+              }
             } catch (e) {
               console.error("Failed to load domain config:", e);
             }
@@ -359,33 +360,6 @@ export default function RunDetail({ params }: { params: Promise<{ id: string }> 
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="h-7">
-                Export ↓
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem
-                onClick={() => {
-                  window.location.href = `/api/runs/${resolvedParams.id}/export?format=csv`;
-                }}
-              >
-                Export Summary CSV
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => {
-                  window.location.href = `/api/runs/${resolvedParams.id}/export?format=csv&detailed=true`;
-                }}
-              >
-                Export Detailed CSV (All Rollouts)
-              </DropdownMenuItem>
-              <DropdownMenuItem disabled className="text-muted-foreground">
-                Export PDF Report (Coming Soon)
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        <div className="flex gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm" className="h-7">
